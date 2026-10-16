@@ -32,7 +32,7 @@ async function dec(bits) {
   var key = await crypto.subtle.importKey("raw", bits.slice(0, 32), "AES-CBC", false, ["decrypt"]);
   return new TextDecoder().decode(await crypto.subtle.decrypt({ name: "AES-CBC", iv: bits.slice(32, 48) }, key, ct));
 }
-function show(page) { document.open(); document.write(page); document.close(); }
+function show(page) { var go = function () { document.open(); document.write(page); document.close(); }; if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () { setTimeout(go, 0); }); else setTimeout(go, 0); }
 var saved = null; try { saved = localStorage.getItem("sf-key-" + SALT); } catch (e) {}
 if (saved) dec(b64(saved)).then(show).catch(function () { try { localStorage.removeItem("sf-key-" + SALT); } catch (e) {} });
 document.getElementById("f").addEventListener("submit", async function (ev) {
