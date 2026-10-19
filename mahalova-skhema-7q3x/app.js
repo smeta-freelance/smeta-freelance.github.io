@@ -44,7 +44,7 @@ var SCREENS = [
   { n: 3, places: [3], time: '29:07–29:24', frame: 's11', clips: [3], route: true,
     title: 'Где Вы ставите коробку на ответвлении группы 18?',
     fixTitle: 'Покажите сами: где коробка на ответвлении группы 18',
-    steps: ['где ВРУ', 'где ставим коробку', 'конец «длины, которую не считаем» (по желанию)'],
+    steps: ['где ВРУ', 'где ставим коробку', 'конец «длины, которую не считаем» (по желанию — мы не отметили)'],
     quote: '«Мы выходим из ВРУ, идём до первого ответвления на группу 18. Вот на это. Ставим здесь коробку…»',
     ours: [[910, 705], [1130, 290]], oursPlace: [3, 3],
     view: [516.7, 120, 1006.7, 755] },
@@ -341,7 +341,8 @@ function renderPanel() {
     };
     $('#reset').onclick = function () {
       if (!a.points.length) { setStatus('Точек пока нет — нажмите на схеме.', 'info'); return; }
-      a.points = []; persist(scr.n, '✓ Точки убраны — можно отмечать заново'); refreshFix();
+      if (!ui.resetAsk || Date.now() - ui.resetAsk > 4000) { ui.resetAsk = Date.now(); setStatus('Убрать все точки на этом экране? Нажмите «Начать заново» ещё раз.', 'warn'); return; }
+      ui.resetAsk = 0; a.points = []; persist(scr.n, '✓ Точки убраны — можно отмечать заново'); refreshFix();
     };
     $('#savefix').onclick = function () {
       a.text = ta.value;
@@ -389,7 +390,7 @@ function drawFrame() {
   svg.setAttribute('viewBox', v.x + ' ' + v.y + ' ' + v.w + ' ' + v.h);
   var wpx = svg.clientWidth || 1000;
   var u = v.w / wpx;                                 // единиц кадра на 1 пиксель экрана
-  var base = clamp(wpx / 1040, 0.6, 1);              // размер значков как в макете, меньше на телефоне
+  var base = clamp(wpx / 1040, 0.9, 1);              // размер значков как в макете, меньше на телефоне
   var g = '';
   var pts, i;
   if (!ui.fix) {
@@ -397,8 +398,20 @@ function drawFrame() {
     if (scr.route && pts.length > 1) {
       g += '<polyline points="' + (scr.line || pts).map(function (p) { return p.join(','); }).join(' ') + '" fill="none" stroke="#FF6A00" stroke-opacity=".9" stroke-width="' + (9 * base * u) + '" stroke-linejoin="round" stroke-linecap="round"/>';
     }
+    var R = 30 * base * u, placed = [];
     for (i = 0; i < pts.length; i++) {
-      var x = pts[i][0], y = pts[i][1];
+      var x0 = pts[i][0], y0 = pts[i][1], x = x0, y = y0;
+      var hits = function (px, py) { return placed.some(function (q) { return Math.hypot(q[0] - px, q[1] - py) < 2.1 * R; }); };
+      if (hits(x, y)) {      // номер закрыл бы соседний — выносим в сторону с тонкой линией к месту
+        var angs = [-60, -120, 60, 120, 0, 180, -90, 90];
+        for (var k = 0; k < angs.length; k++) {
+          var ax = x0 + Math.cos(angs[k] * Math.PI / 180) * 2.6 * R, ay = y0 + Math.sin(angs[k] * Math.PI / 180) * 2.6 * R;
+          if (!hits(ax, ay)) { x = ax; y = ay; break; }
+        }
+        g += '<line x1="' + x0 + '" y1="' + y0 + '" x2="' + x + '" y2="' + y + '" stroke="#FF6A00" stroke-width="' + (4 * base * u) + '"/>' +
+             '<circle cx="' + x0 + '" cy="' + y0 + '" r="' + (9 * base * u) + '" fill="#FF2D55" stroke="#fff" stroke-width="' + (2 * base * u) + '"/>';
+      }
+      placed.push([x, y]);
       g += '<circle cx="' + x + '" cy="' + y + '" r="' + (30 * base * u) + '" fill="#FFE600" fill-opacity=".6" stroke="#FF6A00" stroke-width="' + (6 * base * u) + '"/>' +
            '<circle cx="' + x + '" cy="' + y + '" r="' + (17 * base * u) + '" fill="#FF2D55" stroke="#fff" stroke-width="' + (3 * base * u) + '"/>' +
            '<text x="' + x + '" y="' + y + '" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-weight="700" font-size="' + (20 * base * u) + '" fill="#fff">' + (i + 1) + '</text>';
@@ -511,9 +524,15 @@ function bindFrame() {
 function addPoint(fx, fy) {
   var scr = ui.scr, a = ans(scr.n);
   var x = Math.round(clamp(fx, 0, FW - 1)), y = Math.round(clamp(fy, 0, FH - 1));
+  var svgEl = $('#svg'), upx = ui.view.w / ((svgEl && svgEl.clientWidth) || 1000);   // единиц кадра на 1 пиксель экрана
+  var last = a.points[a.points.length - 1], now = Date.now();
+  if (last && now - (ui.lastAddT || 0) < 700 && Math.hypot(last.x - x, last.y - y) <= 30 * upx) {
+    setStatus('Эта точка уже стоит — двойной щелчок не нужен, достаточно одного.', 'info'); return;   // защита от двойного щелчка
+  }
+  ui.lastAddT = now;
   var same = null;
   for (var i = 0; i < a.points.length; i++) {
-    if (Math.hypot(a.points[i].x - x, a.points[i].y - y) <= 25) { same = i + 1; x = a.points[i].x; y = a.points[i].y; break; }
+    if (Math.hypot(a.points[i].x - x, a.points[i].y - y) <= 8 * upx) { same = i + 1; break; }   // координаты не переносим
   }
   a.points.push({ x: x, y: y, same_as: same });
   a.mode = 'own';
@@ -523,6 +542,9 @@ function addPoint(fx, fy) {
   if (x >= 1620 && y < 225) setStatus('Точка ' + n + ' попала под окно с видео в правом верхнем углу — там её будет плохо видно. Если можно, поставьте рядом.', 'warn');
   refreshFix();
 }
+
+/* предзагрузка кадров, чтобы схема не появлялась с белым фоном */
+['media/slide11.jpg', 'media/drawing.jpg'].forEach(function (src) { var im = new Image(); im.src = src; });
 
 /* ---------- Прослушивание фрагмента ---------- */
 function togglePlayer(scr) {
@@ -565,13 +587,13 @@ function renderVoice(hintHTML) {
   var k = ui.scr.n, a = ans(k), blob = VOICES[k];
   var html = '';
   if (REC && REC.k === k) {
-    html = '<button class="rec on" id="recbtn"><span class="dot"></span><span>Идёт запись <span id="rectime">' + fmtTime((Date.now() - REC.t0) / 1000) + '</span> · Стоп</span></button>';
+    html = '<button class="rec on" id="recbtn" aria-label="Идёт запись, нажмите, чтобы остановить"><span class="dot"></span><span>Идёт запись <span id="rectime">' + fmtTime((Date.now() - REC.t0) / 1000) + '</span> · Стоп</span></button>';
   } else if (blob) {
     html = '<div class="voice-ready"><div class="vtitle">✓ Голос сохранён' + (a.voice && a.voice.dur ? ' (' + fmtTime(a.voice.dur) + ')' : '') + '</div>' +
            '<audio id="vaudio" controls preload="metadata"></audio>' +
            '<div class="row2"><button class="btn btn-light" id="vplay">▶ Прослушать</button><button class="btn btn-light" id="rerec">Перезаписать</button></div></div>';
   } else {
-    html = '<button class="rec" id="recbtn"><span class="dot"></span><span>Записать голосом</span></button>';
+    html = '<button class="rec" id="recbtn" aria-label="Записать голосом"><span class="dot"></span><span>Записать голосом</span></button>';
   }
   if (hintHTML) html += '<div class="mic-hint" style="margin-top:10px">' + hintHTML + '</div>';
   box.innerHTML = html;
