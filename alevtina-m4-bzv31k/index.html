@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Урок 4 · Махалова</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --blue:#1745E0; --navy:#101840; --sky:#38C6F4; --bg:#F4F7FD; --card:#fff;
+  --line:#DCE3F3; --muted:#4E5677; --green:#2F7F46; --green-soft:#E3F5E9;
+  --orange:#FF6A00; --warn-soft:#FFF6E0; --r:14px; color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--navy);font-family:"Golos Text","Segoe UI","Helvetica Neue",Arial,sans-serif;font-size:18px;line-height:1.45}
+a{color:var(--blue)}
+:focus-visible{outline:4px solid var(--sky);outline-offset:2px}
+.top{background:var(--blue);color:#fff}
+.top-in{max-width:980px;margin:0 auto;padding:10px 16px;font-weight:700;font-size:16px}
+.wrap{max-width:980px;margin:0 auto;padding:20px 16px 40px}
+.chip{display:inline-block;background:var(--warn-soft);color:#7A4A00;border:1px solid #F3D9A0;border-radius:999px;padding:4px 12px;font-size:15px;font-weight:600}
+h1{font-size:32px;line-height:1.15;margin:12px 0 8px}
+h2{font-size:23px;margin:0 0 12px}
+.lead{color:var(--muted);margin:0 0 20px;font-size:19px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;margin:0 0 18px}
+.video{width:100%;border-radius:10px;display:block;background:#000;aspect-ratio:16/9}
+.cap{color:var(--muted);font-size:15px;margin:8px 0 12px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.rule{border:1px solid var(--line);border-radius:12px;padding:14px;background:#FAFBFF}
+.rule b{display:block;font-size:19px;margin-bottom:2px}
+.rule .ic{font-size:28px;line-height:1;margin-bottom:6px;display:block}
+.rule span{color:var(--muted);font-size:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:10px 18px;border-radius:12px;border:2px solid var(--blue);background:#fff;color:var(--blue);font:inherit;font-weight:700;font-size:18px;text-decoration:none;cursor:pointer}
+.btn-main{background:var(--blue);color:#fff}
+.btn-ok{background:var(--green);border-color:var(--green);color:#fff}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.steps{list-style:none;margin:0;padding:0}
+.steps li{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}
+.steps li:last-child{border-bottom:0}
+.steps input{width:28px;height:28px;flex:0 0 28px;margin-top:2px;accent-color:var(--green);cursor:pointer}
+.steps label{cursor:pointer}
+.steps label small{display:block;color:var(--muted);font-size:15px}
+.steps li.done label{color:var(--muted);text-decoration:line-through}
+.prog{font-weight:700;color:var(--green);margin:0 0 6px}
+.msg{white-space:pre-wrap;background:#F7F9FF;border:1px dashed #B9C6EE;border-radius:12px;padding:16px;margin:0 0 12px;font-size:17px}
+.plan-b{background:var(--green-soft);border-color:#BFE6CB}
+.facts{margin:0;padding-left:20px;color:var(--muted)}
+.facts li{margin:4px 0}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:12px 18px;border-radius:10px;font-weight:600;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
+footer{color:var(--muted);font-size:15px;text-align:center;margin-top:8px}
+@media (max-width:640px){
+  body{font-size:17px}
+  h1{font-size:26px}
+  .grid{grid-template-columns:1fr}
+  .card{padding:16px}
+  .btn{width:100%}
+}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in">Академия сметного дела · для Алевтины</div></header>
+
+<main class="wrap">
+  <span class="chip">Урок 4 КНС · перезапись на этой неделе</span>
+  <h1>Как работать с Ларисой Владимировной Махаловой</h1>
+  <p class="lead">В уроке 4 около 28–32 минуты не виден курсор. Лариса Владимировна перезапишет урок сама, а ты ведёшь её до готового файла.</p>
+
+  <section class="card">
+    <h2>🎬 Пример: так ИИ подсветит и увеличит схему</h2>
+    <video class="video" src="media/primer.mp4" poster="media/poster.jpg" controls playsinline preload="metadata"></video>
+    <p class="cap">30 секунд. Отправь ролик Ларисе Владимировне вместе с первым сообщением.</p>
+    <a class="btn" href="media/primer.mp4" download="Махалова урок 4 — пример подсветки 30с.mp4">⬇ Скачать ролик</a>
+  </section>
+
+  <section class="card">
+    <h2>Четыре правила общения</h2>
+    <div class="grid">
+      <div class="rule"><span class="ic">💬</span><b>Писать в Max</b><span>В Битрикс она не заходит. Если нет ответа 2 дня, попроси передать сообщение Анну Воронцову.</span></div>
+      <div class="rule"><span class="ic">🤝</span><b>«Лариса Владимировна», на «Вы»</b><span>Коротко и доброжелательно. Сначала поблагодари, потом проси.</span></div>
+      <div class="rule"><span class="ic">☝️</span><b>Один вопрос в сообщении</b><span>Не пиши несколько просьб сразу, иначе ответ затянется.</span></div>
+      <div class="rule"><span class="ic">⏰</span><b>Напоминать мягко</b><span>Не чаще раза в 2 дня и без давления. Срок — эта неделя.</span></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Шаги до готового урока</h2>
+    <p class="prog" id="prog">Готово 0 из 5</p>
+    <ul class="steps" id="steps">
+      <li><input type="checkbox" id="s1"><label for="s1">Отправить первое сообщение и ролик-пример<small>Текст ниже, кнопка «Скопировать».</small></label></li>
+      <li><input type="checkbox" id="s2"><label for="s2">Получить пробу на 10 секунд<small>Перед записью включены показ курсора и подсветка кликов, показывает мышью, а не стилусом.</small></label></li>
+      <li><input type="checkbox" id="s3"><label for="s3">Переслать пробу Руслану<small>Он проверит, хорошо ли виден курсор, и даст «можно записывать».</small></label></li>
+      <li><input type="checkbox" id="s4"><label for="s4">Получить весь урок ссылкой на Диск (mp4)</label></li>
+      <li><input type="checkbox" id="s5"><label for="s5">Передать ссылку Руслану<small>Подсветку и увеличение он сделает сам.</small></label></li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>✉️ Первое сообщение Ларисе Владимировне</h2>
+    <p class="msg" id="msg">Лариса Владимировна, добрый день! Это Алевтина, Академия сметного дела. Спасибо, что согласились перезаписать урок 4: с видимой мышкой ученикам будет гораздо проще следить за схемой.
+Прикладываю короткий пример, как мы дополнительно подсветим и увеличим нужные места.
+Перед полной записью пришлите, пожалуйста, пробу на 10 секунд: проверим, что курсор хорошо видно. Когда Вам удобно её записать?</p>
+    <div class="row">
+      <button class="btn btn-main" id="copy" type="button">📋 Скопировать текст</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>✉️ Напоминание (если нет ответа 2 дня)</h2>
+    <p class="msg" id="msg2">Лариса Владимировна, добрый день! Напомню про пробу на 10 секунд для урока 4. Получится прислать её до пятницы?</p>
+    <div class="row">
+      <button class="btn" id="copy2" type="button">📋 Скопировать напоминание</button>
+    </div>
+  </section>
+
+  <section class="card plan-b">
+    <h2>🟢 Если перезаписать не получится</h2>
+    <p style="margin:0 0 12px">Есть страница из 6 экранов: на каждом нужно нажать «Да, так» или поставить точку на схеме. Ответ сразу приходит к нам, а урок мы поправим без перезаписи.</p>
+    <a class="btn btn-ok" href="https://smeta-freelance.github.io/mahalova-skhema-7q3x/" target="_blank" rel="noopener">Открыть страницу уточнений ↗</a>
+  </section>
+
+  <section class="card">
+    <h2>Об уроке</h2>
+    <ul class="facts">
+      <li>КНС 2026 → раздел 6 «Составление локальных смет. Внутренние системы» → модуль «Внутреннее силовое электрооборудование и электроосвещение» → урок 4 (50 мин).</li>
+      <li>Где не виден курсор: примерно с 28:00 до 32:00, она показывала на схеме стилусом.</li>
+      <li>С настройкой записи с видимой мышкой помог Костя.</li>
+    </ul>
+  </section>
+
+  <footer>Вопросы и все ответы Ларисы Владимировны — сразу Руслану.</footer>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite">Скопировано</div>
+
+<script>
+(function(){
+  var KEY='mahalova-alevtina-steps';
+  var saved={};
+  try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+  var boxes=[].slice.call(document.querySelectorAll('#steps input'));
+  function render(){
+    var n=0;
+    boxes.forEach(function(b){b.closest('li').classList.toggle('done',b.checked);if(b.checked)n++;});
+    document.getElementById('prog').textContent=n===boxes.length?'✅ Все шаги готовы':'Готово '+n+' из '+boxes.length;
+  }
+  boxes.forEach(function(b){
+    b.checked=!!saved[b.id];
+    b.addEventListener('change',function(){
+      saved[b.id]=b.checked;
+      try{localStorage.setItem(KEY,JSON.stringify(saved))}catch(e){}
+      render();
+    });
+  });
+  render();
+  var toast=document.getElementById('toast');
+  function copy(id,btn){
+    var t=document.getElementById(id).innerText;
+    function ok(){toast.classList.add('on');var o=btn.textContent;btn.textContent='✅ Скопировано';setTimeout(function(){toast.classList.remove('on');btn.textContent=o},1600)}
+    if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(ok,fallback)}else{fallback()}
+    function fallback(){var a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy');ok()}catch(e){}document.body.removeChild(a)}
+  }
+  document.getElementById('copy').addEventListener('click',function(){copy('msg',this)});
+  document.getElementById('copy2').addEventListener('click',function(){copy('msg2',this)});
+})();
+</script>
+</body>
+</html>
