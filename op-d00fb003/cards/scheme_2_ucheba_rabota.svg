@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 428" width="680" height="428" role="img" aria-label="Учёба равна рабочей задаче: урок 15–20 минут в записи, практикум на своём объекте, результат для отдела, письмо руководителю — без отрыва от работы" font-family="'Golos Text', system-ui, -apple-system, sans-serif">
+<defs><marker id="a2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1437A9"/></marker></defs>
+<rect x="0" y="0" width="680" height="428" fill="#FFFFFF"/>
+<rect x="16" y="16" width="648" height="72" rx="14" fill="#EEF1FA" stroke="#1437A9" stroke-width="2"/>
+<circle cx="56" cy="52" r="22" fill="#1437A9"/><text x="56" y="59" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle">1</text>
+<text x="96" y="47" font-size="19" font-weight="700" fill="#101840">Урок в записи</text>
+<text x="96" y="73" font-size="16" fill="#101840">15–20 минут, в удобное время</text>
+<rect x="16" y="116" width="648" height="96" rx="14" fill="#EEF1FA" stroke="#1437A9" stroke-width="2"/>
+<circle cx="56" cy="164" r="22" fill="#1437A9"/><text x="56" y="171" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle">2</text>
+<text x="96" y="146" font-size="19" font-weight="700" fill="#101840">Практикум на своём объекте</text>
+<text x="96" y="174" font-size="16" fill="#101840">пересчёт сметы под новые НР и СП с 20.10.2026</text>
+<text x="96" y="198" font-size="16" fill="#101840">конъюнктурный анализ</text>
+<rect x="16" y="240" width="648" height="72" rx="14" fill="#EEF1FA" stroke="#1437A9" stroke-width="2"/>
+<circle cx="56" cy="276" r="22" fill="#1437A9"/><text x="56" y="283" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle">3</text>
+<text x="96" y="271" font-size="19" font-weight="700" fill="#101840">Результат для отдела</text>
+<text x="96" y="297" font-size="16" fill="#101840">пересчитанная смета и анализ цен — в работу</text>
+<rect x="16" y="340" width="648" height="72" rx="14" fill="#E6F4EC" stroke="#1F8A4C" stroke-width="2"/>
+<circle cx="56" cy="376" r="22" fill="#1F8A4C"/><text x="56" y="383" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle">4</text>
+<text x="96" y="371" font-size="19" font-weight="700" fill="#101840">Письмо руководителю</text>
+<text x="96" y="397" font-size="16" font-weight="700" fill="#1F8A4C">«без отрыва от работы»</text>
+<g stroke="#1437A9" stroke-width="3" fill="none" marker-end="url(#a2)">
+<line x1="56" y1="88" x2="56" y2="112"/><line x1="56" y1="212" x2="56" y2="236"/><line x1="56" y1="312" x2="56" y2="336"/>
+</g>
+</svg>

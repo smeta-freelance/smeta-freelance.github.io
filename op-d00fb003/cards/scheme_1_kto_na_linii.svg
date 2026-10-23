@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 440" width="680" height="440" role="img" aria-label="Кто на линии и какой продукт: три первых вопроса ведут к трём веткам — новичок, действующий сметчик или проверяющий, платит организация" font-family="'Golos Text', system-ui, -apple-system, sans-serif">
+<defs><marker id="a1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1437A9"/></marker></defs>
+<rect x="0" y="0" width="680" height="440" fill="#FFFFFF"/>
+<rect x="16" y="16" width="648" height="124" rx="14" fill="#EEF1FA" stroke="#1437A9" stroke-width="2"/>
+<text x="40" y="48" font-size="19" font-weight="700" fill="#101840">Сначала 3 вопроса</text>
+<text x="40" y="78" font-size="17" fill="#101840">1. Составляете или проверяете?</text>
+<text x="40" y="104" font-size="17" fill="#101840">2. Нужен документ к сроку?</text>
+<text x="40" y="130" font-size="17" fill="#101840">3. Кто платит?</text>
+<g stroke="#1437A9" stroke-width="3" fill="none" marker-end="url(#a1)">
+<line x1="120" y1="142" x2="120" y2="174"/><line x1="340" y1="142" x2="340" y2="174"/><line x1="560" y1="142" x2="560" y2="174"/>
+</g>
+<g>
+<rect x="16" y="180" width="208" height="244" rx="14" fill="#EEF1FA" stroke="#1437A9" stroke-width="2"/>
+<path d="M16,194 a14,14 0 0 1 14,-14 h180 a14,14 0 0 1 14,14 v46 h-208 z" fill="#1437A9"/>
+<text x="120" y="217" font-size="18" font-weight="700" fill="#FFFFFF" text-anchor="middle">Новичок</text>
+<text x="120" y="320" font-size="18" font-weight="700" fill="#101840" text-anchor="middle">КНС Профессия</text>
+<text x="120" y="356" font-size="24" font-weight="700" fill="#EB446B" text-anchor="middle">59 000 ₽</text>
+</g>
+<g>
+<rect x="236" y="180" width="208" height="244" rx="14" fill="#EEF1FA" stroke="#1437A9" stroke-width="2"/>
+<path d="M236,194 a14,14 0 0 1 14,-14 h180 a14,14 0 0 1 14,14 v46 h-208 z" fill="#1437A9"/>
+<text x="340" y="206" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">Действующий сметчик</text>
+<text x="340" y="228" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">или проверяющий</text>
+<text x="340" y="270" font-size="17" font-weight="700" fill="#101840" text-anchor="middle">Курс повышения</text>
+<text x="340" y="292" font-size="17" font-weight="700" fill="#101840" text-anchor="middle">квалификации</text>
+<text x="340" y="322" font-size="22" font-weight="700" fill="#EB446B" text-anchor="middle">39 500 ₽</text>
+<text x="340" y="354" font-size="15" fill="#101840" text-anchor="middle">или спецкурс</text>
+<text x="340" y="374" font-size="15" fill="#101840" text-anchor="middle">«Экспертиза сметной</text>
+<text x="340" y="394" font-size="15" fill="#101840" text-anchor="middle">документации»</text>
+<text x="340" y="414" font-size="16" font-weight="700" fill="#101840" text-anchor="middle">19 500 ₽</text>
+</g>
+<g>
+<rect x="456" y="180" width="208" height="244" rx="14" fill="#EEF1FA" stroke="#1437A9" stroke-width="2"/>
+<path d="M456,194 a14,14 0 0 1 14,-14 h180 a14,14 0 0 1 14,14 v46 h-208 z" fill="#1437A9"/>
+<text x="560" y="206" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">Платит</text>
+<text x="560" y="228" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">организация</text>
+<text x="560" y="274" font-size="17" font-weight="700" fill="#101840" text-anchor="middle">Счёт + договор</text>
+<text x="560" y="300" font-size="17" fill="#101840" text-anchor="middle">+ письмо</text>
+<text x="560" y="322" font-size="17" fill="#101840" text-anchor="middle">руководителю</text>
+<text x="560" y="362" font-size="16" fill="#101840" text-anchor="middle">2-й сотрудник</text>
+<text x="560" y="392" font-size="22" font-weight="700" fill="#EB446B" text-anchor="middle">19 750 ₽</text>
+</g>
+</svg>
