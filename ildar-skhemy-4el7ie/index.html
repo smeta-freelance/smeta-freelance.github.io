@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Согласование с экспертами</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: одна колонка ~980px; три схемы-цепочки «кто → кому», под каждой — 4 цифры; решение внизу.
+   Роли цветом (правило АСД): синий — основатели/структура, зелёный — ИИ, оранжевый — человек-посредник, серый — эксперт. */
+:root{
+  --bg:#F5F7FB; --card:#FFFFFF; --ink:#141C3A; --muted:#566080; --line:#DDE3F0;
+  --blue:#1745E0; --blue-soft:#E7EDFF;
+  --green:#1F8A4C; --green-soft:#E3F4EA;
+  --orange:#E8650A; --orange-soft:#FFF0E3;
+  --grey:#5B6478; --grey-soft:#EEF0F4;
+  --gold:#B7791F; --gold-soft:#FFF6DD;
+  --display:"Golos Text","Segoe UI","Helvetica Neue",Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--display);font-size:17px;line-height:1.45;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
+.wrap{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+h1{font-size:clamp(28px,4.4vw,40px);line-height:1.1;margin:6px 0 4px;text-wrap:balance;font-weight:800;letter-spacing:-.01em}
+h2{font-size:23px;margin:0;text-wrap:balance}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--blue)}
+.lead{color:var(--muted);margin:0;max-width:62ch}
+.status{display:inline-flex;gap:8px;align-items:center;background:var(--gold-soft);color:#7A4E0E;border-radius:999px;padding:5px 12px;font-weight:600;font-size:14px;width:max-content;max-width:100%}
+
+.problem{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.pb{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.pb b{font-size:18px}
+.pb span{color:var(--muted);font-size:15px}
+.num{font-family:var(--mono);font-size:26px;font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
+
+.insight{background:var(--ink);color:#fff;border-radius:16px;padding:20px 22px;display:flex;flex-direction:column;gap:6px}
+.insight .eyebrow{color:#9FB6FF}
+.insight p{margin:0;font-size:20px;font-weight:600;line-height:1.35;text-wrap:balance}
+.insight small{color:#C9D2EE;font-size:15px}
+
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:14px;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+
+.scheme{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:16px}
+.scheme.rec{border:2px solid var(--green);box-shadow:0 6px 24px rgba(31,138,76,.10)}
+.sh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.tag{font-size:13px;font-weight:700;border-radius:999px;padding:4px 10px;background:var(--grey-soft);color:var(--grey)}
+.rec .tag{background:var(--green);color:#fff}
+.flow{display:flex;align-items:stretch;gap:0;overflow-x:auto;padding-bottom:4px}
+.node{flex:1 1 0;min-width:128px;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:4px;font-size:14.5px;line-height:1.3}
+.node b{font-size:15.5px}
+.node.f{background:var(--blue-soft);color:#0F2E9E}
+.node.ai{background:var(--green-soft);color:#11502C}
+.node.h{background:var(--orange-soft);color:#8A3A00}
+.node.e{background:var(--grey-soft);color:#2C3345}
+.arr{flex:0 0 26px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:20px}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.fact{border-top:1px solid var(--line);padding-top:8px;min-width:0}
+.fact .k{font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.fact .v{font-weight:600;font-size:15.5px}
+.ok{color:var(--green)} .warn{color:var(--orange)} .bad{color:#C2283A}
+.note{font-size:14.5px;color:var(--muted);margin:0}
+
+.fix{background:var(--card);border:1px dashed #B9C6EE;border-radius:16px;padding:18px 20px;display:flex;flex-direction:column;gap:10px}
+.fix ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+
+.decide{background:var(--blue);color:#fff;border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:12px}
+.decide .eyebrow{color:#CFE0FF}
+.decide q{font-size:21px;font-weight:700;line-height:1.35;quotes:"«" "»"}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.metric{background:rgba(255,255,255,.12);border-radius:12px;padding:12px}
+.metric b{display:block;font-size:16px}
+.metric span{font-size:14px;color:#DCE5FF}
+.who{font-size:14.5px;color:#DCE5FF;margin:0}
+footer{font-size:13px;color:var(--muted)}
+
+@media (max-width:720px){
+  .problem,.metrics{grid-template-columns:1fr}
+  .facts{grid-template-columns:repeat(2,1fr)}
+  .flow{flex-direction:column}
+  .arr{flex-basis:22px;transform:rotate(90deg)}
+  .node{min-width:0}
+}
+@media (prefers-reduced-motion:no-preference){.scheme{transition:box-shadow .2s}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header style="display:flex;flex-direction:column;gap:8px">
+    <span class="eyebrow">Штаб АСД · 26.10.2026 · Руслан и Ильдар</span>
+    <h1>Как эксперту согласовывать презентации</h1>
+    <p class="lead">Слайды лучше делает Claude. Эксперт хочет говорить с человеком. Видение основателей теряется по дороге, а у Руслана нет часов на каждую презентацию. Ниже три коротких пути и рекомендация.</p>
+    <span class="status">🟡 Нужно решение Ильдара на этой неделе</span>
+  </header>
+
+  <section class="problem" aria-label="Факты">
+    <div class="pb"><span class="num">60 000 ₽</span><b>в месяц на дизайнера</b><span>Фирая Ярхамовна 16.10: «много кругов итераций». Продающую презентацию впервые собрали целиком без дизайнера.</span></div>
+    <div class="pb"><span class="num">0</span><b>голосовых от экспертов</b><span>На страницах согласования эксперты пишут текстом: у Анны 23 оценки и 14 комментариев. Кнопка голоса спрятана на втором шаге.</span></div>
+    <div class="pb"><span class="num">≈11</span><b>презентаций и уроков в ближайшие недели</b><span>КПК — 2, уроки Инны — 4, Анна — 1, аватар Ф. Я. — 4. Оценка, не месячная норма.</span></div>
+  </section>
+
+  <section class="insight">
+    <span class="eyebrow">Главное из отзыва Анны, 20.10</span>
+    <p>Человек нужен эксперту для разговора, а не для вёрстки.</p>
+    <small>Дизайнеру правку достаточно сказать, и он «улавливает суть». Агенту её приходится долго формулировать текстом. А свежие фото агент подбирает сам, и это Анне нравится.</small>
+  </section>
+
+  <div class="legend" aria-label="Обозначения">
+    <span><i style="background:var(--blue)"></i>Основатели</span>
+    <span><i style="background:var(--green)"></i>Claude (ИИ)</span>
+    <span><i style="background:var(--orange)"></i>Человек-посредник</span>
+    <span><i style="background:var(--grey)"></i>Эксперт</span>
+  </div>
+
+  <!-- Схема Б — рекомендуемая, первой -->
+  <section class="scheme rec">
+    <div class="sh"><h2>Б. Дизайнер становится «переводчиком» эксперта</h2><span class="tag">⭐ Рекомендуем на месяц</span></div>
+    <div class="flow">
+      <div class="node f"><b>Основатели</b>Один раз утверждают бриф: цель, тон, правила слайдов</div>
+      <div class="arr">→</div>
+      <div class="node ai"><b>Claude</b>Делает слайды и страницу «как сейчас → как предлагаем»</div>
+      <div class="arr">→</div>
+      <div class="node h"><b>Дизайнер</b>Обсуждает с экспертом голосом, записывает правки для Claude</div>
+      <div class="arr">→</div>
+      <div class="node ai"><b>Claude</b>Правит и проверяет по своду правил</div>
+      <div class="arr">→</div>
+      <div class="node f"><b>Основатели</b>Утверждают итог продающих презентаций</div>
+    </div>
+    <div class="facts">
+      <div class="fact"><div class="k">Время Руслана</div><div class="v">≈3 ч/мес <span class="note">(оценка)</span></div></div>
+      <div class="fact"><div class="k">Деньги</div><div class="v warn">60 000 ₽ — месяц пробы</div></div>
+      <div class="fact"><div class="k">Сопротивление экспертов</div><div class="v ok">Минимальное: человек знакомый</div></div>
+      <div class="fact"><div class="k">Риск</div><div class="v warn">Дизайнер меняет смыслы</div></div>
+    </div>
+    <p class="note">Продолжает решение малого совета 20.10 («Надя работает с агентом»), но слайды теперь делает Claude. Дизайнер не придумывает, а передаёт слова эксперта. Через месяц решаем по трём цифрам.</p>
+  </section>
+
+  <section class="scheme">
+    <div class="sh"><h2>А. Без дизайнера, координатор — Алевтина</h2><span class="tag">Цель через месяц</span></div>
+    <div class="flow">
+      <div class="node f"><b>Основатели</b>Бриф один раз</div>
+      <div class="arr">→</div>
+      <div class="node ai"><b>Claude</b>Слайды и страница</div>
+      <div class="arr">→</div>
+      <div class="node h"><b>Алевтина</b>Созвон с экспертом 20–30 минут в Zoom под запись</div>
+      <div class="arr">→</div>
+      <div class="node ai"><b>Claude</b>Правит по расшифровке созвона</div>
+      <div class="arr">→</div>
+      <div class="node f"><b>Основатели</b>Только продающие</div>
+    </div>
+    <div class="facts">
+      <div class="fact"><div class="k">Время Руслана</div><div class="v">≈2 ч/мес <span class="note">(оценка)</span></div></div>
+      <div class="fact"><div class="k">Деньги</div><div class="v ok">60 000 ₽ освобождаются</div></div>
+      <div class="fact"><div class="k">Сопротивление экспертов</div><div class="v warn">Новый человек, привыкать</div></div>
+      <div class="fact"><div class="k">Риск</div><div class="v warn">У Алевтины ГС, КПК, отпуск</div></div>
+    </div>
+    <p class="note">Так уже решили для Махаловой 20.10. Доплата Алевтине — нет данных.</p>
+  </section>
+
+  <section class="scheme">
+    <div class="sh"><h2>В. Эксперт говорит с Claude напрямую</h2><span class="tag">Рано</span></div>
+    <div class="flow">
+      <div class="node f"><b>Основатели</b>Бриф один раз</div>
+      <div class="arr">→</div>
+      <div class="node ai"><b>Claude</b>Слайды и страница с голосовым пояснением</div>
+      <div class="arr">→</div>
+      <div class="node e"><b>Эксперт</b>Отвечает голосовым одной кнопкой</div>
+      <div class="arr">→</div>
+      <div class="node ai"><b>Claude</b>Правит, показывает «мы услышали…»</div>
+      <div class="arr">→</div>
+      <div class="node h"><b>Человек</b>Только если эксперт застрял</div>
+    </div>
+    <div class="facts">
+      <div class="fact"><div class="k">Время Руслана</div><div class="v warn">Много в 1-й месяц, потом ≈1 ч</div></div>
+      <div class="fact"><div class="k">Деньги</div><div class="v ok">60 000 ₽ освобождаются</div></div>
+      <div class="fact"><div class="k">Сопротивление экспертов</div><div class="v bad">Высокое: Анна просила человека</div></div>
+      <div class="fact"><div class="k">Риск</div><div class="v bad">Сорвать сроки КПК</div></div>
+    </div>
+  </section>
+
+  <section class="fix">
+    <span class="eyebrow">Для любой схемы — страница эксперта станет «человечнее»</span>
+    <ul>
+      <li><b>Одна большая кнопка «Записать голосовое»</b> на каждом экране, как в WhatsApp. Отпустил — ответ сохранился и отправился сам.</li>
+      <li><b>Видео-приветствие живого координатора</b> на 20 секунд: «Я слушаю каждое Ваше голосовое».</li>
+      <li><b>Расшифровка под ответом</b> «Мы услышали: …», чтобы эксперт видел, что его поняли.</li>
+      <li>Кнопка <b>«Хочу обсудить с человеком»</b> — запасной путь на созвон 15 минут.</li>
+    </ul>
+  </section>
+
+  <section class="fix" style="border-style:solid;border-color:var(--green)">
+    <span class="eyebrow" style="color:var(--green)">Следующий шаг до решения (26.10)</span>
+    <p style="margin:0">Сначала доделываем саму страницу эксперта: голос одной кнопкой, живой координатор на экране, «Мы услышали…». Делаем пробную версию на тестовых слайдах и показываем вам. Решение по схеме принимаем, когда её увидим.</p>
+  </section>
+
+  <section class="decide">
+    <span class="eyebrow">Вопрос к Ильдару</span>
+    <q>Даём дизайнеру месяц в новой роли: говорит с экспертом, слайды делает Claude, решаем 30.11 по трём цифрам. Да — или сразу схема А с Алевтиной?</q>
+    <div class="metrics">
+      <div class="metric"><b>Дней до утверждения</b><span>от отправки эксперту до «да»</span></div>
+      <div class="metric"><b>Кругов правок</b><span>сколько раз эксперт возвращал</span></div>
+      <div class="metric"><b>Часов Руслана</b><span>на согласования в месяц</span></div>
+    </div>
+    <p class="who">Запуск — пн 02.11. Руслан: бриф и 1 час обучения дизайнера до 30.10. Ильдар: разговор с дизайнером о новой роли до 30.10. Claude: замер трёх цифр.</p>
+  </section>
+
+  <footer>Источники: протоколы штаба 19.10 и малого совета 20.10, записи летучки 16.10 и встречи 20.10, журналы страниц согласования (папка «Презентации экспертов»). Оценки помечены.</footer>
+</div>
+</body>
+</html>
