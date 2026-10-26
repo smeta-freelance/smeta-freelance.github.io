@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex,nofollow">
+<title>Согласование презентации</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="style.css">
+<script src="config.js"></script>
+<script src="data.js"></script>
+</head>
+<body>
+<div id="proto" class="proto-bar">Прототип: ответы сохраняются в тестовый раздел и Яне не уходят.</div>
+<div id="inapp" class="inapp" hidden>
+  <span>Откройте эту страницу в Safari или Chrome — так заработает микрофон.</span>
+  <button type="button" id="copyLink" class="btn small">Скопировать ссылку</button>
+</div>
+
+<header class="top">
+  <div class="brand"><img class="logo-img" src="img/logo.png" alt="Академия сметного дела"></div>
+  <button type="button" class="coord" data-open="talk" aria-label="Обсудить с Яной"><span class="ava ava-s" aria-hidden="true">Я</span><span class="coord-n">Яна</span></button>
+</header>
+
+<main id="app">
+
+<!-- ВХОД -->
+<section class="screen" id="s-login" hidden>
+  <div class="narrow">
+    <img class="logo-img" src="img/logo.png" alt="Академия сметного дела" style="height:48px;margin-bottom:8px">
+    <h1>Ваша презентация к уроку «<span class="lesson"></span>»</h1>
+    <p class="lead">Здесь можно посмотреть наши предложения и ответить голосом. Это займёт около <span class="mins"></span> минут.</p>
+    <label class="lbl" for="code">Код — в письме, которое мы Вам отправили. 6 цифр</label>
+    <input id="code" class="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="••••••">
+    <p class="err" id="codeErr" hidden>Код не подошёл. Проверьте цифры в письме — их 6. Если не получается, напишите Яне: номер добавим.</p>
+    <button type="button" class="btn primary wide" id="loginBtn">Открыть презентацию</button>
+    <p class="muted">В прототипе подходит код <b>123456</b>.</p>
+    <p class="muted">Не нашли письмо? Напишите Яне: номер добавим.</p>
+  </div>
+</section>
+
+<!-- ПРИВЕТСТВИЕ -->
+<section class="screen" id="s-hello" hidden>
+  <div class="hello">
+    <div class="hello-side">
+      <div class="ava ava-l" aria-hidden="true">Я</div>
+      <div class="video-ph" role="img" aria-label="Место для видео-приветствия">
+        <span class="play" aria-hidden="true">▶</span>
+        <span>Здесь будет видео-приветствие (20&nbsp;с)</span>
+      </div>
+      <p class="cap">Яна Борисова, координатор Академии. Я буду читать Ваши ответы.</p>
+    </div>
+    <div class="hello-main">
+      <div id="helloNew">
+        <h1><span class="expert"></span>, здравствуйте!</h1>
+        <p class="lead">Меня зовут Яна Борисова, я помогаю Вам с презентацией «<span class="lesson"></span>». Мы подготовили предложения по <span class="nslides"></span> слайдам — посмотрите их, пожалуйста, своим профессиональным взглядом.</p>
+        <p class="muted">Займёт около <span class="mins"></span> минут. Можно прерваться в любой момент — всё сохранится.</p>
+      </div>
+      <div id="helloSent" hidden>
+        <h1 class="sent-h" id="sentText"></h1>
+        <p class="lead" id="sentSub"></p>
+      </div>
+      <div id="helloBack" hidden>
+        <h1>С возвращением, <span class="expert"></span>!</h1>
+        <p class="lead" id="backText"></p>
+      </div>
+      <ol class="steps">
+        <li><b>1</b><span>Посмотрите слайд: как было и как мы предлагаем.</span></li>
+        <li><b>2</b><span>Нажмите «Сказать голосом» и скажите, что думаете. Или «Принимаю новый вариант».</span></li>
+        <li><b>3</b><span>Всё сохраняется само. В конце — одна кнопка «Готово».</span></li>
+      </ol>
+      <div class="mictest" id="micTest">
+        <button type="button" class="btn ghost wide" id="micTestBtn">🎤 Проверить микрофон</button>
+        <p class="muted" id="micTestHint">Скажите «Здравствуйте» — проверим, что Вас слышно. Это можно пропустить.</p>
+        <div class="level" id="micTestLevel" hidden><i></i></div>
+        <div class="row" id="micTestRes" hidden></div>
+      </div>
+      <button type="button" class="btn primary wide" id="startBtn">Начать — слайд 1</button>
+      <div class="sent-btns" id="sentBtns" hidden>
+        <button type="button" class="btn primary wide" id="seeAnswers">Посмотреть свои ответы</button>
+        <button type="button" class="btn ghost wide" id="addMore">Добавить ещё правку</button>
+      </div>
+      <button type="button" class="link" id="restartBtn" hidden>Начать с начала</button>
+      <button type="button" class="link" data-open="talk">Удобнее созвониться? Обсудить с Яной</button>
+      <p class="ver"></p>
+    </div>
+  </div>
+</section>
+
+<!-- СЛАЙД -->
+<section class="screen" id="s-slide" hidden>
+  <div class="prog">
+    <div class="prog-row"><span class="prog-t" id="progT"></span><span class="prog-r" id="progR"></span></div>
+    <div class="prog-row"><div class="segs" id="segs"></div><button type="button" class="link small-link" id="listBtn">Все слайды ↓</button></div>
+  </div>
+  <div class="slide-grid">
+    <div class="pics">
+      <h2 class="stitle" id="sTitle"></h2>
+      <div class="tabs" role="tablist">
+        <button type="button" role="tab" class="tab on" data-tab="now">Как предлагаем</button>
+        <button type="button" role="tab" class="tab" data-tab="was">Как сейчас</button>
+      </div>
+      <div class="pair" id="pair">
+        <figure class="pic" data-k="was"><figcaption>Как сейчас</figcaption><img id="imgWas" alt="Как сейчас"></figure>
+        <figure class="pic" data-k="now"><figcaption>Как предлагаем</figcaption><img id="imgNow" alt="Как предлагаем"></figure>
+      </div>
+      <p class="zoomhint">Нажмите на слайд — откроется крупно</p>
+    </div>
+    <div class="answer" id="answer">
+      <div class="ans-coord"><span class="ava ava-s" aria-hidden="true">Я</span><span>Яна прочитает и послушает Ваш ответ</span></div>
+      <div id="cards" class="cards"></div>
+      <div class="voice" id="voiceBox"></div>
+      <button type="button" class="btn keep wide" id="keepBtn">👍 Принимаю новый вариант</button>
+      <p class="mark" id="keepMark" hidden>✓ Выбор сохранён · передумали — ответьте иначе</p>
+      <p class="toast" id="toast" hidden></p>
+      <button type="button" class="btn ghost wide" id="textBtn">✏️ Написать текстом</button>
+      <div class="textbox" id="textBox" hidden>
+        <textarea id="ta" rows="4" placeholder="Например: заголовок длинный, сократите до «Кто такой фрилансер»"></textarea>
+        <p class="muted">Можно надиктовать: на телефоне — 🎤 на клавиатуре; на Mac — дважды Fn; в Windows — Win+H.</p>
+        <p class="cnt" id="taCnt" hidden></p>
+        <div class="row"><button type="button" class="btn primary" id="taSave">Сохранить текст</button><span class="tstat" id="taStat"></span></div>
+      </div>
+      <button type="button" class="btn orig wide" id="origBtn">↩ Верните мой старый вариант</button>
+      <p class="mark" id="origMark" hidden>✓ Выбор сохранён · передумали — ответьте иначе</p>
+      <div class="more">
+        <label class="link file-l">📎 Загрузить голосовое<input type="file" accept="audio/*" id="fileIn" hidden></label>
+      </div>
+    </div>
+    <p class="why" id="why"></p>
+  </div>
+</section>
+
+<!-- ПРОВЕРКА ПЕРЕД ОТПРАВКОЙ -->
+<section class="screen" id="s-final" hidden>
+  <div class="narrow">
+    <h1>Проверим перед отправкой</h1>
+    <ul class="sum" id="sumList"></ul>
+    <div id="missed"></div>
+    <p class="lead">Все ответы уже сохранены. Нажмите «Готово», чтобы Яна получила их сегодня. Любой слайд можно открыть и изменить ответ.</p>
+    <div class="general">
+      <h2>Хотите сказать что-то обо всей презентации?</h2>
+      <p class="muted">Это необязательно.</p>
+      <div id="cardsAll" class="cards"></div>
+      <div class="voice" id="voiceBoxAll"></div>
+      <button type="button" class="btn ghost wide" id="textBtnAll">✏️ Написать текстом</button>
+      <div class="textbox" id="textBoxAll" hidden>
+        <textarea id="taAll" rows="4" placeholder="Например: в целом нравится, но шрифт в таблицах мелковат"></textarea>
+        <p class="cnt" id="taCntAll" hidden></p>
+        <div class="row"><button type="button" class="btn primary" id="taSaveAll">Сохранить текст</button><span class="tstat" id="taStatAll"></span></div>
+      </div>
+    </div>
+    <button type="button" class="btn primary wide" id="doneBtn">Готово — передать Яне</button>
+    <p class="err soft" id="doneErr" hidden></p>
+    <button type="button" class="link" id="backToSlides">Вернуться к слайдам</button>
+  </div>
+</section>
+
+<!-- СПАСИБО -->
+<section class="screen" id="s-thanks" hidden>
+  <div class="narrow center">
+    <div class="ava ava-l" aria-hidden="true">Я</div>
+    <h1>Спасибо, <span class="expert"></span>! Ваши ответы у Яны.</h1>
+    <p class="today" id="today"></p>
+    <ol class="steps">
+      <li><b>1</b><span>Сегодня–завтра Яна прослушает голосовые и прочитает ответы.</span></li>
+      <li><b>2</b><span>Мы внесём правки и пришлём письмо со ссылкой на новую версию.</span></li>
+      <li><b>3</b><span>Посмотрите её так же — по слайду, голосом.</span></li>
+    </ol>
+    <p class="muted">Передумали или вспомнили ещё что-то? Просто откройте ссылку из письма снова — ответы можно менять.</p>
+    <button type="button" class="btn primary wide" id="thanksBack">Вернуться к слайдам</button>
+    <button type="button" class="link" data-open="talk">Обсудить с Яной</button>
+    <p class="ver"></p>
+  </div>
+</section>
+</main>
+
+<!-- НИЖНЯЯ ПАНЕЛЬ СЛАЙДА -->
+<footer class="bottom" id="bottom" hidden>
+  <p class="save" id="save" aria-live="polite">Всё сохраняется само. Любой ответ можно изменить.</p>
+  <div class="nav">
+    <button type="button" class="btn ghost" id="prevBtn">← Назад</button>
+    <button type="button" class="btn primary" id="nextBtn">Далее →</button>
+  </div>
+  <p class="kbd">Стрелки ← → — листать, пробел — сказать голосом</p>
+</footer>
+
+<!-- ОКНА -->
+<div class="sheet" id="m-list" hidden role="dialog" aria-modal="true" aria-labelledby="listH">
+  <div class="sheet-in">
+    <div class="sheet-h"><h2 id="listH">Все слайды</h2><button type="button" class="btn ghost" data-close>Закрыть</button></div>
+    <p class="muted" id="listSum"></p>
+    <ul class="slist" id="slist"></ul>
+  </div>
+</div>
+
+<div class="sheet" id="m-talk" hidden role="dialog" aria-modal="true" aria-labelledby="talkH">
+  <div class="sheet-in">
+    <div class="sheet-h"><h2 id="talkH">Обсудить с человеком</h2><button type="button" class="btn ghost" data-close>Закрыть</button></div>
+    <div class="who"><span class="ava ava-m" aria-hidden="true">Я</span><div><b>Яна Борисова</b><br><span class="muted">координатор Академии</span></div></div>
+    <p>Удобнее обсудить голосом? Выберите, как связаться — Яна ответит в рабочее время.</p>
+    <button type="button" class="btn primary wide" id="callMe">📞 Попросить Яну позвонить</button>
+    <div id="callBox" hidden>
+      <p>Когда Вам удобно? Время — по Москве. Яна позвонит по номеру, который есть у Академии.</p>
+      <div class="choices">
+        <button type="button" class="btn ghost wide" data-when="сегодня после 12:00 по Москве">Сегодня после 12:00 по Москве</button>
+        <button type="button" class="btn ghost wide" data-when="завтра до 15:00 по Москве">Завтра до 15:00 по Москве</button>
+        <button type="button" class="btn ghost wide" data-when="завтра после 15:00 по Москве">Завтра после 15:00 по Москве</button>
+      </div>
+    </div>
+    <p class="ok-line" id="callOk" hidden></p>
+    <button type="button" class="btn ghost wide" id="msgBtn">💬 Написать в WhatsApp или Telegram</button>
+    <p class="muted" id="msgInfo" hidden>Контакт Яны: номер добавим. Назовите номер слайда в начале сообщения: «Слайд 3…»</p>
+    <button type="button" class="btn ghost wide" data-close>Вернуться к слайдам</button>
+  </div>
+</div>
+
+<div class="sheet" id="m-mic" hidden role="dialog" aria-modal="true" aria-labelledby="micH">
+  <div class="sheet-in">
+    <div class="sheet-h"><h2 id="micH">Не получилось включить микрофон</h2><button type="button" class="btn ghost" data-close>Закрыть</button></div>
+    <p class="lead" id="micWhy"></p>
+    <ol class="hsteps" id="micSteps"></ol>
+    <p class="muted">Сделали? Нажмите «Попробовать ещё раз».</p>
+    <button type="button" class="btn primary wide" id="micRetry">Попробовать ещё раз</button>
+    <button type="button" class="btn ghost wide" id="micText">✏️ Ответить текстом</button>
+    <button type="button" class="btn ghost wide" id="micMsg">💬 Записать в WhatsApp или Telegram</button>
+    <p class="muted" id="micMsgInfo" hidden>Контакт Яны: номер добавим. Назовите номер слайда в начале голосового: «Слайд 3…»</p>
+    <button type="button" class="link" data-open="talk">Обсудить с Яной по телефону</button>
+  </div>
+</div>
+
+<div class="viewer" id="viewer" hidden role="dialog" aria-modal="true" aria-label="Слайд крупно">
+  <button type="button" class="btn ghost viewer-x" data-close>Закрыть</button>
+  <div class="viewer-in"><img id="viewerImg" alt=""></div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
