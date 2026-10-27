@@ -1,0 +1,107 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow">
+<title>Академия сметного дела — мои презентации</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Одна ссылка для эксперта (Руслан 27.10): вход по имени и паролю → «Мои презентации» → «＋ Новая презентация». Стиль — как стартовая страница. */
+:root{--bg:#F4F6FA;--ink:#14213D;--ink2:#5B6680;--line:#DCE2EE;--navy:#0F1E5A;--blue:#1745E0;--soft:#EEF3FD;--pink:#E8336D;--green:#2E7D32;--amber:#B26A00;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.5 Rubik,system-ui,-apple-system,sans-serif}
+.top{display:flex;align-items:center;gap:14px;padding:12px 16px;background:#fff;border-bottom:1px solid var(--line)}
+.top img{height:38px}.top .sp{flex:1}
+.out{border:1px solid var(--line);background:#fff;color:var(--ink);font:inherit;font-size:16px;border-radius:12px;min-height:44px;padding:0 16px;cursor:pointer}
+main{max-width:860px;margin:0 auto;padding:24px 16px 80px}
+.card{background:#fff;border-radius:22px;padding:24px;box-shadow:0 2px 12px rgba(15,30,90,.06)}
+.login{max-width:440px;margin:6vh auto 0}
+h1{margin:0 0 6px;font-size:28px;line-height:1.2}h1 span{color:var(--blue)}
+p{margin:0 0 14px;color:var(--ink2)}
+label{display:block;font-weight:600;margin:14px 0 6px}
+input[type=text],input[type=password]{width:100%;font:inherit;font-size:20px;padding:14px 18px;border:1.5px solid var(--line);border-radius:16px;min-height:54px;color:var(--ink)}
+input:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 4px rgba(15,30,90,.12)}
+.rem{display:flex;gap:10px;align-items:center;font-weight:400;color:var(--ink2);font-size:16px}.rem input{width:22px;height:22px}
+.go{display:block;width:100%;margin-top:18px;min-height:58px;border:0;border-radius:18px;background:var(--navy);color:#fff;font:inherit;font-size:20px;font-weight:700;cursor:pointer}
+.err{color:var(--pink);min-height:1.4em;margin-top:10px;font-size:16px}
+.gulya{display:flex;gap:16px;align-items:flex-start;margin:4px 0 20px}
+.gulya img{width:76px;height:76px;border-radius:50%;object-fit:cover;flex:none;box-shadow:0 0 0 4px #fff,0 0 0 6px #F2C29B}
+.bubble{background:#fff;border-radius:22px;padding:14px 18px;font-size:19px;box-shadow:0 2px 12px rgba(15,30,90,.06)}
+.bubble .who{font-size:14px;color:var(--ink2);margin-bottom:2px}
+.play{border:0;background:var(--soft);color:var(--navy);font:inherit;font-size:15px;border-radius:12px;padding:6px 14px;margin-top:8px;cursor:pointer;min-height:44px}
+.new{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;min-height:72px;border:0;border-radius:22px;background:var(--navy);color:#fff;font:inherit;font-size:23px;font-weight:700;cursor:pointer;text-decoration:none;box-shadow:0 8px 22px rgba(15,30,90,.22)}
+.new:hover{background:#16297A}.new b{font-size:30px;line-height:1}
+.call{display:none}
+h2{font-size:21px;margin:30px 0 12px}
+.list{display:grid;gap:12px}
+.deck{background:#fff;border-radius:20px;padding:18px 20px;box-shadow:0 2px 12px rgba(15,30,90,.05);display:grid;grid-template-columns:1fr auto;gap:6px 16px;align-items:center}
+.deck .t{font-weight:600;font-size:19px;line-height:1.3}
+.deck .m{color:var(--ink2);font-size:16px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
+.st{display:inline-block;border-radius:10px;padding:2px 10px;font-size:15px;font-weight:600}
+.st.wait{background:#FFF1DE;color:var(--amber)}.st.busy{background:#E4ECFC;color:var(--blue)}.st.ok{background:#E3F4E7;color:var(--green)}.st.make{background:#F1EEFB;color:#5B3FB0}
+.cont{grid-row:span 2;border:0;border-radius:14px;background:var(--blue);color:#fff;font:inherit;font-size:17px;font-weight:600;min-height:48px;padding:0 20px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+.cont[aria-disabled=true]{background:#C9D3E8;pointer-events:none}
+.empty{color:var(--ink2)}
+@media(max-width:560px){.deck{grid-template-columns:1fr}.cont{grid-row:auto;justify-content:center}.new{font-size:21px}h1{font-size:24px}}
+</style></head><body>
+<header class="top"><img src="img/logo.png" alt="Академия сметного дела"><span class="sp"></span><button type="button" class="out" id="out" hidden>Выйти</button></header>
+<main>
+<form id="f" class="card login"><h1>Академия <span>сметного дела</span></h1><p>Ваши презентации и дизайнер Гульнара. Введите имя и пароль из сообщения.</p>
+<label for="nm">Имя и фамилия</label><input id="nm" type="text" autocomplete="name" placeholder="Например: Анна Воронцова" required>
+<label for="pw">Пароль</label><input id="pw" type="password" autocomplete="current-password" required>
+<label class="rem"><input id="rem" type="checkbox" checked> Запомнить на этом устройстве на 30 дней</label>
+<button type="submit" class="go">Войти</button><div class="err" id="err" role="alert"></div></form>
+<section id="me" hidden>
+<div class="gulya"><img src="img/gulya.jpg" alt="Гульнара Сафина, дизайнер Академии"><div class="bubble"><div class="who">Гульнара Сафина · дизайнер Академии</div><span id="say"></span><br><button type="button" class="play" id="play" hidden>▶ Послушать</button></div></div>
+<a class="new" id="new" href="start/"><b>＋</b> Новая презентация</a>
+<button type="button" class="call" id="call" hidden>🎙 Созвон с Гулей</button>
+<h2>Мои презентации</h2><div class="list" id="ls"></div>
+</section></main>
+<script>
+var ITER=310000,B={"03b9f8c388a6f1083dcf2070f1942de55c3e9179c4ddfc1f2cd4c58b844ed753": {"salt": "dfd60d6f49575f7a", "data": "U2FsdGVkX1/f1g1vSVdfestDjviw7QF7L7Gtg54uLRPcKR34tmYgM2MXvCK1GPiN9H71itxYHZJHdtBwMATP9qhRHyhDOEDLfKWxs+8GE3nZ8IFYu2BCvU77MacirYQ+zHeOJeCrYdsOiL4ER0EPskTMY6CW3I3tLmbiYLCNeV9nUeAdBMrvPGIiqAn852j6ORld+6JwybxY2ZEq4/o9FZeNzSLJ8MjgDY5INmgvofjVp6t69d2XOBOZ3D78/zWKll4Rp4zv6bmlLRql1FIKTXoOJLXQZQm2Zqxr/WYx80k1irF4/Mxx0NQPJOkWcvoo092QyFMmNYFKaW/L6hocFMGO+EBJkE/4HAaWkjAgvVZt+n6LvwAy2PI6A7dVDjEEt55O/5g788CtQISmY6gcacYYkfix/46gygVpf3KyS8suv7K3c3rbPSM2O2keUZ4069XRgBt5iEqpp8Mi++D0UxtkVCc6SLwf95xl+cHpTQSB9c7+kfqLf3960wif9ZrW"}, "2df038ef9c8ccf45da97a639775f0d52c39b18a3e1efc645d9ba09975cd642ef": {"salt": "dfd60d6f49575f7a", "data": "U2FsdGVkX1/f1g1vSVdfestDjviw7QF7L7Gtg54uLRPcKR34tmYgM2MXvCK1GPiN9H71itxYHZJHdtBwMATP9qhRHyhDOEDLfKWxs+8GE3nZ8IFYu2BCvU77MacirYQ+zHeOJeCrYdsOiL4ER0EPskTMY6CW3I3tLmbiYLCNeV9nUeAdBMrvPGIiqAn852j6ORld+6JwybxY2ZEq4/o9FZeNzSLJ8MjgDY5INmgvofjVp6t69d2XOBOZ3D78/zWKll4Rp4zv6bmlLRql1FIKTXoOJLXQZQm2Zqxr/WYx80k1irF4/Mxx0NQPJOkWcvoo092QyFMmNYFKaW/L6hocFMGO+EBJkE/4HAaWkjAgvVZt+n6LvwAy2PI6A7dVDjEEt55O/5g788CtQISmY6gcacYYkfix/46gygVpf3KyS8suv7K3c3rbPSM2O2keUZ4069XRgBt5iEqpp8Mi++D0UxtkVCc6SLwf95xl+cHpTQSB9c7+kfqLf3960wif9ZrW"}, "a9a2f3a14729d39b54ab255b2f866fd5fb5938149e653b93d2c9b33edd08e2db": {"salt": "dfd60d6f49575f7a", "data": "U2FsdGVkX1/f1g1vSVdfestDjviw7QF7L7Gtg54uLRPcKR34tmYgM2MXvCK1GPiN9H71itxYHZJHdtBwMATP9qhRHyhDOEDLfKWxs+8GE3nZ8IFYu2BCvU77MacirYQ+zHeOJeCrYdsOiL4ER0EPskTMY6CW3I3tLmbiYLCNeV9nUeAdBMrvPGIiqAn852j6ORld+6JwybxY2ZEq4/o9FZeNzSLJ8MjgDY5INmgvofjVp6t69d2XOBOZ3D78/zWKll4Rp4zv6bmlLRql1FIKTXoOJLXQZQm2Zqxr/WYx80k1irF4/Mxx0NQPJOkWcvoo092QyFMmNYFKaW/L6hocFMGO+EBJkE/4HAaWkjAgvVZt+n6LvwAy2PI6A7dVDjEEt55O/5g788CtQISmY6gcacYYkfix/46gygVpf3KyS8suv7K3c3rbPSM2O2keUZ4069XRgBt5iEqpp8Mi++D0UxtkVCc6SLwf95xl+cHpTQSB9c7+kfqLf3960wif9ZrW"}, "8fe5d877c02272dbbf16d8601a5a890587edb0498bc2672c44ed33a971075e2d": {"salt": "d8785b8e2851d1fd", "data": "U2FsdGVkX1/YeFuOKFHR/cEkG9jpe3CsiIbnUxbw555+PHFaoQr6pisZ3/AAZAMqTQR423huz0MDWTpNxX+b4gmMrsozqXoUruEiyI/tDMjXak1KvTzI3glb2VGSHXaNamHU3oRQPoZY5iMbbzm7xQGk+rZVx3ltLE0ZVfbJP6ZQTbWBvCnsdkp1TCO6xabzk7kzc2EqOjc5GlwjxK2edwuMMt6aAY+oLIJGrvFqQnptDHDFWBWIXTfemO2vVk5kntZs1IUCFZi93dwBVszZAw=="}, "aec6e7431febb26a0887b2a7a18381105b30cbe8c09f42954626535a46e5a22d": {"salt": "d8785b8e2851d1fd", "data": "U2FsdGVkX1/YeFuOKFHR/cEkG9jpe3CsiIbnUxbw555+PHFaoQr6pisZ3/AAZAMqTQR423huz0MDWTpNxX+b4gmMrsozqXoUruEiyI/tDMjXak1KvTzI3glb2VGSHXaNamHU3oRQPoZY5iMbbzm7xQGk+rZVx3ltLE0ZVfbJP6ZQTbWBvCnsdkp1TCO6xabzk7kzc2EqOjc5GlwjxK2edwuMMt6aAY+oLIJGrvFqQnptDHDFWBWIXTfemO2vVk5kntZs1IUCFZi93dwBVszZAw=="}, "ee5660a26429b96f0baed52306ac08d7206568b673cdc51d5064fcf119504035": {"salt": "d8785b8e2851d1fd", "data": "U2FsdGVkX1/YeFuOKFHR/cEkG9jpe3CsiIbnUxbw555+PHFaoQr6pisZ3/AAZAMqTQR423huz0MDWTpNxX+b4gmMrsozqXoUruEiyI/tDMjXak1KvTzI3glb2VGSHXaNamHU3oRQPoZY5iMbbzm7xQGk+rZVx3ltLE0ZVfbJP6ZQTbWBvCnsdkp1TCO6xabzk7kzc2EqOjc5GlwjxK2edwuMMt6aAY+oLIJGrvFqQnptDHDFWBWIXTfemO2vVk5kntZs1IUCFZi93dwBVszZAw=="}, "1d6c7864afd0b32abbf762d8ed6d16582a5d87ac2f32dd764c3977dfc9c3cc63": {"salt": "5f69e6e7690b0765", "data": "U2FsdGVkX19faebnaQsHZbjvRYDeEv023UJDqTlr+RL2kXPY4LlaSS+MkWX+EpKIsi0PX/eP+yKnhw2tKdMENPesIJ001F98UlhL7jyDFn48U/xTt2nhKpweAFNKxv2ziACimOFAb6cCxWPR/tmVEVHVIk4+SHqs3urvlec5TCVFIWc+lVZzvyjbB7ZuyvLOufJLe6Tbi1gtIlQV1Vz2c/gdBk3OzZXCCMrQA/6N5SY="}, "68347933e56d016d49855dd07a6a1cdc6f9d1bc5f24ff5dca7f98757e43203d5": {"salt": "5f69e6e7690b0765", "data": "U2FsdGVkX19faebnaQsHZbjvRYDeEv023UJDqTlr+RL2kXPY4LlaSS+MkWX+EpKIsi0PX/eP+yKnhw2tKdMENPesIJ001F98UlhL7jyDFn48U/xTt2nhKpweAFNKxv2ziACimOFAb6cCxWPR/tmVEVHVIk4+SHqs3urvlec5TCVFIWc+lVZzvyjbB7ZuyvLOufJLe6Tbi1gtIlQV1Vz2c/gdBk3OzZXCCMrQA/6N5SY="}, "ba0ae183c4ee30fe9a953217068fc29bc594657cdcb903af2f035845ff3f9ba7": {"salt": "5f69e6e7690b0765", "data": "U2FsdGVkX19faebnaQsHZbjvRYDeEv023UJDqTlr+RL2kXPY4LlaSS+MkWX+EpKIsi0PX/eP+yKnhw2tKdMENPesIJ001F98UlhL7jyDFn48U/xTt2nhKpweAFNKxv2ziACimOFAb6cCxWPR/tmVEVHVIk4+SHqs3urvlec5TCVFIWc+lVZzvyjbB7ZuyvLOufJLe6Tbi1gtIlQV1Vz2c/gdBk3OzZXCCMrQA/6N5SY="}},SB={"url": "https://twtxrtgknenldyqmwymy.supabase.co", "key": "sb_publishable_N5Zaxf5mfaMc67JoaCWxVA_fp_fnlLE"},LINES={"hub_return": ["{ИО}, с возвращением! Продолжим или начнём новую презентацию?", "{ИО}, рада Вас видеть. Продолжим работу или начнём новую презентацию?"], "hub_first": ["{ИО}, здравствуйте! Здесь будут все Ваши презентации. Нажмите «Новая презентация», и я помогу её сделать."], "final_done": ["{ИО}, презентация готова. Спасибо за работу! Если захотите начать новую, я рядом.", "{ИО}, все слайды решены. Спасибо! Можем начать новую презентацию, когда Вам удобно."], "new_started": ["Я начала новую презентацию. Пришлю ссылку, как только первые слайды будут готовы."]},AUD={"{ИО}, с возвращением! Продолжим или начнём новую презентацию?": "audio/65653ec904d1.mp3", "{ИО}, рада Вас видеть. Продолжим работу или начнём новую презентацию?": "audio/e735ea11085f.mp3", "{ИО}, здравствуйте! Здесь будут все Ваши презентации. Нажмите «Новая презентация», и я помогу её сделать.": "audio/5e22158adfdf.mp3", "{ИО}, презентация готова. Спасибо за работу! Если захотите начать новую, я рядом.": "audio/08fbf611c46b.mp3", "{ИО}, все слайды решены. Спасибо! Можем начать новую презентацию, когда Вам удобно.": "audio/7a284001f4e2.mp3", "Я начала новую презентацию. Пришлю ссылку, как только первые слайды будут готовы.": "audio/cc188a38dcb3.mp3"},DAY=864e5;
+function $(s){return document.querySelector(s)}
+function hex(h){var a=new Uint8Array(h.length/2);for(var i=0;i<a.length;i++)a[i]=parseInt(h.substr(i*2,2),16);return a}
+function b64(s){var b=atob(s),a=new Uint8Array(b.length);for(var i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a}
+function norm(s){return String(s||'').replace(/ё/g,'е').replace(/Ё/g,'Е').replace(/\s+/g,' ').trim().toLowerCase()}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){return null}}
+async function sha(s){var d=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(d)).map(function(x){return('0'+x.toString(16)).slice(-2)}).join('')}
+async function bits(pw,salt){var k=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveBits']);
+  return new Uint8Array(await crypto.subtle.deriveBits({name:'PBKDF2',salt:hex(salt),iterations:ITER,hash:'SHA-256'},k,384))}
+async function dec(b,data){var ct=b64(data);if(String.fromCharCode.apply(null,ct.slice(0,8))==='Salted__')ct=ct.slice(16);
+  var key=await crypto.subtle.importKey('raw',b.slice(0,32),'AES-CBC',false,['decrypt']);
+  return JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-CBC',iv:b.slice(32,48)},key,ct)))}
+/* вход на устройстве: ключ расшифровки + срок (30 дней или до конца дня без галочки); уроки и стартовая узнают ключ сами */
+function keep(salt,b64key,exp){ls('sf-key-'+salt,b64key);ls('sf-exp-'+salt,String(exp))}
+function forget(salt){if(!salt)return;ls('sf-key-'+salt,null);ls('sf-exp-'+salt,null)}
+function logout(){var s=ls('pe-hub-who'),me={};try{me=JSON.parse(ls('pe-hub-me')||'{}')}catch(e){}forget(s);forget(me.cs);['pe-hub-who','pe-hub-me','pe-hub-new','sf-author'].forEach(function(k){ls(k,null)});location.reload()}
+$('#out').onclick=logout;
+function pick(k){var a=LINES[k]||[];return a.length?a[Math.floor(Math.random()*a.length)]:''}
+var snd=null;function voice(line,auto){var src=AUD[line];var p=$('#play');if(!src){p.hidden=true;return}p.hidden=false;p.onclick=function(){try{if(snd)snd.pause();snd=new Audio(src);snd.play()}catch(e){}};if(auto)p.onclick()}
+function status(d,live){if(d.building)return['make','Гуля собирает'];if(live.busy)return['busy','Гуля правит'];if(d.stage==='approved'||d.stage==='final'||(d.n&&live.ok>=d.n))return['ok','Готово ✓'];return['wait','Ждёт Вас']}
+function card(d,live){var s=status(d,live),acc=d.building?'Пришлю ссылку, когда первые слайды будут готовы':(d.n?'принято '+(live.ok||0)+' из '+d.n:'');
+  return '<div class="deck"><div class="t">'+esc(d.title)+'</div>'+(d.building?'<span class="cont" aria-disabled="true">Скоро</span>':'<a class="cont" href="'+esc(d.url)+'">Продолжить</a>')+
+    '<div class="m"><span class="st '+s[0]+'">'+s[1]+'</span><span>'+esc(acc)+'</span></div></div>'}
+function H(tok){var h={apikey:SB.key,Authorization:'Bearer '+SB.key};if(tok)h['x-pe-token']=tok;return h}
+async function liveOf(d){var r={busy:false,ok:0};if(d.building)return r;var base=SB.url.replace(/\/$/,'')+'/rest/v1/';
+  try{var j=await fetch(base+'pe_jobs?select=id&deck=eq.'+encodeURIComponent(d.deck)+'&status=in.(queued,processing)&limit=1',{headers:H(d.tok)});if(j.ok)r.busy=(await j.json()).length>0}catch(e){}
+  try{var v=await fetch(base+'sf_votes?select=section,verdict,updated_at&order=updated_at&section=like.'+encodeURIComponent('pe_'+d.deck+'_v*'),{headers:H(d.tok)});
+    if(v.ok){var last={};(await v.json()).forEach(function(x){var m=/_v\d+_(.+)$/.exec(x.section);if(m)last[m[1]]=x.verdict});r.ok=Object.keys(last).filter(function(k){return last[k]==='keep'}).length}}catch(e){}
+  return r}
+async function show(x,salt,first){$('#f').hidden=true;$('#me').hidden=false;$('#out').hidden=false;
+  var seen=ls('pe-hub-seen-'+salt),line=(x.decks.length||seen)?pick('hub_return'):pick('hub_first');ls('pe-hub-seen-'+salt,'1');
+  $('#say').textContent=(line||'{ИО}, здравствуйте!').replace(/\{ИО\}/g,x.io);voice(line,first);
+  var me={io:x.io,code:x.code,cs:x.ck&&x.ck.s};ls('pe-hub-me',JSON.stringify(me));ls('sf-author',x.io);   /* голоса и правки — под именем вошедшего эксперта */
+  var pend=[];try{pend=JSON.parse(ls('pe-hub-new')||'[]')}catch(e){}
+  pend=pend.filter(function(p){return Date.now()-p.t<2*DAY&&!x.decks.some(function(d){return d.t>=p.t-120000})});ls('pe-hub-new',JSON.stringify(pend));
+  var all=pend.map(function(p){return{title:p.title||'Новая презентация',building:true}}).concat(x.decks);
+  if(!all.length){$('#ls').innerHTML='<p class="empty">Пока презентаций нет. Нажмите «Новая презентация» — Гуля поможет начать.</p>';return}
+  $('#ls').innerHTML=all.map(function(d){return card(d,{busy:false,ok:0})}).join('');
+  var lv=await Promise.all(all.map(liveOf));$('#ls').innerHTML=all.map(function(d,i){return card(d,lv[i])}).join('')}
+(async function(){try{var s=ls('pe-hub-who');if(!s)return;var exp=+ls('sf-exp-'+s)||0,kb=ls('sf-key-'+s);if(!kb||exp<Date.now()){logout();return}
+  for(var k in B){var e=B[k];if(e.salt!==s)continue;await show(await dec(b64(kb),e.data),s,false);return}}catch(e){}})();
+$('#f').addEventListener('submit',async function(ev){ev.preventDefault();var err=$('#err');err.textContent='Проверяю…';
+  var words=norm($('#nm').value).split(' '),forms=[words.join(' '),words[0],words[words.length-1]],pw=$('#pw').value,seen={};
+  for(var i=0;i<forms.length;i++){var h=await sha(forms[i]),e=B[h];if(!e||seen[e.salt])continue;seen[e.salt]=1;
+    try{var b=await bits(pw,e.salt),x=await dec(b,e.data),exp=$('#rem').checked?Date.now()+30*DAY:new Date().setHours(23,59,59,0);
+      keep(e.salt,btoa(String.fromCharCode.apply(null,b)),exp);if(x.ck)keep(x.ck.s,x.ck.k,exp);ls('pe-hub-who',e.salt);
+      err.textContent='';await show(x,e.salt,true);return}catch(_){}}
+  err.textContent='Не нашли такое имя или пароль не подходит. Проверьте и попробуйте ещё раз.'});
+</script></body></html>
