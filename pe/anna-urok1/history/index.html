@@ -33,14 +33,13 @@ async function dec(bits) {
   return new TextDecoder().decode(await crypto.subtle.decrypt({ name: "AES-CBC", iv: bits.slice(32, 48) }, key, ct));
 }
 function show(page) { var go = function () { document.open(); document.write(page); document.close(); }; if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () { setTimeout(go, 0); }); else setTimeout(go, 0); }
-var saved = null; try { saved = localStorage.getItem("sf-key-" + SALT); } catch (e) {}
+var saved = null; try { var ex = +localStorage.getItem("sf-exp-" + SALT) || 0; if (ex && ex < Date.now()) { localStorage.removeItem("sf-key-" + SALT); localStorage.removeItem("sf-exp-" + SALT); } saved = localStorage.getItem("sf-key-" + SALT); } catch (e) {}
 if (saved) dec(b64(saved)).then(show).catch(function () { try { localStorage.removeItem("sf-key-" + SALT); } catch (e) {} });
 document.getElementById("f").addEventListener("submit", async function (ev) {
   ev.preventDefault();
   var err = document.getElementById("err"); err.textContent = "Проверяю…";
   try {
-    var bits = await bitsFrom(document.getElementById("pw").value);
-    var page = await dec(bits);
+    var pw0 = document.getElementById("pw").value, bits, page; try { bits = await bitsFrom(pw0); page = await dec(bits); } catch (e1) { bits = await bitsFrom(pw0.replace(/\s+/g, "").toUpperCase()); page = await dec(bits); }
     if (document.getElementById("rem").checked) {
       try { localStorage.setItem("sf-key-" + SALT, btoa(String.fromCharCode.apply(null, bits))); } catch (e) {}
     }
