@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Проверьте себя — 5 вопросов сметчику · Академия сметного дела</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;600;700;800&display=swap">
+<style>
+:root{--bg:#F5F6FA;--card:#fff;--ink:#101840;--muted:#5A6080;--line:#DDE1EC;--blue:#1437A9;--soft:#EEF1FA;--pink:#EB446B;--ok:#1F8A4C;--okbg:#E7F5EC;--warn:#B4561A;--warnbg:#FFF4E5;
+--f:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 var(--f)}
+.wrap{max-width:720px;margin:0 auto;padding:14px max(16px,env(safe-area-inset-left,0px)) 60px max(16px,env(safe-area-inset-right,0px))}
+header{display:flex;align-items:center;gap:10px;padding:6px 0 10px}
+header img{height:38px}
+.card{background:var(--card);border-radius:22px;padding:22px 20px;box-shadow:0 2px 4px rgba(16,24,64,.05),0 12px 30px rgba(16,24,64,.08);margin-top:14px}
+h1{font-size:27px;line-height:1.2;margin:0 0 10px;text-wrap:balance}
+h2{font-size:20px;line-height:1.35;margin:4px 0 12px;text-wrap:balance}
+.chip{display:inline-block;font:700 13px var(--f);color:var(--blue);background:var(--soft);border-radius:999px;padding:3px 12px}
+.muted{color:var(--muted)}
+.prog{height:8px;background:var(--soft);border-radius:999px;overflow:hidden;margin-top:12px}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--pink));transition:width .4s}
+button{font:700 17px var(--f);border:0;border-radius:14px;padding:13px 20px;min-height:48px;cursor:pointer}
+button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.main{background:var(--pink);color:#fff}
+.opt{display:block;width:100%;text-align:left;background:#fff;color:var(--ink);border:2px solid var(--line);font-weight:600;margin-top:10px}
+@media (hover:hover){.opt:hover{border-color:var(--blue)}}
+.opt.good{border-color:var(--ok);background:var(--okbg)}
+.opt.bad{border-color:var(--warn);background:var(--warnbg)}
+.fb{margin-top:12px;border-radius:14px;padding:12px 14px;font-size:16px}
+.fb.good{background:var(--okbg)} .fb.bad{background:var(--warnbg)}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.big{font-size:52px;line-height:1;margin:4px 0}
+.note{font-size:13px;color:var(--muted);margin-top:16px}
+ul{padding-left:20px;margin:8px 0 0}
+</style></head><body>
+<div class="wrap">
+<header><img src="../logo.png" alt="Академия сметного дела"></header>
+<div id="app"></div>
+<p class="note">Ответы сверены экспертами Академии сметного дела по ФРСН, официальному порталу правовой информации и текстам приказов Минстроя России на 22.10.2026. Нормы меняются — проверяйте дату.</p>
+</div>
+<script>
+(function () {
+var Q = [
+ {q:'С 20.10.2026 действуют новые нормативы накладных расходов и сметной прибыли (приказы Минстроя № 209/пр и № 210/пр). Земляные работы механизированным способом — какие теперь проценты (первая графа таблицы по территориям)?',
+  o:['НР 92 %, СП 46 % — как раньше','НР 96 %, СП 52 %','НР 100 %, СП 50 %','Нормативы не менялись'], a:1,
+  w:'НР — 96 % вместо 92 %, СП — 52 % вместо 46 %. По какой таблице посчитана ваша последняя смета?'},
+ {q:'Коэффициенты 1,15 и 1,25 при капремонте (п. 58 «б» Методики № 421/пр) — когда и к чему их применяют?',
+  o:['К любой смете на капремонт, ко всей сумме','Когда нет норм ГЭСНр, а технология как в новом строительстве: 1,15 — к оплате труда рабочих, 1,25 — к эксплуатации машин и труду машинистов','Только к материалам','Их отменили в 2026 году'], a:1,
+  w:'Применяются, когда нет норм ГЭСНр, а технология как в новом строительстве: 1,15 — к оплате труда рабочих, 1,25 — к эксплуатации машин и оплате труда машинистов.'},
+ {q:'Документы для конъюнктурного анализа должны быть не старше скольких месяцев?',
+  o:['3 месяцев','6 месяцев','12 месяцев для всех','Срок не установлен'], a:1,
+  w:'6 месяцев (п. 14 Методики № 421/пр). До 12 месяцев с 14.02.2026 — только для оборудования объектов с особым статусом, до 31.12.2026 (приказ № 42/пр).'},
+ {q:'Методика № 904/пр по определению сметных цен материалов ещё действует?',
+  o:['Да, действует','Нет: с 07.06.2026 её заменила Методика № 181/пр','Действует до конца 2026 года','Её заменила № 421/пр'], a:1,
+  w:'Нет: с 07.06.2026 её заменила Методика № 181/пр.'},
+ {q:'Изменение № 726/пр к Методике по сметным ценам эксплуатации машин — это новинка 2026 года?',
+  o:['Да, вышло в 2026 году','Нет, оно действует с 17.12.2023; в 2026 году вышло изменение № 741/пр','Это проект, ещё не действует','Его отменили'], a:1,
+  w:'Нет, № 726/пр действует с 17.12.2023. В 2026 году — № 741/пр (с 15.05.2026): перебазировка отдельной строкой, передислокация при вахтовом методе.'}
+];
+var app = document.getElementById('app'), k = 0, score = 0;
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function start(){
+  app.innerHTML='<div class="card"><span class="chip">2 минуты · 5 вопросов</span><h1>Проверьте себя: пять вопросов сметчику</h1>'+
+  '<p>Ответили на все пять уверенно — отлично, вы следите за изменениями. Засомневались хоть в одном — в этом и разница между «слышал» и «применил в своей смете».</p>'+
+  '<div class="row"><button class="main" id="go">Начать ▶</button></div></div>';
+  document.getElementById('go').onclick=q;
+}
+function q(){
+  scrollTo(0,0);
+  var t=Q[k], ord=t.o.map(function(_,j){return j;}).sort(function(){return Math.random()-.5;});   // варианты в случайном порядке
+  app.innerHTML='<div class="card"><span class="chip">Вопрос '+(k+1)+' из '+Q.length+'</span><div class="prog"><i style="width:'+(k/Q.length*100)+'%"></i></div><h2>'+esc(t.q)+'</h2>'+
+   ord.map(function(j){return '<button class="opt" data-j="'+j+'">'+esc(t.o[j])+'</button>';}).join('')+'<div id="fb"></div></div>';
+  var done=false;
+  [].forEach.call(document.querySelectorAll('.opt'),function(b){b.onclick=function(){
+    if(done)return; done=true; var j=+b.dataset.j, ok=j===t.a;
+    if(ok){score++;b.classList.add('good');}else{b.classList.add('bad');document.querySelector('.opt[data-j="'+t.a+'"]').classList.add('good');}
+    document.getElementById('fb').innerHTML='<div class="fb '+(ok?'good':'bad')+'"><b>'+(ok?'Верно! 👍':'Не совсем — это частая ошибка')+'</b><br>'+esc(t.w)+'</div>'+
+     '<div class="row"><button class="main" id="nx">'+(k+1<Q.length?'Следующий вопрос →':'Мой результат')+'</button></div>';
+    document.getElementById('nx').onclick=function(){k++;k<Q.length?q():fin();};
+  };});
+}
+function fin(){
+  scrollTo(0,0);
+  var all=score===Q.length;
+  app.innerHTML='<div class="card" style="text-align:center"><div class="big">'+(all?'🏆':'📘')+'</div><h1>'+score+' из '+Q.length+'</h1>'+
+   '<p>'+(all?'Вы уверенно следите за изменениями — так держать!':'Нормы 2025–2026 годов меняются быстро — и пропустить что-то легко даже опытному специалисту.')+'</p></div>'+
+   '<div class="card"><h2>Где разобраться подробно</h2><p>Курс повышения квалификации Академии сметного дела «Ценообразование и сметное нормирование в строительстве» — для сметчиков со стажем:</p>'+
+   '<ul><li>нормы по состоянию на 20.10.2026, курс обновляется с выходом новых приказов;</li><li>практикумы куратор разбирает письменно;</li><li>уроки по 15–20 минут в записи, в своём темпе;</li><li>удостоверение о повышении квалификации, 72 ак. ч.;</li><li>пробный доступ — 5 дней.</li></ul>'+
+   '<p class="muted" style="margin-top:12px">Чтобы получить пробный доступ или программу, напишите менеджеру Академии, который прислал вам эту ссылку.</p>'+
+   '<div class="row"><button class="main" id="again">Пройти ещё раз</button></div></div>';
+  document.getElementById('again').onclick=function(){k=0;score=0;q();};
+}
+start();
+})();
+</script>
+</body></html>
