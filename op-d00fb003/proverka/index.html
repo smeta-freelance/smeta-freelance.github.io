@@ -11,7 +11,7 @@
 body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 var(--f)}
 .wrap{max-width:720px;margin:0 auto;padding:14px max(16px,env(safe-area-inset-left,0px)) 60px max(16px,env(safe-area-inset-right,0px))}
 header{display:flex;align-items:center;gap:10px;padding:6px 0 10px}
-header img{height:38px}
+header img{height:44px}
 .card{background:var(--card);border-radius:22px;padding:22px 20px;box-shadow:0 2px 4px rgba(16,24,64,.05),0 12px 30px rgba(16,24,64,.08);margin-top:14px}
 h1{font-size:27px;line-height:1.2;margin:0 0 10px;text-wrap:balance}
 h2{font-size:20px;line-height:1.35;margin:4px 0 12px;text-wrap:balance}
@@ -34,7 +34,7 @@ button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 ul{padding-left:20px;margin:8px 0 0}
 </style></head><body>
 <div class="wrap">
-<header><img src="../logo.png" alt="Академия сметного дела"></header>
+<header><a href="https://asdprof.ru/" target="_blank" rel="noopener" title="Сайт Академии сметного дела" style="display:inline-flex"><img src="../logo.png" alt="Академия сметного дела — официальный сайт"></a></header>
 <div id="app"></div>
 <p class="note">Ответы сверены экспертами Академии сметного дела по ФРСН, официальному порталу правовой информации и текстам приказов Минстроя России на 22.10.2026. Нормы меняются — проверяйте дату.</p>
 </div>
@@ -42,8 +42,8 @@ ul{padding-left:20px;margin:8px 0 0}
 (function () {
 var Q = [
  {q:'С 20.10.2026 действуют новые нормативы накладных расходов и сметной прибыли (приказы Минстроя № 209/пр и № 210/пр). Земляные работы механизированным способом — какие теперь проценты (первая графа таблицы по территориям)?',
-  o:['НР 92 %, СП 46 % — как раньше','НР 96 %, СП 52 %','НР 100 %, СП 50 %','Нормативы не менялись'], a:1,
-  w:'НР — 96 % вместо 92 %, СП — 52 % вместо 46 %. По какой таблице посчитана ваша последняя смета?'},
+  o:['НР 92 %, СП 46 % — как раньше','НР 96 %, СП 52 %','НР 100 %, СП 50 %','Нормативы не менялись'], a:1,
+  w:'НР — 96 % вместо 92 %, СП — 52 % вместо 46 %. По какой таблице посчитана ваша последняя смета?'},
  {q:'Коэффициенты 1,15 и 1,25 при капремонте (п. 58 «б» Методики № 421/пр) — когда и к чему их применяют?',
   o:['К любой смете на капремонт, ко всей сумме','Когда нет норм ГЭСНр, а технология как в новом строительстве: 1,15 — к оплате труда рабочих, 1,25 — к эксплуатации машин и труду машинистов','Только к материалам','Их отменили в 2026 году'], a:1,
   w:'Применяются, когда нет норм ГЭСНр, а технология как в новом строительстве: 1,15 — к оплате труда рабочих, 1,25 — к эксплуатации машин и оплате труда машинистов.'},
