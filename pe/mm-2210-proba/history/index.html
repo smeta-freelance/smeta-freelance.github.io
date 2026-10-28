@@ -39,7 +39,7 @@ document.getElementById("f").addEventListener("submit", async function (ev) {
   ev.preventDefault();
   var err = document.getElementById("err"); err.textContent = "Проверяю…";
   try {
-    var pw0 = document.getElementById("pw").value, bits, page; try { bits = await bitsFrom(pw0); page = await dec(bits); } catch (e1) { var RU = "йцукенгшщзхъфывапролджэячсмитьбюё", EN = "qwertyuiop[]asdfghjkl;'zxcvbnm,.`"; var pn = pw0.toLowerCase().split("").map(function (c) { var k = RU.indexOf(c); return k >= 0 ? EN[k] : c; }).join("").replace(/\s+/g, "").toUpperCase(); bits = await bitsFrom(pn); page = await dec(bits); }
+    var pw0 = document.getElementById("pw").value, bits, page; try { bits = await bitsFrom(pw0); page = await dec(bits); } catch (e1) { var RU = "йцукенгшщзхъфывапролджэячсмитьбюё", EN = "qwertyuiop[]asdfghjkl;'zxcvbnm,.`"; var pn = pw0.toLowerCase().split("").map(function (c) { var k = RU.indexOf(c); return k >= 0 ? EN[k] : c; }).join("").replace(/[\s–—-]+/g, "").toUpperCase(); bits = await bitsFrom(pn); page = await dec(bits); }
     if (document.getElementById("rem").checked) {
       try { localStorage.setItem("sf-key-" + SALT, btoa(String.fromCharCode.apply(null, bits))); } catch (e) {}
     }
