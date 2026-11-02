@@ -569,6 +569,74 @@ section.soft{background:var(--sky)}
 .qc figcaption{margin-top:auto;font-size:13px;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px}
 .qc.lr{background:#fffaf0}
 @media(max-width:560px){.hq .vq+.vq{display:none}}
+
+/* ===== Гуля 02.11: образы к смыслам (П1–П20) и эксперты с Фираей Валиевой в центре ===== */
+/* образ в карточке: фото «на вылет» сверху, подпись объясняет смысл */
+.fig{margin:0;min-width:0}
+.fig .ph{position:relative;overflow:hidden;aspect-ratio:2/1;background:var(--sky)}
+.fig .ph img{width:100%;height:100%;object-fit:cover}
+.fig figcaption{font-size:14px;line-height:1.4;color:#3f4766;padding-top:8px}
+.card>.fig:first-child{margin:-24px -24px 16px}
+.card>.fig:first-child .ph{border-radius:var(--r) var(--r) 0 0}
+.card>.fig:first-child figcaption{padding:10px 24px 0}
+/* документ — лист бумаги на светлом поле, жёлтый маркер на нужном пункте */
+.fig.paper .ph{background:#fff;box-shadow:inset 0 0 0 1px #e6e9f2}
+.fig.paper .ph img{object-position:0 0}
+.fig.paper.ctr .ph img{object-position:50% 0}
+.fig .note-m{position:absolute;right:12px;bottom:10px;background:var(--sun);color:var(--navy);font-weight:800;font-size:13px;letter-spacing:.02em;border-radius:999px;padding:4px 12px;box-shadow:0 4px 12px rgba(11,20,70,.18)}
+/* карточки болей: номер под образом, не поверх */
+.pain.has-fig{padding-top:24px}
+.pain.has-fig .n{position:static;display:block;margin-bottom:6px}
+@media(max-width:360px){.card.pain.has-fig{padding-top:20px}.card>.fig:first-child{margin:-20px -20px 14px}.card>.fig:first-child figcaption{padding:10px 20px 0}}
+/* было → стало: образ справа от строки */
+.bs .row.has-fig{grid-template-columns:1fr 40px 1fr 270px}
+.bs .row .fig .ph{border-radius:14px;aspect-ratio:16/10}
+.bs .row .fig figcaption{font-size:13px;padding-top:6px}
+@media(max-width:1000px){.bs .row.has-fig{grid-template-columns:1fr 40px 1fr}.bs .row.has-fig .fig{grid-column:1/-1;display:grid;grid-template-columns:200px 1fr;gap:14px;align-items:center}.bs .row.has-fig .fig figcaption{padding:0;font-size:14px}}
+@media(max-width:720px){.bs .row.has-fig{grid-template-columns:1fr}.bs .row.has-fig .fig{grid-template-columns:1fr}.bs .row.has-fig .fig .ph{aspect-ratio:2/1}.bs .row.has-fig .fig figcaption{padding-top:6px}}
+/* первый экран: под карточкой экспертов — образ спокойной работы */
+.hero-side{display:grid;gap:18px;min-width:0}
+.hero-side .fig .ph{border-radius:20px;aspect-ratio:16/9;box-shadow:0 18px 40px rgba(11,20,70,.10)}
+.hero-side .fig figcaption{padding:8px 6px 0}
+/* эксперты в первом экране: Фирая Валиева в центре и крупнее, пять — симметрично ниже */
+.team-ph{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.team-ph img{width:calc((100% - 40px)/5);flex:0 0 auto}
+.team-ph img.rektor{width:38%;margin:0 31% -6px;position:relative;z-index:1}
+@media(max-width:900px){.team-ph{gap:8px}.team-ph img{width:calc((100% - 32px)/5)}.team-ph img.rektor{width:30%;margin:0 35% -4px}}
+/* блок «Эксперты»: ректор крупно в центре, ниже пятеро, ряды по центру */
+.experts{display:flex;flex-wrap:wrap;justify-content:center;gap:22px 16px}
+.experts .ex{flex:0 0 calc((100% - 64px)/5);min-width:0}
+.experts .ex.rektor{flex-basis:100%}
+.experts .ex.rektor .av{max-width:220px}
+.experts .ex.rektor h3{font-size:22px}
+.experts .ex.rektor p{font-size:15px;color:var(--navy);font-weight:600}
+@media(max-width:1000px){.experts .ex{flex-basis:calc((100% - 32px)/3)}}
+@media(max-width:560px){.experts .ex{flex-basis:calc((100% - 16px)/2)}.experts .ex.rektor .av{max-width:170px}}
+.ex-intro{display:grid;grid-template-columns:1.25fr 1fr;gap:28px;align-items:center;margin-top:6px}
+.ex-intro .fig .ph{border-radius:20px;aspect-ratio:16/10}
+@media(max-width:820px){.ex-intro{grid-template-columns:1fr}}
+/* куратор: текст и реальный ответ куратора рядом */
+.card.cur{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:center}
+.card.cur .fig.paper .ph{aspect-ratio:16/9;border-radius:14px}
+@media(max-width:820px){.card.cur{grid-template-columns:1fr}}
+/* фото-лента в блоке */
+.fig.wide{margin-top:26px}
+.fig.wide .ph{aspect-ratio:22/9;border-radius:22px}
+@media(max-width:560px){.fig.wide .ph{aspect-ratio:16/9}}
+/* удостоверение рядом со сканами лицензии */
+.doc .scans.s3{grid-template-columns:1.2fr 1fr 1fr;align-items:start}
+.doc .scans .udost{border-radius:12px;overflow:hidden;box-shadow:0 10px 24px rgba(11,20,70,.08)}
+.doc .scans .udost figcaption{font-size:13px;color:#3f4766;padding-top:6px}
+@media(max-width:560px){.doc .scans.s3{grid-template-columns:1fr 1fr}.doc .scans.s3 .udost{grid-column:1/-1}}
+/* финал: Фирая Валиева в центре и крупнее, пятеро ниже */
+.faces{flex-wrap:wrap;max-width:420px}
+.faces li.rektor{flex:0 0 100%;display:flex;justify-content:center;margin-bottom:8px;position:relative;z-index:2}
+.faces li.rektor img{width:104px;height:104px;margin-left:0}
+.faces li:nth-child(2) img{margin-left:0}
+@media(max-width:400px){.faces li.rektor img{width:80px;height:80px}}
+.card>.fig:first-child .cap{font-size:14px;line-height:1.4;color:#3f4766;padding:10px 24px 0;margin:0}
+.qc.lr>.fig:first-child .ph{aspect-ratio:5/2}
+@media(max-width:560px){.experts .ex.rektor .av{max-width:210px}}
 </style>
 </head>
 <body>
@@ -617,19 +685,23 @@ section.soft{background:var(--sky)}
       <p style="margin-top:14px"><a href="#program" style="font-weight:600">Смотреть программу по модулям →</a></p>
       <p class="note" style="margin-top:12px">Заявка — это разговор, а не оплата: вам позвонят из Академии, ответят на вопросы и помогут выбрать. Хотите сначала посмотреть — начните учиться бесплатно: 5 дней пробного доступа.</p>
     </div>
+    <div class="hero-side">
     <a class="team" href="#experts" aria-label="Эксперты курса">
       <div class="team-ph">
-        <img src="img/exp_valieva.webp" alt="Фирая Валиева" width="320" height="320">
+        <img class="rektor" src="img/exp_valieva.webp" alt="Фирая Валиева" width="320" height="320">
+        <img src="img/exp_dyachenko.webp" alt="Людмила Дьяченко" width="320" height="320">
+        <img src="img/exp_pritchina.webp" alt="Светлана Притчина" width="320" height="320">
         <img src="img/exp_mitrofanova.webp" alt="Инна Митрофанова" width="320" height="320">
         <img src="img/exp_vorontsova.webp" alt="Анна Воронцова" width="320" height="320">
-        <img src="img/exp_pritchina.webp" alt="Светлана Притчина" width="320" height="320">
         <img src="img/exp_kiseleva.webp" alt="Тамара Киселёва" width="320" height="320">
-        <img src="img/exp_dyachenko.webp" alt="Людмила Дьяченко" width="320" height="320">
       </div>
       <b>Курс ведут 6 экспертов Академии</b>
       <span>Ректор Академии Фирая Валиева, руководитель Экспертного совета Инна Митрофанова и эксперты-практики</span>
       <span class="team-cur">+ куратор Академии — практикующий специалист сметного дела — проверяет каждый практикум, пока не останется замечаний</span>
     </a>
+    <!-- П9, П4: образ «снижаете риск ошибок, работаете спокойно» -->
+    <figure class="fig"><div class="ph"><img src="img/c_spokoyno.webp" alt="Специалист спокойно работает за столом с документами" width="800" height="500"></div><figcaption>Смету составляете и проверяете по документу — меньше риска ошибок, спокойнее работа</figcaption></figure>
+    </div>
   </div>
 </section>
 
@@ -639,11 +711,11 @@ section.soft{background:var(--sky)}
     <span class="kicker">Узнаёте себя?</span>
     <h2>С этим к нам приходят специалисты сметного дела</h2>
     <div class="cards c3 doors">
-      <div class="card pain"><span class="n">01</span><h3>Методики меняются — не успеваете отследить</h3><p class="q">Приказы и методики выходят один за другим, и непонятно, что из этого меняет вашу смету.</p><p class="ans"><b>Вы получите:</b> изменения разобраны по модулям вместе с экспертами — вы знаете, что изменилось и где это в вашей смете.</p><p class="vq">«Стала более уверенно разбираться в изменениях, знаю где можно узнать и посмотреть что-то важное для меня»<span>Выпускник курса повышения квалификации</span></p></div>
-      <div class="card pain"><span class="n">02</span><h3>Правило знаете, а откуда оно — нет</h3><p class="q">Делаете по привычке или по совету коллеги, а сослаться не на что.</p><p class="ans"><b>Вы получите:</b> к норме, цене и коэффициенту — документ и пункт, на который можно сослаться.</p><p class="vq">«Теперь чувствую себя увереннее, так как знаю не только правила, но и могу сослаться на нормативный документ»<span>Выпускник курса повышения квалификации</span></p></div>
-      <div class="card pain"><span class="n">03</span><h3>Вопрос подрядчика застаёт врасплох</h3><p class="q">Ответ звучит неуверенно, а с чужой сметой приходится соглашаться — и терять в цене.</p><p class="ans"><b>Вы получите:</b> отвечаете по существу, со ссылкой на методику, и идёте к экспертизе, понимая документы и новые правила.</p><p class="vq">«Уверенно отвечаю на вопросы подрядчиков, могу обосновать свои ответы с ссылкой на Методики.»<span>Выпускник курса повышения квалификации</span></p></div>
-      <div class="card pain"><span class="n">04</span><h3>Коллеги отвечают не на все вопросы</h3><p class="q">Спросить не у кого, а искать самому долго — и не всегда верно.</p><p class="ans"><b>Вы получите:</b> находите разъяснение в нормативной документации сами. Выпускники рассказывают, что к ним стали обращаться коллеги.</p><p class="vq">«Ко мне стали обращаться коллеги с просьбой найти разъяснения в нормативной документации»<span>Выпускник курса повышения квалификации</span></p></div>
-      <div class="card pain"><span class="n">05</span><h3>Возвращаетесь после перерыва</h3><p class="q">Декрет, другая сфера, переезд — а правила за это время изменились.</p><p class="ans"><b>Вы получите:</b> закрываете пробелы по порядку, от модуля к модулю, и возвращаетесь к работе с обновлёнными знаниями.</p><p class="vq">«перерыв в работе по специальности был 15 лет, срочно нужно было освежить знания, академия в этом мне помогла и продолжает помогать.»<span>Выпускник курса повышения квалификации</span></p></div>
+      <div class="card pain has-fig"><figure class="fig paper ctr"><div class="ph"><img src="img/doc_prikaz421.webp" alt="Первая страница приказа Минстроя России от 4 августа 2020 г. № 421/пр об утверждении Методики" loading="lazy" width="900" height="553"></div><figcaption>Приказ Минстроя № 421/пр: что он меняет в вашей смете, разбираем по модулям</figcaption></figure><span class="n">01</span><h3>Методики меняются — не успеваете отследить</h3><p class="q">Приказы и методики выходят один за другим, и непонятно, что из этого меняет вашу смету.</p><p class="ans"><b>Вы получите:</b> изменения разобраны по модулям вместе с экспертами — вы знаете, что изменилось и где это в вашей смете.</p><p class="vq">«Стала более уверенно разбираться в изменениях, знаю где можно узнать и посмотреть что-то важное для меня»<span>Выпускник курса повышения квалификации</span></p></div>
+      <div class="card pain has-fig"><figure class="fig paper"><div class="ph"><img src="img/doc_421_p139.webp" alt="Пункт 139 Методики № 421/пр, выделенный маркером" loading="lazy" width="796" height="398"><span class="note-m" aria-hidden="true">основание</span></div><figcaption>Пункт 139 Методики № 421/пр — документ и пункт, на которые можно сослаться</figcaption></figure><span class="n">02</span><h3>Правило знаете, а откуда оно — нет</h3><p class="q">Делаете по привычке или по совету коллеги, а сослаться не на что.</p><p class="ans"><b>Вы получите:</b> к норме, цене и коэффициенту — документ и пункт, на который можно сослаться.</p><p class="vq">«Теперь чувствую себя увереннее, так как знаю не только правила, но и могу сослаться на нормативный документ»<span>Выпускник курса повышения квалификации</span></p></div>
+      <div class="card pain has-fig"><figure class="fig"><div class="ph"><img src="img/c_obekt_razgovor.webp" alt="Инженеры обсуждают работы на строительной площадке в Москве" loading="lazy" width="800" height="500"></div><figcaption>Разговор на объекте: отвечаете по существу, со ссылкой на методику</figcaption></figure><span class="n">03</span><h3>Вопрос подрядчика застаёт врасплох</h3><p class="q">Ответ звучит неуверенно, а с чужой сметой приходится соглашаться — и терять в цене.</p><p class="ans"><b>Вы получите:</b> отвечаете по существу, со ссылкой на методику, и идёте к экспертизе, понимая документы и новые правила.</p><p class="vq">«Уверенно отвечаю на вопросы подрядчиков, могу обосновать свои ответы с ссылкой на Методики.»<span>Выпускник курса повышения квалификации</span></p></div>
+      <div class="card pain has-fig"><figure class="fig"><div class="ph"><img src="img/c_razyasnenie.webp" alt="Двое разбирают документ за рабочим столом" loading="lazy" width="800" height="500"></div><figcaption>Коллега спросил — вы находите разъяснение в нормативном документе</figcaption></figure><span class="n">04</span><h3>Коллеги отвечают не на все вопросы</h3><p class="q">Спросить не у кого, а искать самому долго — и не всегда верно.</p><p class="ans"><b>Вы получите:</b> находите разъяснение в нормативной документации сами. Выпускники рассказывают, что к ним стали обращаться коллеги.</p><p class="vq">«Ко мне стали обращаться коллеги с просьбой найти разъяснения в нормативной документации»<span>Выпускник курса повышения квалификации</span></p></div>
+      <div class="card pain has-fig"><figure class="fig"><div class="ph"><img src="img/c_vozvrashchenie.webp" alt="Специалист занимается за ноутбуком дома" loading="lazy" width="800" height="500"></div><figcaption>После перерыва — по порядку, модуль за модулем, в своём темпе</figcaption></figure><span class="n">05</span><h3>Возвращаетесь после перерыва</h3><p class="q">Декрет, другая сфера, переезд — а правила за это время изменились.</p><p class="ans"><b>Вы получите:</b> закрываете пробелы по порядку, от модуля к модулю, и возвращаетесь к работе с обновлёнными знаниями.</p><p class="vq">«перерыв в работе по специальности был 15 лет, срочно нужно было освежить знания, академия в этом мне помогла и продолжает помогать.»<span>Выпускник курса повышения квалификации</span></p></div>
       <div class="card pain door-cta"><h3>Узнали себя?</h3><p class="q">Оставьте заявку — менеджер покажет модуль и урок под вашу задачу. Если в курсе этого нет, скажем прямо.</p><a class="btn btn-main js-apply" href="https://academia-bti.ru/dr12?pick=b" style="margin-top:16px">Оставить заявку</a></div>
     </div>
   </div>
@@ -655,10 +727,10 @@ section.soft{background:var(--sky)}
     <span class="kicker">Что вы будете делать иначе</span>
     <h2>Ссылайтесь на документ, а не на память</h2>
     <div class="bs">
-      <div class="row"><div class="was"><div class="hd">Было</div>Правило знаете, но откуда оно — объяснить трудно.</div><div class="ar">→</div><div class="now"><div class="hd">Стало</div>Знаете не только правило, но и документ, на который можно сослаться: норма, цена, коэффициент — документ и пункт.</div></div>
-      <div class="row"><div class="was"><div class="hd">Было</div>«На каком основании?» — и ответ подрядчику или экспертизе получается невнятным.</div><div class="ar">→</div><div class="now"><div class="hd">Стало</div>Отвечаете подрядчику по существу, со ссылкой на методику, к экспертизе идёте, понимая документы и новые правила.</div></div>
-      <div class="row"><div class="was"><div class="hd">Было</div>Чужую смету приходится принимать как есть — не хватает аргументов.</div><div class="ar">→</div><div class="now"><div class="hd">Стало</div>Проверяете сметы проектировщиков и подрядчиков, видите слабые места и называете их со ссылкой на документ.</div></div>
-      <div class="row"><div class="was"><div class="hd">Было</div>Сводный расчёт, НМЦК и смета контракта — по чужому шаблону.</div><div class="ar">→</div><div class="now"><div class="hd">Стало</div>Собираете сводный сметный расчёт и смету контракта шаг за шагом, рассчитываете и обосновываете НМЦК.</div></div>
+      <div class="row has-fig"><div class="was"><div class="hd">Было</div>Правило знаете, но откуда оно — объяснить трудно.</div><div class="ar">→</div><div class="now"><div class="hd">Стало</div>Знаете не только правило, но и документ, на который можно сослаться: норма, цена, коэффициент — документ и пункт.</div><figure class="fig"><div class="ph"><img src="img/m_doc_hand.webp" alt="Рука указывает на строку в печатном документе" loading="lazy" width="800" height="500"></div><figcaption>Не «так принято», а пункт документа</figcaption></figure></div>
+      <div class="row has-fig"><div class="was"><div class="hd">Было</div>«На каком основании?» — и ответ подрядчику или экспертизе получается невнятным.</div><div class="ar">→</div><div class="now"><div class="hd">Стало</div>Отвечаете подрядчику по существу, со ссылкой на методику, к экспертизе идёте, понимая документы и новые правила.</div><figure class="fig"><div class="ph"><img src="img/c_stroyka_leningradsky.webp" alt="Строящееся здание с башенным краном в Москве" loading="lazy" width="800" height="500"></div><figcaption>Спрашивают подрядчик и экспертиза — у вас есть основание</figcaption></figure></div>
+      <div class="row has-fig"><div class="was"><div class="hd">Было</div>Чужую смету приходится принимать как есть — не хватает аргументов.</div><div class="ar">→</div><div class="now"><div class="hd">Стало</div>Проверяете сметы проектировщиков и подрядчиков, видите слабые места и называете их со ссылкой на документ.</div><figure class="fig paper"><div class="ph"><img src="img/doc_421_lsr_tab.webp" alt="Шапка формы локального сметного расчёта: графы сметной стоимости и ФГИС ЦС" loading="lazy" width="800" height="500"></div><figcaption>Чужая смета: сверяете графы с формой Методики и видите слабое место</figcaption></figure></div>
+      <div class="row has-fig"><div class="was"><div class="hd">Было</div>Сводный расчёт, НМЦК и смета контракта — по чужому шаблону.</div><div class="ar">→</div><div class="now"><div class="hd">Стало</div>Собираете сводный сметный расчёт и смету контракта шаг за шагом, рассчитываете и обосновываете НМЦК.</div><figure class="fig paper"><div class="ph"><img src="img/doc_421_ssr.webp" alt="Форма сводного сметного расчёта стоимости строительства из приложения № 6 к Методике № 421/пр" loading="lazy" width="800" height="500"></div><figcaption>Сводный сметный расчёт — форма из приложения № 6 к Методике № 421/пр</figcaption></figure></div>
     </div>
     <p class="quote-line">«Не боюсь больше расчетов с НЦС, НМЦК, ССРСС, все в голове разложилось по полочкам.»<span>Выпускник курса повышения квалификации</span></p>
     <p class="note" style="margin-top:14px">Результат зависит от вашего опыта и условий работы.</p>
@@ -679,6 +751,7 @@ section.soft{background:var(--sky)}
       <li>Смету и ведомость объёмов сдают в машиночитаемом формате, и для ресурсно-индексного метода у Минстроя своя схема.</li>
     </ol>
     <p class="quote-line"><b>Считайте по-новому: ресурсно-индексный метод и ФСНБ-2022.</b> Вы составляете смету ресурсно-индексным методом и понимаете, откуда в ней каждая цена: изменения разобраны по модулям, к урокам — презентации экспертов и раздаточный материал.</p>
+    <div class="photo-band"><img src="img/meet_valieva.jpg" alt="Фирая Валиева ведёт занятие на Живой встрече Академии сметного дела, сентябрь 2026" loading="lazy" width="900" height="600"><div class="tx"><h3>Новые правила — разбираем вместе</h3><p>Живая встреча Академии, сентябрь 2026: ректор Академии Фирая Валиева ведёт занятие. Изменения не догоняете в одиночку.</p></div></div>
     <p class="vq">«…оказывается многие знания устарели и нуждались в корректировке, тем более что появился РИМ, и помимо прежних методик появились новые методики и новые методы и подходы к определению сметной стоимости..»<span>Выпускник курса повышения квалификации</span></p>
     <p class="note" style="margin-top:14px">Честно о записях: у прежних редакций курса часть записей была 2023–2024 годов. Программа 2026 года собрана под действующие документы; при изменениях нормативной базы курс обновляем. Какие модули потока уже открыты, менеджер скажет до оплаты.</p>
   </div>
@@ -691,31 +764,36 @@ section.soft{background:var(--sky)}
     <h2>Пять задач — один курс повышения квалификации</h2>
     <p class="lead">С этими вопросами к нам приходят в 2026 году. Программа, куратор и удостоверение — одни для всех; под задачу есть <a href="#varianty">варианты курса</a>.</p>
     <div class="cards c3 doors">
-      <div class="card pain" id="rim">
+      <div class="card pain has-fig" id="rim">
+        <figure class="fig paper"><div class="ph"><img src="img/doc_421_lsr_rim.webp" alt="Форма локального сметного расчёта для ресурсно-индексного метода из Методики № 421/пр" loading="lazy" width="800" height="400"><span class="note-m" aria-hidden="true">РИМ</span></div><figcaption>Форма локальной сметы для ресурсно-индексного метода — из Методики № 421/пр</figcaption></figure>
         <span class="n">01</span>
         <h3>Правила 2026: РИМ, новые накладные расходы и сметная прибыль</h3>
         <p class="q">Правила изменились, а смета по привычке — по-старому. С ресурсно-индексным методом каждую цену хочется перепроверить: откуда она и устоит ли при проверке.</p>
         <p class="ans"><b>Вы получите:</b> что изменилось и где это в вашей смете — в первом модуле; ресурсно-индексный метод — досконально: цену из ФГИС ЦС читаете как расчёт и объясняете, откуда она взялась. Практикумы по смете РИМ и перевозке проверяет куратор. Вариант <a href="#var-rim">«КПК РИМ»</a>.</p>
       </div>
-      <div class="card pain" id="osnovanie">
+      <div class="card pain has-fig" id="osnovanie">
+        <figure class="fig paper"><div class="ph"><img src="img/doc_421_p141.webp" alt="Пункт 141 Методики № 421/пр, выделенный маркером" loading="lazy" width="796" height="398"><span class="note-m" aria-hidden="true">основание</span></div><figcaption>Пункт Методики — его можно показать экспертизе и заказчику</figcaption></figure>
         <span class="n">02</span>
         <h3>«На каком основании?»</h3>
         <p class="q">Экспертиза вернула смету. Заказчик не пропускает коэффициент. Нужен ответ на узкую задачу — перевозка, оборудование, цена контракта.</p>
         <p class="ans"><b>Вы получите:</b> к каждой норме, цене и коэффициенту — документ и пункт, который можно показать экспертизе и заказчику. Перевозка — модуль 4, оборудование и цена по коммерческим предложениям — модуль 5, коэффициенты — модуль 6, цена контракта — модули 8–9. Практикумы проверяет куратор, пока не останется замечаний.</p>
       </div>
-      <div class="card pain" id="srok">
+      <div class="card pain has-fig" id="srok">
+        <figure class="fig"><div class="ph"><img src="img/udost_krupno.webp" alt="Удостоверение о повышении квалификации Академии сметного дела" loading="lazy" width="625" height="390"></div><figcaption>Удостоверение о повышении квалификации — на ваше имя</figcaption></figure>
         <span class="n">03</span>
-        <h3>Нужно подтвердить квалификацию удостоверением</h3>
+        <h3>Получить удостоверение о повышении квалификации на своё имя</h3>
         <p class="q">Работодатель просит удостоверение к аттестации, к тендеру, к проверке штата. А повышение квалификации было давно.</p>
         <p class="ans"><b>Вы получите:</b> удостоверение о повышении квалификации установленного образца на 72 ак. ч. на своё имя после итогового теста, сведения — в ФИС ФРДО. Основные темы профессионального стандарта — по порядку, с практикумами и куратором: знания можно привести в порядок заранее. Профэкзамен: квалификации для специалистов по сметам утверждены, центров, где его сдать, на 2 ноября 2026 года нет. Вариант <a href="#var-standart">«КПК Профстандарт»</a>.</p>
       </div>
-      <div class="card pain" id="programma">
+      <div class="card pain has-fig" id="programma">
+        <figure class="fig"><div class="ph"><img src="img/c_rabochiy_stol.webp" alt="Ноутбук и калькулятор на рабочем столе" loading="lazy" width="800" height="500"></div><figcaption>Вечером дома: практикум в вашей сметной программе</figcaption></figure>
         <span class="n">04</span>
         <h3>Нет сметной программы дома</h3>
         <p class="q">Программа и база — только на работе, а учиться хочется вечером дома.</p>
         <p class="ans"><b>Вы получите:</b> практикумы — в программе, в которой работаете; нет её дома — скажите менеджеру, подберём вариант для практикумов до оплаты. Методика плюс обучение работе в ГРАНД-Смете — вариант <a href="#var-grand">«КПК + ГРАНД-Смета»</a>: запишитесь в лист ожидания, условия назовём, как только откроется набор.</p>
       </div>
-      <div class="card pain" id="org">
+      <div class="card pain has-fig" id="org">
+        <figure class="fig"><div class="ph"><img src="img/c_pismo.webp" alt="Человек подписывает документы за столом" loading="lazy" width="800" height="500"></div><figcaption>Счёт, договор и письмо руководителю — в день заявки</figcaption></figure>
         <span class="n">05</span>
         <h3>Учиться за счёт работодателя</h3>
         <p class="q">Обучение нужно согласовать с руководителем и провести через бухгалтерию.</p>
@@ -821,10 +899,10 @@ section.soft{background:var(--sky)}
     <span class="kicker">Как проходит обучение</span>
     <h2>Закрепляйте теорию заданиями из рабочих ситуаций</h2>
     <div class="cards c2">
-      <div class="card"><h3><span class="ic">▶</span>40 уроков в записи</h3><p>Более 23 часов видео с экспертами: длинные уроки разбиты на части. К урокам — тесты и письменные задания, близкие к реальным рабочим ситуациям, и 5 практикумов с проверкой куратора.</p></div>
-      <div class="card"><h3><span class="ic">≡</span>Знания по полочкам</h3><p>Идёте от модуля к модулю по порядку: следующий модуль открывается, когда пройдены уроки и сданы задания. Вся информация — в одном месте, пробелы закрываются.</p></div>
-      <div class="card"><h3><span class="ic">?</span>Встречи с экспертами — 2 раза в месяц</h3><p>Онлайн: приносите вопрос из своей сметы и разбираете его с экспертами Академии. Запись остаётся в личном кабинете.</p></div>
-      <div class="card"><h3><span class="ic">↻</span>Возвращайтесь к урокам в работе</h3><p>Уроки, презентации экспертов и раздаточный материал — в личном кабинете, пока открыт доступ, 6 месяцев: нужную тему открываете, когда она появляется в работе.</p></div>
+      <div class="card"><figure class="fig"><div class="ph"><img src="img/m_praktika.webp" alt="Участники Живой встречи работают с документами за столом" loading="lazy" width="800" height="500"></div><figcaption>Задания близки к рабочим ситуациям: расчёт по документам</figcaption></figure><h3><span class="ic">▶</span>40 уроков в записи</h3><p>Более 23 часов видео с экспертами: длинные уроки разбиты на части. К урокам — тесты и письменные задания, близкие к реальным рабочим ситуациям, и 5 практикумов с проверкой куратора.</p></div>
+      <div class="card"><figure class="fig"><div class="ph"><img src="img/c_papki.webp" alt="Папки с документами на полке, каждая подписана" loading="lazy" width="800" height="500"></div><figcaption>Знания по полочкам: каждая тема на своём месте</figcaption></figure><h3><span class="ic">≡</span>Знания по полочкам</h3><p>Идёте от модуля к модулю по порядку: следующий модуль открывается, когда пройдены уроки и сданы задания. Вся информация — в одном месте, пробелы закрываются.</p></div>
+      <div class="card"><figure class="fig"><div class="ph"><img src="img/meet_zal.jpg" alt="Фирая Валиева ведёт занятие для слушателей на Живой встрече Академии сметного дела, сентябрь 2026" loading="lazy" width="940" height="800"></div><figcaption>Живая встреча Академии, сентябрь 2026: вопросы — экспертам</figcaption></figure><h3><span class="ic">?</span>Встречи с экспертами — 2 раза в месяц</h3><p>Онлайн: приносите вопрос из своей сметы и разбираете его с экспертами Академии. Запись остаётся в личном кабинете.</p></div>
+      <div class="card"><figure class="fig"><div class="ph"><img src="img/c_zapis_punkta.webp" alt="Рука записывает в блокнот" loading="lazy" width="800" height="500"></div><figcaption>Тема появилась в работе — открыли урок, записали нужный пункт</figcaption></figure><h3><span class="ic">↻</span>Возвращайтесь к урокам в работе</h3><p>Уроки, презентации экспертов и раздаточный материал — в личном кабинете, пока открыт доступ, 6 месяцев: нужную тему открываете, когда она появляется в работе.</p></div>
     </div>
     <div class="cards c3"><figure class="card qc"><blockquote>«Курс дал хорошую практическую базу — особенно ценно, что задания приближены к реальным рабочим ситуациям.»</blockquote><figcaption>Выпускник курса повышения квалификации</figcaption></figure><figure class="card qc"><blockquote>«Все уроки ведутся на понятном языке с акцентом на главные моменты. Модули связаны между собой. После изучения курса все мои знания упорядочились и разложились по полочкам.»</blockquote><figcaption>Выпускник курса повышения квалификации</figcaption></figure><figure class="card qc"><blockquote>«Мне понравились подробные презентации к урокам. Я их скачала и за 5-10 минут рассчитываю вспомнить детали этой темы.»</blockquote><figcaption>Выпускник курса повышения квалификации</figcaption></figure></div>
     <div class="photo-band">
@@ -843,16 +921,19 @@ section.soft{background:var(--sky)}
     <span class="kicker">Кто рядом</span>
     <h2>Учитесь у практиков, которые работают в сметном деле</h2>
     <p class="quote-line">«Так же могу отметить лекторов, которые расщепляли материал методичек … своими примерами из жизни или логическим разбором.»<span>Выпускник курса повышения квалификации</span></p>
+    <div class="ex-intro">
     <p class="lead">Нормативный текст разбирают 6 экспертов Академии, которые сами работают в сметном деле: на примерах, по логике, простым языком. Среди них — ректор Академии и руководитель Экспертного совета. Под портретом — модули, которые ведёт эксперт.</p>
+    <figure class="fig"><div class="ph"><img src="img/valieva_za_rabotoy.webp" alt="Фирая Валиева за рабочим столом со сметной документацией" loading="lazy" width="800" height="500"></div><figcaption>Фирая Валиева, ректор Академии, за сметной документацией: эксперты курса сами работают в сметном деле</figcaption></figure>
+    </div>
     <div class="experts">
-      <div class="ex"><div class="av"><img src="img/exp_valieva.webp" alt="Фирая Валиева" loading="lazy" width="320" height="320"></div><h3>Фирая Валиева</h3><p>ректор Академии</p><div class="mods-of" aria-label="модули 1, 3"><i>1</i><i>3</i></div></div>
-      <div class="ex"><div class="av"><img src="img/exp_mitrofanova.webp" alt="Инна Митрофанова" loading="lazy" width="320" height="320"></div><h3>Инна Митрофанова</h3><p>руководитель Экспертного совета</p><div class="mods-of" aria-label="модули 2, 4, 5, 7"><i>2</i><i>4</i><i>5</i><i>7</i></div></div>
+<div class="ex rektor"><div class="av"><img src="img/exp_valieva.webp" alt="Фирая Валиева" loading="lazy" width="320" height="320"></div><h3>Фирая Валиева</h3><p>ректор Академии</p><div class="mods-of" aria-label="модули 1, 3"><i>1</i><i>3</i></div></div>
       <div class="ex"><div class="av"><img src="img/exp_dyachenko.webp" alt="Людмила Дьяченко" loading="lazy" width="320" height="320"></div><h3>Людмила Дьяченко</h3><p>эксперт Академии</p><div class="mods-of" aria-label="модули 4, 6"><i>4</i><i>6</i></div></div>
-      <div class="ex"><div class="av"><img src="img/exp_vorontsova.webp" alt="Анна Воронцова" loading="lazy" width="320" height="320"></div><h3>Анна Воронцова</h3><p>эксперт Академии</p><div class="mods-of" aria-label="модули 2, 6"><i>2</i><i>6</i></div></div>
       <div class="ex"><div class="av"><img src="img/exp_pritchina.webp" alt="Светлана Притчина" loading="lazy" width="320" height="320"></div><h3>Светлана Притчина</h3><p>эксперт Академии</p><div class="mods-of" aria-label="модули 8, 9"><i>8</i><i>9</i></div></div>
+      <div class="ex"><div class="av"><img src="img/exp_mitrofanova.webp" alt="Инна Митрофанова" loading="lazy" width="320" height="320"></div><h3>Инна Митрофанова</h3><p>руководитель Экспертного совета</p><div class="mods-of" aria-label="модули 2, 4, 5, 7"><i>2</i><i>4</i><i>5</i><i>7</i></div></div>
+      <div class="ex"><div class="av"><img src="img/exp_vorontsova.webp" alt="Анна Воронцова" loading="lazy" width="320" height="320"></div><h3>Анна Воронцова</h3><p>эксперт Академии</p><div class="mods-of" aria-label="модули 2, 6"><i>2</i><i>6</i></div></div>
       <div class="ex"><div class="av"><img src="img/exp_kiseleva.webp" alt="Тамара Киселёва" loading="lazy" width="320" height="320"></div><h3>Тамара Киселёва</h3><p>эксперт Академии</p><div class="mods-of" aria-label="модуль 3"><i>3</i></div></div>
     </div>
-    <div class="card" style="margin-top:32px"><h3>Получайте разбор ваших работ от куратора</h3><p>Куратор Академии — практикующий специалист сметного дела — разбирает ваши 5 практикумов письменно: что верно, что доработать и на какой документ опереться, пока не останется замечаний. Он направляет, а решение находите вы — и навык остаётся у вас.</p><p class="vq">«Куратор всегда был на связи и отвечал на все-все вопросы.»<span>Выпускник курса повышения квалификации</span></p></div>
+    <div class="card cur" style="margin-top:32px"><div><h3>Получайте разбор ваших работ от куратора</h3><p>Куратор Академии — практикующий специалист сметного дела — разбирает ваши 5 практикумов письменно: что верно, что доработать и на какой документ опереться, пока не останется замечаний. Он направляет, а решение находите вы — и навык остаётся у вас.</p><p class="vq">«Куратор всегда был на связи и отвечал на все-все вопросы.»<span>Выпускник курса повышения квалификации</span></p></div><figure class="fig paper"><div class="ph"><img src="img/kurator_otvet.webp" alt="Ответ куратора к практикуму в личном кабинете: в формуле ошибка, исправьте — и результат будет правильным" loading="lazy" width="900" height="411"></div><figcaption>Ответ куратора к практикуму: где ошибка и как исправить (имена скрыты)</figcaption></figure></div>
     <h3 style="margin-top:48px">Эксперты Академии на Живой встрече, сентябрь 2026</h3>
     <div class="meet" tabindex="0" aria-label="Фото со встречи — листайте">
       <figure><img src="img/meet_valieva.jpg" alt="Фирая Валиева ведёт занятие на Живой встрече Академии сметного дела, сентябрь 2026" loading="lazy" width="900" height="600"><figcaption>Фирая Валиева ведёт занятие</figcaption></figure>
@@ -880,13 +961,13 @@ section.soft{background:var(--sky)}
       <li><b>Практикумы и встречи</b><span>5 практикумов с разбором куратора, встречи с экспертами 2 раза в месяц.</span></li>
       <li><b>Итоговый тест и удостоверение</b><span>100 вопросов, 80 % для зачёта, 10 попыток. Удостоверение — примерно через 2 недели.</span></li>
     </ol>
-    <h3 style="margin-top:44px">Сколько времени в день</h3>
+    <h3 style="margin-top:44px">Сколько времени займёт</h3>
     <div class="pace">
-      <div class="card on"><div class="big">≈ 15–20 мин</div><p>видео в день, если проходить курс 3 месяца; задания и практикумы — сверху</p></div>
-      <div class="card"><div class="big">≈ 70 мин</div><p>видео в день, если проходить курс 3 недели; задания и практикумы — сверху</p></div>
-      <div class="card"><div class="big">6 мес</div><p>открыты материалы; куратор на связи 3 месяца</p></div>
+      <div class="card on"><div class="big">≈ 40 мин</div><p>средняя длина урока в записи; длинные уроки разбиты на части</p></div>
+      <div class="card"><div class="big">6 мес</div><p>открыты материалы — проходите в своём темпе</p></div>
+      <div class="card"><div class="big">3 мес</div><p>куратор на связи и разбирает ваши практикумы</p></div>
     </div>
-    <p class="note" style="margin-top:14px">Считали по длительности видео уроков на 2 ноября 2026 года, по всем календарным дням. Задания к урокам и 5 практикумов — дополнительно, в своём темпе. За 3 недели курс можно пройти, когда открыты все модули потока, — график менеджер назовёт до оплаты.</p>
+    <p class="note" style="margin-top:14px">Уроки в записи, средняя длина около 40 минут; проходите в своём темпе: материалы открыты полгода, куратор на связи 3 месяца.</p>
     <div class="cta-band">
       <div><b>Готовы начать?</b><span>Заявка — это разговор, а не оплата: вам позвонят из Академии.</span></div>
       <div class="cta-row"><a class="btn btn-main js-apply" href="https://academia-bti.ru/dr12?pick=b">Оставить заявку</a></div>
@@ -903,7 +984,8 @@ section.soft{background:var(--sky)}
     <p class="lead">Вы получаете удостоверение о повышении квалификации на своё имя и знания, которые применяете в работе, а не только документ. Уроки и материалы под рукой, пока открыт доступ.</p>
     <p class="vq">«после прохождения курса получила большое количество новых знаний, теперь буду применять на практике.»<span>Выпускник курса повышения квалификации</span></p>
     <div class="doc">
-      <div class="scans">
+      <div class="scans s3">
+        <figure class="udost fig"><img src="img/udost.webp" alt="Удостоверение о повышении квалификации и «Настольная книга профессионального сметчика» Академии" loading="lazy" width="700" height="700"><figcaption>Удостоверение о повышении квалификации — на ваше имя</figcaption></figure>
         <a href="img/license1.jpg" target="_blank" rel="noopener" aria-label="Открыть скан лицензии, страница 1"><img src="img/license1_s.jpg" alt="Лицензия на образовательную деятельность АНО ДПО «Центр образования и консультирования», страница 1" loading="lazy" width="600" height="849"></a>
         <a href="img/license2.jpg" target="_blank" rel="noopener" aria-label="Открыть скан лицензии, страница 2"><img src="img/license2_s.jpg" alt="Лицензия, приложение: дополнительное профессиональное образование" loading="lazy" width="600" height="849"></a>
       </div>
@@ -928,10 +1010,11 @@ section.soft{background:var(--sky)}
       <div><b>≈ 90</b><span>ответов — о знаниях по полочкам: собрались в систему, закрылись пробелы</span></div>
       <div><b>≈ 70</b><span>ответов — об уверенности в своих расчётах</span></div>
     </div>
+    
     <p class="note" style="margin-top:12px">По итоговым анкетам выпускников прежних редакций программы, 441 ответ. Чаще всего выпускники пишут об уверенности и о том, что знания собрались в систему; многие — что к ним стали обращаться коллеги за разъяснениями.</p>
     <div class="cards c3" style="margin-top:22px"><figure class="card qc"><blockquote>«Сейчас, благодаря АСД, я чувствую себя уверенно в этом громадном океане по названию "Сметное дело"»</blockquote><figcaption>Выпускник курса повышения квалификации</figcaption></figure><figure class="card qc"><blockquote>«…благодаря более систематизированной системе знаний, всегда знаешь, где искать ответ на тот или иной вопрос.»</blockquote><figcaption>Выпускник курса повышения квалификации</figcaption></figure><figure class="card qc"><blockquote>«Появилась уверенность в знаниях и работе. … Понимание нормативной документации. Нет страха перед всеми новыми обновлениями в сметной работе.»</blockquote><figcaption>Выпускник курса повышения квалификации</figcaption></figure><figure class="card qc"><blockquote>«Ко мне за советом обращаются старшие коллеги и ... подрядчики!»</blockquote><figcaption>Выпускник курса повышения квалификации</figcaption></figure><figure class="card qc"><blockquote>«Формат обучения максимально удобный! Советую всем проходить.»</blockquote><figcaption>Выпускник курса повышения квалификации</figcaption></figure><figure class="card qc"><blockquote>«Прекрасный курс, прекрасные преподаватели, я не представляю дальнейшей жизни инженером сметчиком без академии.»</blockquote><figcaption>Выпускник курса повышения квалификации</figcaption></figure></div>
-    <div class="cards c2"><figure class="card qc lr"><blockquote>«Стала главным специалистом СДО»</blockquote><figcaption>Выпускник курса повышения квалификации · личный результат выпускника, у каждого свой</figcaption></figure><figure class="card qc lr"><blockquote>«Работаю в офисе, плюс беру доп работу на просчет смет»</blockquote><figcaption>Выпускник курса повышения квалификации · личный результат выпускника, у каждого свой</figcaption></figure></div>
-    <p class="note" style="margin-top:12px">Цитаты из итоговых анкет — дословно, с разрешения авторов поделиться достижениями; сокращения отмечены многоточием. Результат у каждого свой: он зависит от опыта и условий работы.</p>
+    <div class="cards c2"><figure class="card qc lr"><div class="fig"><div class="ph"><img src="img/c_razgovor_o_roste.webp" alt="Рукопожатие за столом" loading="lazy" width="800" height="500"></div><p class="cap">Разговор о росте — с обновлёнными знаниями</p></div><blockquote>«Стала главным специалистом СДО»</blockquote><figcaption>Выпускник курса повышения квалификации · личный результат выпускника, у каждого свой</figcaption></figure><figure class="card qc lr"><div class="fig"><div class="ph"><img src="img/c_doma_vecherom.webp" alt="Специалист работает дома за ноутбуком с документами" loading="lazy" width="800" height="500"></div><p class="cap">Дополнительный проект по смете — если решите</p></div><blockquote>«Работаю в офисе, плюс беру доп работу на просчет смет»</blockquote><figcaption>Выпускник курса повышения квалификации · личный результат выпускника, у каждого свой</figcaption></figure></div>
+    <p class="note" style="margin-top:12px">Цитаты из итоговых анкет — дословно, с разрешения авторов поделиться достижениями; сокращения отмечены многоточием.</p>
     <p class="lead">Отзывы и фото ниже публикуем с письменного согласия авторов. Результат у каждого свой: он зависит от опыта и условий работы.</p>
     <div class="grads">
       <div class="gr"><div class="face"><img src="img/nasyrova.jpg" alt="Эльза Насырова, кадр видеоотзыва" loading="lazy" width="300" height="300"></div><div><b>Эльза Насырова</b><span class="city">начальник строительного отдела, Мелеуз</span></div><blockquote>«В результате полученных знаний и навыков за год работы в организации меня повысили в должности.»</blockquote><p class="tag">Видеоотзыв, сентябрь 2026 · курс повышения квалификации, прежняя редакция программы · личный результат</p></div>
@@ -959,9 +1042,9 @@ section.soft{background:var(--sky)}
     <span class="kicker">Для руководителя</span>
     <h2>Специалист, который опирается на документ</h2>
     <div class="cards c3">
-      <div class="card"><h3>Сметы — по документу</h3><p>Сотрудник учится составлять и проверять сметы по документу — так снижается риск ошибок в расчётах организации.</p></div>
-      <div class="card"><h3>Новое направление</h3><p>Подтягиваете специалиста под сводный расчёт, НМЦК и смету контракта: модули 7–9 и практикумы с проверкой куратора.</p></div>
-      <div class="card"><h3>Проверка чужих смет</h3><p>Сотрудник видит слабые места в сметах проектировщиков и подрядчиков и называет их со ссылкой на документ.</p></div>
+      <div class="card"><figure class="fig"><div class="ph"><img src="img/c_stroyka_ryazansky.webp" alt="Строящийся жилой дом с краном в Москве" loading="lazy" width="800" height="500"></div><figcaption>Объект организации: сметы составлены и проверены по документу</figcaption></figure><h3>Сметы — по документу</h3><p>Сотрудник учится составлять и проверять сметы по документу — так снижается риск ошибок в расчётах организации.</p></div>
+      <div class="card"><figure class="fig paper"><div class="ph"><img src="img/doc_421_glavy.webp" alt="Перечень глав сводного сметного расчёта в пункте 138 Методики № 421/пр" loading="lazy" width="800" height="500"></div><figcaption>Главы сводного сметного расчёта по пункту 138 Методики — модуль 7</figcaption></figure><h3>Новое направление</h3><p>Подтягиваете специалиста под сводный расчёт, НМЦК и смету контракта: модули 7–9 и практикумы с проверкой куратора.</p></div>
+      <div class="card"><figure class="fig"><div class="ph"><img src="img/c_stroyploshadka.webp" alt="Строительная площадка в Москве" loading="lazy" width="800" height="500"></div><figcaption>Сметы подрядчиков и проектировщиков: слабые места — со ссылкой на документ</figcaption></figure><h3>Проверка чужих смет</h3><p>Сотрудник видит слабые места в сметах проектировщиков и подрядчиков и называет их со ссылкой на документ.</p></div>
     </div>
     <div class="cards c3" style="margin-top:18px"><figure class="card qc"><blockquote>«Руководство оценило такую инициативу к обучению. Чувствую себя более грамотным и уверенным специалистом.»</blockquote><figcaption>Выпускник курса повышения квалификации</figcaption></figure><figure class="card qc"><blockquote>«Сейчас шеф получает необходимую информацию от меня.»</blockquote><figcaption>Выпускник курса повышения квалификации</figcaption></figure><figure class="card qc"><blockquote>«Я являюсь заместителем руководителя учреждения, который курирует вопросы капстроительства, это и побудило … пройти обучение по сметному делу, особенно учитывая изменения законодательста в этом направлении.»</blockquote><figcaption>Выпускник курса повышения квалификации</figcaption></figure></div>
     <div class="cta-band">
@@ -983,19 +1066,19 @@ section.soft{background:var(--sky)}
         <span class="for">Перешли на ресурсно-индексный метод</span>
         <h3>КПК РИМ</h3>
         <p class="idea">Ресурсно-индексный метод по шагам: каждую цену в смете вы объясняете документом.</p>
-        <ul><li>Модули 3–6 подряд: нормативная база РИМ, локальная смета, конъюнктурный анализ, коэффициенты</li><li>3 практикума: локальная смета с ценами ФГИС ЦС на нужную дату, перевозка, конъюнктурный анализ — куратор проверяет, пока не останется замечаний</li></ul>
+        <ul><li>Программа и удостоверение одни, разный набор под задачу: здесь в фокусе ресурсно-индексный метод — нормативная база РИМ, локальная смета, конъюнктурный анализ, коэффициенты (модули 3–6)</li><li>В фокусе 3 практикума из 5: локальная смета с ценами ФГИС ЦС на нужную дату, перевозка, конъюнктурный анализ — куратор проверяет, пока не останется замечаний</li></ul>
         <p class="vdoc">Удостоверение о повышении квалификации: «Ценообразование и сметное нормирование в строительстве», 72 ак. ч.</p>
-        <div class="pr">39 500 ₽<small>как у курса повышения квалификации · вариант — с 10 ноября</small></div>
+        <div class="pr">39 500 ₽<small>как у курса повышения квалификации · продажи варианта — с 10 ноября; старт обучения — 1-го числа каждого месяца</small></div>
         <a class="btn btn-main js-apply" href="https://academia-bti.ru/dr12?pick=b">Оставить заявку</a>
       </div>
       <div class="var v2" id="var-standart">
-        <span class="for">Нужно подтвердить квалификацию удостоверением</span>
+        <span class="for">Получить удостоверение о повышении квалификации на своё имя</span>
         <h3>КПК Профстандарт</h3>
         <p class="idea">Основные темы профессионального стандарта — по порядку и спокойно. После итогового теста — удостоверение о повышении квалификации на своё имя.</p>
         <ul><li>Основные темы профессионального стандарта: система ценообразования, состав сметной документации, сводный сметный расчёт</li><li>Итоговый тест на 100 вопросов (80 % для зачёта) — он же проверка себя по темам профстандарта; это не профессиональный экзамен</li></ul>
         <p class="fine" style="font-size:14px">Академия не центр оценки квалификации. Квалификации для специалистов по сметам утверждены; центров оценки по ним на 2 ноября 2026 года нет.</p>
         <p class="vdoc">Удостоверение о повышении квалификации: «Ценообразование и сметное нормирование в строительстве», 72 ак. ч.</p>
-        <div class="pr">39 500 ₽<small>как у курса повышения квалификации · вариант — с 10 ноября</small></div>
+        <div class="pr">39 500 ₽<small>как у курса повышения квалификации · продажи варианта — с 10 ноября; старт обучения — 1-го числа каждого месяца</small></div>
         <a class="btn btn-main js-apply" href="https://academia-bti.ru/dr12?pick=b">Оставить заявку</a>
       </div>
       <div class="var v3" id="var-grand">
@@ -1077,7 +1160,7 @@ section.soft{background:var(--sky)}
       <details><summary>Это курс для начинающих?</summary><div class="a"><p>Нет. Это курс не про то, что такое смета, а про то, на каком основании стоит каждая цифра: норма, цена, коэффициент — документ и пункт. Он для тех, кто уже составляет или проверяет сметы; хватит и 6–8 месяцев практики.</p></div></details>
       <details><summary>Я проверяю чужие сметы, а не составляю. Мне подойдёт?</summary><div class="a"><p>Да. Курс идёт по пути цены — от выбора документа до сметы контракта. Вы видите, на каком основании строится каждая цифра, и знаете, где искать слабое место в чужой смете. Модули про НМЦК и смету контракта — как раз сторона заказчика.</p></div></details>
       <details><summary>Кто проверяет практикумы? А если вернут на доработку?</summary><div class="a"><p>Практикумы проверяет куратор Академии — практикующий специалист сметного дела, а не тест и не робот. Разбор письменный: что верно, что доработать и на какой документ опереться. Куратор направляет, а решение находите вы — так навык остаётся у вас.</p><p>Возврат на доработку — не отсев: цель, чтобы вы довели расчёт до конца и могли его защитить. Куратор на связи 3 месяца: за это время проверяет, пока не останется замечаний, и помогает обосновать свою позицию.</p></div></details>
-      <details><summary>Нет времени. Сколько нужно заниматься?</summary><div class="a"><p>В уроках — более 23 часов видео, длинные уроки разбиты на части, к каждому — задание. Если проходить курс 3 месяца, это около 15–20 минут видео в день плюс задания и практикумы. Темп выбираете сами. Материалы открыты полгода, куратор на связи 3 месяца.</p></div></details>
+      <details><summary>Нет времени. Сколько нужно заниматься?</summary><div class="a"><p>Уроки в записи, средняя длина около 40 минут, длинные разбиты на части, к каждому — задание. Проходите в своём темпе: материалы открыты полгода, куратор на связи 3 месяца.</p></div></details>
       <details><summary>Удостоверение нужно к аттестации. Как его получить?</summary><div class="a"><p>Пройдите модули и практикумы, затем сдайте итоговый тест — он открывается, когда пройдены все модули потока; график заключительных модулей менеджер назовёт до оплаты. Удостоверение выдаём примерно через 2 недели после теста — электронно и Почтой России, сведения вносятся в ФИС ФРДО.</p></div></details>
       <details><summary>Документ официальный? Сведения внесут в ФИС ФРДО?</summary><div class="a"><p>Удостоверение о повышении квалификации установленного образца на 72 академических часа на ваше имя; сведения вносятся в ФИС ФРДО. Обучение проводит АНО ДПО «Центр образования и консультирования» по лицензии № Л035-01272-16/00371642 — её можно проверить в реестре Рособрнадзора.</p><p>Требования аттестационных комиссий разные, поэтому за комиссию мы не ручаемся: пришлём программу с часами по модулям и копию лицензии — сверьте их с вашим требованием.</p></div></details>
       <details><summary>Всё это есть бесплатно — зачем курс?</summary><div class="a"><p>Быть в курсе можно бесплатно: методики открыты, вебинары Академии тоже. Знать, как применить изменение в своей смете и защитить цифру, — другое. Бесплатно не получить проверки практикумов куратором и удостоверения.</p><p>Ирина Евстратова, руководитель сметного отдела из Новокузнецка, с 2015 года была с Академией на вебинарах — и пришла на курс: «За последние три года произошло много изменений и повышение квалификации неизбежно…»</p></div></details>
@@ -1113,14 +1196,14 @@ section.soft{background:var(--sky)}
       <div class="track"><figure class="q"><p>«Больше всего для меня были важны уроки именно знание сметчика подрядной организации.»</p><figcaption class="by"><b>Анжелика Каныгина</b><span>курс повышения квалификации и Годовая система, прежняя редакция</span></figcaption></figure><figure class="q"><p>«Во время прохождения курса и выполнения различных занятий я получала обратную отдачу от куратора.»</p><figcaption class="by"><b>Анастасия Саидова</b><span>курс повышения квалификации, видеоотзыв, сентябрь 2026</span></figcaption></figure><figure class="q"><p>«Очень понравился модуль про сводный сметный расчёт, когда мы делали очень много практики, про временные здания и сооружения, про зимнее удорожание.»</p><figcaption class="by"><b>Виктория Киркина</b><span>Курс начинающего сметчика, Годовая система и курс повышения квалификации</span></figcaption></figure><figure class="q"><p>«спасибо, заполнила небольшие пробелы по нормативке»</p><figcaption class="by"><b>Елена Анненко</b><span>курс повышения квалификации, 2026</span></figcaption></figure><figure class="q"><p>«…В результате я повысила свою квалификацию и самооценку приобрела в защите своих смет.»</p><figcaption class="by"><b>Альфия Бикмеева</b><span>выпускница Академии, видеоотзыв, август 2026</span></figcaption></figure><figure class="q"><p>«Очень сжато и конкретно подан материал»</p><figcaption class="by"><b>Наталья Бутусова</b><span>курс повышения квалификации, 2026</span></figcaption></figure><figure class="q"><p>«Прошла обучение… справлялась с заданиями с помощью куратора и самостоятельно, как получалось.»</p><figcaption class="by"><b>Мария Лебедева</b><span>курс повышения квалификации «Переход», прежняя редакция</span></figcaption></figure><div class="dup" aria-hidden="true"><figure class="q"><p>«Больше всего для меня были важны уроки именно знание сметчика подрядной организации.»</p><figcaption class="by"><b>Анжелика Каныгина</b><span>курс повышения квалификации и Годовая система, прежняя редакция</span></figcaption></figure><figure class="q"><p>«Во время прохождения курса и выполнения различных занятий я получала обратную отдачу от куратора.»</p><figcaption class="by"><b>Анастасия Саидова</b><span>курс повышения квалификации, видеоотзыв, сентябрь 2026</span></figcaption></figure><figure class="q"><p>«Очень понравился модуль про сводный сметный расчёт, когда мы делали очень много практики, про временные здания и сооружения, про зимнее удорожание.»</p><figcaption class="by"><b>Виктория Киркина</b><span>Курс начинающего сметчика, Годовая система и курс повышения квалификации</span></figcaption></figure><figure class="q"><p>«спасибо, заполнила небольшие пробелы по нормативке»</p><figcaption class="by"><b>Елена Анненко</b><span>курс повышения квалификации, 2026</span></figcaption></figure><figure class="q"><p>«…В результате я повысила свою квалификацию и самооценку приобрела в защите своих смет.»</p><figcaption class="by"><b>Альфия Бикмеева</b><span>выпускница Академии, видеоотзыв, август 2026</span></figcaption></figure><figure class="q"><p>«Очень сжато и конкретно подан материал»</p><figcaption class="by"><b>Наталья Бутусова</b><span>курс повышения квалификации, 2026</span></figcaption></figure><figure class="q"><p>«Прошла обучение… справлялась с заданиями с помощью куратора и самостоятельно, как получалось.»</p><figcaption class="by"><b>Мария Лебедева</b><span>курс повышения квалификации «Переход», прежняя редакция</span></figcaption></figure></div></div>
     </div>
   <div class="wrap">
-    <p class="note" style="margin-top:16px">Отзывы — дословно из личного кабинета, комментариев к урокам и видеоотзывов. Публикуем с письменного согласия авторов. «Прежняя редакция» — автор учился по программе до обновления 2026 года. Результат личный и зависит от опыта и условий работы.</p>
+    <p class="note" style="margin-top:16px">Отзывы — дословно из личного кабинета, комментариев к урокам и видеоотзывов. Публикуем с письменного согласия авторов. «Прежняя редакция» — автор учился по программе до обновления 2026 года.</p>
   </div>
 </section>
 
 <!-- 15. Финал -->
 <section class="final">
   <div class="wrap">
-    <ul class="faces" aria-label="Эксперты курса"><li><img src="img/exp_valieva.webp" alt="Фирая Валиева" width="320" height="320" loading="lazy"></li><li><img src="img/exp_mitrofanova.webp" alt="Инна Митрофанова" width="320" height="320" loading="lazy"></li><li><img src="img/exp_dyachenko.webp" alt="Людмила Дьяченко" width="320" height="320" loading="lazy"></li><li><img src="img/exp_vorontsova.webp" alt="Анна Воронцова" width="320" height="320" loading="lazy"></li><li><img src="img/exp_pritchina.webp" alt="Светлана Притчина" width="320" height="320" loading="lazy"></li><li><img src="img/exp_kiseleva.webp" alt="Тамара Киселёва" width="320" height="320" loading="lazy"></li></ul>
+    <ul class="faces" aria-label="Эксперты курса"><li class="rektor"><img src="img/exp_valieva.webp" alt="Фирая Валиева" width="320" height="320" loading="lazy"></li><li><img src="img/exp_dyachenko.webp" alt="Людмила Дьяченко" width="320" height="320" loading="lazy"></li><li><img src="img/exp_pritchina.webp" alt="Светлана Притчина" width="320" height="320" loading="lazy"></li><li><img src="img/exp_mitrofanova.webp" alt="Инна Митрофанова" width="320" height="320" loading="lazy"></li><li><img src="img/exp_vorontsova.webp" alt="Анна Воронцова" width="320" height="320" loading="lazy"></li><li><img src="img/exp_kiseleva.webp" alt="Тамара Киселёва" width="320" height="320" loading="lazy"></li></ul>
     <h2>Снизьте риск ошибок в своих сметах — оставьте заявку</h2>
     <p class="lead">Вам позвонят из Академии: ответим на вопросы, покажем модуль под вашу задачу и поможем выбрать оплату. Заявка — это разговор, а не оплата.</p>
     <div class="cta-row" style="margin-top:28px">
@@ -1153,7 +1236,8 @@ section.soft{background:var(--sky)}
       <p>** Если вы оплачиваете обучение сами и платите НДФЛ по ставке 13 %: до 13 % стоимости обучения, в пределах годового лимита социальных налоговых вычетов (ст. 219 НК РФ). Для вычета Академия по вашему запросу выдаёт справку об оплате образовательных услуг для налогового органа.</p>
       <p>*** Более 10 000 человек оплатили обучение в Академии — по данным учебной платформы на 20.10.2026.</p>
       <p>Отзывы и фото опубликованы с письменного согласия авторов; цитаты — дословно, сокращения отмечены многоточием. Результат зависит от опыта и условий работы.</p>
-      <p>Цены на ноябрь 2026 года. Версия страницы: <span id="ver">02.11.2026 22:42</span>.</p>
+      <p>Изображения: документы — Методика определения сметной стоимости строительства, утверждённая приказом Минстроя России от 04.08.2020 № 421/пр (официальный документ); фото Живой встречи, удостоверения и экспертов — Академия сметного дела; фото Wikimedia Commons и StockSnap: Shixart1985 — CC BY 2.0, Oregon Department of Transportation — CC BY 2.0, Maximf — CC BY 3.0, Retired electrician, Helloquence, Kristin Hardwick, Green Chameleon и автор Unsplash — CC0.</p>
+      <p>Цены на ноябрь 2026 года. Версия страницы: <span id="ver">02.11.2026 23:19</span>.</p>
     </div>
   </div>
 </footer>
