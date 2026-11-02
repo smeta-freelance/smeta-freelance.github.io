@@ -409,7 +409,7 @@
 </div>
 <h2 class="ui-h2 hb-h2">Мои работы</h2><div class="hb-list" id="ls"></div>
 <details class="hb-arch" id="arch" hidden><summary><svg class="ic"><use href="#h-archive"/></svg><span id="archh">Архив</span><svg class="ic ic--sm hb-chev"><use href="#h-chev-d"/></svg></summary><div class="hb-list" id="als"></div></details>
-</section><p class="hb-ver">Версия страницы: 03.11.2026 00:39 МСК</p></main>
+</section><p class="hb-ver">Версия страницы: 03.11.2026 00:51 МСК</p></main>
 <div class="ui-modal hb-ask" id="askm" role="dialog" aria-modal="true" aria-labelledby="askt"><div class="ui-modal__box">
 <span class="ui-modal__icon"><svg class="ic"><use href="#h-message"/></svg></span>
 <h2 class="ui-modal__title" id="askt">Написать Руслану</h2>
@@ -733,9 +733,9 @@ var LIVE=(function(){var Q=location.search;
   function base(){return SB.url.replace(/\/$/,'')+'/rest/v1/'}
   function poll(){fetch(base()+'pe_worker?select=seen_at,note&id=eq.mac',{headers:SBH()}).then(function(r){return r.ok?r.text():''}).then(function(s){var a=[];try{a=s?JSON.parse(s):[]}catch(e){}
     var w=a[0],age=w?(Date.now()-new Date(w.seen_at).getTime())/6e4:999;if(/[?&]live_pulse=old/.test(Q))age=999;
-    if(age>10)ST={k:'away',t:night()?'не на месте — отвечу утром, после 9:00 МСК':'ненадолго отошла — отвечу, как вернусь'};
-    else if(night())ST={k:'night',t:'нерабочее время — отвечу утром, после 9:00 МСК'};
-    else ST={k:'on',t:'в сети · отвечаю обычно за 2–5 минут'};paint()}).catch(function(){})}
+    if(age>10)ST={k:'away',t:'ненадолго отошла — отвечу, как вернусь'};
+    
+    else ST={k:'on',t:'в сети · работаю для Вас круглосуточно'};paint()}).catch(function(){})}
   function paint(){var b=$('#hbLive');if(!b||!ST.k)return;b.hidden=false;b.setAttribute('data-live',ST.k);b.querySelector('b').textContent=ST.t;
     var c=document.querySelector('#lv-card .lv-st');if(c){c.setAttribute('data-live',ST.k);c.innerHTML='<i></i>'+esc(ST.t[0].toUpperCase()+ST.t.slice(1))}}
   function nw(n){return n%10===1&&n%100!==11?'работа':n%10>=2&&n%10<=4&&(n%100<12||n%100>14)?'работы':'работ'}
@@ -746,7 +746,7 @@ var LIVE=(function(){var Q=location.search;
   function card(){var o=$('#lv-card');last=document.activeElement;var x=tot();
     if(!o){o=document.createElement('div');o.id='lv-card';o.className='lv-ov';o.setAttribute('role','dialog');o.setAttribute('aria-modal','true');o.setAttribute('aria-labelledby','lv-h');
       o.innerHTML='<div class="lv-box"><button type="button" class="lv-x" aria-label="Закрыть">✕</button><img class="lv-ph" src="img/gulya.jpg" alt="Гульнара Сафина"><h2 id="lv-h">Гульнара Сафина</h2><p class="lv-role">Дизайнер Академии сметного дела</p><p class="lv-st" role="status"><i></i>На связи</p>'
-        +'<ul class="lv-li"><li><b>График</b>пн–пт, 9:00–19:00 МСК. В другое время сообщения сохраняются — отвечу утром.</li><li><b>Сроки</b>Отвечаю обычно за 2–5 минут, слайды к уроку делаю за 15–30 минут.</li><li id="lv-n"><b>Сделали с Вами</b><span></span></li><li><b>Что я умею</b>План урока, слайды, запись урока.</li></ul>'
+        +'<ul class="lv-li"><li><b>График</b>Работаю для Вас круглосуточно, без выходных</li><li><b>Сроки</b>Отвечаю обычно за 2–5 минут, слайды к уроку делаю за 15–30 минут.</li><li id="lv-n"><b>Сделали с Вами</b><span></span></li><li><b>Что я умею</b>План урока, слайды, запись урока.</li></ul>'
         +'<p class="lv-ru">Если срочно — <button type="button" class="lv-rn">напишите Руслану</button>, основателю Академии.</p></div>';
       document.body.appendChild(o);o.addEventListener('click',function(e){if(e.target===o||e.target.closest('.lv-x'))close()});o.querySelector('.lv-rn').onclick=function(){close();var b=$('#ask');if(b&&!b.hidden)b.click()}}
     o.querySelector('#lv-n').hidden=!x.w;o.querySelector('#lv-n span').textContent=x.w+' '+nw(x.w)+(x.s?', '+x.s+' '+ns(x.s):'');o.querySelector('.lv-ru').hidden=!!($('#ask')||{}).hidden;
@@ -773,7 +773,7 @@ var LIVE=(function(){var Q=location.search;
     var g=$('#golos');if(g&&!g._lv){g._lv=1;g.onclick=golos}poll();if(!TK){TK=setInterval(function(){if(!document.hidden)poll()},60000)}}
   var TK=null;
   var GV=false;function greetV(){if(GV||ls('pe-hub-back')!=='1')return [];GV=true;var d={'доброе утро':'Доброе утро.','добрый день':'Добрый день.','добрый вечер':'Добрый вечер.'}[tod()],r=[];if(d)r.push(d);r.push('Рада, что Вы вернулись.');
-    if(ST.k==='night'||(ST.k==='away'&&night()))r.push('Отвечу утром, после девяти.');return r}   /* фразы Гули 02.11/17: один раз за загрузку */
+    if(false)r.push('Отвечу утром, после девяти.');return r}   /* фразы Гули 02.11/17: один раз за загрузку */
   function back(io){var L=['Рада Вас видеть.','Рада, что Вы зашли.','Хорошо, что Вы снова здесь.'];return io+', '+tod()+'! '+L[Math.floor(Math.random()*L.length)]}
   return {show:show,total:total,tod:tod,back:back,card:card,greetV:greetV}})();
 if(ME)try{LIVE.show(ME)}catch(x){}
