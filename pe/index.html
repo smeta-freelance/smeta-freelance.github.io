@@ -308,6 +308,12 @@
   .hb-more .ui-btn{flex:1 1 calc(50% - 4px);gap:6px;padding:0 8px;white-space:normal;text-align:left;line-height:1.15}.hb-more .ui-btn .ic{width:18px;height:18px}.hb-more .ui-btn--ghost{margin-left:0}
   .hb-acts .ui-btn--lg{font-size:19px}
 }
+.hb-who{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-weight:700;font-size:14px;color:var(--wc);background:color-mix(in srgb,var(--wc) 10%,#fff);border:1px solid color-mix(in srgb,var(--wc) 35%,#fff)}
+.hb-who::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--wc)}
+.hb-whobar{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.hb-wf{font:inherit;font-size:15px;font-weight:600;padding:7px 14px;border-radius:999px;border:1.5px solid color-mix(in srgb,var(--wc,#0F1E4A) 35%,#fff);background:#fff;color:var(--wc,#0F1E4A);cursor:pointer;min-height:40px}
+.hb-wf.on{background:var(--wc,#0F1E4A);color:#fff;border-color:var(--wc,#0F1E4A)}
+.hb-pwh{font-size:15px;color:#4A5578;margin:-4px 0 10px;min-height:20px}.hb-pwh .ok{color:#1E9E4A;font-weight:600}.hb-pwh .bad{color:#C62828;font-weight:600}
 </style></head><body class="ui-root">
 <!-- asd-icons — начало -->
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"><!-- asd-icons v1 — Lucide (ISC), вставлять сразу после <body>; вызов: <svg class="ic"><use href="#i-mic"/></svg> -->
@@ -370,7 +376,7 @@
 <p class="ui-text-muted">Я — Гульнара, дизайнер Академии. Ваш логин для входа: <b id="rgL"></b>. Придумайте, пожалуйста, пароль — не короче 8 знаков. Его знаете только Вы.</p>
 <div class="ui-field"><label class="ui-label" for="rp1">Новый пароль</label><input class="ui-input" id="rp1" type="password" autocomplete="new-password" required></div>
 <div class="ui-field"><label class="ui-label" for="rp2">Повторите пароль</label><input class="ui-input" id="rp2" type="password" autocomplete="new-password" required></div>
-<label class="hb-rem"><input id="rgShow" type="checkbox"> Показать пароль</label>
+<p class="hb-pwh" id="rgHint" aria-live="polite"></p><label class="hb-rem"><input id="rgShow" type="checkbox"> Показать пароль</label>
 <button type="submit" class="ui-btn ui-btn--primary ui-btn--lg ui-btn--block" id="rgGo"><svg class="ic"><use href="#h-login"/></svg>Сохранить пароль и войти</button><p class="hb-err" id="rgErr" role="alert"></p></form>
 <section id="me" hidden>
 <div class="hb-hello"><img class="hb-hello__ava" src="img/gulya.jpg" alt="Гульнара Сафина, дизайнер Академии"><div class="hb-hello__box"><span class="hb-hello__name">Гульнара Сафина <span>· дизайнер Академии</span></span><p class="hb-say" id="say"></p>
@@ -384,7 +390,7 @@
 </div>
 <h2 class="ui-h2 hb-h2">Мои работы</h2><div class="hb-list" id="ls"></div>
 <details class="hb-arch" id="arch" hidden><summary><svg class="ic"><use href="#h-archive"/></svg><span id="archh">Архив</span><svg class="ic ic--sm hb-chev"><use href="#h-chev-d"/></svg></summary><div class="hb-list" id="als"></div></details>
-</section><p class="hb-ver">Версия страницы: 02.11.2026 21:56 МСК</p></main>
+</section><p class="hb-ver">Версия страницы: 02.11.2026 22:10 МСК</p></main>
 <div class="ui-modal hb-ask" id="askm" role="dialog" aria-modal="true" aria-labelledby="askt"><div class="ui-modal__box">
 <span class="ui-modal__icon"><svg class="ic"><use href="#h-message"/></svg></span>
 <h2 class="ui-modal__title" id="askt">Написать Руслану</h2>
@@ -494,16 +500,23 @@ function bookNext(d,io){var b=d.book||{},T='«'+d.title+'»';return{idea:io+', �
   chapters:io+', книга '+T+': принято глав '+(b.ch_ok||0)+' из '+(b.ch_n||0)+'. Продолжим следующую главу?',check:io+', все главы приняты: '+T+'. Я предлагаю проверить нормы и термины.',layout:io+', книга '+T+' проверена. Я предлагаю собрать вёрстку.',done:io+', книга свёрстана: '+T+'. Спасибо!'}[b.stage||'idea']}
 var SEC_='ui-btn--secondary ui-btn--sm';
 function archBtn(d){return d.deck?(ARCH[d.deck]?'<button type="button" class="ui-btn ui-btn--ghost ui-btn--sm" data-unarch="'+esc(d.deck)+'">'+ic('i-undo')+'Вернуть из архива</button>':'<button type="button" class="ui-btn ui-btn--ghost ui-btn--sm" data-arch="'+esc(d.deck)+'">'+ic('h-archive')+'В архив</button>'):''}
-function head(kind,d,s){return '<div><div class="hb-card__tags"><span class="hb-kind">'+esc(kind)+'</span>'+badge(s)+'</div><h3 class="ui-h3">'+esc(d.title)+(d.who?' <small>· '+esc(d.who)+'</small>':'')+(d.demo&&!d.who?' <small>· пробная</small>':'')+'</h3>'}
+/* кабинет основателя (Руслан 02.11): тег эксперта — свой цвет у каждого, фильтр сверху; работы от новых к старым, дата создания */
+var WHOC=['#1E40D8','#1E9E4A','#B4235A','#B45309','#6D28D9','#0E7490','#9F1239','#4D7C0F'];
+function whoCol(w){var h=0;for(var i=0;i<w.length;i++)h=(h*31+w.charCodeAt(i))>>>0;return WHOC[h%WHOC.length]}
+function whoTag(w){return '<span class="hb-who" style="--wc:'+whoCol(w)+'">'+esc(w)+'</span>'}
+function head(kind,d,s){return '<div><div class="hb-card__tags">'+(d.who?whoTag(d.who):'')+'<span class="hb-kind">'+esc(kind)+'</span>'+badge(s)+'</div><h3 class="ui-h3">'+esc(d.title)+(d.demo&&!d.who?' <small>· пробная</small>':'')+'</h3>'}
+/* «Записать урок» — только когда все слайды приняты (Руслан 02.11: кнопка была видна при старых, непринятых слайдах) */
+var RECST=['record','recorded','mont','montErr','fix','lesson','accepted'];
+function made(d){return d.t>0?'<span>создано '+fmt(d.t)+'</span>':''}
 function bookCard(d){var s=bookSt(d),ma=bookAct(d),b=d.book||{},i=CARDS.push(d)-1;
   var acts='<div class="hb-more">'+(b.pdf&&!(ma&&ma[1]===b.pdf)?btnA(SEC_,['Скачать PDF',b.pdf,'i-download']):'')+(b.docx?btnA(SEC_,['Скачать Word',b.docx,'i-download']):'')+archBtn(d)+'</div>';
-  return '<article class="ui-card hb-card">'+head('книга',d,s)+'<div class="hb-meta">'+(d.mt?'<span>изменено '+fmt(d.mt)+'</span>':'')+'</div></div>'+
+  return '<article class="ui-card hb-card">'+head('книга',d,s)+'<div class="hb-meta">'+made(d)+(d.mt?'<span>изменено '+fmt(d.mt)+'</span>':'')+'</div></div>'+
     (ma?btnA('ui-btn--primary hb-main-act',ma):'<span class="hb-wait hb-main-act">'+ic('i-timer','ic--sm')+'Скоро</span>')+bookSteps(d)+acts+'</article>'}
 function card(d,live){if(d.book)return bookCard(d);var g=stage(d,live),s=status(d,live),ma=mainAct(d,g),acc=g.st==='late'?(isFounder(ME)?'':'Если срочно — напишите Руслану'):d.plan==='ready'?'Я предлагаю план урока — посмотрите и примите или поправьте':d.plan==='making'?'Покажу план урока через 1–2 минуты':d.building?'Пришлю ссылку, когда первые слайды будут готовы':'',i=CARDS.push(d)-1,z=d.url?d.url+'zapis/':'';
   var planSt=!!d.plan&&!d.n,contUrl=ma?ma[1]:(!d.building&&d.plan!=='making'&&d.url&&g.st!=='mont'&&g.st!=='busy'&&g.st!=='fix')?d.url:null;   /* этап плана: слайдов ещё нет — без записи и PPTX */
   var acts=d.building?'':'<div class="hb-more">'+(d.url&&!planSt&&contUrl!==d.url?btnA(SEC_,['Открыть слайды',d.url,'i-image']):'')+(d.pptx&&!planSt&&!(ma&&ma[1]===d.pptx)?btnA(SEC_,['Скачать для PowerPoint',d.pptx,'i-download']):'')+(d.pdf&&!planSt?btnA(SEC_,['Скачать PDF',d.pdf,'i-download']):'')+
-    ((d.vers||[]).length&&!planSt?'<button type="button" class="ui-btn '+SEC_+'" data-vers="'+i+'" aria-expanded="false">'+ic('h-history')+'История версий</button>':'')+(d.rec&&isLesson(d)&&!planSt&&!(ma&&ma[1]===z)?btnA(SEC_,['Записать урок',z,'i-video']):'')+archBtn(d)+'</div>';
-  return '<article class="ui-card hb-card">'+head(d.kind||'новая работа',d,s)+'<div class="hb-meta">'+(acc?'<span>'+esc(acc)+'</span>':'')+(d.mt?'<span>изменено '+fmt(d.mt)+'</span>':'')+'</div></div>'+
+    ((d.vers||[]).length&&!planSt?'<button type="button" class="ui-btn '+SEC_+'" data-vers="'+i+'" aria-expanded="false">'+ic('h-history')+'История версий</button>':'')+(d.rec&&isLesson(d)&&!planSt&&RECST.indexOf(g.st)>=0&&!(ma&&ma[1]===z)?btnA(SEC_,['Записать урок',z,'i-video']):'')+archBtn(d)+'</div>';
+  return '<article class="ui-card hb-card">'+head(d.kind||'новая работа',d,s)+'<div class="hb-meta">'+(acc?'<span>'+esc(acc)+'</span>':'')+made(d)+(d.mt?'<span>изменено '+fmt(d.mt)+'</span>':'')+'</div></div>'+
     (ma?btnA('ui-btn--primary hb-main-act',ma):g.st==='late'?'<span class="hb-main-act" aria-hidden="true"></span>':d.building||d.plan==='making'?'<span class="hb-wait hb-main-act">'+ic('i-timer','ic--sm')+'Скоро</span>':contUrl?btnA('ui-btn--primary hb-main-act',[d.n?'Открыть слайды':'Открыть',contUrl,'i-chev-r']):'<span class="hb-wait hb-main-act">'+ic('i-timer','ic--sm')+'Работаю</span>')+
     steps(d,g)+acts+'</article>'}
 function drawNext(){var box=$('#next'),io=(ME&&ME.io)||'',best=null,bi=-1,bt=-1;ALL.forEach(function(d,i){if(d.deck&&ARCH[d.deck])return;var t=!d.deck?Infinity:Math.max(d.t||0,d.mt||0);if(t>bt){bt=t;best=d;bi=i}});
@@ -545,6 +558,7 @@ async function show(e,ck,first){$('#f').hidden=true;$('#me').hidden=false;$('#ou
   pend=pend.filter(function(p){return Date.now()-p.t<2*DAY&&!e.decks.some(function(d){return d.t>=p.t-120000})});ls('pe-hub-new',JSON.stringify(pend));
   var all=pend.map(function(p){return{title:p.title||'Новая презентация',building:true}}).concat(e.decks);
   if(!all.length){$('#ls').innerHTML='<div class="ui-card ui-card--flat hb-empty">Пока работ нет. Нажмите «Новая работа с Гулей» — расскажите голосом, что нужно, или загрузите черновик.</div>';return}
+  if(isFounder(e))all.sort(function(a,b){return (b.building?Infinity:(b.t||b.mt||0))-(a.building?Infinity:(a.t||a.mt||0))});
   ALL=all;await loadArch();drawAll(null);var lv=await Promise.all(all.map(liveOf));drawAll(lv);
   if(!TICK)TICK=setInterval(async function(){if(document.hidden)return;var open=document.querySelector('.hb-vers');if(open)return;drawAll(await Promise.all(ALL.map(liveOf)))},60000)}   /* этапы обновляются сами раз в минуту */
 /* вход в кабинет — запись для Руслана (28.10): sf_comments «hub_login»; основателя не пишем; с одного браузера не чаще раза в 30 мин; ошибка не мешает входу */
@@ -552,7 +566,13 @@ function logIn(e,pw){try{if(e.role==='founder'||e.code==='valiev'||!e.code||e.te
   fetch(SB.url.replace(/\/$/,'')+'/rest/v1/sf_comments',{method:'POST',headers:Object.assign(SBH(),{'Content-Type':'application/json',Prefer:'return=minimal'}),
     body:JSON.stringify({section:'hub_login',voter:e.code,author:e.full||e.io,body:pw?'[вход] пароль':'[вход] запомнен'})}).catch(function(){})}catch(x){}}
 var ALL=[],LV=null,ARCH={},ME=null,TICK=null,SAY0=null;
-function drawAll(lv){if(lv)LV=lv;CARDS=[];var main=[],arc=[];ALL.forEach(function(d,i){var h=card(d,(LV||[])[i]||{busy:false,ok:0});(d.deck&&ARCH[d.deck]?arc:main).push(h)});
+var FW=null;
+function whoBar(){var b=$('#whobar');if(!b){b=document.createElement('div');b.id='whobar';b.className='hb-whobar';$('#ls').parentNode.insertBefore(b,$('#ls'))}
+  var n={};ALL.forEach(function(d){if(d.who&&!(d.deck&&ARCH[d.deck]))n[d.who]=(n[d.who]||0)+1});var ks=Object.keys(n).sort(function(a,b){return n[b]-n[a]||a.localeCompare(b)});
+  if(!isFounder(ME)||ks.length<2){b.hidden=true;FW=null;return}if(FW&&!n[FW])FW=null;b.hidden=false;
+  b.innerHTML='<button type="button" class="hb-wf'+(FW?'':' on')+'" data-wf="">Все · '+ks.reduce(function(s,k){return s+n[k]},0)+'</button>'+ks.map(function(k){return '<button type="button" class="hb-wf'+(FW===k?' on':'')+'" data-wf="'+esc(k)+'" style="--wc:'+whoCol(k)+'">'+esc(k)+' · '+n[k]+'</button>'}).join('')}
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-wf]');if(!b)return;FW=b.getAttribute('data-wf')||null;drawAll(null)});
+function drawAll(lv){if(lv)LV=lv;CARDS=[];var main=[],arc=[];whoBar();ALL.forEach(function(d,i){if(FW&&d.who!==FW&&!(d.deck&&ARCH[d.deck]))return;var h=card(d,(LV||[])[i]||{busy:false,ok:0});(d.deck&&ARCH[d.deck]?arc:main).push(h)});
   $('#ls').innerHTML=main.length?main.join(''):'<div class="ui-card ui-card--flat hb-empty">Все работы в архиве. Нажмите «Новая работа с Гулей», чтобы начать новую.</div>';$('#arch').hidden=!arc.length;$('#archh').textContent='Архив · '+arc.length;$('#als').innerHTML=arc.join('');drawNext();
   if(!main.length&&arc.length&&ME){LINE='';$('#say').textContent=ME.io+', Ваши работы — в разделе «Архив».';var nb=$('#next');nb.innerHTML='<a class="ui-btn ui-btn--secondary" href="#arch" data-openarch="1">'+ic('h-archive')+'Открыть архив ('+arc.length+')</a>';nb.hidden=false}
   else if(SAY0!==null&&ME){$('#say').textContent=WAITSAY||SAY0}}
@@ -595,7 +615,7 @@ document.addEventListener('click',function(e){var a=e.target.closest&&e.target.c
       .then(function(r){if(!r.ok)throw r.status;done()}).catch(function(){go.classList.remove('is-loading');msg('Не отправилось — проверьте интернет и нажмите ещё раз. Текст на месте.','err')})}})();
 function enter(x,e,kb,exp){keep(x.ck.s,x.ck.k,exp);ls('pe-hub-k',kb);ls('pe-hub-exp',String(exp));ls('pe-hub-who',e.code);show(e,x.ck,true)}
 (async function(){try{var who=ls('pe-hub-who'),kb=ls('pe-hub-k'),exp=+ls('pe-hub-exp')||0,ah=ls('pe-hub-acc');if(!who||!kb)return;if(exp<Date.now()){logout();return}
-  if(ah&&ACC[ah]){var y=await dec(b64(kb),ACC[ah].data);keep(y.ck.s,y.ck.k,exp);await show(y,y.ck,false);return}
+  if(ah&&ACC[ah]){var y;try{y=await dec(b64(kb),ACC[ah].data)}catch(x){if(await staleAcc(ah))return;throw x}keep(y.ck.s,y.ck.k,exp);await show(y,y.ck,false);return}
   var x=await dec(b64(kb)),e=x.experts.filter(function(z){return z.code===who})[0];if(e)await show(e,x.ck,false)}catch(e){logout()}})();
 /* логин: как набран или в русской раскладке (Вфкнф18 = Darya18) → ключ из ACC, нет такого — null */
 function lat(s){return String(s||'').trim().toLowerCase().split('').map(function(c){var k=RU.indexOf(c);return k>=0?EN[k]:c}).join('')}
@@ -605,11 +625,18 @@ async function fresher(v){if(!/^[A-Za-z0-9_-]{3,40}$/.test(lat(v)))return false;
   try{var t=await (await fetch(location.pathname+'?nc='+Date.now(),{cache:'no-store'})).text(),a=await sha('acc:'+lat(v));
     if(t.indexOf('"'+a+'"')<0)return false;try{sessionStorage.setItem('pe-fresh','1')}catch(e){}
     say_('Обновляю страницу — нажмите «Войти» ещё раз.',true);setTimeout(function(){location.replace(location.pathname+'?nc='+Date.now())},900);return true}catch(e){return false}}
+async function staleAcc(ah){try{if(sessionStorage.getItem('pe-fresh'))return false}catch(e){}
+  try{var t=await (await fetch(location.pathname+'?nc='+Date.now(),{cache:'no-store'})).text();if(t.indexOf('"'+ACC[ah].salt+'"')>=0)return false;
+    try{sessionStorage.setItem('pe-fresh','1')}catch(e){}say_('Обновляю страницу — нажмите «Войти» ещё раз.',true);setTimeout(function(){location.replace(location.pathname+'?nc='+Date.now())},900);return true}catch(e){return false}}
 /* приглашение (Руслан 02.11): #reg=<код>&l=<логин>&n=<имя> — логин даём мы, пароль человек придумывает сам.
    Ключ от пароля (как при входе) уходит на Mac под его открытым ключом; сам пароль никуда не уходит. */
 (function(){var q=new URLSearchParams((location.hash||'').slice(1)),T=q.get('reg'),L=q.get('l'),N=q.get('n');if(!T||!L)return;
   var f=$('#rg');$('#f').hidden=true;f.hidden=false;$('#rgL').textContent=L;$('#rgN').textContent=N?', '+N:'';
   try{history.replaceState(null,'',location.pathname)}catch(e){}
+  /* подсказка прямо под полями (Руслан 02.11: в первом поле 7 знаков, во втором 11 — непонятно, в чём ошибка) */
+  function hint(){var a=npw($('#rp1').value),b=npw($('#rp2').value),h=$('#rgHint');
+    h.innerHTML=(a.length>=8?'<span class="ok">✓ 8 знаков и больше</span>':'<span>Знаков: '+a.length+' из 8</span>')+(b?(a===b?' · <span class="ok">✓ пароли совпадают</span>':' · <span class="bad">пароли пока разные</span>'):'')}
+  $('#rp1').oninput=hint;$('#rp2').oninput=hint;$('#rp1').value='';$('#rp2').value='';setTimeout(function(){$('#rp1').value='';$('#rp2').value='';hint()},400);
   $('#rgShow').onchange=function(){var t=this.checked?'text':'password';$('#rp1').type=t;$('#rp2').type=t};
   function m(t,w){var e=$('#rgErr');e.textContent=t;e.className='hb-err'+(w?' is-wait':'')}
   var busy=false,H={apikey:SB.key,Authorization:'Bearer '+SB.key},API=SB.url.replace(/\/$/,'');
@@ -632,8 +659,8 @@ async function fresher(v){if(!/^[A-Za-z0-9_-]{3,40}$/.test(lat(v)))return false;
         m(nt.err==='invite'?'Эта ссылка уже использована или устарела. Напишите Руслану — он пришлёт новую.':'Не получилось сохранить пароль. Напишите, пожалуйста, Руслану.');return}
       var ah=await sha('acc:'+L.toLowerCase()),exp=Date.now()+30*DAY;
       ls('pe-hub-k',b2s(ba));ls('pe-hub-exp',String(exp));ls('pe-hub-who',L.toLowerCase());ls('pe-hub-acc',ah);
-      m('Пароль сохранён. Открываю кабинет…',true);
-      while(Date.now()-t0<600000){var tx=await (await fetch(location.pathname+'?nc='+Date.now(),{cache:'no-store'})).text();if(tx.indexOf('"'+ah+'"')>=0)break;
+      m('Пароль сохранён. Открываю кабинет — до минуты…',true);
+      while(Date.now()-t0<600000){var tx=await (await fetch(location.pathname+'?nc='+Date.now(),{cache:'no-store'})).text();if(tx.indexOf('"'+ah+'"')>=0&&tx.indexOf('"'+salt+'"')>=0)break;
         await new Promise(function(z){setTimeout(z,5000)})}
       location.replace(location.pathname+'?nc='+Date.now())}
     catch(e){busy=false;$('#rgGo').classList.remove('is-loading');
@@ -659,7 +686,7 @@ async function login(){var err=$('#err'),pk=$('#pick');pk.hidden=true;pk.innerHT
   say_('Проверяю…',true);
   var exp=$('#rem').checked?Date.now()+30*DAY:new Date().setHours(23,59,59,0),pw=npw($('#pw').value);
   var ah=await accKey($('#nm').value);if(!ah&&await fresher($('#nm').value))return;if(ah){try{var ba=await bits(pw,ACC[ah].salt),y=await dec(ba,ACC[ah].data);say_('');
-      keep(y.ck.s,y.ck.k,exp);ls('pe-hub-k',b2s(ba));ls('pe-hub-exp',String(exp));ls('pe-hub-who',y.code);ls('pe-hub-acc',ah);show(y,y.ck,true);return}catch(_){say_('Пароль не подходит. Проверьте и попробуйте ещё раз.');return}}
+      keep(y.ck.s,y.ck.k,exp);ls('pe-hub-k',b2s(ba));ls('pe-hub-exp',String(exp));ls('pe-hub-who',y.code);ls('pe-hub-acc',ah);show(y,y.ck,true);return}catch(_){if(await staleAcc(ah))return;say_('Пароль не подходит. Проверьте и попробуйте ещё раз.');return}}
   var x,b;try{b=await bits(pw);x=await dec(b)}catch(_){say_('Пароль не подходит. Проверьте и попробуйте ещё раз.');return}
   ls('pe-hub-acc',null);var kb=b2s(b),m=match($('#nm').value,x.experts);
   if(m.length===1){say_('');enter(x,m[0],kb,exp);return}
