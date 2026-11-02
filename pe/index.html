@@ -390,7 +390,7 @@
 </div>
 <h2 class="ui-h2 hb-h2">Мои работы</h2><div class="hb-list" id="ls"></div>
 <details class="hb-arch" id="arch" hidden><summary><svg class="ic"><use href="#h-archive"/></svg><span id="archh">Архив</span><svg class="ic ic--sm hb-chev"><use href="#h-chev-d"/></svg></summary><div class="hb-list" id="als"></div></details>
-</section><p class="hb-ver">Версия страницы: 02.11.2026 22:10 МСК</p></main>
+</section><p class="hb-ver">Версия страницы: 02.11.2026 22:27 МСК</p></main>
 <div class="ui-modal hb-ask" id="askm" role="dialog" aria-modal="true" aria-labelledby="askt"><div class="ui-modal__box">
 <span class="ui-modal__icon"><svg class="ic"><use href="#h-message"/></svg></span>
 <h2 class="ui-modal__title" id="askt">Написать Руслану</h2>
@@ -630,7 +630,10 @@ async function staleAcc(ah){try{if(sessionStorage.getItem('pe-fresh'))return fal
     try{sessionStorage.setItem('pe-fresh','1')}catch(e){}say_('Обновляю страницу — нажмите «Войти» ещё раз.',true);setTimeout(function(){location.replace(location.pathname+'?nc='+Date.now())},900);return true}catch(e){return false}}
 /* приглашение (Руслан 02.11): #reg=<код>&l=<логин>&n=<имя> — логин даём мы, пароль человек придумывает сам.
    Ключ от пароля (как при входе) уходит на Mac под его открытым ключом; сам пароль никуда не уходит. */
+/* 02.11 (Руслан): пароли выдаёт он сам — по старой ссылке-приглашению показываем обычный вход с подсказкой */
+var REG_OFF=true;
 (function(){var q=new URLSearchParams((location.hash||'').slice(1)),T=q.get('reg'),L=q.get('l'),N=q.get('n');if(!T||!L)return;
+  if(REG_OFF){try{history.replaceState(null,'',location.pathname)}catch(e){}$('#nm').value=L;setTimeout(function(){say_('Пароль для входа Вам пришлёт Руслан. Введите его здесь.',true);$('#pw').focus()},300);return}
   var f=$('#rg');$('#f').hidden=true;f.hidden=false;$('#rgL').textContent=L;$('#rgN').textContent=N?', '+N:'';
   try{history.replaceState(null,'',location.pathname)}catch(e){}
   /* подсказка прямо под полями (Руслан 02.11: в первом поле 7 знаков, во втором 11 — непонятно, в чём ошибка) */
