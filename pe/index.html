@@ -692,7 +692,7 @@ body.g2-login .g2-lava{display:block;width:72px;height:72px;border-radius:50%;ob
 </div>
 <h2 class="ui-h2 hb-h2">Мои работы</h2><div class="hb-list" id="ls"></div>
 <details class="hb-arch" id="arch" hidden><summary><svg class="ic"><use href="#h-archive"/></svg><span id="archh">Архив</span><svg class="ic ic--sm hb-chev"><use href="#h-chev-d"/></svg></summary><div class="hb-list" id="als"></div></details>
-</section><p class="hb-ver">Версия страницы: 04.11.2026 10:58 МСК</p></main>
+</section><p class="hb-ver">Версия страницы: 04.11.2026 11:05 МСК</p></main>
 <div class="ui-modal hb-ask" id="askm" role="dialog" aria-modal="true" aria-labelledby="askt"><div class="ui-modal__box">
 <span class="ui-modal__icon"><svg class="ic"><use href="#h-message"/></svg></span>
 <h2 class="ui-modal__title" id="askt">Написать Руслану</h2>
@@ -1170,7 +1170,7 @@ var G2=(function(){
     if(ME&&ME.panel)h+='<a href="'+esc(ME.panel)+'" role="menuitem">'+gi('land')+'Панель Академии</a>';
     if(ME&&!isFounder(ME)&&ME.code)h+='<button type="button" data-m="ask" role="menuitem">'+gi('msg')+'Написать Руслану</button>';
     h+='<button type="button" data-m="how" role="menuitem">'+gi('help')+'Как со мной работать</button><button type="button" data-m="old" role="menuitem">'+gi('undo')+'Прежний вид кабинета</button><button type="button" data-m="out" role="menuitem">'+gi('logout')+'Выйти</button>'+
-      '<div class="mver">Версия страницы: 04.11.2026 10:58 МСК</div>';m.innerHTML=h;q('#g2pmenu').innerHTML=h}
+      '<div class="mver">Версия страницы: 04.11.2026 11:05 МСК</div>';m.innerHTML=h;q('#g2pmenu').innerHTML=h}
   /* ---------- экраны ---------- */
   function view(v){q('#g2home').classList.toggle('on',v==='home');q('#g2work').classList.toggle('on',v!=='home');closeDrawer()}
   function top(t,st){var tt=q('#g2tt');q('#g2top').classList.toggle('bordered',!!t);tt.innerHTML=t?'<div class="t">'+esc(t)+'</div>'+(st?'<div class="st">'+esc(st)+'</div>':''):''}
