@@ -309,8 +309,17 @@
 /* окно «Написать Руслану» */
 .hb-ask .ui-modal__icon{background:var(--ui-blue-50);color:var(--ui-blue)}
 .hb-ask .ui-textarea{min-height:140px;margin-top:16px}
+.hb-ask .ui-btn--primary{background:#0D0E11;color:#fff;box-shadow:none}.hb-ask .ui-btn--primary:hover{background:#2A2D33}   /* свод 7.2: главная кнопка чёрная */
 .hb-ask__st{min-height:1.4em;margin:8px 0 0;font-size:var(--ui-fs-sm);color:var(--ui-g600);display:flex;align-items:flex-start;gap:8px}
 .hb-ask__st.is-ok{color:var(--ui-ok);font-weight:600}.hb-ask__st.is-err{color:var(--ui-rec-600)}
+/* свод 14.5 (04.11): 🎤 голосовое и 📎 скриншот (⌘V и файл) в письме Руслану */
+.hb-att{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:8px}.hb-att .ui-btn{min-height:44px}.hb-att .sym{font-size:18px;line-height:1}
+.hb-att .hint{font-size:15px;color:var(--ui-g600);flex:1 1 200px}
+.hb-rec{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 4px 0 12px;border-radius:999px;background:#fff;border:1.5px solid var(--ui-g900);font-weight:600;font-variant-numeric:tabular-nums}
+.hb-rec .wv{display:flex;align-items:center;gap:2px;height:24px;width:72px;overflow:hidden}.hb-rec .wv i{display:block;width:3px;height:4px;border-radius:3px;background:var(--ui-g900);transition:height .08s linear}
+.hb-rec .stop{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:0;background:var(--ui-g900);color:#fff;padding:0;cursor:pointer}.hb-rec .stop i{width:12px;height:12px;background:#fff;border-radius:2px}
+.hb-pv{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}.hb-pv:empty{display:none}.hb-pv img{max-width:160px;max-height:120px;border-radius:8px;border:1px solid var(--ui-g200)}.hb-pv audio{max-width:100%}
+.hb-ast{margin:4px 0 0;font-size:var(--ui-fs-sm);color:var(--ui-g600)}.hb-ast:empty{display:none}.hb-ast.is-ok{color:var(--ui-ok);font-weight:600}.hb-ast.is-err{color:var(--ui-g900);font-weight:600}
 .hb-ask__old{margin:16px 0 0;padding:0;list-style:none;font-size:var(--ui-fs-sm);color:var(--ui-g700)}
 .hb-ask__old:empty{display:none}
 .hb-ask__old::before{content:"Вы уже писали";display:block;font-weight:600;color:var(--ui-g500);margin-bottom:4px}
@@ -732,12 +741,14 @@ body.g2-login .g2-lava{display:block;width:72px;height:72px;border-radius:50%;ob
 </div>
 <h2 class="ui-h2 hb-h2">Мои работы</h2><div class="hb-list" id="ls"></div>
 <details class="hb-arch" id="arch" hidden><summary><svg class="ic"><use href="#h-archive"/></svg><span id="archh">Архив</span><svg class="ic ic--sm hb-chev"><use href="#h-chev-d"/></svg></summary><div class="hb-list" id="als"></div></details>
-</section><p class="hb-ver">Версия страницы: 04.11.2026 19:06 МСК</p></main>
+</section><p class="hb-ver">Версия страницы: 04.11.2026 19:26 МСК</p></main>
 <div class="ui-modal hb-ask" id="askm" role="dialog" aria-modal="true" aria-labelledby="askt"><div class="ui-modal__box">
 <span class="ui-modal__icon"><svg class="ic"><use href="#h-message"/></svg></span>
 <h2 class="ui-modal__title" id="askt">Написать Руслану</h2>
 <p class="ui-modal__text">Это сообщение прочитает только Руслан, основатель Академии. Вопрос, жалоба, просьба — пишите как есть.</p>
 <div class="ui-field" id="askf"><label class="ui-label" for="askx" hidden>Сообщение</label><textarea class="ui-textarea" id="askx" placeholder="Ваше сообщение Руслану"></textarea></div>
+<div class="hb-att"><button type="button" class="ui-btn ui-btn--secondary ui-btn--sm" id="askMic" aria-label="Записать голосовое сообщение"><span class="sym" aria-hidden="true">🎤</span><span>Голосовое</span></button><button type="button" class="ui-btn ui-btn--secondary ui-btn--sm" id="askShot" aria-label="Приложить скриншот или файл"><span class="sym" aria-hidden="true">📎</span><span>Скриншот</span></button><input type="file" id="askFile" accept="image/*,.pdf" hidden><span class="hint">или вставьте снимок экрана ⌘V / Ctrl+V прямо в поле</span></div>
+<p class="hb-ast" id="askAst" role="status" aria-live="polite"></p><div class="hb-pv" id="askPv"></div>
 <p class="hb-ask__st" id="asks" role="status" aria-live="polite"></p>
 <div class="ui-modal__acts"><button type="button" class="ui-btn ui-btn--secondary" id="askc"><svg class="ic"><use href="#i-x"/></svg>Закрыть</button><button type="button" class="ui-btn ui-btn--primary" id="askgo"><svg class="ic"><use href="#i-send"/></svg>Отправить Руслану</button></div>
 <ul class="hb-ask__old" id="askl"></ul>
@@ -982,12 +993,44 @@ document.addEventListener('click',function(e){var a=e.target.closest&&e.target.c
   function open(){last=document.activeElement;m.classList.add('is-open');f.classList.remove('is-error');ta.value=ls(DK())||'';msg(ta.value.trim()?'Черновик на месте — нажмите «Отправить Руслану».':'');list();setTimeout(function(){ta.focus()},60)}
   function close(){m.classList.remove('is-open');if(last&&last.focus)last.focus()}
   $('#ask').onclick=open;$('#askc').onclick=close;
+  /* 14.5: вложения — голосовое (sf-voice) и скриншот (pe-uploads; файл или ⌘V); в тело письма — строки «Голосовое: sf-voice/<путь> (N с)» / «Скриншот: pe-uploads/<путь>» (ссылку делает обработчик). Пробный вход test-* — в хранилище не пишем */
+  var AST=$('#askAst'),PV=$('#askPv'),MICB=$('#askMic'),FI=$('#askFile'),REC=null;
+  function ast(t,k){AST.textContent=t||'';AST.className='hb-ast'+(k?' is-'+k:'')}
+  function addLine(t){ta.value=(ta.value.trim()?ta.value.trim()+'\n':'')+t;ta.dispatchEvent(new Event('input'))}
+  function safe(n){var mm=String(n).match(/\.([A-Za-z0-9]{1,6})$/),e=mm?mm[1].toLowerCase():'bin';return(String(n).replace(/\.[^.]*$/,'').replace(/[^A-Za-z0-9_-]+/g,'_').slice(0,40)||'file')+'.'+e}
+  function put(b,path,body,ty){if(ME&&ME.test)return new Promise(function(r){setTimeout(function(){r(path)},300)});return fetch(SB.url.replace(/\/$/,'')+'/storage/v1/object/'+b+'/'+path.split('/').map(encodeURIComponent).join('/'),{method:'POST',headers:Object.assign({'Content-Type':ty,'x-upsert':'false'},SBH()),body:body}).then(function(r){if(!r.ok)throw r.status;return path})}
+  function who(){return (ME&&ME.code)||'anon'}
+  function shot(f){if(!f)return;if(f.size>25*1048576){ast('Файл больше 25 МБ — пришлите, пожалуйста, поменьше.','err');return}var nm=f.name||('screenshot_'+Date.now()+'.png'),p='ruslan/hub/'+who()+'/'+Date.now()+'_'+safe(nm);ast('Загружаю «'+nm+'»…');
+    put('pe-uploads',p,f,/^image\//.test(f.type)||/^application\/pdf/.test(f.type)?f.type:'application/octet-stream').then(function(){addLine('Скриншот: pe-uploads/'+p);ast('✓ Скриншот приложен — он уйдёт Руслану вместе с письмом.','ok');
+      if(/^image\//.test(f.type)){var im=document.createElement('img');im.alt='Скриншот';im.src=URL.createObjectURL(f);PV.appendChild(im)}}).catch(function(){ast('Не загрузилось — проверьте интернет и попробуйте ещё раз.','err')})}
+  $('#askShot').onclick=function(){FI.click()};FI.addEventListener('change',function(){var f=FI.files[0];FI.value='';shot(f)});
+  m.addEventListener('paste',function(e){var cd=e.clipboardData;if(!cd||!cd.files||!cd.files.length)return;var f=cd.files[0];if(!/^image\//.test(f.type))return;e.preventDefault();shot(f)});
+  function mmss(s){return Math.floor(s/60)+':'+('0'+s%60).slice(-2)}
+  MICB.onclick=function(){if(REC){REC.stop();return}if(!(window.MediaRecorder&&navigator.mediaDevices&&navigator.mediaDevices.getUserMedia)){ast('В этом браузере запись голоса недоступна — напишите, пожалуйста, текстом.','err');return}
+    var ac0=null;try{ac0=new(window.AudioContext||window.webkitAudioContext)()}catch(e){}
+    navigator.mediaDevices.getUserMedia({audio:true}).then(function(s){var ch=[],mr,t0=Date.now(),raf=0,an=null,buf=null,mt=['audio/webm;codecs=opus','audio/webm','audio/mp4'].filter(function(x){return MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(x)})[0]||'';
+      try{mr=mt?new MediaRecorder(s,{mimeType:mt}):new MediaRecorder(s)}catch(err){s.getTracks().forEach(function(t){t.stop()});ast('Запись не запустилась — напишите текстом.','err');return}
+      var pill=document.createElement('span');pill.className='hb-rec';pill.setAttribute('role','status');pill.setAttribute('aria-label','Идёт запись голосового');pill.innerHTML='<span class="wv" aria-hidden="true">'+new Array(19).join('<i></i>')+'</span><span class="tm">0:00</span><button type="button" class="stop" aria-label="Стоп — закончить запись" title="Стоп"><i></i></button>';
+      MICB.replaceWith(pill);var bars=[].slice.call(pill.querySelectorAll('.wv i')),tmE=pill.querySelector('.tm');
+      try{if(ac0&&ac0.resume)ac0.resume();an=ac0.createAnalyser();an.fftSize=1024;ac0.createMediaStreamSource(s).connect(an);buf=new Float32Array(an.fftSize)}catch(e){an=null}
+      var lvl=[],tick=setInterval(function(){tmE.textContent=mmss(Math.round((Date.now()-t0)/1000))},500);
+      function draw(){raf=requestAnimationFrame(draw);var v=.08;if(an){an.getFloatTimeDomainData(buf);var q=0;for(var k=0;k<buf.length;k++)q+=buf[k]*buf[k];v=Math.min(1,Math.sqrt(q/buf.length)*6)}lvl.push(v);if(lvl.length>bars.length)lvl.shift();for(var j=0;j<bars.length;j++){var x=lvl[lvl.length-bars.length+j];bars[j].style.height=(4+Math.round((x||0)*20))+'px'}}
+      draw();mr.ondataavailable=function(e){if(e.data&&e.data.size)ch.push(e.data)};
+      function stop(){clearInterval(tick);cancelAnimationFrame(raf);try{ac0&&ac0.close()}catch(e){}try{if(mr.state==='recording')mr.stop()}catch(e){}REC=null}
+      REC={stop:stop};pill.querySelector('.stop').onclick=stop;
+      mr.onstop=function(){s.getTracks().forEach(function(t){t.stop()});pill.replaceWith(MICB);var sec=Math.round((Date.now()-t0)/1000),ty=(mr.mimeType||'audio/webm').split(';')[0],blob=new Blob(ch,{type:ty});
+        if(blob.size<2000){ast('Не расслышала — запишите ещё раз чуть дольше или напишите текстом.','err');return}
+        var p='ruslan/hub/'+who()+'/'+Date.now()+(ty.indexOf('mp4')>=0?'.m4a':'.webm');ast('Отправляю голосовое…');
+        put('sf-voice',p,blob,ty).then(function(){addLine('Голосовое: sf-voice/'+p+' ('+sec+' с)');ast('✓ Голосовое приложено ('+mmss(sec)+') — уйдёт Руслану вместе с письмом.','ok');var a=document.createElement('audio');a.controls=true;a.src=URL.createObjectURL(blob);PV.appendChild(a)})
+          .catch(function(){ast('Голосовое не отправилось — проверьте интернет и запишите ещё раз.','err')})};
+      try{mr.start(1000)}catch(err){stop();s.getTracks().forEach(function(t){t.stop()});pill.replaceWith(MICB);ast('Запись не запустилась — напишите текстом.','err');return}
+      ast('Говорите… нажмите ■, когда закончите.')},function(err){try{ac0&&ac0.close()}catch(e){}var n=(err&&err.name)||'';ast(n==='NotAllowedError'||n==='SecurityError'?'Нет доступа к микрофону — разрешите его значком слева от адреса и нажмите 🎤 ещё раз. Или напишите текстом.':n==='NotFoundError'?'Не нашла микрофон — подключите наушники с микрофоном или напишите текстом.':'Запись не запустилась — напишите текстом.','err')})};
   m.addEventListener('click',function(e){if(e.target===m)close()});
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&m.classList.contains('is-open'))close()});
   ta.addEventListener('input',function(){ls(DK(),ta.value||null);f.classList.remove('is-error');msg(ta.value.trim()?'Черновик сохранён на этом устройстве.':'')});
   go.onclick=function(){var v=ta.value.trim();if(!v){f.classList.add('is-error');msg('Напишите, пожалуйста, хотя бы пару слов — и нажмите «Отправить Руслану» ещё раз.','err');ta.focus();return}
     if(!ME)return;go.classList.add('is-loading');msg('Отправляю…');
-    function done(){go.classList.remove('is-loading');ta.value='';ls(DK(),null);msg('Сообщение получено — Руслан прочитает.','ok');list()}
+    function done(){go.classList.remove('is-loading');ta.value='';PV.innerHTML='';ast('');ls(DK(),null);msg('Сообщение получено — Руслан прочитает.','ok');list()}
     if(ME.test){setTimeout(function(){var a=tabList();a.unshift({t:Date.now(),b:'[кабинет] '+v});tabList(a);done()},300);return}   /* пробный вход: в базу не пишем */
     fetch(SB.url.replace(/\/$/,'')+'/rest/v1/sf_comments',{method:'POST',headers:Object.assign(SBH(),{'Content-Type':'application/json',Prefer:'return=minimal'}),
       body:JSON.stringify({section:'hub_ruslan',voter:ME.code,author:ME.full||ME.io,body:'[кабинет] '+v})})
@@ -1213,7 +1256,7 @@ var G2=(function(){
     if(ME&&ME.panel)h+='<a href="'+esc(ME.panel)+'" role="menuitem">'+gi('land')+'Панель Академии</a>';
     if(ME&&!isFounder(ME)&&ME.code)h+='<button type="button" class="acc" data-m="ask" role="menuitem">'+gi('msg')+'Написать Руслану — вопрос или жалоба</button>';
     h+='<button type="button" data-m="set" role="menuitem">'+gi('gear')+'Настройки</button><button type="button" data-m="how" role="menuitem">'+gi('help')+'Как со мной работать</button><button type="button" data-m="old" role="menuitem">'+gi('undo')+'Прежний вид кабинета</button><button type="button" data-m="out" role="menuitem">'+gi('logout')+'Выйти</button>'+
-      '<div class="mver">Версия страницы: 04.11.2026 19:06 МСК</div>';m.innerHTML=h;q('#g2pmenu').innerHTML=h}
+      '<div class="mver">Версия страницы: 04.11.2026 19:26 МСК</div>';m.innerHTML=h;q('#g2pmenu').innerHTML=h}
   /* ---------- экраны ---------- */
   function view(v){q('#g2home').classList.toggle('on',v==='home');q('#g2work').classList.toggle('on',v!=='home');closeDrawer()}
   function top(t,st){var tt=q('#g2tt');q('#g2top').classList.toggle('bordered',!!t);tt.innerHTML=t?'<div class="t">'+esc(t)+'</div>'+(st?'<div class="st">'+esc(st)+'</div>':''):''}
