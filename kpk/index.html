@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Курс повышения квалификации — Академия сметного дела</title>
-<meta name="description" content="Курс повышения квалификации для специалистов сметного дела, которые составляют или проверяют сметы: 9 модулей, 6 экспертов Академии, 5 практикумов с куратором, удостоверение на 72 ак. ч.">
+<meta name="description" content="Курс повышения квалификации для специалистов сметного дела, которые составляют или проверяют сметы: 6 модулей, 6 экспертов Академии, 5 практикумов с куратором, удостоверение на 72 ак. ч.">
 <meta name="robots" content="noindex">
 <meta property="og:title" content="Курс повышения квалификации — Академия сметного дела">
 <meta property="og:description" content="Снижает риск ошибок при составлении и проверке смет. 6 экспертов, 5 практикумов с куратором, удостоверение на своё имя.">
@@ -166,12 +166,12 @@ section[id]{scroll-margin-top:80px}
 .ex p{font-size:14px;color:var(--muted);margin-top:4px}
 
 /* путь */
-.steps{margin-top:34px;display:grid;grid-template-columns:repeat(5,1fr);gap:14px;padding:0;list-style:none;counter-reset:s}
+.steps{margin-top:34px;display:grid;grid-template-columns:repeat(6,1fr);gap:14px;padding:0;list-style:none;counter-reset:s}
 .steps li{counter-increment:s;background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}
 .steps li::before{content:counter(s);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--pink);color:#fff;font-weight:800;margin-bottom:10px}
 .steps b{display:block;color:var(--navy);font-size:17px}
 .steps span{display:block;color:var(--muted);font-size:15px;margin-top:4px}
-@media(max-width:1000px){.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:1000px){.steps{grid-template-columns:1fr 1fr 1fr}}@media(max-width:700px){.steps{grid-template-columns:1fr 1fr}}
 @media(max-width:520px){.steps{grid-template-columns:1fr}}
 .pace{margin-top:30px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .pace .card{text-align:center}
@@ -265,7 +265,7 @@ footer .fn{margin-top:22px;border-top:1px solid var(--line);padding-top:18px;dis
 .stats span{display:block;color:var(--muted);margin-top:10px;font-size:15px}
 @media(max-width:900px){.stats{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:560px){.stats{grid-template-columns:1fr 1fr}}
-.flow{list-style:none;padding:0;margin:34px 0 0;display:grid;grid-template-columns:repeat(7,1fr);gap:0;position:relative}
+.flow{list-style:none;padding:0;margin:34px 0 0;display:grid;grid-template-columns:repeat(6,1fr);gap:0;position:relative}
 .flow::before{content:"";position:absolute;left:4%;right:4%;top:27px;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--blue),var(--pink))}
 .flow li{position:relative;text-align:center;padding:0 6px}
 .flow .dot{position:relative;z-index:1;width:58px;height:58px;margin:0 auto;border-radius:50%;background:#fff;border:4px solid var(--blue);display:grid;place-items:center;font-weight:800;color:var(--navy);font-size:15px}
@@ -277,7 +277,7 @@ footer .fn{margin-top:22px;border-top:1px solid var(--line);padding-top:18px;dis
 .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:22px;font-size:14px;color:var(--muted)}
 .legend i{display:inline-block;width:14px;height:14px;border-radius:50%;border:3px solid var(--blue);vertical-align:-2px;margin-right:6px}
 .legend i.p{border-color:var(--pink);background:var(--pink-50)}
-.outcome{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:14px;margin-top:30px}
+.outcome{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:14px;margin-top:30px}
 .outcome .card{border-top:4px solid var(--blue)}
 .outcome .card:first-child{border-top-color:var(--pink)}
 .outcome .card b{display:block;color:var(--navy);font-size:20px}
@@ -558,6 +558,19 @@ section.soft{background:var(--sky)}
 .ticks li::before{content:"✓";position:absolute;left:0;top:1px;width:26px;height:26px;border-radius:50%;background:var(--green-50);color:var(--green);display:grid;place-items:center;font-weight:800;font-size:14px}
 .ticks b{color:var(--navy)}
 .stats.s3{grid-template-columns:repeat(3,1fr)}
+.stats.s2{grid-template-columns:repeat(2,1fr)}
+@media(max-width:760px){.stats.s2{grid-template-columns:1fr}}
+/* логотип продукта и ролик */
+.prod-logo{display:block;height:54px;width:auto;margin-bottom:16px}
+.promo{display:grid;grid-template-columns:300px 1fr;gap:32px;align-items:center;margin-top:44px;background:#fff;border:1px solid var(--line);border-radius:22px;padding:24px}
+.promo video{width:100%;aspect-ratio:9/16;border-radius:16px;background:var(--navy);display:block}
+.promo .pl{height:46px;width:auto;display:block;margin-bottom:14px}
+.promo ul{margin:12px 0 18px;padding-left:20px;color:var(--muted);display:grid;gap:6px}
+@media(max-width:760px){.promo{grid-template-columns:1fr;padding:18px}.promo video{max-width:300px;margin:0 auto}}
+.choose .clogo{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.choose .clogo img{height:34px;width:auto}
+.mod .pk{display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:var(--pink);background:var(--pink-50);border-radius:999px;padding:3px 10px}
+.ex .rg{font-size:13px;color:var(--muted);margin-top:4px;line-height:1.4}
+
 @media(max-width:760px){.stats.s3{grid-template-columns:1fr}}
 .vq{margin-top:12px;padding:10px 0 0 14px;border-left:3px solid #ffc83d;font-style:italic;color:var(--navy);font-size:15px;line-height:1.45}
 .vq span{display:block;margin-top:4px;font-style:normal;font-size:12px;color:var(--muted)}
@@ -662,11 +675,13 @@ section.soft{background:var(--sky)}
 <section class="hero">
   <div class="wrap grid">
     <div>
+      <img class="prod-logo" src="img/logo_kpk.webp" alt="КПК · Квалификация · Курс повышения квалификации Академии сметного дела" width="800" height="198">
       <span class="kicker">Курс повышения квалификации Академии сметного дела · программа 2026</span>
       <h1>Снижайте риск ошибок <span class="hl">при составлении и проверке смет</span></h1>
       <p class="desc">Курс повышения квалификации для специалистов сметного дела, которые составляют или проверяют сметы</p>
       <p class="promise">Разбирайте изменения правил вместе с экспертами: вы знаете, что изменилось в ценообразовании и где это отражается в вашей смете, и не остаётесь один на один с потоком приказов.</p>
       <ul class="ticks">
+        <li><b>Упор на практику</b> — 5 практикумов из рабочих ситуаций, куратор проверяет каждый, пока не останется замечаний</li>
         <li><b>Работайте спокойно</b> — вы знаете, где что искать</li>
         <li><b>Знания по полочкам</b> — от модуля к модулю, пробелы закрываются</li>
         <li><b>Удостоверение на своё имя</b> — и знания, которые применяете в работе</li>
@@ -677,7 +692,7 @@ section.soft{background:var(--sky)}
         <a class="btn btn-ghost" href="#price">Цена и оплата</a>
       </div>
       <ul class="chips" style="margin-top:26px">
-        <li>9 модулей · 40 уроков</li>
+        <li>6 модулей · 40 уроков</li>
         <li>5 практикумов с куратором</li>
         <li>6 экспертов Академии</li>
         <li>72 ак. часа</li>
@@ -761,7 +776,7 @@ section.soft{background:var(--sky)}
 <section class="soft" id="zadachi">
   <div class="wrap">
     <span class="kicker">Ваша задача</span>
-    <h2>Пять задач — один курс повышения квалификации</h2>
+    <h2>Четыре задачи — один курс повышения квалификации</h2>
     <p class="lead">С этими вопросами к нам приходят в 2026 году. Программа, куратор и удостоверение — одни для всех; под задачу есть <a href="#varianty">варианты курса</a>.</p>
     <div class="cards c3 doors">
       <div class="card pain has-fig" id="rim">
@@ -776,14 +791,14 @@ section.soft{background:var(--sky)}
         <span class="n">02</span>
         <h3>«На каком основании?»</h3>
         <p class="q">Экспертиза вернула смету. Заказчик не пропускает коэффициент. Нужен ответ на узкую задачу — перевозка, оборудование, цена контракта.</p>
-        <p class="ans"><b>Вы получите:</b> к каждой норме, цене и коэффициенту — документ и пункт, который можно показать экспертизе и заказчику. Перевозка — модуль 4, оборудование и цена по коммерческим предложениям — модуль 5, коэффициенты — модуль 6, цена контракта — модули 8–9. Практикумы проверяет куратор, пока не останется замечаний.</p>
+        <p class="ans"><b>Вы получите:</b> к каждой норме, цене и коэффициенту — документ и пункт, который можно показать экспертизе и заказчику. Перевозка — модуль 2, оборудование и цена по коммерческим предложениям — модуль 3, коэффициенты — модуль 4, цена контракта — модуль 6. Практикумы проверяет куратор, пока не останется замечаний.</p>
       </div>
       <div class="card pain has-fig" id="srok">
         <figure class="fig"><div class="ph"><img src="img/udost_krupno.webp" alt="Удостоверение о повышении квалификации Академии сметного дела" loading="lazy" width="625" height="390"></div><figcaption>Удостоверение о повышении квалификации — на ваше имя</figcaption></figure>
         <span class="n">03</span>
         <h3>Получить удостоверение о повышении квалификации на своё имя</h3>
         <p class="q">Работодатель просит удостоверение к аттестации, к тендеру, к проверке штата. А повышение квалификации было давно.</p>
-        <p class="ans"><b>Вы получите:</b> удостоверение о повышении квалификации установленного образца на 72 ак. ч. на своё имя после итогового теста, сведения — в ФИС ФРДО. Основные темы профессионального стандарта — по порядку, с практикумами и куратором: знания можно привести в порядок заранее. Профэкзамен: квалификации для специалистов по сметам утверждены, центров, где его сдать, на 2 ноября 2026 года нет. Вариант <a href="#var-standart">«КПК Профстандарт»</a>.</p>
+        <p class="ans"><b>Вы получите:</b> удостоверение о повышении квалификации установленного образца на 72 ак. ч. на своё имя после итогового теста, сведения — в ФИС ФРДО. Основные темы профессионального стандарта — по порядку, с практикумами и куратором: знания можно привести в порядок заранее. Профэкзамен: в курсе есть тренажёр — 50 вопросов за 1 час по темам профессионального стандарта, проверьте себя заранее. Квалификации для специалистов по сметам утверждены, центров, где сдать экзамен, на 2 ноября 2026 года нет. Вариант <a href="#var-standart">«КПК Профстандарт»</a>.</p>
       </div>
       <div class="card pain has-fig" id="programma">
         <figure class="fig"><div class="ph"><img src="img/c_rabochiy_stol.webp" alt="Ноутбук и калькулятор на рабочем столе" loading="lazy" width="800" height="500"></div><figcaption>Вечером дома: практикум в вашей сметной программе</figcaption></figure>
@@ -791,13 +806,6 @@ section.soft{background:var(--sky)}
         <h3>Нет сметной программы дома</h3>
         <p class="q">Программа и база — только на работе, а учиться хочется вечером дома.</p>
         <p class="ans"><b>Вы получите:</b> практикумы — в программе, в которой работаете; нет её дома — скажите менеджеру, подберём вариант для практикумов до оплаты. Методика плюс обучение работе в ГРАНД-Смете — вариант <a href="#var-grand">«КПК + ГРАНД-Смета»</a>: запишитесь в лист ожидания, условия назовём, как только откроется набор.</p>
-      </div>
-      <div class="card pain has-fig" id="org">
-        <figure class="fig"><div class="ph"><img src="img/c_pismo.webp" alt="Человек подписывает документы за столом" loading="lazy" width="800" height="500"></div><figcaption>Счёт, договор и письмо руководителю — в день заявки</figcaption></figure>
-        <span class="n">05</span>
-        <h3>Учиться за счёт работодателя</h3>
-        <p class="q">Обучение нужно согласовать с руководителем и провести через бухгалтерию.</p>
-        <p class="ans"><b>Вы получите:</b> счёт и договор — в день заявки и готовое письмо руководителю: курс снижает риск ошибок при составлении и проверке смет, сотрудник учится обосновывать каждую цифру документом. Второй и следующий сотрудник — 19 750 ₽ одним счётом (на КПК РИМ и КПК Профстандарт).</p>
       </div>
       <div class="card pain door-cta">
         <h3>Ваша задача — в другом?</h3>
@@ -816,7 +824,7 @@ section.soft{background:var(--sky)}
     <h2>Что внутри курса повышения квалификации</h2>
     <div class="stats">
       <div><b>72</b><span>академических часа — столько в удостоверении</span></div>
-      <div><b>9</b><span>модулей — от системы цен до сметы контракта</span></div>
+      <div><b>6</b><span>модулей — от изменений правил до сметы контракта</span></div>
       <div><b>40</b><span>уроков в записи — более 23 часов видео с экспертами</span></div>
       <div><b>5</b><span>практикумов с проверкой куратора</span></div>
       <div><b>6</b><span>экспертов Академии ведут модули</span></div>
@@ -824,13 +832,12 @@ section.soft{background:var(--sky)}
     <h3 style="margin-top:54px;font-size:26px">Путь цены — так устроена программа</h3>
     <p class="lead" style="margin-top:8px">Курс идёт за стоимостью строительства шаг за шагом: от выбора документа до сметы контракта.</p>
     <ol class="flow">
-      <li><span class="dot">1–2</span><b>Документ и метод</b><span>что главнее, комплект документации</span></li>
-      <li class="pr"><span class="dot">3–4</span><b>Цена ресурса</b><span>РИМ, ФГИС ЦС на нужную дату</span><em>2 практикума</em></li>
-      <li class="pr"><span class="dot">5</span><b>Конъюнктурный анализ</b><span>цена по коммерческим предложениям</span><em>практикум</em></li>
-      <li><span class="dot">6</span><b>Коэффициенты</b><span>в том числе капремонт и реконструкция</span></li>
-      <li><span class="dot">7</span><b>Сводный расчёт</b><span>главы 1–12</span></li>
-      <li class="pr"><span class="dot">8</span><b>НМЦК</b><span>с индексами инфляции</span><em>2 практикума</em></li>
-      <li><span class="dot">9</span><b>Смета контракта</b><span>и её изменения по 44-ФЗ</span></li>
+      <li><span class="dot">1</span><b>Изменения и документ</b><span>что изменилось, какой документ главнее, комплект документации</span></li>
+      <li class="pr"><span class="dot">2</span><b>Ресурсно-индексный метод</b><span>цена ресурса ФГИС ЦС на нужную дату, перевозка</span><em>2 практикума</em></li>
+      <li class="pr"><span class="dot">3</span><b>Конъюнктурный анализ</b><span>цена по коммерческим предложениям</span><em>практикум</em></li>
+      <li><span class="dot">4</span><b>Коэффициенты</b><span>в том числе капремонт и реконструкция</span></li>
+      <li><span class="dot">5</span><b>Сводный расчёт</b><span>главы 1–12</span></li>
+      <li class="pr"><span class="dot">6</span><b>НМЦК и смета контракта</b><span>индексы инфляции, изменения по 44-ФЗ</span><em>2 практикума</em></li>
     </ol>
     <div class="legend"><span><i></i>номер модуля</span><span><i class="p"></i>модуль с практикумом, который проверяет куратор</span></div>
     <div class="rowdemo" aria-label="Схема: из чего складывается строка сметы">
@@ -847,45 +854,34 @@ section.soft{background:var(--sky)}
     <div class="outcome">
       <div class="card"><b>5 практикумов, проверенных куратором</b><ul><li>локальная смета ресурсно-индексным методом</li><li>перевозка</li><li>конъюнктурный анализ</li><li>индексы инфляции</li><li>расчёт НМЦК</li></ul></div>
       <div class="card"><b>Итоговый тест</b><p>80 % верных ответов для зачёта, 10 попыток.</p></div>
+      <div class="card"><b>Тренажёр к профэкзамену</b><p>50 вопросов за 1 час по темам профессионального стандарта — проверка себя перед независимой оценкой квалификации.</p></div>
       <div class="card"><b>Удостоверение на 72 ак. ч.</b><p>На ваше имя, сведения — в ФИС ФРДО.</p></div>
     </div>
-  </div>
-</section>
-
-<!-- 4. Шесть тем -->
-<section id="tems">
-  <div class="wrap">
-    <span class="kicker">Что освоите</span>
-    <h2>Шесть тем, на которых держится смета 2026 года</h2>
-    <div class="cards c3">
-      <div class="card topic"><span class="num">1</span><div><span class="tg">Изменения · модуль 1</span><h3>Главные изменения в ценообразовании</h3><p>Что изменилось на текущий момент и где это в вашей смете.</p></div></div>
-      <div class="card topic"><span class="num">2</span><div><span class="tg">Метод · модули 3–4</span><h3>РИМ — досконально</h3><p>Локальная смета ресурсно-индексным методом с ценами ФГИС ЦС на нужную дату и перевозкой — каждую строку объясняете.</p></div></div>
-      <div class="card topic"><span class="num">3</span><div><span class="tg">Обоснование цены · модуль 5</span><h3>Конъюнктурный анализ</h3><p>Цена ресурса подтверждена коммерческими предложениями — её проще отстоять при проверке.</p></div></div>
-      <div class="card topic"><span class="num">4</span><div><span class="tg">Коэффициенты · модуль 6</span><h3>Повышающие и понижающие коэффициенты</h3><p>В том числе при капремонте и реконструкции: каждый подтверждён документом — спокойно объясняете его эксперту.</p></div></div>
-      <div class="card topic"><span class="num">5</span><div><span class="tg">Расчёт · модуль 7</span><h3>Сводный сметный расчёт</h3><p>Главы 1–12: каждая строка опирается на документ, а не на старый расчёт.</p></div></div>
-      <div class="card topic"><span class="num">6</span><div><span class="tg">Закупки и контракт · модули 8–9</span><h3>НМЦК и смета контракта</h3><p>Расчёт НМЦК с индексами инфляции и изменения сметы контракта в случаях, допускаемых 44-ФЗ: каждая цифра НМЦК — с основанием, такую НМЦК проще защитить перед заказчиком и контролем.</p></div></div>
+    <div class="promo">
+      <video src="img/promo_kpk.mp4" poster="img/promo_kpk_poster.jpg" controls muted playsinline preload="none" aria-label="Ролик о курсе повышения квалификации, 20 секунд"></video>
+      <div><img class="pl" src="img/logo_kpk.webp" alt="КПК · Квалификация · Курс повышения квалификации" width="800" height="198" loading="lazy">
+        <h3>Курс повышения квалификации — за 20 секунд</h3>
+        <ul><li>правила 2026 года изменились — разбираем их вместе с экспертами</li><li>5 практикумов с куратором</li><li>6 экспертов Академии</li><li>удостоверение на своё имя</li></ul>
+        <a class="btn btn-main js-apply" href="https://academia-bti.ru/dr12?pick=b">Оставить заявку</a></div>
     </div>
-    <p class="quote-line"><b>Главный навык, который тренирует курс:</b> обосновать каждую цифру сметы документом — норму шифром ФСНБ и объёмом по проекту, цену — ФГИС ЦС или конъюнктурным анализом, коэффициент — техчастью сборника или пунктом методики.</p>
   </div>
 </section>
 
-<!-- 5. Программа -->
+<!-- 4–5. Программа: 6 модулей (Руслан 04.11.2026: «на самом деле 6 модулей… даже понятнее будет») -->
 <section class="soft" id="program">
   <div class="wrap">
     <span class="kicker">Программа</span>
-    <h2>9 модулей — путь стоимости от системы ценообразования до сметы контракта</h2>
+    <h2>6 модулей — шесть тем, на которых держится смета 2026 года</h2>
     <div class="mods">
-      <div class="mod"><span class="mn">Модуль 1</span><div><h3>Система ценообразования и этапы определения стоимости</h3><p>Уверенно выбираете действующий нормативный документ и понимаете, какой главнее.</p></div><div class="who">Фирая Валиева<span>ректор Академии</span></div></div>
-      <div class="mod"><span class="mn">Модуль 2</span><div><h3>Состав сметной документации</h3><p>Корректно собираете комплект: метод, уровень цен, пояснительная записка, ВОР — документы реже возвращают.</p></div><div class="who">Инна Митрофанова, Анна Воронцова</div></div>
-      <div class="mod"><span class="mn">Модуль 3</span><div><h3>Нормативная база РИМ</h3><p>Обоснованно читаете сметную цену труда, машин и материалов, накладные расходы и сметную прибыль.</p></div><div class="who">Фирая Валиева, Тамара Киселёва</div></div>
-      <div class="mod"><span class="mn">Модуль 4</span><div><h3>Ресурсно-индексный метод</h3><p>Корректно считаете локальную смету РИМ с ценами ФГИС ЦС на нужную дату и перевозкой. Практикумы: смета РИМ и перевозка.</p></div><div class="who">Людмила Дьяченко, Инна Митрофанова</div></div>
-      <div class="mod"><span class="mn">Модуль 5</span><div><h3>Конъюнктурный анализ</h3><p>Качественно делаете конъюнктурный анализ: цена ресурса подтверждена коммерческими предложениями. Практикум.</p></div><div class="who">Инна Митрофанова</div></div>
-      <div class="mod"><span class="mn">Модуль 6</span><div><h3>Понижающие и повышающие коэффициенты</h3><p>Обоснованно применяете коэффициенты, в том числе при капремонте и реконструкции.</p></div><div class="who">Людмила Дьяченко, Анна Воронцова</div></div>
-      <div class="mod"><span class="mn">Модуль 7</span><div><h3>Сводный сметный расчёт</h3><p>Обоснованно собираете сводный сметный расчёт по главам 1–12.</p></div><div class="who">Инна Митрофанова</div></div>
-      <div class="mod"><span class="mn">Модуль 8</span><div><h3>НМЦК</h3><p>Корректно рассчитываете начальную (максимальную) цену контракта с индексами инфляции. Практикумы: индексы инфляции и расчёт НМЦК.</p></div><div class="who">Светлана Притчина</div></div>
-      <div class="mod"><span class="mn">Модуль 9</span><div><h3>Смета контракта</h3><p>Корректно составляете смету контракта и вносите в неё изменения в случаях, допускаемых 44-ФЗ.</p></div><div class="who">Светлана Притчина</div></div>
+      <div class="mod"><span class="mn">Модуль 1</span><div><h3>Главные изменения в ценообразовании</h3><p>Что изменилось на текущий момент и где это в вашей смете: систему ценообразования, какой нормативный документ главнее и как собрать комплект сметной документации — метод, уровень цен, пояснительная записка, ВОР.</p></div><div class="who">Фирая Валиева, Инна Митрофанова, Анна Воронцова</div></div>
+      <div class="mod"><span class="mn">Модуль 2</span><div><h3>Ресурсно-индексный метод — досконально</h3><p>Нормативная база ресурсно-индексного метода и локальная смета с ценами ФГИС ЦС на нужную дату и перевозкой: каждую строку объясняете — откуда цена труда, машин и материалов, накладные расходы и сметная прибыль.</p><span class="pk">2 практикума: локальная смета ресурсно-индексным методом и перевозка</span></div><div class="who">Фирая Валиева, Людмила Дьяченко, Инна Митрофанова, Тамара Киселёва</div></div>
+      <div class="mod"><span class="mn">Модуль 3</span><div><h3>Конъюнктурный анализ</h3><p>Цена ресурса подтверждена коммерческими предложениями — её проще отстоять при проверке.</p><span class="pk">Практикум: конъюнктурный анализ</span></div><div class="who">Инна Митрофанова</div></div>
+      <div class="mod"><span class="mn">Модуль 4</span><div><h3>Повышающие и понижающие коэффициенты</h3><p>В том числе при капремонте и реконструкции: каждый коэффициент подтверждён документом — спокойно объясняете его эксперту.</p></div><div class="who">Людмила Дьяченко, Анна Воронцова</div></div>
+      <div class="mod"><span class="mn">Модуль 5</span><div><h3>Сводный сметный расчёт</h3><p>Главы 1–12: каждая строка опирается на документ, а не на старый расчёт.</p></div><div class="who">Инна Митрофанова</div></div>
+      <div class="mod"><span class="mn">Модуль 6</span><div><h3>НМЦК и смета контракта</h3><p>Расчёт начальной (максимальной) цены контракта с индексами инфляции и изменения сметы контракта в случаях, допускаемых 44-ФЗ: каждая цифра — с основанием, такую НМЦК проще защитить перед заказчиком и контролем.</p><span class="pk">2 практикума: индексы инфляции и расчёт НМЦК</span></div><div class="who">Светлана Притчина</div></div>
     </div>
-    <p class="note mods-note">Заключительные модули открываются по графику потока — график назовём до оплаты. Программа 2026 года; курс обновляем при изменениях нормативной базы и выходе новых нормативных документов.</p>
+    <p class="quote-line"><b>Главный навык, который тренирует курс:</b> обосновать каждую цифру сметы документом — норму шифром ФСНБ и объёмом по проекту, цену — ФГИС ЦС или конъюнктурным анализом, коэффициент — техчастью сборника или пунктом методики.</p>
+    <p class="note mods-note">40 уроков по порядку: длинные уроки разбиты на части. Заключительные модули открываются по графику потока — график назовём до оплаты. Программа 2026 года; курс обновляем при изменениях нормативной базы и выходе новых нормативных документов.</p>
     <div class="cta-band">
       <div><b>Ваша задача — в каком модуле?</b><span>Назовите её в заявке: менеджер покажет модуль и урок и назовёт график потока.</span></div>
       <div class="cta-row"><a class="btn btn-main js-apply" href="https://academia-bti.ru/dr12?pick=b">Оставить заявку</a><a class="btn btn-ghost" href="#price">Цена и оплата</a></div>
@@ -922,20 +918,23 @@ section.soft{background:var(--sky)}
     <h2>Учитесь у практиков, которые работают в сметном деле</h2>
     <p class="quote-line">«Так же могу отметить лекторов, которые расщепляли материал методичек … своими примерами из жизни или логическим разбором.»<span>Выпускник курса повышения квалификации</span></p>
     <div class="ex-intro">
-    <p class="lead">Нормативный текст разбирают 6 экспертов Академии, которые сами работают в сметном деле: на примерах, по логике, простым языком. Среди них — ректор Академии и руководитель Экспертного совета. Под портретом — модули, которые ведёт эксперт.</p>
+    <p class="lead">Нормативный текст разбирают 6 экспертов Академии, которые сами работают в сметном деле: на примерах, по логике, простым языком. Среди них — ректор Академии и руководитель Экспертного совета.</p>
     <figure class="fig"><div class="ph"><img src="img/valieva_za_rabotoy.webp" alt="Фирая Валиева за рабочим столом со сметной документацией" loading="lazy" width="800" height="500"></div><figcaption>Фирая Валиева, ректор Академии, за сметной документацией: эксперты курса сами работают в сметном деле</figcaption></figure>
     </div>
     <div class="experts">
-<div class="ex rektor"><div class="av"><img src="img/exp_valieva.webp" alt="Фирая Валиева" loading="lazy" width="320" height="320"></div><h3>Фирая Валиева</h3><p>ректор Академии</p><div class="mods-of" aria-label="модули 1, 3"><i>1</i><i>3</i></div></div>
-      <div class="ex"><div class="av"><img src="img/exp_dyachenko.webp" alt="Людмила Дьяченко" loading="lazy" width="320" height="320"></div><h3>Людмила Дьяченко</h3><p>эксперт Академии</p><div class="mods-of" aria-label="модули 4, 6"><i>4</i><i>6</i></div></div>
-      <div class="ex"><div class="av"><img src="img/exp_pritchina.webp" alt="Светлана Притчина" loading="lazy" width="320" height="320"></div><h3>Светлана Притчина</h3><p>эксперт Академии</p><div class="mods-of" aria-label="модули 8, 9"><i>8</i><i>9</i></div></div>
-      <div class="ex"><div class="av"><img src="img/exp_mitrofanova.webp" alt="Инна Митрофанова" loading="lazy" width="320" height="320"></div><h3>Инна Митрофанова</h3><p>руководитель Экспертного совета</p><div class="mods-of" aria-label="модули 2, 4, 5, 7"><i>2</i><i>4</i><i>5</i><i>7</i></div></div>
-      <div class="ex"><div class="av"><img src="img/exp_vorontsova.webp" alt="Анна Воронцова" loading="lazy" width="320" height="320"></div><h3>Анна Воронцова</h3><p>эксперт Академии</p><div class="mods-of" aria-label="модули 2, 6"><i>2</i><i>6</i></div></div>
-      <div class="ex"><div class="av"><img src="img/exp_kiseleva.webp" alt="Тамара Киселёва" loading="lazy" width="320" height="320"></div><h3>Тамара Киселёва</h3><p>эксперт Академии</p><div class="mods-of" aria-label="модуль 3"><i>3</i></div></div>
+<div class="ex rektor"><div class="av"><img src="img/exp_valieva.webp" alt="Фирая Валиева" loading="lazy" width="320" height="320"></div><h3>Фирая Валиева</h3><p>основатель и ректор Академии</p><p class="rg">руководила РЦЦС · автор 5 книг · по её курсам обучились более 10 000 человек</p></div>
+      <div class="ex"><div class="av"><img src="img/exp_dyachenko.webp" alt="Людмила Дьяченко" loading="lazy" width="320" height="320"></div><h3>Людмила Дьяченко</h3><p>эксперт Академии</p><p class="rg">ресурсно-индексный метод · преподаёт более 10 лет</p></div>
+      <div class="ex"><div class="av"><img src="img/exp_pritchina.webp" alt="Светлана Притчина" loading="lazy" width="320" height="320"></div><h3>Светлана Притчина</h3><p>эксперт Академии</p><p class="rg">НМЦК и смета контракта · директор строительной компании</p></div>
+      <div class="ex"><div class="av"><img src="img/exp_mitrofanova.webp" alt="Инна Митрофанова" loading="lazy" width="320" height="320"></div><h3>Инна Митрофанова</h3><p>руководитель Экспертного совета</p><p class="rg">подготовка смет к экспертизе</p></div>
+      <div class="ex"><div class="av"><img src="img/exp_vorontsova.webp" alt="Анна Воронцова" loading="lazy" width="320" height="320"></div><h3>Анна Воронцова</h3><p>эксперт Академии</p><p class="rg">капремонт · сопровождение смет в экспертизе</p></div>
+      <div class="ex"><div class="av"><img src="img/exp_kiseleva.webp" alt="Тамара Киселёва" loading="lazy" width="320" height="320"></div><h3>Тамара Киселёва</h3><p>эксперт Академии</p><p class="rg">высшая категория по стоимости строительства</p></div>
     </div>
-    <div class="card cur" style="margin-top:32px"><div><h3>Получайте разбор ваших работ от куратора</h3><p>Куратор Академии — практикующий специалист сметного дела — разбирает ваши 5 практикумов письменно: что верно, что доработать и на какой документ опереться, пока не останется замечаний. Он направляет, а решение находите вы — и навык остаётся у вас.</p><p class="vq">«Куратор всегда был на связи и отвечал на все-все вопросы.»<span>Выпускник курса повышения квалификации</span></p></div><figure class="fig paper"><div class="ph"><img src="img/kurator_otvet.webp" alt="Ответ куратора к практикуму в личном кабинете: в формуле ошибка, исправьте — и результат будет правильным" loading="lazy" width="900" height="411"></div><figcaption>Ответ куратора к практикуму: где ошибка и как исправить (имена скрыты)</figcaption></figure></div>
-    <h3 style="margin-top:48px">Эксперты Академии на Живой встрече, сентябрь 2026</h3>
-    <div class="meet" tabindex="0" aria-label="Фото со встречи — листайте">
+    <div class="card cur" style="margin-top:32px"><div><h3>Получайте разбор ваших работ от куратора</h3><p>Куратор Академии — практикующий специалист сметного дела — разбирает ваши 5 практикумов письменно: что верно, что доработать и на какой документ опереться, пока не останется замечаний. Он направляет, а решение находите вы — и навык остаётся у вас.</p><p class="vq">«Куратор всегда был на связи и отвечал на все-все вопросы.»<span>Выпускник курса повышения квалификации</span></p></div><figure class="fig paper"><div class="ph"><img src="img/kurator_otvet.webp" alt="Ответ куратора к практикуму в личном кабинете: в формуле ошибка, исправьте — и результат будет правильным" loading="lazy" width="900" height="411"></div><figcaption>Ответ куратора к практикуму: где ошибка и как исправить</figcaption></figure></div>
+    <h3 style="margin-top:48px">Живые встречи Академии: эксперты и ученики</h3>
+    <div class="meet" tabindex="0" aria-label="Фото со встреч — листайте">
+      <figure><img src="img/meet_gruppa.jpg" alt="Участники Живой встречи Академии сметного дела — общее фото" loading="lazy" width="1200" height="900"><figcaption>Живая встреча Академии — общее фото</figcaption></figure>
+      <figure><img src="img/meet_praktika.jpg" alt="Практика в зале на Живой встрече Академии сметного дела" loading="lazy" width="675" height="900"><figcaption>Практика в зале: разбираем задачу из сметы</figcaption></figure>
+      <figure><img src="img/meet_may2024.jpg" alt="Участницы Живой встречи Академии сметного дела, май 2024" loading="lazy" width="1200" height="800"><figcaption>Живая встреча Академии, май 2024</figcaption></figure>
       <figure><img src="img/meet_valieva.jpg" alt="Фирая Валиева ведёт занятие на Живой встрече Академии сметного дела, сентябрь 2026" loading="lazy" width="900" height="600"><figcaption>Фирая Валиева ведёт занятие</figcaption></figure>
       <figure><img src="img/meet_mitrofanova.jpg" alt="Инна Митрофанова на Живой встрече Академии сметного дела, сентябрь 2026" loading="lazy" width="600" height="900"><figcaption>Инна Митрофанова</figcaption></figure>
       <figure><img src="img/meet_pritchina.jpg" alt="Светлана Притчина на Живой встрече Академии сметного дела, сентябрь 2026" loading="lazy" width="600" height="900"><figcaption>Светлана Притчина</figcaption></figure>
@@ -959,6 +958,7 @@ section.soft{background:var(--sky)}
       <li><b>Первые уроки — сразу</b><span>После оплаты: загрузите диплом и заполните анкету для удостоверения.</span></li>
       <li><b>Старт 1-го числа</b><span>Модули по порядку, чат потока, куратор знакомится с учениками.</span></li>
       <li><b>Практикумы и встречи</b><span>5 практикумов с разбором куратора, встречи с экспертами 2 раза в месяц.</span></li>
+      <li><b>Тренажёр к профэкзамену</b><span>50 вопросов за 1 час по темам профессионального стандарта — проверяете себя заранее.</span></li>
       <li><b>Итоговый тест и удостоверение</b><span>100 вопросов, 80 % для зачёта, 10 попыток. Удостоверение — примерно через 2 недели.</span></li>
     </ol>
     <h3 style="margin-top:44px">Сколько времени займёт</h3>
@@ -1005,10 +1005,9 @@ section.soft{background:var(--sky)}
   <div class="wrap">
     <span class="kicker">Что говорят выпускники</span>
     <h2>К нам приходят за порядком в знаниях и уверенностью в своих сметах</h2>
-    <div class="stats s3">
+    <div class="stats s2">
       <div><b>83 %</b><span>ответивших выпускников прежних редакций готовы рекомендовать курс коллегам — 368 из 441</span></div>
       <div><b>≈ 90</b><span>ответов — о знаниях по полочкам: собрались в систему, закрылись пробелы</span></div>
-      <div><b>≈ 70</b><span>ответов — об уверенности в своих расчётах</span></div>
     </div>
     
     <p class="note" style="margin-top:12px">По итоговым анкетам выпускников прежних редакций программы, 441 ответ. Чаще всего выпускники пишут об уверенности и о том, что знания собрались в систему; многие — что к ним стали обращаться коллеги за разъяснениями.</p>
@@ -1043,12 +1042,12 @@ section.soft{background:var(--sky)}
     <h2>Специалист, который опирается на документ</h2>
     <div class="cards c3">
       <div class="card"><figure class="fig"><div class="ph"><img src="img/c_stroyka_ryazansky.webp" alt="Строящийся жилой дом с краном в Москве" loading="lazy" width="800" height="500"></div><figcaption>Объект организации: сметы составлены и проверены по документу</figcaption></figure><h3>Сметы — по документу</h3><p>Сотрудник учится составлять и проверять сметы по документу — так снижается риск ошибок в расчётах организации.</p></div>
-      <div class="card"><figure class="fig paper"><div class="ph"><img src="img/doc_421_glavy.webp" alt="Перечень глав сводного сметного расчёта в пункте 138 Методики № 421/пр" loading="lazy" width="800" height="500"></div><figcaption>Главы сводного сметного расчёта по пункту 138 Методики — модуль 7</figcaption></figure><h3>Новое направление</h3><p>Подтягиваете специалиста под сводный расчёт, НМЦК и смету контракта: модули 7–9 и практикумы с проверкой куратора.</p></div>
+      <div class="card"><figure class="fig paper"><div class="ph"><img src="img/doc_421_glavy.webp" alt="Перечень глав сводного сметного расчёта в пункте 138 Методики № 421/пр" loading="lazy" width="800" height="500"></div><figcaption>Главы сводного сметного расчёта по пункту 138 Методики — модуль 5</figcaption></figure><h3>Новое направление</h3><p>Подтягиваете специалиста под сводный расчёт, НМЦК и смету контракта: модули 5–6 и практикумы с проверкой куратора.</p></div>
       <div class="card"><figure class="fig"><div class="ph"><img src="img/c_stroyploshadka.webp" alt="Строительная площадка в Москве" loading="lazy" width="800" height="500"></div><figcaption>Сметы подрядчиков и проектировщиков: слабые места — со ссылкой на документ</figcaption></figure><h3>Проверка чужих смет</h3><p>Сотрудник видит слабые места в сметах проектировщиков и подрядчиков и называет их со ссылкой на документ.</p></div>
     </div>
     <div class="cards c3" style="margin-top:18px"><figure class="card qc"><blockquote>«Руководство оценило такую инициативу к обучению. Чувствую себя более грамотным и уверенным специалистом.»</blockquote><figcaption>Выпускник курса повышения квалификации</figcaption></figure><figure class="card qc"><blockquote>«Сейчас шеф получает необходимую информацию от меня.»</blockquote><figcaption>Выпускник курса повышения квалификации</figcaption></figure><figure class="card qc"><blockquote>«Я являюсь заместителем руководителя учреждения, который курирует вопросы капстроительства, это и побудило … пройти обучение по сметному делу, особенно учитывая изменения законодательста в этом направлении.»</blockquote><figcaption>Выпускник курса повышения квалификации</figcaption></figure></div>
     <div class="cta-band">
-      <div><b>Счёт и договор — в день заявки</b><span>Готовое письмо руководителю, удостоверение — каждому на его имя. Второй и следующий сотрудник — 19 750 ₽ одним счётом (на КПК РИМ и КПК Профстандарт).</span></div>
+      <div><b>Счёт и договор — в день заявки</b><span>Готовое письмо руководителю, удостоверение — каждому на его имя. Условия для второго и следующих сотрудников назовёт менеджер.</span></div>
       <div class="cta-row"><a class="btn btn-main js-apply" href="https://academia-bti.ru/dr12?pick=b">Оставить заявку</a></div>
     </div>
   </div>
@@ -1060,13 +1059,13 @@ section.soft{background:var(--sky)}
     <span class="kicker">Варианты курса</span>
     <h2>Один курс повышения квалификации — варианты под вашу задачу</h2>
     <p class="lead">Программа, эксперты, куратор и удостоверение у всех вариантов одни. Разное — на чём акцент (ресурсно-индексный метод или темы профессионального стандарта), а в варианте с ГРАНД-Сметой добавлен второй курс. Не знаете, какой выбрать, — менеджер подскажет по трём вопросам.</p>
-    <div class="common"><b>У всех вариантов:</b><span>72 ак. ч.</span><span>9 модулей, 40 уроков</span><span>5 практикумов с куратором</span><span>6 экспертов</span><span>удостоверение на своё имя</span></div>
+    <div class="common"><b>У всех вариантов:</b><span>72 ак. ч.</span><span>6 модулей, 40 уроков</span><span>5 практикумов с куратором</span><span>6 экспертов</span><span>удостоверение на своё имя</span></div>
     <div class="vars">
       <div class="var v1" id="var-rim">
         <span class="for">Перешли на ресурсно-индексный метод</span>
         <h3>КПК РИМ</h3>
         <p class="idea">Ресурсно-индексный метод по шагам: каждую цену в смете вы объясняете документом.</p>
-        <ul><li>Программа и удостоверение одни, разный набор под задачу: здесь в фокусе ресурсно-индексный метод — нормативная база РИМ, локальная смета, конъюнктурный анализ, коэффициенты (модули 3–6)</li><li>В фокусе 3 практикума из 5: локальная смета с ценами ФГИС ЦС на нужную дату, перевозка, конъюнктурный анализ — куратор проверяет, пока не останется замечаний</li></ul>
+        <ul><li>Программа и удостоверение одни, разный набор под задачу: здесь в фокусе ресурсно-индексный метод — нормативная база РИМ, локальная смета, конъюнктурный анализ, коэффициенты (модули 2–4)</li><li>В фокусе 3 практикума из 5: локальная смета с ценами ФГИС ЦС на нужную дату, перевозка, конъюнктурный анализ — куратор проверяет, пока не останется замечаний</li></ul>
         <p class="vdoc">Удостоверение о повышении квалификации: «Ценообразование и сметное нормирование в строительстве», 72 ак. ч.</p>
         <div class="pr">39 500 ₽<small>как у курса повышения квалификации · продажи варианта — с 10 ноября; старт обучения — 1-го числа каждого месяца</small></div>
         <a class="btn btn-main js-apply" href="https://academia-bti.ru/dr12?pick=b">Оставить заявку</a>
@@ -1075,7 +1074,7 @@ section.soft{background:var(--sky)}
         <span class="for">Получить удостоверение о повышении квалификации на своё имя</span>
         <h3>КПК Профстандарт</h3>
         <p class="idea">Основные темы профессионального стандарта — по порядку и спокойно. После итогового теста — удостоверение о повышении квалификации на своё имя.</p>
-        <ul><li>Основные темы профессионального стандарта: система ценообразования, состав сметной документации, сводный сметный расчёт</li><li>Итоговый тест на 100 вопросов (80 % для зачёта) — он же проверка себя по темам профстандарта; это не профессиональный экзамен</li></ul>
+        <ul><li>Основные темы профессионального стандарта: система ценообразования, состав сметной документации, сводный сметный расчёт</li><li>Тренажёр к профэкзамену: 50 вопросов за 1 час по темам профстандарта</li><li>Итоговый тест на 100 вопросов (80 % для зачёта) — тоже проверка себя по темам профстандарта</li></ul>
         <p class="fine" style="font-size:14px">Академия не центр оценки квалификации. Квалификации для специалистов по сметам утверждены; центров оценки по ним на 2 ноября 2026 года нет.</p>
         <p class="vdoc">Удостоверение о повышении квалификации: «Ценообразование и сметное нормирование в строительстве», 72 ак. ч.</p>
         <div class="pr">39 500 ₽<small>как у курса повышения квалификации · продажи варианта — с 10 ноября; старт обучения — 1-го числа каждого месяца</small></div>
@@ -1108,7 +1107,7 @@ section.soft{background:var(--sky)}
         <p style="color:#dfe5ff">Можно оплатить в рассрочку — это кредит АО «ТБанк»*. Условия — на странице оплаты. Оценивайте свои финансовые возможности и риски.</p>
         <ul>
           <li>Навык верно составлять и проверять сметы: к каждой норме, цене и коэффициенту — документ и пункт</li>
-          <li>9 модулей, 40 уроков, задание к каждому</li>
+          <li>6 модулей, 40 уроков, задание к каждому</li>
           <li>5 практикумов с индивидуальным сопровождением куратора</li>
           <li>6 экспертов и встречи с ними 2 раза в месяц</li>
           <li>Удостоверение на 72 ак. ч., сведения в ФИС ФРДО</li>
@@ -1120,8 +1119,6 @@ section.soft{background:var(--sky)}
       </div>
       <div class="side">
         <div class="card"><b>5 дней — бесплатно</b><p>Начните учиться бесплатно прямо сейчас: пять дней пробного доступа ко всему курсу. Без оплаты. Напишите об этом в заявке.</p></div>
-        <div class="card"><b>35 550 ₽ — выпускникам Академии</b><p>Тем, кто окончил у нас Курс начинающего сметчика, курс повышения квалификации или Годовую систему: −10 % на КПК РИМ и КПК Профстандарт. Для варианта с ГРАНД-Сметой условия назовёт менеджер.</p></div>
-        <div class="card"><b>Платит организация</b><p>Счёт и договор — в день заявки, для руководителя — готовое письмо о курсе. Второй и следующий сотрудник — 19 750 ₽ одним счётом на КПК РИМ и КПК Профстандарт (со скидкой выпускника не суммируется); для варианта с ГРАНД-Сметой условия назовёт менеджер.</p></div>
         <div class="card"><b>Налоговый вычет до 13 %</b><p>Если оплачиваете сами и платите НДФЛ, можно вернуть до 13 % стоимости обучения социальным налоговым вычетом**.</p></div>
         <div class="card"><b>КПК + ГРАНД-Смета</b><p>Два курса в одном пакете — лист ожидания: откроем запись после подтверждения программы для практикумов. <a href="#varianty">Подробнее о вариантах</a>.</p></div>
       </div>
@@ -1140,9 +1137,9 @@ section.soft{background:var(--sky)}
       <div><b>Высотка для опытных</b><span>удостоверение и поддержка весь год</span></div>
     </div>
     <div class="cards c3">
-      <div class="card"><h3>Курс начинающего сметчика</h3><p class="for">Начинаете профессию с нуля</p><p>Профессия с нуля и диплом о профессиональной переподготовке.</p></div>
-      <div class="card on"><span class="badge">Эта страница</span><h3>Курс повышения квалификации</h3><p class="for">Уже работаете со сметами — хватит и 6–8 месяцев практики</p><p>Правила 2026 года, обоснование каждой цифры и удостоверение на своё имя.</p></div>
-      <div class="card"><h3>Высотка для опытных</h3><p class="for">Нужны удостоверение и поддержка весь год</p><p>Курс повышения квалификации 2 раза за год и Годовая система «Элита» на 12 месяцев: за спиной — Экспертный совет Академии.</p></div>
+      <div class="card"><div class="clogo"><img src="img/logo_kns.webp" alt="КНС · Курс начинающего сметчика" width="800" height="198" loading="lazy"></div><h3>Курс начинающего сметчика</h3><p class="for">Начинаете профессию с нуля</p><p>Профессия с нуля и диплом о профессиональной переподготовке.</p></div>
+      <div class="card on"><span class="badge">Эта страница</span><div class="clogo"><img src="img/logo_kpk.webp" alt="КПК · Курс повышения квалификации" width="800" height="198" loading="lazy"></div><h3>Курс повышения квалификации</h3><p class="for">Уже работаете со сметами — хватит и 6–8 месяцев практики</p><p>Правила 2026 года, обоснование каждой цифры и удостоверение на своё имя.</p></div>
+      <div class="card"><div class="clogo"><img src="img/logo_kpk.webp" alt="КПК" width="800" height="198" loading="lazy"><img src="img/logo_gs.webp" alt="ГС · Годовая система" width="800" height="198" loading="lazy"></div><h3>Высотка для опытных</h3><p class="for">Нужны удостоверение и поддержка весь год</p><p>Курс повышения квалификации 2 раза за год и Годовая система «Элита» на 12 месяцев: за спиной — Экспертный совет Академии.</p></div>
     </div>
     <p class="drive">Курс начинающего сметчика — ваш автомобиль. Курс повышения квалификации — умение хорошо водить машину: вы уверенно ведёте смету и знаете, почему поворачиваете именно так.</p>
     <p class="note" style="margin-top:12px">Нужно научиться работать в самой сметной программе — для этого есть курс «Гранд-Смета от А до Я». Курс повышения квалификации — о методике.</p>
@@ -1173,7 +1170,7 @@ section.soft{background:var(--sky)}
       <details><summary>Дадут сметную программу? В чём делать практикумы?</summary><div class="a"><p>Курс — о методике, а не о кнопках. Практикумы выполняете в сметной программе, в которой работаете. Если своей программы дома нет — скажите менеджеру, подберём вариант для практикумов до оплаты. Работе в самой программе учит курс «Гранд-Смета от А до Я».</p></div></details>
       <details><summary>А если не сдам итоговый тест с первого раза?</summary><div class="a"><p>На итоговый тест — 10 попыток, для зачёта нужно 80 % верных ответов. Вопрос по заданию можно задать в чате потока — куратор поможет разобраться.</p></div></details>
       <details><summary>Рассрочка — это кредит?</summary><div class="a"><p>Да, рассрочку оформляет АО «ТБанк» — это кредит банка. Срок, полную стоимость кредита и сумму платежей банк показывает на странице оплаты — прочитайте их до оформления. Оценивайте свои финансовые возможности и риски. Не хотите с банком — оплатите сразу картой или по реквизитам.</p></div></details>
-      <details><summary>Платит организация. Какие документы пришлёте?</summary><div class="a"><p>Одним письмом: проект договора, счёт, копию лицензии, программу с часами по модулям и готовое письмо руководителю. Второй и следующий сотрудник одной организации — 19 750 ₽ одним счётом; удостоверение — каждому на его имя.</p></div></details>
+      <details><summary>Платит организация. Какие документы пришлёте?</summary><div class="a"><p>Одним письмом: проект договора, счёт, копию лицензии, программу с часами по модулям и готовое письмо руководителю. Удостоверение — каждому на его имя; условия для второго и следующих сотрудников назовёт менеджер.</p></div></details>
     </div>
     <div class="cta-band">
       <div><b>Не нашли ответ?</b><span>Напишите вопрос в заявке — менеджер перезвонит и ответит.</span></div>
@@ -1237,7 +1234,7 @@ section.soft{background:var(--sky)}
       <p>*** Более 10 000 человек оплатили обучение в Академии — по данным учебной платформы на 20.10.2026.</p>
       <p>Отзывы и фото опубликованы с письменного согласия авторов; цитаты — дословно, сокращения отмечены многоточием. Результат зависит от опыта и условий работы.</p>
       <p>Изображения: документы — Методика определения сметной стоимости строительства, утверждённая приказом Минстроя России от 04.08.2020 № 421/пр (официальный документ); фото Живой встречи, удостоверения и экспертов — Академия сметного дела; фото Wikimedia Commons и StockSnap: Shixart1985 — CC BY 2.0, Oregon Department of Transportation — CC BY 2.0, Maximf — CC BY 3.0, Retired electrician, Helloquence, Kristin Hardwick, Green Chameleon и автор Unsplash — CC0.</p>
-      <p>Цены на ноябрь 2026 года. Версия страницы: <span id="ver">03.11.2026 13:45</span>.</p>
+      <p>Цены на ноябрь 2026 года. Версия страницы: <span id="ver">04.11.2026 18:43</span>.</p>
     </div>
   </div>
 </footer>
