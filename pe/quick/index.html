@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Быстро — Академия Сметного Дела</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=Rubik:wght@500;700;800&display=swap">
+<style>
+:root{--navy:#101840;--blue:#1745E0;--ink:#1B1F27;--mut:#6B7390;--line:#DCE1EE;--bg:#F5F6FA;--card:#fff;--red:#D92D20;--green:#12A150}
+*{box-sizing:border-box}html,body{margin:0}body{font:17px/1.4 'IBM Plex Sans',Arial,sans-serif;color:var(--ink);background:var(--bg);color-scheme:light}
+header{height:56px;display:flex;align-items:center;gap:14px;padding:0 20px;background:#fff;border-bottom:1px solid var(--line)}
+header img{height:30px}header b{font:800 20px Rubik,Arial,sans-serif;color:var(--navy)}header a{margin-left:auto;color:var(--blue);text-decoration:none;font-size:15px;min-height:36px;display:flex;align-items:center}
+main{max-width:1040px;margin:0 auto;padding:18px 20px 40px}
+.say{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px}.say img{width:48px;height:48px;border-radius:50%;object-fit:cover;flex:none}
+.bubble{background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px 14px;font-size:17px;max-width:760px}.bubble small{display:block;color:var(--mut);font-size:14px;margin-top:2px}
+.row{display:flex;gap:10px;align-items:stretch}.row textarea,.row input{flex:1;min-width:0;font:inherit;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;background:#fff;color:var(--ink);resize:none}
+.row textarea{height:56px}.row textarea:focus,.row input:focus{outline:none;border-color:var(--blue)}
+button{font:600 16px 'IBM Plex Sans',Arial,sans-serif;min-height:44px;border-radius:12px;padding:0 18px;cursor:pointer;border:1.5px solid var(--navy);background:var(--navy);color:#fff}
+button.o{background:#fff;color:var(--navy)}button:disabled{opacity:.45;cursor:default}button:focus-visible{outline:3px solid #9DB4FF;outline-offset:2px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}.chip{min-height:40px;font-weight:400;font-size:15px;background:#fff;color:var(--ink);border:1.5px solid var(--line);border-radius:20px;padding:0 14px;text-align:left}
+.chip:hover{border-color:var(--blue)}
+#work{display:none;margin-top:16px}#st{display:none;margin:12px 0;font-size:16px;color:var(--navy)}#st i{display:block;height:6px;border-radius:3px;background:var(--line);margin-top:8px;overflow:hidden}#st i b{display:block;height:100%;width:3%;background:var(--blue);transition:width .6s}
+#err{display:none;margin:12px 0;padding:10px 14px;border-radius:12px;background:#FFF1F0;color:#7A271A}
+.slide{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;aspect-ratio:16/9;width:100%}.slide img{width:100%;height:100%;display:block;object-fit:contain}
+.meta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin:10px 0;color:var(--mut);font-size:14px}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+details{margin-top:12px;font-size:14px;color:var(--mut)}details a{color:var(--blue)}summary{cursor:pointer;min-height:32px}
+#hint{display:none;margin-top:8px;color:var(--mut);font-size:14px}
+@media(max-width:600px){.chip,#back{min-height:44px}main{padding:12px 12px 30px}.row{flex-direction:column}.row button{width:100%}.acts button{flex:1 1 100%}header b{font-size:18px}}
+</style></head><body>
+<header><img src="logo.png" alt="Академия Сметного Дела"><b>Быстро</b><a id="back" href="../start/">← Новая работа</a></header>
+<main>
+<div class="say"><img src="gulya.jpg" alt="Гульнара Сафина, дизайнер Академии"><div class="bubble" id="hello">Напишите одной строкой, что нужно: слайд или рисунок. Я поищу в интернете и сразу сделаю.<small>Дальше правьте, как в обычной переписке: «крупнее», «замени картинку», «добавь пример».</small></div></div>
+<div class="row"><textarea id="q" maxlength="600" placeholder="Например: слайд про зимнее удорожание с фото стройки" aria-label="Что нужно сделать"></textarea><button id="go">Сделать</button></div>
+<div class="chips" id="ex"><button class="chip" type="button">Слайд: что такое зимнее удорожание, с фото стройки</button><button class="chip" type="button">Рисунок: схема «заказчик → подрядчик → смета»</button><button class="chip" type="button">Инфографика: три шага проверки сметы</button></div>
+<div id="st" role="status"><span id="stt"></span><i><b id="stb"></b></i></div>
+<div id="err" role="alert"></div>
+<section id="work" aria-live="polite">
+ <div class="slide"><img id="img" alt="Готовый слайд"></div>
+ <div class="meta"><span id="sayt"></span><span id="ctl"></span></div>
+ <div class="chips" id="vars"></div>
+ <div class="row" style="margin-top:12px"><input id="fx" maxlength="400" placeholder="Что поправить? Например: «крупнее»" aria-label="Что поправить"><button id="fxgo">Поправить</button></div>
+ <div class="meta"><span id="left"></span></div>
+ <div class="acts"><button id="png">Скачать картинку</button><button id="ppt" class="o">Скачать PowerPoint</button><button id="add" class="o">Добавить в работу</button><button id="new" class="o">Новый слайд</button></div>
+ <div id="hint"></div>
+ <details id="src"><summary id="srcs"></summary><div id="srcl"></div></details>
+</section>
+</main>
+<script>window.QUICK={"url": "https://twtxrtgknenldyqmwymy.supabase.co", "key": "sb_publishable_N5Zaxf5mfaMc67JoaCWxVA_fp_fnlLE", "deck": "_quick"};</script>
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)},QK=window.QUICK||{},qid=null,busy=false,tm=null,DECK=(location.search.match(/[?&]deck=([\w\-]+)/)||[])[1]||'';
+function load(on,txt,sec){var s=$('#st');s.style.display=on?'block':'none';if(tm)clearInterval(tm);if(!on)return;$('#stt').textContent=txt;var t0=Date.now(),est=sec*1000;$('#stb').style.width='4%';
+ tm=setInterval(function(){var p=Math.min(94,4+90*(Date.now()-t0)/est);$('#stb').style.width=p+'%';var left=Math.max(0,Math.round((est-(Date.now()-t0))/1000));$('#stt').textContent=txt+(left>0?' · ещё ≈'+left+' сек':' · ещё немного…')},700)}
+function err(m){var e=$('#err');e.style.display=m?'block':'none';e.textContent=m||'';if(m)e.scrollIntoView({block:'nearest'})}
+function lock(b){busy=b;['#go','#fxgo','#png','#ppt','#add','#new'].forEach(function(s){$(s).disabled=b});document.querySelectorAll('.chip').forEach(function(c){c.disabled=b})}
+/* ---- связь: локально — /api/*, на сайте — задача pe_jobs (action quick_*) ---- */
+function call(action,body){body=body||{};body.qid=qid;
+ if(!QK.url){return fetch('/api/'+action,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).then(function(r){return r.json()}).then(function(j){if(j.error)throw new Error(j.error);return j})}
+ var H={apikey:QK.key,Authorization:'Bearer '+QK.key,'Content-Type':'application/json'};body.action='quick_'+action;
+ return fetch(QK.url+'/rest/v1/pe_jobs',{method:'POST',headers:Object.assign({Prefer:'return=representation'},H),body:JSON.stringify({kind:'upload',deck:QK.deck||'_quick',payload:body})}).then(function(r){if(!r.ok)throw new Error('нет связи');return r.json()}).then(function(a){var id=a[0].id;
+  return new Promise(function(ok,no){var n=0,iv=setInterval(function(){n++;fetch(QK.url+'/rest/v1/pe_jobs?select=status,note&id=eq.'+id,{headers:H}).then(function(r){return r.json()}).then(function(x){x=x&&x[0];if(!x)return;
+   if(x.status==='done'){clearInterval(iv);try{ok(JSON.parse(x.note))}catch(e){no(new Error('ответ не прочитан'))}}else if(x.status==='failed'||x.status==='error'){clearInterval(iv);no(new Error('не получилось'))}}).catch(function(){});if(n>150){clearInterval(iv);no(new Error('долго'))}},3000)})})}
+function show(v){qid=v.id;$('#work').style.display='block';$('#img').src=(v.png||('/files/'+v.id+'/slide.png'))+'?t='+Date.now();$('#sayt').textContent=v.say||'';
+ $('#ctl').textContent=v.control&&v.control.ok?'✓ Проверила: ничего не наезжает, слова на русском':'';
+ var vs=$('#vars');vs.innerHTML='';(v.variants||[]).forEach(function(t,i){var b=document.createElement('button');b.type='button';b.className='chip';b.textContent='Другой вариант: '+t;b.onclick=function(){run('variant',{i:i},'Делаю другой вариант',35)};vs.appendChild(b)});
+ $('#left').textContent=v.limit||v.left<=0?'Правки на этом слайде закончились — скачайте или начните новый.':'Осталось правок: '+v.left;$('#fx').disabled=$('#fxgo').disabled=v.left<=0;
+ var s=v.sources||[],l=$('#srcl');$('#src').style.display=(s.length||v.photo)?'block':'none';$('#srcs').textContent='Откуда взято ('+(s.length+(v.photo?1:0))+')';l.innerHTML='';
+ s.forEach(function(x){var d=document.createElement('div');var a=document.createElement('a');a.href=/^https?:/.test(x.url)?x.url:'#';a.target='_blank';a.rel='noopener';a.textContent=x.what||x.url;d.appendChild(a);d.appendChild(document.createTextNode(x.date?' · '+x.date:''));l.appendChild(d)});
+ if(v.photo){var d=document.createElement('div');d.appendChild(document.createTextNode('Фото: '));var a=document.createElement('a');a.href=v.photo.page;a.target='_blank';a.rel='noopener';a.textContent=v.photo.title+' · '+v.photo.lic;d.appendChild(a);l.appendChild(d)}
+ if(v.no_photo){$('#hint').style.display='block';$('#hint').textContent='Свободного фото по теме не нашла. Могу сгенерировать картинку — это платно: назову цену и спрошу, делать ли.'}else $('#hint').style.display='none'}
+function run(action,body,txt,sec){if(busy)return;err('');lock(true);load(true,txt,sec);return call(action,body).then(function(v){show(v);$('#work').scrollIntoView({block:'nearest'})}).catch(function(e){err('Приняла. Не получилось сделать сразу — попробуйте ещё раз, ничего не потеряно.')}).then(function(){load(false);lock(false);if($('#fx').disabled&&$('#left').textContent.indexOf('Осталось')===0)$('#fx').disabled=$('#fxgo').disabled=false})}
+function make(){var t=$('#q').value.trim();if(t.length<4){err('Напишите хотя бы несколько слов: о чём слайд или рисунок.');return}qid=null;run('make',{text:t},'Гуля ищет в интернете и рисует',45)}
+$('#go').onclick=make;$('#q').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();make()}});
+document.querySelectorAll('#ex .chip').forEach(function(c){c.onclick=function(){$('#q').value=c.textContent.replace(/^[^:]+:\s*/,function(m){return m});make()}});
+function fix(){var t=$('#fx').value.trim();if(!t)return;$('#fx').value='';run('fix',{text:t},'Гуля вносит правку',/замени|крупн|мельч|убери/i.test(t)?8:30)}
+$('#fxgo').onclick=fix;$('#fx').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();fix()}});
+function dl(what,name){if(busy)return;lock(true);load(true,what==='png'?'Готовлю картинку':'Готовлю PowerPoint',what==='png'?3:20);call('export',{what:what}).then(function(v){var a=document.createElement('a');a.href=v.url||('/files/'+qid+'/slide.'+what);a.download=name;a.click()}).catch(function(){err('Не получилось подготовить файл — попробуйте ещё раз.')}).then(function(){load(false);lock(false)})}
+$('#png').onclick=function(){dl('png','слайд.png')};$('#ppt').onclick=function(){dl('pptx','слайд.pptx')};
+$('#add').onclick=function(){if(!DECK){err('Откройте «Быстро» из нужной работы — тогда я добавлю слайд туда. Пока можно скачать.');return}run('add',{deck:DECK},'Добавляю в работу',8)};
+$('#new').onclick=function(){qid=null;$('#work').style.display='none';$('#q').value='';$('#q').focus();err('')};
+if(DECK)$('#back').href='../'+DECK+'/',$('#back').textContent='← К работе';
+})();
+</script></body></html>
