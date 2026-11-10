@@ -25,5 +25,9 @@ a.btn:focus-visible{outline:3px solid #8AA2F5;outline-offset:3px}
   <a class="btn" href="/pe/">Открыть мои работы</a>
   <p class="s">Если страница так и не открылась, напишите мне в разделе «Мои работы» — я помогу.</p>
 </main>
+<script>/* 10.11 (Руслан: без плашки «Страница открывается»): страница работы /pe/… только что создана — ждём публикацию здесь и открываем сами */
+(function(){if(!/^\/pe\/[^\/]+\//.test(location.pathname))return;var h=document.querySelector('h1'),p=h&&h.nextElementSibling;
+if(h)h.textContent='Страница готовится';if(p)p.textContent='Работа только что создана. Страница откроется здесь сама примерно через 2–5 минут — её можно не закрывать.';
+var n=0,t=setInterval(function(){if(++n>60){clearInterval(t);return}fetch(location.pathname+'?nc='+Date.now(),{cache:'no-store'}).then(function(r){if(r.ok){clearInterval(t);location.replace(location.pathname+'?r='+Date.now()+location.hash)}}).catch(function(){})},15000)})();</script>
 </body>
 </html>
