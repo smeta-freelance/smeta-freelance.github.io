@@ -227,12 +227,12 @@ function ask(mode,text,lastW,wrev){
   if(CUR&&CUR.pending&&text!==''&&!vtr()){toast('Секунду — подключаю работу. Повторите, пожалуйста, через минуту.',4000);return}
   ST=ST||{msgs:[]};if(text)ST.msgs.push({id:'l'+Date.now(),who:'me',text:text});
   WAIT={id:null,t0:Date.now(),lastW:lastW!=null?lastW:LASTW,mode:mode,text:''};render();scrollEnd();
-  job('sokrat_chat',{mode:mode,text:text||''}).then(function(ok){if(!ok){WAIT=null;render();toast('Нет связи — сообщение не ушло. Проверьте интернет и отправьте ещё раз.',4000)}});
+  job('sokrat_chat',{mode:mode,text:text||''}).then(function(ok){if(!ok){WAIT=null;if(text&&ST&&ST.msgs){var lm=ST.msgs[ST.msgs.length-1];if(lm&&lm.who==='me'&&lm.text===text)ST.msgs.pop();var tx=$('#tx');if(tx&&!tx.value.trim()){tx.value=text;tx.oninput&&tx.oninput()}}render();toast('Нет связи — сообщение не ушло. Проверьте интернет и отправьте ещё раз.',4000)}});
   follow(wrev||WREV)}
 
 /* поток ответа: раз в 0,8 с — номер версии «sokw» (несколько байт), текст — только при изменении */
 function follow(rev){var cur=rev,busy=false,base=SB.url.replace(/\/$/,'')+'/rest/v1/pe_state';
-  if(!(ST&&ST.intro))[1500,4000].forEach(function(ms){setTimeout(function(){if(!WAIT||(ST&&ST.intro))return;G2L.get(CUR.deck,'sok',3000).then(function(s){if(s&&s.data&&s.data.intro&&WAIT){ST=ST||{msgs:[]};ST.intro=s.data.intro;ST.title=s.data.title||ST.title;render()}})},ms)});
+  if(!(ST&&ST.intro))[1500,4000,10000,30000,60000,85000,120000].forEach(function(ms){setTimeout(function(){if(!WAIT||(ST&&ST.intro))return;G2L.get(CUR.deck,'sok',3000).then(function(s){if(s&&s.data&&s.data.intro&&WAIT){ST=ST||{msgs:[]};ST.intro=s.data.intro;ST.title=s.data.title||ST.title;render()}})},ms)});
   var tm=setInterval(function(){if(!WAIT){clearInterval(tm);return}if(busy)return;busy=true;
     fetch(base+'?select=rev&deck=eq.'+encodeURIComponent(CUR.deck)+'&key=eq.sokw&limit=1',{headers:H(),cache:'no-store'}).then(function(r){return r.ok?r.json():[]}).then(function(a){var x=a&&a[0];
       if(x&&x.rev!==cur){cur=x.rev;WREV=cur;return G2L.get(CUR.deck,'sokw',4000).then(function(row){var d=row&&row.data;if(!d||!WAIT)return;
@@ -333,7 +333,8 @@ function waitNew(id){   /* rel48 (Руслан 11.11: «ни на каком э�
     busy=false},10000);
   return app()}
 function vtr(){try{return localStorage.getItem('sf-voter')||''}catch(e){return ''}}
-function waitLine(){var s=Math.round((Date.now()-WAIT.t0)/1000),m=WAIT.mode,what=m==='program'?'Читаю Ваши материалы и пишу программу урока':m==='slides'?'Пишу, что поставить на каждый слайд':'Читаю Ваше сообщение';
+function waitLine(){var s0=Math.round((Date.now()-WAIT.t0)/1000);if(CUR&&CUR.pending&&!WAIT.text&&s0>150&&!(ST&&ST.intro))return '<p class="wait"><b>Не нахожу материалы этой работы.</b> Откройте её, пожалуйста, из <a href="/pe/">«Мои работы»</a> — или начните новую работу.</p>';   /* rel51: неверный адрес — без бесконечного ожидания */
+  var s=Math.round((Date.now()-WAIT.t0)/1000),m=WAIT.mode,what=m==='program'?'Читаю Ваши материалы и пишу программу урока':m==='slides'?'Пишу, что поставить на каждый слайд':'Читаю Ваше сообщение';
   var eta=m==='program'?'обычно 20–40 секунд':m==='slides'?'обычно 1–2 минуты':'обычно до минуты';
   return '<p class="wait"><b>'+what+'…</b> '+(s>90&&!WAIT.text?'Ещё немного — заканчиваю. ':'')+'· '+s+' с · '+eta+'<span class="caret"></span></p>'}
 function renderWait(){var e=$('#wtx');if(!e)return;e.innerHTML=WAIT.text?((/###\s*Слайд/.test(WAIT.text)?LEGEND:'')+md(WAIT.text)+'<span class="caret"></span>'):waitLine();
