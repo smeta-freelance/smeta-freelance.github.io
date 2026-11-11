@@ -59,18 +59,6 @@ main{grid-template-columns:minmax(0,1fr) 320px}.stage .vs{max-width:none}.stage 
 .mh nav .ok{color:var(--ok)}.mh nav .now{border:1.5px solid var(--act);color:var(--act);font-weight:600}
 .gl .av{width:48px;height:48px;border-radius:10px;background:#15171C;color:#fff;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0}
 .mgate{max-width:560px;margin:60px auto;background:#fff;border-radius:16px;padding:28px;text-align:center;box-shadow:0 1px 3px rgba(20,24,40,.06)}.mgate h1{font-size:24px;margin:0 0 8px}.mgate p{color:var(--mut);margin:0 0 16px}
-.mup{max-width:640px;margin:48px auto;padding:0 16px}.mup h1{font-size:24px;margin:0 0 6px}.mup p.s{color:var(--mut);margin:0 0 16px}
-.mdz{display:block;border:2px dashed #B8C2DA;border-radius:16px;background:#fff;padding:36px 20px;text-align:center;cursor:pointer;font-size:17px}.mdz.on,.mdz:hover{border-color:var(--act);background:var(--act-soft)}.mdz.has{border-style:solid;border-color:var(--ok);background:var(--ok-soft)}
-.mdz b{display:block;font-size:19px;margin-bottom:4px}.mdz small{color:var(--mut);font-size:14px}.mup .btn{width:100%;margin-top:14px;min-height:48px;font-size:18px}
-.mup .bar{height:10px;border-radius:99px;background:var(--g);overflow:hidden;margin:16px 0 8px}.mup .bar i{display:block;height:100%;width:3%;background:var(--act);transition:width .6s}.mup .st{color:var(--mut);font-size:15px;min-height:22px}.mup .er{color:var(--bad);font-size:15px;margin-top:10px}
-.mbar{max-width:1180px;margin:2px auto 0}.mbt{font-size:14px;color:var(--mut);margin-bottom:4px}.mbb{height:8px;border-radius:99px;background:var(--g);overflow:hidden}.mbb i{display:block;height:100%;width:2%;background:var(--act);transition:width .6s}
-.gh{position:absolute;inset:0;background:#fff;display:flex;flex-direction:column;justify-content:center;padding:6% 7%;text-align:left;border-top:6px solid var(--act)}
-.gh .gc{filter:blur(14px);animation:ghb var(--gd,70s) linear forwards;animation-delay:var(--ge,0s);transform:translateZ(0)}.gh h4{margin:0 0 10px;font-size:clamp(18px,3.4vw,28px);font-weight:700;line-height:1.2}.gh ul{margin:0;padding-left:1.1em;color:var(--mut);font-size:clamp(12px,1.9vw,17px);line-height:1.4}
-.gh .gt{position:absolute;left:7%;right:7%;bottom:5%;font-size:15px;font-weight:600;color:var(--act)}.gh .gb{height:6px;border-radius:99px;background:var(--g);overflow:hidden;margin-top:6px}.gh .gb i{display:block;height:100%;width:100%;background:var(--act);transform-origin:left;transform:scaleX(0);animation:ghp var(--gd,70s) linear forwards;animation-delay:var(--ge,0s)}
-.gh.q .gc,.gh.q .gb i{animation:none}.gh.q .gb i{transform:scaleX(.02)}
-@keyframes ghb{from{filter:blur(14px)}to{filter:blur(0)}}@keyframes ghp{from{transform:scaleX(.02)}to{transform:scaleX(1)}}@keyframes gin{from{opacity:0;filter:blur(10px)}to{opacity:1;filter:blur(0)}}
-.big img{animation:gin .9s ease-out}
-@media (prefers-reduced-motion:reduce){.gh .gc,.gh .gb i,.big img{animation:none!important}.gh .gc{filter:blur(4px)}.gh .gb i{transform:scaleX(.5)}}
 .mver{font-size:12px;color:#8A909C;white-space:nowrap}.mver b{color:#1745E0}
 @media (max-width:900px){.mh{padding:8px 12px}.mh nav{margin-left:0}}
 </style></head><body><div class="mh" id="mh"><div><div class="who"><span class="mav" aria-hidden="true">М.</span><div>Малевич · дизайнер<small id="mt"></small></div></div>
@@ -83,13 +71,7 @@ main{grid-template-columns:minmax(0,1fr) 320px}.stage .vs{max-width:none}.stage 
 <button type="button" class="pp" id="pp">🖍 Выделить жёлтым</button><input type="file" id="fin" hidden multiple accept=".jpg,.jpeg,.png,.webp,.heic,.gif,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv"><dialog id="dl"><h3>Малевич вас не понял — это моя вина</h3><ol><li>Этот слайд останется как есть.</li><li>Мы идём дальше — к следующему слайду.</li><li>Руслан получит сообщение и поможет.</li></ol>
 <label for="nt">Если хотите, напишите, что не так (необязательно):</label><textarea id="nt"></textarea><div class="bt"><button type="button" class="btn" id="dc">Вернуться к слайду</button><button type="button" class="btn p g2s-main" id="dg">Оставить и открыть следующий</button></div></dialog>
 <script>window.SF_SB={"url": "https://twtxrtgknenldyqmwymy.supabase.co", "key": "sb_publishable_N5Zaxf5mfaMc67JoaCWxVA_fp_fnlLE"};window.PE={deck:'',live:''};window.S25={slides:[],io:'',demo:false,built:'1970-01-01T00:00:00Z'};
-window.MAL={acc:{"68a65ce466f495e6c1b17bea662e1e18e0cf95e07ac38110e27f3577a838dfcd": {"salt": "d6e437a4bfa7ac3b", "data": "U2FsdGVkX1/W5Dekv6esO9Q7BSiQbemlmzioGPXGiVEIJMXAjHhEGuwluw9xZXTHeyC3c6wgab0tF2VgUoG3x5/mf5Q8E53LYMhQltGUqgYpQJDJdp13bNcKjXdHOooD"}, "48abaa3600cf333679aa01a92e0bba5d24e1c247188b4413647e45043978f84d": {"salt": "81cffbac4b44fb40", "data": "U2FsdGVkX1+Bz/usS0T7QJ3ll1ojmq++ZZXvynZej5yAoT/XkKAeIx0a4pguTtNRZkc1i5MO7G0BXawX45BBfmXriN+7E0XKGd9CAoIhWZ66pNpv66WCCUXxB9VOS0NLbB6vN1uNf5IzBO/UiZEFMFX4EtJHktpL79zhycanyoVCaO9xjWT9C1+pb0798oP6dn0tAqjq3Ygh6QmeYroXuovVyqWyzYAmuYbHaGmRyuTaO8V+Ek3TK9wsVXQJO3nup0eIkjyTPIz8tV1gJ3bj0g=="}},iter:310000,test:false};
-window.__ghost=function(c,s,q){function e(x){return String(x==null?'':x).replace(/[&<>"]/g,function(k){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[k]})}
-  var el=(!q&&s.t0)?Math.max(0,(Date.now()-s.t0)/1000):0,D=70;if(!q&&s.__ge===undefined)s.__ge=-Math.min(el,D);
-  var li=(c.x||[]).map(function(z){return '<li>'+e(z)+'</li>'}).join('');
-  return '<div class="gh'+(q?' q':'')+'" style="--gd:'+D+'s;--ge:'+(q?0:s.__ge)+'s"><div class="gc"><h4>'+e(c.t||('Слайд '+c.k))+'</h4>'+(li?'<ul>'+li+'</ul>':'')+'</div><div class="gt"><span id="ghn"></span><div class="gb"><i></i></div></div></div>'};
-window.__ghostTxt=function(s,q){var n=document.getElementById('ghn');if(!n)return;if(q){n.textContent='Рисую по порядку — слайд уже в очереди';return}
-  var r=Math.round(70-Math.max(0,(Date.now()-(s.t0||Date.now()))/1000));n.textContent=r>3?'Проявляется · ≈'+r+' сек':'Ещё чуть-чуть'};
+window.MAL={acc:{"68a65ce466f495e6c1b17bea662e1e18e0cf95e07ac38110e27f3577a838dfcd": {"salt": "d6e437a4bfa7ac3b", "data": "U2FsdGVkX1/W5Dekv6esO9Q7BSiQbemlmzioGPXGiVEIJMXAjHhEGuwluw9xZXTH2OwTatOp4ShD2pmUIqHWEsodJ5IPSBe7lV8AaG/gld8="}, "48abaa3600cf333679aa01a92e0bba5d24e1c247188b4413647e45043978f84d": {"salt": "81cffbac4b44fb40", "data": "U2FsdGVkX1+Bz/usS0T7QJ3ll1ojmq++ZZXvynZej5zWRanMVGg3QVce2FQbjQl2niNO92MesXHusWhHziWhxdef+SrfGcu0cew4lx2hu5FcNJon+E+HB7m8egajAvHIiulSu01h7L6ylWCj6ce/vPNtbgmJ3j5Lw1joaiNk0KRqrQhJrZdWObzAEEcyOjmIzO0QFz/3N86xVWjx8Nt4OoNDJr+GsWymCNWDe9a8KsZtgOLDQlFYQkjGjS4O0EET"}},iter:310000,test:false};
 </script><script>/* g2_live.js — слой A (dev32, 09.11.2026): живые данные страниц из базы pe_state вместо ожидания публикации сайта.
    G2L.get(deck,key,ms)  → Promise({data,rev,at}|null): строка pe_state (не дольше ms, по умолчанию 1500 мс; нет связи — null).
    G2L.pick(emb,row)     → данные новее: из базы, если записаны ПОСЛЕ сборки страницы (row.at > emb.built), иначе встроенные.
@@ -159,8 +141,8 @@ function paint(){
   if(ready&&s.red)redBig(s,c);
   else if(ready&&s.v&&s.v[s.sel])bigEdit(s,cur);
   else if(ready)setH(big,'<div class="wt"><b>Слайд '+c.k+' готов</b><span class="tm">загружаю картинку…</span></div>');
-  else if(s.st==='drawing'){setH(big,window.__ghost(c,s,0));window.__ghostTxt(s,0)}
-  else{setH(big,window.__ghost(c,s,1));window.__ghostTxt(s,1)}
+  else if(s.st==='drawing'){setH(big,'<div class="wt"><b>Слайд '+c.k+' рисуется</b><span class="tm" style="font-size:20px">время — в строке сверху</span></div>')}
+  else setH(big,'<div class="wt"><b>Текст слайда '+c.k+' готов</b><span class="tm" style="font-size:20px">рисую по порядку</span></div>');
   if(!(ready&&s.v&&s.v[s.sel]&&!s.red)){IFK='';$('#pp').style.display='none'}
   edBar(s,c,ready);
   setH($('#vs'),ready&&s.v&&s.v[L[0]]&&!s.red?L.map(function(t){return '<button type="button" class="v" aria-label="Вариант '+LN[t]+'" data-v="'+t+'" aria-pressed="'+(s.sel===t)+'">'+img(s,t,cur)+'<span>'+LN[t]+'</span></button>'}).join(''):'');
@@ -297,12 +279,12 @@ live();setInterval(live,DEMO?1000:6000);setInterval(paint,1000);paint();
 window.__boot25=(function(){var S=window.S25,L=window.G2L,K=(window.PE||{}).live||(window.PE||{}).deck,W=false,ids=function(a){return (a||[]).map(function(x){return x.id}).join(',')};
 var M0=document.getElementById('mn').innerHTML;
 function wait(){W=true;var m=document.getElementById('mn'),f=document.getElementById('ft'),g=document.getElementById('gl');if(f)f.style.display='none';
-  if(g)g.innerHTML='<li>'+(window.__direct?'Принимаю Вашу презентацию и оформляю слайды в стиле Академии.':'Принимаю тексты слайдов от Сократа.')+'</li><li>Страница обновится сама — её можно не закрывать.</li>';
+  if(g)g.innerHTML='<li>Принимаю тексты слайдов от Сократа.</li><li>Страница обновится сама — её можно не закрывать.</li>';
   if(m)m.innerHTML='<section class="card done"><h2 style="color:var(--ink)">Слайды появятся здесь</h2><p style="margin:0;color:var(--mut)">Рисую по одному — по три варианта на слайд. Первый появится здесь сам.</p></section>'}
 function run(){if(!(S.slides||[]).length&&!S.demo){wait();return}if(W){W=false;document.getElementById('mn').innerHTML=M0;document.getElementById('ft').style.display=''}window.__run25()}
 if(!L||S.demo){run();return}
 if(!(S.slides||[]).length)wait();   /* сразу, без мелькания пустого экрана */
-L.get(K,'s25',1500).then(function(row){if(row&&L.newer(S,row)&&row.data&&row.data.slides){S.slides=window.__fixS(row.data.slides);if(row.data.direct&&window.__setDirect)window.__setDirect();S.built=row.at}run();
+L.get(K,'s25',1500).then(function(row){if(row&&L.newer(S,row)&&row.data&&row.data.slides){S.slides=window.__fixS(row.data.slides);S.built=row.at}run();
   L.watch(K,'s25',row&&row.rev,function(r){if(!L.newer(S,r)||!r.data)return;var n=r.data.slides||[];
     if(W?n.length:(ids(n)!==ids(S.slides)&&!L.touched()))location.reload()},W?8:20)})});
 </script><script>
@@ -317,57 +299,11 @@ function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return
 function gate(h,p,a){var m=document.getElementById('mn'),f=document.getElementById('ft'),g=document.querySelector('.gl'),w=document.getElementById('pgw');[f,g,w].forEach(function(x){if(x)x.style.display='none'});
   m.style.display='block';m.innerHTML='<div class="mgate"><h1>'+h+'</h1><p>'+p+'</p>'+(a||'<a class="btn p" href="/pe/">Открыть мои работы →</a>')+'</div>'}
 var D=decodeURIComponent((location.hash||'').slice(1));
-var M=window.MAL,kb=ls('pe-hub-k'),ah=ls('pe-hub-acc'),exp=+ls('pe-hub-exp')||0,mk=ls('pe-mal-tok-'+D);
-/* вход Малевича (Руслан 11.11): без адреса работы — «Прикрепите презентацию»; файл → новая работа → переход на #<работа> */
-function safe(n){var m=String(n).match(/\.([A-Za-z0-9]{1,6})$/),x=m?m[1].toLowerCase():'bin';return (String(n).replace(/\.[^.]*$/,'').replace(/[^A-Za-z0-9_-]+/g,'_').replace(/^_+|_+$/g,'').slice(0,40)||'file')+'.'+x}
-function upload(me){var SB=window.SF_SB,m=document.getElementById('mn'),f0=document.getElementById('ft'),g=document.querySelector('.gl'),w=document.getElementById('pgw');[f0,g,w].forEach(function(x){if(x)x.style.display='none'});
-  m.style.display='block';m.innerHTML='<div class="mup"><h1>Прикрепите презентацию</h1><p class="s">Малевич оформит её в стиле Академии. Текст и смысл остаются Вашими — он ничего не переписывает.</p>'+
-   '<label class="mdz" id="dz"><input type="file" id="fi" accept=".pptx" hidden><span id="dzt"><b>Перетащите файл PowerPoint сюда</b><small>или нажмите, чтобы выбрать (.pptx, до 50 МБ)</small></span></label>'+
-   '<button type="button" class="btn p" id="go" disabled>Оформить в стиле Академии</button><div id="pr" hidden><div class="bar"><i id="pb"></i></div><div class="st" id="ps"></div></div><div class="er" id="er" role="alert"></div></div>';
-  window.onhashchange=function(){location.reload()};
-  var F=null,busy=false,$=function(i){return document.getElementById(i)},H={apikey:SB.key,Authorization:'Bearer '+SB.key};
-  function pick(f){var er=$('er');er.textContent='';if(!f)return;
-    if(!/\.pptx$/i.test(f.name)){er.textContent='Нужен файл PowerPoint (.pptx). «'+f.name+'» не подходит — выберите, пожалуйста, другой.';return}
-    if(f.size>50*1048576){er.textContent='Файл больше 50 МБ. Сохраните презентацию полегче и выберите её ещё раз.';return}
-    F=f;$('dz').classList.add('has');$('dzt').innerHTML='<b>✓ '+esc(f.name)+'</b><small>'+(f.size>1048576?(f.size/1048576).toFixed(1)+' МБ':Math.max(1,Math.round(f.size/1024))+' КБ')+' · нажмите, чтобы выбрать другой</small>';$('go').disabled=false}
-  $('fi').onchange=function(){pick(this.files[0])};
-  var dz=$('dz');['dragenter','dragover'].forEach(function(e){dz.addEventListener(e,function(ev){ev.preventDefault();dz.classList.add('on')})});
-  ['dragleave','drop'].forEach(function(e){dz.addEventListener(e,function(ev){ev.preventDefault();dz.classList.remove('on')})});
-  dz.addEventListener('drop',function(ev){var f=ev.dataTransfer&&ev.dataTransfer.files[0];if(f)pick(f)});
-  function prog(p,t){$('pr').hidden=false;$('pb').style.width=p+'%';$('ps').textContent=t}
-  function fail(t){busy=false;$('go').disabled=!F;$('go').textContent='Оформить в стиле Академии';$('pr').hidden=true;$('er').textContent=t+' Файл остался выбранным — нажмите кнопку ещё раз.'}
-  $('go').onclick=function(){if(busy||!F)return;busy=true;$('go').disabled=true;$('go').textContent='Отправляю…';$('er').textContent='';prog(6,'Загружаю презентацию…');
-    var vt=(ls('pe-mal-voter')||('v'+Math.random().toString(36).slice(2,12)));try{localStorage.setItem('pe-mal-voter',vt)}catch(e){}
-    var path='start/'+vt+'/'+Date.now()+'_1_'+safe(F.name);
-    fetch(SB.url.replace(/\/$/,'')+'/storage/v1/object/pe-uploads/'+path.split('/').map(encodeURIComponent).join('/'),{method:'POST',headers:Object.assign({'Content-Type':'application/octet-stream','x-upsert':'false'},H),body:F})
-    .then(function(r){if(!r.ok)throw 1;prog(25,'Передаю Малевичу…');
-      var nm=((me&&me.io)||'эксперт').slice(0,120);
-      return fetch(SB.url.replace(/\/$/,'')+'/rest/v1/pe_jobs',{method:'POST',headers:Object.assign({'Content-Type':'application/json',Prefer:'return=representation'},H),
-        body:JSON.stringify({deck:'start',kind:'upload',round:1,status:'queued',author:nm,payload:{action:'start',malevich:true,name:nm,text:'',files:[{path:path,name:F.name,size:F.size,kind:'slides'}],voter:vt,login:(me&&me.code)||'',kind:'урок'}})})})
-    .then(function(r){if(!r.ok)throw 2;return r.text()}).then(function(tx){var a=tx?JSON.parse(tx):[],jid=a&&a[0]&&a[0].id;if(!jid)throw 3;prog(40,'Малевич читает слайды…');
-      var t0=Date.now(),ti=setInterval(function(){
-        fetch(SB.url.replace(/\/$/,'')+'/rest/v1/pe_jobs?select=status,deck,note&id=eq.'+jid,{headers:H,cache:'no-store'}).then(function(r){return r.text()}).then(function(x){var j=(x?JSON.parse(x):[])[0];if(!j)return;
-          var el=(Date.now()-t0)/1e3;
-          if(j.status==='error'){clearInterval(ti);fail(j.note||'Не получилось принять презентацию.');return}
-          if(j.status==='done'&&j.deck&&j.deck!=='start'){clearInterval(ti);prog(100,'✓ Готово — открываю слайды');try{localStorage.setItem('pe-mal-tok-'+j.deck,'1');localStorage.setItem('pe-mal-direct-'+j.deck,'1')}catch(e){}
-            setTimeout(function(){location.hash='#'+j.deck},500);return}
-          prog(Math.min(92,40+el*0.6),j.status==='processing'?(j.note&&!/^Принято/.test(j.note)?j.note:'Малевич разбирает слайды…'):'Малевич читает слайды…');
-          if(el>240){clearInterval(ti);fail('Задерживаюсь: Малевич ещё не ответил. Презентация не потеряна — я сообщил Руслану.')}
-        }).catch(function(){})},2000)})
-    .catch(function(){fail('Нет связи — презентация не отправлена.')})}}
-var D=decodeURIComponent((location.hash||'').slice(1));
-if(!D){
-  if(M.test){upload(null);return}
-  if(!(kb&&ah&&exp>Date.now())){gate('Войдите в кабинет','Чтобы прикрепить презентацию, войдите в «Мои работы» Академии — тем же логином и паролем.');return}
-  (async function(){var me=null;try{if(M.acc[ah])me=await dec(b64(kb),M.acc[ah].data)}catch(e){}
-    if(!me){gate('Войдите в кабинет','Чтобы прикрепить презентацию, войдите в «Мои работы» Академии — тем же логином и паролем.');return}
-    upload(me)})();return}
 if(!/^[a-z0-9][\w\-]{3,80}$/i.test(D)){gate('Слайды у Малевича','Откройте работу из «Мои работы» или из чата Сократа.');return}
+var M=window.MAL,kb=ls('pe-hub-k'),ah=ls('pe-hub-acc'),exp=+ls('pe-hub-exp')||0,mk=ls('pe-mal-tok-'+D);
 function go(x){var site=(x&&x.site)||('pe/'+D);window.PE={deck:D,live:D,tok:(x&&x.tok)||(mk&&mk!=='1'?mk:null)};
   window.__VB='/'+site.replace(/^\/|\/$/g,'')+'/img/variants/';window.S25.next='/'+site.replace(/^\/|\/$/g,'')+'/zapis/';
   window.__fixS=function(a){return (a||[]).map(function(s){var v=s.v||{},o={};for(var k in v)o[k]=String(v[k]).replace(/^\.\.\/img\/variants\//,window.__VB);s.v=o;return s})};
-  window.__setDirect=function(){window.__direct=1;var s1=document.getElementById('ms1');s1.textContent='✓ Ваша презентация';s1.removeAttribute('href');s1.style.pointerEvents='none'};
-  if(ls('pe-mal-direct-'+D))window.__setDirect();
   var t=(x&&x.title)||'';document.getElementById('mt').textContent=t;document.getElementById('ms1').href='/pe/sokrat/#'+encodeURIComponent(D);
   if(window.G2L&&!t)G2L.get(D,'paket',3000).then(function(r){var d=r&&r.data||{};if(d.title)document.getElementById('mt').textContent=d.title});
   window.onhashchange=function(){location.reload()};window.__boot25()}
@@ -378,5 +314,5 @@ if(!(kb&&ah&&exp>Date.now())){gate('Войдите в кабинет','Слай�
   if(x||mk)return go(x);
   gate('Эта работа пока не у Малевича','Откройте её из «Мои работы» — там видно, у кого она сейчас.')})()})();
 /* шаг «Слайды · N из M» в шапке — по списку слайдов страницы */
-setInterval(function(){var n=document.querySelectorAll('#rb .it').length,r=document.querySelectorAll('#rb .sx.rd,#rb .sx.ok,#rb .sx.sk').length,e=document.getElementById('ms2');if(e)e.textContent=n?'● Слайды · '+r+' из '+n:'● Слайды';},1000);
+setInterval(function(){var n=document.querySelectorAll('#rb .it').length,r=document.querySelectorAll('#rb .sx.rd,#rb .sx.ok,#rb .sx.sk').length,e=document.getElementById('ms2');if(e)e.textContent=n?'● Слайды · '+r+' из '+n:'● Слайды'},1000);
 </script></body></html>
