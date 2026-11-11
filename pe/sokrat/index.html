@@ -71,6 +71,35 @@ mark{background:var(--mark);color:inherit;padding:0 2px;border-radius:3px}
 .fb{position:absolute;z-index:25;display:none;background:var(--mark);color:var(--ink);border:1px solid #E8C94A;border-radius:10px;padding:6px 14px;font-size:16px;font-weight:600;box-shadow:0 6px 18px rgba(16,24,40,.18);white-space:nowrap}
 .fb.on{display:block}.fb:hover{background:#FFE070}
 .legend .hlx{cursor:pointer}
+/* dev39: История урока, прежние ответы, ожидание новой работы */
+.hbtn{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:4px 12px;font-size:15px;font-weight:600;color:var(--blue);margin-left:auto}.hbtn:hover{background:var(--blue-soft)}
+.hbtn+.pc{margin-left:0}
+.hist{position:fixed;top:0;right:-460px;width:440px;max-width:100vw;height:100vh;background:#fff;border-left:1px solid var(--line);box-shadow:-10px 0 30px rgba(16,24,40,.12);z-index:45;transition:right .2s;display:flex;flex-direction:column}
+.hist.on{right:0}.hist .hh{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line)}.hist .hh b{font-size:17px}
+.hist .hx{margin-left:auto;border:0;background:none;font-size:22px;color:var(--muted);width:36px;height:36px;border-radius:8px}.hist .hx:hover{background:var(--side)}
+.hist .ht{display:flex;gap:6px;flex-wrap:wrap;padding:10px 16px 0}.hist .ht button{border:1px solid var(--line);background:#fff;border-radius:16px;padding:2px 11px;font-size:14px}
+.hist .ht button.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.hist .hs{margin:10px 16px 4px;height:38px;border:1.5px solid var(--line);border-radius:10px;padding:0 12px;font:inherit;font-size:15px}
+.hist .hb{flex:1;overflow:auto;padding:4px 16px 20px}.hist .hd{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin:14px 0 4px}
+.hist .hd small{display:block;font-weight:400;text-transform:none;letter-spacing:0;font-size:13px}
+.hist .hi{display:block;width:100%;text-align:left;border:0;border-left:3px solid #C7D2FE;background:none;padding:5px 9px;margin:3px 0;font-size:15px;line-height:1.4;border-radius:0 8px 8px 0}
+.hist .hi:hover{background:var(--side)}.hist .hi b{font-weight:600}.hist .hi .tm{color:var(--muted);font-size:13px;margin-left:4px}
+.hist .hi .full{display:none;white-space:pre-wrap;margin-top:6px}.hist .hi.open .short{display:none}.hist .hi.open .full{display:block}
+.hist .hi .ins{display:none;margin-top:8px;border:1.5px solid var(--blue);color:var(--blue);background:#fff;border-radius:8px;padding:3px 12px;font-size:14px;font-weight:600}.hist .hi.open .ins{display:inline-block}
+.hist .none{color:var(--muted);font-size:15px;margin-top:16px}
+.prev{border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin:14px 0;background:#FAFBFF}
+.prev p.lead{margin:0 0 6px}.prev .qa{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 12px;margin-top:8px;font-size:16px}
+.prev .qa .qh{font-weight:600;font-size:15px}.prev .qa .qh small{font-weight:400;color:var(--muted);margin-left:6px}
+.prev .qa .qv{margin:4px 0;white-space:pre-wrap}.prev .qa .qb{display:flex;gap:8px}
+.prev .qa .qb button{border:1.5px solid var(--blue);color:var(--blue);background:#fff;border-radius:14px;padding:1px 11px;font-size:14px;font-weight:600}
+.prev .qa .qb button.ok{background:var(--blue);color:#fff}.prev .qa.done{border-color:#BFE3CC;background:#F3FBF6}.prev .qa.done .qb{display:none}
+.prev .qa.done .qh::after{content:" · ✓ верно";color:var(--green);font-weight:600}
+.prev .more{border:0;background:none;color:var(--blue);font-size:14px;padding:6px 0 0}
+.newwait{max-width:560px;margin:14vh auto;text-align:center}.newwait img{width:56px}.newwait h2{font-size:22px;margin:10px 0 6px}
+.newwait .bar{height:8px;border-radius:6px;background:var(--side);overflow:hidden;margin:16px 0 8px}.newwait .bar i{display:block;height:100%;background:var(--blue);width:3%;transition:width .8s}
+.newwait p{color:var(--muted);margin:4px 0}
+.top{overflow:hidden}.steps{min-width:0;overflow:hidden;flex-shrink:1}   /* тест rel46: без горизонтальной прокрутки на 1000–1024 px */
+@media (max-width:1280px){.hbtn{font-size:0;padding:4px 8px;flex:none}.hbtn::before{content:"🕘";font-size:18px}.top .pc{display:none}}
 </style></head>
 <body>
 <div id="root"></div>
@@ -116,7 +145,7 @@ G2L.touched=function(){return touched};
 (function(){
 var ITER=310000,ACC={"68a65ce466f495e6c1b17bea662e1e18e0cf95e07ac38110e27f3577a838dfcd": {"salt": "d6e437a4bfa7ac3b", "data": "U2FsdGVkX1/W5Dekv6esO9Q7BSiQbemlmzioGPXGiVEIJMXAjHhEGuwluw9xZXTHeyC3c6wgab0tF2VgUoG3x4Cc5OrFciH4/XVkqaHE4TyVMviwEsfVa/Uv4j4EgjV76YOEe/7Hwh22j7mpJDe9DW9KHXXIV91Ckz2eJR8sj9SJdWQjmkGRMc4hD3CUbFZto89pAdhUm1TDnGtKT78C8ivsjlkRpeXY5onaqQatRZQwHl1/2qjmbtr+1pK0O9GxtQaUFqTSZoc+xIpvBuyVOLvho1yBODFvbU+HiSMnmpTM3jFSztqZe1EWUvdzErrRBWXcHHuNpDqbjPtKv3F1POC0Ncq4ZTSVMHcDXWBecLvWfO+q5BL/7uswCr//1lcu2YDKMHYiXB+6PYD6RYOg3mZb4a659YcHPwyDVCDdQ5xT5MKMNcEcFN+ArBom7y5TjwXnbT0crGmixuMb+9f+ZpxO8hrkMubhlHWNe1MYzd7DS1EHC8gQ0O+0fv2IilhGOVqToEswnDQ9Kw1Gi1eARSrGhshlLkl5nQGNnzw8scl9bPD8gt/It/3V2urlPJFhv4ax9m0pF8htCAEG+cPr4ZZzu8oEU/OZ7F+rOfBtdQj6YvU+eD7ZqaNgX0NUGO74ljUvF64Zmt2f2K4+wMy0xvkqqPLPzRNz7jbnqaK9eBPWW+GMXOeJNRC2k7f9YiUqLL8a/dy7eJ4llUC3Y4tqDhka4o1cPoCOLYur8N7WO2Fl2anW/fZDZ60q+CI7fV6c87NS0XPYvt311aiFu2dXbOCuiPvi2b4HWMf5+zlDOettn5q81T1dbqfRpLy8IWhUROsh5n2JeItR846J1/LtU2q4vZ/ecSFEo9L1jxStBOFRD+VGrxaWmiclS2FtoIFiDV4oNmCCUD5ZfVG8+pUOI/wMUBb9SQMZj0Uop+hRSnVivM/rI3oxWQzO66eDi/VoL7eEJNz5Gt8vKN/RUqp6v+JiJPh4HklPZQ9/hNMJlAXPuWPu40XbIDNDxVb+WJvH0VAmrZhj5Iix6mnPzi0PHn59JkFQ5SfjXuasMiohZEgwDAPPSY5pksWWnBZq3RPPDqSH/x7o7/4RHATNA3lsrM023Ih2Nwg0+Fu7Le1UilmsOulSBSzGNNGIoTMzV2iI4z1Qoekt/7WTLLaNVHpW/dpBKNKIR0XEBnj6hhguikCtB70W4iOGF34aop5mfVlXtJxdeczS9ZIdZp7s086vIW50xAL2CRif3ksVg0q+jk/SUzFUHsuxbDZznmMAio7IXJy1yTMslsOYuQq/GE2sjW3qopX/6oxBHHm7yK6m1usVaAQpXNtc4ec4ot9/US/FJvV1ekLGothwO9eZ6FPlg8aP+0IplO+b6VDUIWLjBM42m3sELlCsKzJu4bqYDd/dkp6I93/hXzBmKgXsmb5QLvtiwMdFQ9FbmkviVh2sqLQCUti8hL8XL0VfEJvLVQ+W0gpUVRvz+MfkmvVkirIilXnIZpdDmZLHhk7VrNaa1CY="}, "48abaa3600cf333679aa01a92e0bba5d24e1c247188b4413647e45043978f84d": {"salt": "81cffbac4b44fb40", "data": "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"}},SB=window.SF_SB,TEST=false;
 var RU='йцукенгшщзхъфывапролджэячсмитьбюё',EN="qwertyuiop[]asdfghjkl;'zxcvbnm,.`";
-var ME=null,CUR=null,ST=null,WAIT=null,STOPW=null,EDIT=null,REC=null,LASTW='',WREV=0,LOCAL=0;
+var ME=null,CUR=null,ST=null,WAIT=null,STOPW=null,EDIT=null,REC=null,LASTW='',WREV=0,LOCAL=0,HIST=null,STOPH=null,HOK={},HTAB='Все',HQ='',HALL=false;
 function $(s,r){return (r||document).querySelector(s)}
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){return null}}
@@ -152,18 +181,22 @@ function login(){
 /* ---------- приложение ---------- */
 function deckOf(id){return (ME.decks||[]).filter(function(d){return d.deck===id})[0]}
 function app(){
-  var h=decodeURIComponent((location.hash||'').slice(1));CUR=deckOf(h)||(ME.decks||[])[0]||null;
+  var h=decodeURIComponent((location.hash||'').slice(1));if(h&&!deckOf(h)&&/^[a-z0-9][\w\-]{3,80}$/i.test(h))return waitNew(h);   /* dev39: новая работа из кабинета — страница ещё обновляется на сайте */
+  CUR=deckOf(h)||(ME.decks||[])[0]||null;
   $('#root').innerHTML='<div class="app"><aside class="rail" id="rail"><a class="logo" href="/pe/"><img src="img/logo.png" alt="Академия Сметного Дела"></a>'+
     '<a class="new" href="/pe/#new">+ Новая работа</a><div class="app-nm"><img src="img/sokrat.png" alt="">Сократ · методист</div><div class="hint">Работы у Сократа</div><div id="works"></div>'+
-    '<a class="back" href="/pe/">← Все мои работы</a></aside><main><div class="top"><button class="burger" id="bg" aria-label="Работы">☰</button><b class="nm" id="nm"></b><span class="steps" id="steps"></span><span class="pc" id="pc"></span></div>'+
+    '<a class="back" href="/pe/">← Все мои работы</a></aside><main><div class="top"><button class="burger" id="bg" aria-label="Работы">☰</button><b class="nm" id="nm"></b><span class="steps" id="steps"></span><button class="hbtn" id="hbtn" type="button" aria-haspopup="dialog" title="История урока" aria-label="История урока">🕘 История урока</button><span class="pc" id="pc"></span></div>'+
     '<div class="chat" id="chat"></div><div class="dock"><div class="in"><div class="field"><textarea id="tx" rows="1" placeholder="Напишите Сократу, что поправить"></textarea>'+
     '<button class="ib" id="mic" title="Сказать голосом" aria-label="Сказать голосом">🎤</button><button class="ib send" id="send" title="Отправить" aria-label="Отправить">↑</button></div>'+
-    '<button class="go2" id="dlb">⤓ Скачать</button><button class="go" id="hand">Передать Малевичу →</button></div></div></main></div>';
+    '<button class="go2" id="dlb">⤓ Скачать</button><button class="go" id="hand">Передать Малевичу →</button></div></div></main></div>'+
+    '<aside class="hist" id="hist" role="dialog" aria-label="История урока"><div class="hh"><b>🕘 История урока</b><button class="hx" id="hx" type="button" aria-label="Закрыть">×</button></div>'+
+    '<div class="ht" id="htabs"></div><input class="hs" id="hq" type="search" placeholder="Поиск по истории" aria-label="Поиск по истории"><div class="hb" id="hbody"></div></aside>';
   works();$('#bg').onclick=function(){$('#rail').classList.toggle('open')};
   var tx=$('#tx');tx.oninput=function(){tx.style.height='auto';tx.style.height=Math.min(180,tx.scrollHeight)+'px'};
   tx.onkeydown=function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendText()}};$('#send').onclick=sendText;
-  $('#dlb').onclick=function(e){openDl(e.currentTarget)};$('#hand').onclick=handoff;mic();
+  $('#dlb').onclick=function(e){openDl(e.currentTarget)};$('#hand').onclick=handoff;mic();histBind();
   window.onhashchange=function(){var d=deckOf(decodeURIComponent(location.hash.slice(1)));if(d&&d!==CUR){CUR=d;works();openWork()}};
+  window.onkeydown=function(e){if(e.key==='Escape')histShow(false)};
   openWork()}
 function works(){var a=ME.decks||[];$('#works').innerHTML=a.length?a.map(function(d){return '<a class="w'+(d===CUR?' on':'')+'" href="#'+encodeURIComponent(d.deck)+'">'+esc(d.title)+'<small>'+esc(d.st||'Новая')+'</small></a>'}).join(''):
   '<div class="empty">Пока нет работ у Сократа. Начните новую работу — Сократ прочитает материалы и предложит программу урока.</div>'}
@@ -174,7 +207,7 @@ function job(action,extra){if(!CUR)return Promise.resolve(false);
     author:String(ME.io||'эксперт').slice(0,120),payload:Object.assign({action:action},extra||{})})}).then(function(r){return r.ok}).catch(function(){return false})}
 
 async function openWork(){
-  if(STOPW){STOPW();STOPW=null}WAIT=null;EDIT=null;ST=null;
+  if(STOPW){STOPW();STOPW=null}if(STOPH){STOPH();STOPH=null}WAIT=null;EDIT=null;ST=null;HIST=null;HOK={};histDraw();
   if(!CUR){$('#chat').innerHTML='<div class="so"><img class="ava" src="img/sokrat.png" alt=""><div class="txt"><p>Здравствуйте! Здесь будут Ваши работы у Сократа. Начните новую работу в кабинете — я прочитаю материалы и предложу программу урока.</p><p><a href="/pe/#new">+ Новая работа</a></p></div></div>';head();return}
   $('#chat').innerHTML='<p class="wait">Открываю работу…</p>';head();
   var row=await G2L.get(CUR.deck,'sok',4000);ST=row&&row.data||null;var rev=row&&row.rev||0;
@@ -183,7 +216,9 @@ async function openWork(){
   if(ST&&ST.busy&&!(w&&w.data&&w.data.id===ST.busy&&w.data.done)){WAIT={id:ST.busy,t0:Date.now(),lastW:lastW,mode:'',text:(w&&w.data&&w.data.id===ST.busy)?w.data.text:''};render();follow(w&&w.rev||0)}
   else if(!ST||!(ST.msgs||[]).length){ask('program','',lastW,w&&w.rev||0)}
   else job('sokrat_hello');
-  STOPW=G2L.watch(CUR.deck,'sok',rev,function(r){if(WAIT||EDIT)return;if(LOCAL&&(Date.parse(r.data&&r.data.at)||0)<LOCAL-1500)return;ST=r.data;render()},10)}
+  STOPW=G2L.watch(CUR.deck,'sok',rev,function(r){if(WAIT||EDIT)return;if(LOCAL&&(Date.parse(r.data&&r.data.at)||0)<LOCAL-1500)return;ST=r.data;render()},10);
+  var dk=CUR.deck,hr=await G2L.get(dk,'hist',4000);if(CUR&&CUR.deck===dk){HIST=hr&&hr.data||null;histDraw();if(!WAIT&&!EDIT)render()}
+  STOPH=G2L.watch(dk,'hist',hr&&hr.rev||0,function(r){if(!CUR||CUR.deck!==dk)return;HIST=r.data;histDraw();if(!WAIT&&!EDIT)render()},20)}
 
 function ask(mode,text,lastW,wrev){
   ST=ST||{msgs:[]};if(text)ST.msgs.push({id:'l'+Date.now(),who:'me',text:text});
@@ -235,6 +270,7 @@ function lastOf(k){var a=(ST&&ST.msgs)||[];for(var i=a.length-1;i>=0;i--)if(a[i]
 function hasSlides(){return !!(ST&&ST.doc&&ST.doc.slides)}
 function render(){if(!CUR)return;var c=$('#chat'),a=(ST&&ST.msgs)||[],o=[],it=ST&&ST.intro;
   if(it)o.push('<div class="me"><div class="b">'+esc(it.text)+((it.files||[]).filter(okf).length?'<div class="files">'+it.files.filter(okf).map(function(f){return '<span>📎 '+esc(f)+'</span>'}).join('')+'</div>':'')+'</div></div>');
+  var pv=prevCard();if(pv)o.push(pv);
   var lp=lastOf('program'),lsd=lastOf('slides');
   a.forEach(function(m){if(m.who==='me'){o.push('<div class="me"><div class="b">'+esc(m.text)+'</div></div>');return}
     var tools=m.kind==='program'||m.kind==='slides'||m.kind==='edit';
@@ -244,7 +280,56 @@ function render(){if(!CUR)return;var c=$('#chat'),a=(ST&&ST.msgs)||[],o=[],it=ST
       (m===lp&&!lsd&&!WAIT&&ST.step!=='handed'?'<div class="quick"><button class="main" data-q="yes">Да, пишем слайды →</button><button data-q="add">Добавить пункт</button><button data-q="short">Короче, на 10 минут</button></div>':'')+
       '</div></div>')});
   if(WAIT)o.push('<div class="so" id="wt"><img class="ava" src="img/sokrat.png" alt="Сократ"><div class="col" style="flex:1;min-width:0"><div class="txt" id="wtx"></div></div></div>');
-  c.innerHTML=o.join('');if(WAIT)renderWait();head();bind()}
+  c.innerHTML=o.join('');if(WAIT)renderWait();head();bind();prevBind()}
+/* ---------- dev39: История урока (Руслан 11.11: «чтобы всегда можно было вернуться… найти, что уже было сказано») ---------- */
+function dm(t){var d=new Date(t);return ('0'+d.getDate()).slice(-2)+'.'+('0'+(d.getMonth()+1)).slice(-2)}
+function hm(t){var d=new Date(t);return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)}
+function shortQ(q){return String(q||'').replace(/\s*(Можно голосом|Расскажите,? как).*$/,'').replace(/\?.*$/,'?').trim()}
+function nTimes(n){return n===1?'один раз':n===2?'дважды':n+' раза'}
+function prevOther(){return ((HIST&&HIST.items)||[]).filter(function(x){return CUR&&x.w!==CUR.deck&&x.stage==='Распаковка'&&x.q})}
+function prevCard(){if(!HIST||hasSlides()||(ST&&ST.handed))return '';var it=prevOther();if(!it.length)return '';
+  var seen={},L=[];it.forEach(function(x){var k=shortQ(x.q).toLowerCase();if(seen[k])return;seen[k]=1;L.push(x)});   /* по каждому вопросу — самый свежий ответ */
+  L.sort(function(a,b){return (a.qn||99)-(b.qn||99)});var rounds={};it.forEach(function(x){rounds[x.w]=1});var n=Object.keys(rounds).length,show=HALL?L:L.slice(0,3);
+  return '<div class="so prev-so"><img class="ava" src="img/sokrat.png" alt="Сократ"><div class="col" style="flex:1;min-width:0"><div class="prev">'+
+    '<p class="lead">По этому уроку мы уже говорили '+nTimes(n)+'. Вот что Вы отвечали — заново не спрашиваю. Если что-то изменилось, нажмите «Поправить», и я обновлю программу.</p>'+
+    show.map(function(x){var k=x.w+'|'+(x.qn||0);return '<div class="qa'+(HOK[k]?' done':'')+'" data-k="'+esc(k)+'"><div class="qh">'+(x.qn?'Вопрос '+x.qn+' · ':'')+esc(shortQ(x.q))+'<small>Ваш ответ '+dm(x.at)+' · круг '+x.round+'</small></div>'+
+      '<div class="qv">'+esc(x.a.length>420?x.a.slice(0,420)+'…':x.a)+'</div><div class="qb"><button class="ok" data-pv="ok">✓ Верно</button><button data-pv="fix">✎ Поправить</button></div></div>'}).join('')+
+    (L.length>3&&!HALL?'<button class="more" data-pv="all">Показать все ответы ('+L.length+')</button>':'')+'</div></div></div>'}
+function prevBind(){document.querySelectorAll('[data-pv]').forEach(function(b){b.onclick=function(){var a=b.getAttribute('data-pv');if(a==='all'){HALL=true;render();return}
+  var qa=b.closest('.qa'),k=qa.getAttribute('data-k'),x=prevOther().filter(function(y){return y.w+'|'+(y.qn||0)===k})[0];if(!x)return;
+  if(a==='ok'){HOK[k]=1;qa.classList.add('done');return}
+  var t=$('#tx');t.value='Поправка к моему ответу «'+shortQ(x.q)+'»: ';t.focus();t.oninput&&t.oninput();toast('Допишите, что изменилось, и отправьте — Сократ поправит программу',3500)}})}
+function histShow(on){var h=$('#hist');if(!h)return;h.classList.toggle('on',!!on);if(on){histDraw();setTimeout(function(){var q=$('#hq');if(q)q.focus()},60)}}
+function histBind(){$('#hbtn').onclick=function(){histShow(!$('#hist').classList.contains('on'))};$('#hx').onclick=function(){histShow(false)};
+  $('#hq').oninput=function(){HQ=this.value.trim().toLowerCase();histDraw()}}
+function histDraw(){var b=$('#hbody'),tb=$('#htabs');if(!b||!tb)return;var T=['Все','Распаковка','Программа','Правки'];
+  tb.innerHTML=T.map(function(t){return '<button type="button" data-ht="'+t+'"'+(t===HTAB?' class="on"':'')+'>'+t+'</button>'}).join('');
+  tb.querySelectorAll('[data-ht]').forEach(function(x){x.onclick=function(){HTAB=x.getAttribute('data-ht');histDraw()}});
+  if(!HIST){b.innerHTML='<p class="none">Собираю историю урока…</p>';return}
+  var W={};(HIST.works||[]).forEach(function(w){W[w.deck]=w});
+  var it=(HIST.items||[]).filter(function(x){return (HTAB==='Все'||x.stage===HTAB)&&(!HQ||(x.q+' '+x.a+' '+x.wt).toLowerCase().indexOf(HQ)>=0)});
+  if(!it.length){b.innerHTML='<p class="none">'+(HQ||HTAB!=='Все'?'Ничего не нашёл. Попробуйте другое слово или вкладку «Все».':'По этому уроку Вы ещё ничего не писали. Здесь будет всё, что Вы скажете на каждом этапе.')+'</p>';return}
+  var o=[],last='';it.forEach(function(x,i){var w=W[x.w]||{},g=dm(x.at)+'|'+x.w;
+    if(g!==last){last=g;o.push('<div class="hd">'+dm(x.at)+' · круг '+x.round+' · '+esc(x.who)+(CUR&&x.w===CUR.deck?' · эта работа':'')+'<small>'+esc(x.wt||w.title||'')+'</small></div>')}
+    var lbl=x.stage+(x.qn?', вопрос '+x.qn:'')+(x.q&&!x.qn?' · '+shortQ(x.q):'');
+    o.push('<div class="hi" role="button" tabindex="0" data-hi="'+i+'"><b>'+esc(lbl)+'</b> — <span class="short">«'+esc(x.a.length>110?x.a.slice(0,110)+'…':x.a)+'»</span><span class="tm">'+hm(x.at)+'</span>'+
+      (x.qn?'<div class="full" style="color:var(--muted);font-size:14px">'+esc(shortQ(x.q))+'</div>':'')+'<div class="full">'+esc(x.a)+'</div><button type="button" class="ins" data-ins="'+i+'">Вставить в ответ</button></div>')});
+  b.innerHTML=o.join('');
+  b.querySelectorAll('[data-hi]').forEach(function(e){e.onclick=function(ev){if(ev.target.closest('[data-ins]'))return;e.classList.toggle('open')};e.onkeydown=function(ev){if(ev.key==='Enter')e.classList.toggle('open')}});
+  b.querySelectorAll('[data-ins]').forEach(function(e){e.onclick=function(){var x=it[+e.getAttribute('data-ins')],t=$('#tx');if(!t||!x)return;
+    t.value=(t.value?t.value.replace(/\s*$/,'\n'):'')+x.a;t.oninput&&t.oninput();histShow(false);t.focus();toast('Вставил в поле ответа — поправьте и отправьте Сократу',3000)}})}
+/* dev39: новая работа из кабинета — сайт обновляется 1–3 минуты; спрашиваем свежую страницу и открываем работу, как только она появится */
+function waitNew(id){var t0=Date.now(),busy=false,LIM=12*60e3;
+  $('#root').innerHTML='<div class="newwait"><img src="img/sokrat.png" alt=""><h2>Я взял Вашу работу</h2><p>Открою её здесь примерно через 1–3 минуты — страница обновляется на сайте.</p>'+
+    '<div class="bar"><i id="nwb"></i></div><p id="nwt">0 с</p><p style="margin-top:18px"><a href="/pe/">← Все мои работы</a></p></div>';
+  var tm=setInterval(async function(){var s=Math.round((Date.now()-t0)/1e3),b=$('#nwb'),t=$('#nwt');if(!b){clearInterval(tm);return}
+    b.style.width=Math.min(96,Math.max(3,s/180*100))+'%';t.textContent=s<180?s+' с · обычно 1–3 минуты':'Ещё немного — заканчиваю… '+Math.floor(s/60)+' мин';
+    if(Date.now()-t0>LIM){clearInterval(tm);t.textContent='Задерживаюсь. Работа сохранена — она уже в «Мои работы», я сообщил Руслану.';return}
+    if(busy||s%10)return;busy=true;
+    try{var r=await fetch(location.pathname+'?nc='+Date.now(),{cache:'no-store'}),h=await r.text(),m=h.match(/,ACC=(\{[\s\S]*?\}),SB=window\.SF_SB/);
+      if(m){var A=JSON.parse(m[1]),ah=ls('pe-hub-acc'),kb=ls('pe-hub-k');if(A[ah]&&kb){var M=await dec(b64(kb),A[ah].data);
+        if((M.decks||[]).some(function(d){return d.deck===id})){clearInterval(tm);ACC=A;ME=M;app();return}}}}catch(e){}
+    busy=false},1000)}
 function waitLine(){var s=Math.round((Date.now()-WAIT.t0)/1000),m=WAIT.mode,what=m==='program'?'Читаю Ваши материалы и пишу программу урока':m==='slides'?'Пишу, что поставить на каждый слайд':'Читаю Ваше сообщение';
   var eta=m==='program'?'обычно 20–40 секунд':m==='slides'?'обычно 1–2 минуты':'обычно до минуты';
   return '<p class="wait"><b>'+what+'…</b> '+(s>90&&!WAIT.text?'Ещё немного — заканчиваю. ':'')+'· '+s+' с · '+eta+'<span class="caret"></span></p>'}
