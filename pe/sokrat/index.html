@@ -109,6 +109,9 @@ mark{background:var(--mark);color:inherit;padding:0 2px;border-radius:3px}
 .newwait p{color:var(--muted);margin:4px 0}
 .top{overflow:hidden}.steps{min-width:0;overflow:hidden;flex-shrink:1}   /* тест rel46: без горизонтальной прокрутки на 1000–1024 px */
 @media (max-width:1280px){.hbtn{font-size:0;padding:4px 8px;flex:none}.hbtn::before{content:"🕘";font-size:18px}.top .pc{display:none}}
+/* SOKRAT_MAT12 v1.2: кнопка сверки и ответ сверки */
+.acts button.ck{border-color:var(--blue);color:var(--blue);font-weight:600}.acts button.ck:hover{background:#EEF2FF;color:var(--blue)}
+.txt.k-check{border-left:4px solid var(--blue);padding-left:14px}
 </style></head>
 <body>
 <div id="root"></div>
@@ -285,13 +288,14 @@ function hasSlides(){return !!(ST&&ST.doc&&ST.doc.slides)}
 function render(){if(!CUR)return;var c=$('#chat'),a=(ST&&ST.msgs)||[],o=[],it=ST&&ST.intro;
   if(it)o.push('<div class="me"><div class="b">'+esc(it.text)+((it.files||[]).filter(okf).length?'<div class="files">'+it.files.filter(okf).map(function(f){return '<span>📎 '+esc(f)+'</span>'}).join('')+'</div>':'')+'</div></div>');
   var pv=prevCard();if(pv)o.push(pv);
-  var lp=lastOf('program'),lsd=lastOf('slides');
-  a.forEach(function(m){if(m.who==='me'){o.push('<div class="me"><div class="b">'+esc(m.text)+'</div></div>');return}
+  var lp=lastOf('program'),lsd=lastOf('slides'),lastT=-1;a.forEach(function(m,i){if(m.who==='so'&&(m.kind==='program'||m.kind==='slides'||m.kind==='edit'))lastT=i});
+  var ckAfter=a.slice(lastT+1).some(function(m){return m.kind==='check'});   /* v1.2: кнопка сверки — под последним ответом с программой или слайдами */
+  a.forEach(function(m,mi){if(m.who==='me'){o.push('<div class="me"><div class="b">'+esc(m.text)+'</div></div>');return}
     if(m.who==='ma'){o.push(maCard(m));return}   /* dev47: реплика Малевича */
     var tools=m.kind==='program'||m.kind==='slides'||m.kind==='edit';
-    o.push('<div class="so" data-id="'+esc(m.id)+'"><img class="ava" src="img/sokrat.png" alt="Сократ"><div class="col" style="flex:1;min-width:0"><div class="txt k-'+esc(m.kind||'')+(m.err?' err':'')+'">'+(m.steps&&m.steps.length?'<details class="srch"><summary>Проверил: '+m.steps.length+' '+(m.steps.length%10===1&&m.steps.length%100!==11?'поиск':m.steps.length%10>=2&&m.steps.length%10<=4&&(m.steps.length%100<12||m.steps.length%100>14)?'поиска':'поисков')+' — уроки Академии и официальные источники</summary><ul>'+m.steps.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul></details>':'')+(m.kind==='slides'?LEGEND:'')+
+    o.push('<div class="so" data-id="'+esc(m.id)+'"><img class="ava" src="img/sokrat.png" alt="Сократ"><div class="col" style="flex:1;min-width:0"><div class="txt k-'+esc(m.kind||'')+(m.err?' err':'')+'">'+(m.steps&&m.steps.length?'<details class="srch"><summary>Проверил: '+m.steps.length+' '+(m.steps.length%10===1&&m.steps.length%100!==11?'поиск':m.steps.length%10>=2&&m.steps.length%10<=4&&(m.steps.length%100<12||m.steps.length%100>14)?'поиска':'поисков')+(m.kind==='check'?' — официальные источники':' — уроки Академии и официальные источники')+'</summary><ul>'+m.steps.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul></details>':'')+(m.kind==='slides'?LEGEND:'')+
       (m.kind==='program'?'<div class="ptitle">Программа урока</div>':'')+(m.kind==='note'&&!m.err?'<div class="done-note">✓ '+inl(m.text)+'</div>':md(m.text,m.upd))+'</div>'+
-      (tools?'<div class="acts">'+'<button data-a="cp">⧉ Копировать</button><button data-a="ed">✎ Править</button><button data-a="dl">⤓ Скачать</button></div>':'')+
+      (tools?'<div class="acts">'+'<button data-a="cp">⧉ Копировать</button><button data-a="ed">✎ Править</button><button data-a="dl">⤓ Скачать</button>'+(mi===lastT&&!ckAfter&&!WAIT&&!(ST&&ST.handed)?'<button data-a="ck" class="ck">🔎 Сверить с официальными источниками</button>':'')+'</div>':'')+
       (m===lp&&!lsd&&!WAIT&&ST.step!=='handed'?'<div class="quick"><button class="main" data-q="yes">Да, пишем слайды →</button><button data-q="add">Добавить пункт</button></div>':'')+
       '</div></div>')});
   if(WAIT)o.push('<div class="so" id="wt"><img class="ava" src="img/sokrat.png" alt="Сократ"><div class="col" style="flex:1;min-width:0"><div class="txt" id="wtx"></div></div></div>');
@@ -345,9 +349,9 @@ function waitNew(id){   /* rel48 (Руслан 11.11: «ни на каком э�
   return app()}
 function vtr(){try{return localStorage.getItem('sf-voter')||''}catch(e){return ''}}
 function waitLine(){var s0=Math.round((Date.now()-WAIT.t0)/1000);if(CUR&&CUR.pending&&!WAIT.text&&s0>150&&!(ST&&ST.intro))return '<p class="wait"><b>Не нахожу материалы этой работы.</b> Откройте её, пожалуйста, из <a href="/pe/">«Мои работы»</a> — или начните новую работу.</p>';   /* rel51: неверный адрес — без бесконечного ожидания */
-  var s=Math.round((Date.now()-WAIT.t0)/1000),m=WAIT.mode,what=m==='program'?'Читаю Ваши материалы и пишу программу урока':m==='slides'?'Пишу, что поставить на каждый слайд':'Читаю Ваше сообщение';
-  var eta=m==='program'?'обычно 1–2 минуты':m==='slides'?'обычно 3–5 минут':'обычно 1–2 минуты',lim=m==='slides'?360:150,st=WAIT.steps||[];   /* умный Сократ (11.11): ищет в уроках Академии и на официальных сайтах, думает основательно */
-  return '<p class="wait"><b>'+(st.length?'Проверяю по урокам Академии и официальным источникам':what)+'…</b> '+(s>lim&&!WAIT.text?'Ещё немного — заканчиваю. ':'')+'· '+s+' с · '+eta+'<span class="caret"></span></p>'+(st.length?'<div class="srch"><ul>'+st.map(function(x,i){return '<li'+(i===st.length-1?' class="now"':'')+'>'+esc(x)+'</li>'}).join('')+'</ul></div>':'')}
+  var s=Math.round((Date.now()-WAIT.t0)/1000),m=WAIT.mode,what=m==='check'?'Сверяю с официальными источниками':m==='program'?'Читаю Ваши материалы и пишу программу урока':m==='slides'?'Пишу, что поставить на каждый слайд':'Читаю Ваше сообщение';
+  var eta=m==='check'?'обычно 3–5 минут':m==='program'?'обычно 1–2 минуты':m==='slides'?'обычно 2–4 минуты':'обычно 1–2 минуты',lim=m==='slides'?300:m==='check'?330:150,st=WAIT.steps||[];   /* умный Сократ (11.11): ищет в уроках Академии и на официальных сайтах, думает основательно */
+  return '<p class="wait"><b>'+(st.length&&m!=='check'?'Проверяю по урокам Академии и официальным источникам':what)+'…</b> '+(s>lim&&!WAIT.text?'Ещё немного — заканчиваю. ':'')+'· '+s+' с · '+eta+'<span class="caret"></span></p>'+(st.length?'<div class="srch"><ul>'+st.map(function(x,i){return '<li'+(i===st.length-1?' class="now"':'')+'>'+esc(x)+'</li>'}).join('')+'</ul></div>':'')}
 function renderWait(){var e=$('#wtx');if(!e)return;e.innerHTML=WAIT.text?((/###\s*Слайд/.test(WAIT.text)?LEGEND:'')+md(WAIT.text)+'<span class="caret"></span>'):waitLine();
   var nearBottom=window.innerHeight+window.scrollY>document.body.scrollHeight-260;if(nearBottom)scrollEnd()}
 function tick(){if(WAIT&&!WAIT.text)renderWait()}
@@ -368,6 +372,7 @@ function head(){if(!CUR)return;$('#nm').textContent=(ST&&ST.title)||CUR.title;va
 function bind(){document.querySelectorAll('.so [data-a]').forEach(function(b){var so=b.closest('.so'),id=so.getAttribute('data-id'),a=b.getAttribute('data-a');
     if(a==='hl')b.onmousedown=function(e){e.preventDefault();yellow(so,id)};else b.onclick=function(e){
       if(a==='cp'){var m=msg(id);navigator.clipboard.writeText(plain(m&&m.text)).then(function(){toast('Скопировано')},function(){toast('Не получилось скопировать — выделите текст и нажмите Cmd+C')})}
+      else if(a==='ck'){if(WAIT)return;ask('check','')}
       else if(a==='ed')editMsg(so,id);else if(a==='dl')openDl(b)}});
   document.querySelectorAll('[data-q]').forEach(function(b){b.onclick=function(){if(WAIT)return;var q=b.getAttribute('data-q');if(q!=='add'){var qq=b.closest('.quick');if(qq)qq.remove()}
     if(q==='yes')ask('slides','Да, пишем слайды');else if(q==='short')ask('program','Короче, на 10 минут');else{var t=$('#tx');t.value='Добавьте пункт: ';t.focus();t.oninput()}}})}
@@ -459,5 +464,5 @@ document.addEventListener('mousedown',function(e){var h=e.target.closest&&e.targ
 boot();
 })();
 </script>
-<!--PEVER--><div id="pever" title="Номер версии" style="position:fixed;left:12px;bottom:10px;z-index:60;font:12px/1.4 system-ui,sans-serif;color:#5B6270;background:rgba(255,255,255,.94);border:1px solid #E4E6EB;border-radius:8px;padding:2px 9px;pointer-events:none">Сократ · версия <b style="color:#1745E0">1.1</b> · 11.11 15:59</div><!--/PEVER-->
+<!--PEVER--><div id="pever" title="Номер версии" style="position:fixed;left:12px;bottom:10px;z-index:60;font:12px/1.4 system-ui,sans-serif;color:#5B6270;background:rgba(255,255,255,.94);border:1px solid #E4E6EB;border-radius:8px;padding:2px 9px;pointer-events:none">Сократ · версия <b style="color:#1745E0">1.2</b> · 11.11 17:33</div><!--/PEVER-->
 </body></html>
