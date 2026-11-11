@@ -26,6 +26,7 @@ main{max-width:1180px;margin:0 auto;padding:18px 24px 24px;display:grid;grid-tem
 .ft>div{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:14px;justify-content:space-between}.ft .t{min-width:0}
 .btn{min-height:48px;padding:0 22px;border-radius:12px;border:1.5px solid #AEB6C7;background:#fff;color:var(--ink);font-weight:600;font-size:18px;font-family:inherit;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center}
 .btn.p{background:var(--act);border-color:var(--act);color:#fff}.btn.p:hover{background:var(--act-h)}.btn.p:disabled{background:#9AA8D6;border-color:#9AA8D6;cursor:not-allowed}
+.btn.dl{border-color:#1745E0;background:#fff;color:#1745E0}
 .btn.w{border-color:#E0A094;background:var(--bad-soft);color:var(--bad)}
 .bt{display:flex;gap:10px}
 .done{grid-column:1/-1;padding:22px;text-align:center}.done h2{margin:0 0 6px;font-size:24px;color:var(--ok)}
@@ -76,12 +77,12 @@ main{grid-template-columns:minmax(0,1fr) 320px}.stage .vs{max-width:none}.stage 
 .mver{font-size:12px;color:#8A909C;white-space:nowrap}.mver b{color:#1745E0}
 @media (max-width:900px){.mh{padding:8px 12px}.mh nav{margin-left:0}}
 </style></head><body><div class="mh" id="mh"><div><div class="who"><span class="mav" aria-hidden="true">М.</span><div>Малевич · дизайнер<small id="mt"></small></div></div>
-<nav aria-label="Шаги урока"><a class="ok" id="ms1" href="/pe/sokrat/">✓ Тексты от Сократа</a><span class="now" id="ms2">● Слайды</span><span>○ Запись</span><span>○ Монтаж</span></nav><span class="mver" title="Номер версии сервиса">Малевич · версия <b>1.6</b> · 11.11 22:23</span></div></div>
+<nav aria-label="Шаги урока"><a class="ok" id="ms1" href="/pe/sokrat/">✓ Тексты от Сократа</a><span class="now" id="ms2">● Слайды</span><span>○ Запись</span><span>○ Монтаж</span></nav><span class="mver" title="Номер версии сервиса">Малевич · версия <b>1.8</b> · 11.11 22:51</span></div></div>
 <div class="gl"><div><span class="av" aria-hidden="true">М.</span><div><small>Малевич · дизайнер Академии Сметного Дела</small><ul id="gl"></ul></div></div></div>
 <div class="pgw" id="pgw"><div class="pgt" id="pgt"></div><div class="pgbar" aria-hidden="true"><i id="pgi"></i></div></div>
 <main id="mn"><section class="card stage" aria-live="polite"><div class="hd"><h2 id="ttl"></h2><span id="vt"></span><button type="button" class="btn p hb" id="hok" hidden></button><span class="hn" id="hn"></span></div><div class="big" id="big"></div><div class="vs" id="vs"></div><div id="ed"></div></section>
 <aside class="card rb"><h3 id="rbh">Слайды урока</h3><div id="rb"></div></aside></main>
-<div class="ft" id="ft"><div><div class="t" id="ftt"></div><div class="bt"><button type="button" class="btn w" id="bst">🙁 Малевич меня не понимает</button><button type="button" class="btn w" id="dpdf" hidden>Скачать PDF</button><button type="button" class="btn w" id="dppt" hidden>Скачать слайды (PPTX)</button><button type="button" class="btn p g2s-main" id="bok"></button></div></div></div>
+<div class="ft" id="ft"><div><div class="t" id="ftt"></div><div class="bt"><button type="button" class="btn w" id="bst">🙁 Малевич меня не понимает</button><button type="button" class="btn dl" id="dpdf" hidden>Скачать PDF</button><button type="button" class="btn dl" id="dppt" hidden>Скачать слайды (PPTX)</button><button type="button" class="btn p g2s-main" id="bok"></button></div></div></div>
 <button type="button" class="pp" id="pp">🖍 Выделить жёлтым</button><input type="file" id="fin" hidden multiple accept=".jpg,.jpeg,.png,.webp,.heic,.gif,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv"><dialog id="dl"><h3>Малевич вас не понял — это моя вина</h3><ol><li>Этот слайд останется как есть.</li><li>Мы идём дальше — к следующему слайду.</li><li>Руслан получит сообщение и поможет.</li></ol>
 <label for="nt">Если хотите, напишите, что не так (необязательно):</label><textarea id="nt"></textarea><div class="bt"><button type="button" class="btn" id="dc">Вернуться к слайду</button><button type="button" class="btn p g2s-main" id="dg">Оставить и открыть следующий</button></div></dialog>
 <script>window.SF_SB={"url": "https://twtxrtgknenldyqmwymy.supabase.co", "key": "sb_publishable_N5Zaxf5mfaMc67JoaCWxVA_fp_fnlLE"};window.PE={deck:'',live:''};window.S25={slides:[],io:'',demo:false,built:'1970-01-01T00:00:00Z'};
@@ -174,7 +175,7 @@ function paint(){
   while(RB.children.length>sl.length)RB.removeChild(RB.lastChild);
   $('#rbh').textContent='Слайды урока · '+sl.length;
   var go=$('#bok'),dt=dirty(cur),nx=s.red&&nextReady();go.dataset.all=all?'1':'';go.dataset.mode=dt?'send':s.red?'next':'';
-  go.textContent=all?'Открыть Запись':dt?'Отправить правку Малевичу':s.red?(nx?'Пока жду — к слайду '+ST[nx].k+' →':'Малевич перерисовывает…'):'Утвердить слайд '+c.k;
+  go.textContent=all?'Перейти к Гудвину · оператору':dt?'Отправить правку Малевичу':s.red?(nx?'Пока жду — к слайду '+ST[nx].k+' →':'Малевич перерисовывает…'):'Утвердить слайд '+c.k;
   go.disabled=!all&&(dt?(s.st!=='ready'&&s.st!=='approved'):s.red?!nx:s.st!=='ready');keep();
   $('#dpdf').hidden=$('#dppt').hidden=!all;$('#dpdf').disabled=$('#dppt').disabled=!!PK.busy;$('#bst').style.display=(all||s.st==='approved'||s.st==='skipped'||s.red)?'none':'';$('#bst').disabled=!(s.st==='ready');
   if(!all&&dt){var e0=E[cur];$('#ftt').innerHTML='Слайд '+c.k+' · <b>есть правки:</b> '+esc(edWhat(e0))}else if(!all&&s.red)$('#ftt').innerHTML='Слайд '+c.k+' перерисовывается · <b>можно идти дальше</b>';else

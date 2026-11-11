@@ -5,7 +5,7 @@ body{font-family:"Golos Text",Onest,system-ui,-apple-system,"Segoe UI",Roboto,sa
 .ds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}@media(max-width:860px){.ds{grid-template-columns:1fr}}
 .d{background:#fff;border-radius:16px;padding:18px;border:1px solid var(--line);display:flex;flex-direction:column}.av{width:38px;height:38px;border-radius:10px;background:#15171C;color:#fff;font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
 .d b{font-size:20px}.in{margin:8px 0;color:var(--mut)}.out{font-weight:600;margin-bottom:12px}.sp{flex:1}
-.btn{display:block;text-align:center;background:var(--act);color:#fff;font:700 17px inherit;border:0;border-radius:12px;padding:13px 18px;text-decoration:none;cursor:pointer;min-height:46px;width:100%}.btn:disabled{background:#B9C3E8;cursor:default}.btn.w2{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;margin-top:8px;min-height:40px;font-size:16px}
+#mt-dz,#mt-rm,#mt-pr{display:none!important}#mt-go{background:#C9D1E3!important;pointer-events:none}.btn{display:block;text-align:center;background:var(--act);color:#fff;font:700 17px inherit;border:0;border-radius:12px;padding:13px 18px;text-decoration:none;cursor:pointer;min-height:46px;width:100%}.btn[hidden]{display:none}.btn:disabled{background:#B9C3E8;cursor:default}.btn.w2{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;margin-top:8px;min-height:40px;font-size:16px}
 .dz{display:block;border:2px dashed #B8C2DA;border-radius:12px;background:#fff;padding:14px;text-align:center;cursor:pointer;margin-bottom:10px;font-size:15px}.dz.has{border-style:solid;border-color:var(--ok);background:var(--ok-soft)}.dz.on{border-color:var(--act)}
 .bar{height:10px;border-radius:99px;background:var(--g);overflow:hidden;margin:12px 0 6px}.bar i{display:block;height:100%;width:3%;background:var(--act);transition:width .6s}.st{color:var(--mut);font-size:15px}.er{color:var(--bad);font-size:15px;margin-top:8px}
 .gate{max-width:520px;margin:60px auto;background:#fff;border-radius:16px;padding:28px;text-align:center}</style></head><body><div class="w" id="w"></div>
@@ -19,37 +19,45 @@ function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return
 var W=document.getElementById('w'),M=window.DV,SB=window.SF_SB,$=function(i){return document.getElementById(i)};
 function gate(){W.innerHTML='<div class="gate"><h1>Войдите в кабинет</h1><p class="s">Новая работа открывается после входа в «Мои работы» Академии — тем же логином и паролем.</p><a class="btn" href="/pe/">Открыть мои работы →</a></div>'}
 function safe(n){var m=String(n).match(/\.([A-Za-z0-9]{1,6})$/),x=m?m[1].toLowerCase():'bin';return (String(n).replace(/\.[^.]*$/,'').replace(/[^A-Za-z0-9_-]+/g,'_').replace(/^_+|_+$/g,'').slice(0,40)||'file')+'.'+x}
+function door(me,id,cfg){
+ var F=[],busy=false,H={apikey:SB.key,Authorization:'Bearer '+SB.key},$d=function(k){return document.getElementById(id+'-'+k)},DZ0=$d('dzt').innerHTML;
+ function pick(fs){var er=$d('er');er.textContent='';fs=[].slice.call(fs||[]);if(!fs.length)return;
+  var ok=fs.filter(function(f){return cfg.re.test(f.name)});if(ok.length!==fs.length)er.textContent=cfg.bad;if(!ok.length)return;
+  if(ok.some(function(f){return f.size>cfg.max*1048576})){er.textContent='Файл больше '+cfg.max+' МБ — сохраните полегче.';return}
+  if(cfg.check){var m=cfg.check(ok);if(m){er.textContent=m;return}}
+  F=ok;$d('dz').classList.add('has');$d('dzt').innerHTML='<b>✓ '+esc(F.length>1?F.length+' файлов':F[0].name)+'</b>';$d('go').disabled=false;$d('rm').hidden=false}
+ $d('fi').onchange=function(){pick(this.files)};var dz=$d('dz');
+ ['dragenter','dragover'].forEach(function(e){dz.addEventListener(e,function(ev){ev.preventDefault();dz.classList.add('on')})});['dragleave','drop'].forEach(function(e){dz.addEventListener(e,function(ev){ev.preventDefault();dz.classList.remove('on')})});
+ dz.addEventListener('drop',function(ev){pick(ev.dataTransfer&&ev.dataTransfer.files)});
+ $d('rm').onclick=function(){if(busy)return;F=[];$d('fi').value='';$d('dz').classList.remove('has');$d('dzt').innerHTML=DZ0;$d('go').disabled=true;$d('rm').hidden=true;$d('er').textContent=''};
+ function prog(p,t){$d('pr').hidden=false;$d('pb').style.width=p+'%';$d('ps').textContent=t}
+ function fail(t){busy=false;$d('go').disabled=!F.length;$d('rm').hidden=!F.length;$d('go').textContent=cfg.btn;$d('pr').hidden=true;$d('er').textContent=t+' Файлы остались выбранными — нажмите кнопку ещё раз.'}
+ $d('go').onclick=function(){if(busy||!F.length)return;busy=true;$d('go').disabled=true;$d('rm').hidden=true;$d('go').textContent='Отправляю…';$d('er').textContent='';prog(5,'Загружаю…');
+  var vt=ls('pe-mal-voter')||('v'+Math.random().toString(36).slice(2,12));try{localStorage.setItem('pe-mal-voter',vt)}catch(e){}
+  var ts=Date.now(),n=0,up=F.map(function(f,i){var path='start/'+vt+'/'+ts+'_'+(i+1)+'_'+safe(f.name);return fetch(SB.url.replace(/\/$/,'')+'/storage/v1/object/pe-uploads/'+path.split('/').map(encodeURIComponent).join('/'),{method:'POST',headers:Object.assign({'Content-Type':'application/octet-stream','x-upsert':'false'},H),body:f}).then(function(r){if(!r.ok)throw 1;n++;prog(5+Math.round(25*n/F.length),'Загружаю · '+n+' из '+F.length);return {path:path,name:f.name,size:f.size,kind:(/\.(mp4|mov|m4v|webm|mkv)$/i.test(f.name)?'video':'slides')}})});
+  Promise.all(up).then(function(files){prog(32,cfg.who+' принимает…');var nm=((me&&me.io)||'эксперт').slice(0,120);
+   return fetch(SB.url.replace(/\/$/,'')+'/rest/v1/pe_jobs',{method:'POST',headers:Object.assign({'Content-Type':'application/json',Prefer:'return=representation'},H),body:JSON.stringify({deck:'start',kind:'upload',round:1,status:'queued',author:nm,payload:Object.assign({action:'start',name:nm,text:'',files:files,voter:vt,login:(me&&me.code)||'',kind:'урок'},cfg.extra)})})})
+  .then(function(r){if(!r.ok)throw 2;return r.text()}).then(function(tx){var a=tx?JSON.parse(tx):[],jid=a&&a[0]&&a[0].id;if(!jid)throw 3;prog(40,cfg.who+' читает файлы…');var t0=Date.now(),ti=setInterval(function(){
+    fetch(SB.url.replace(/\/$/,'')+'/rest/v1/pe_jobs?select=status,deck,note&id=eq.'+jid,{headers:H,cache:'no-store'}).then(function(r){return r.text()}).then(function(x){var j=(x?JSON.parse(x):[])[0];if(!j)return;var el=(Date.now()-t0)/1e3;
+     if(j.status==='error'){clearInterval(ti);fail(j.note||'Не получилось принять файлы.');return}
+     if(j.status==='done'&&j.deck&&j.deck!=='start'){clearInterval(ti);prog(100,'✓ Готово — открываю');try{localStorage.setItem('pe-mal-tok-'+j.deck,'1');localStorage.setItem('pe-mal-direct-'+j.deck,'1')}catch(e){}setTimeout(function(){location.href=cfg.to(j.deck)},500);return}
+     prog(Math.min(92,40+el*0.5),j.status==='processing'?(j.note&&!/^Принято/.test(j.note)?j.note:cfg.who+' разбирает файлы…'):cfg.who+' читает файлы…');
+     if(el>(cfg.wait||300)){clearInterval(ti);fail('Задерживаюсь: ответа ещё нет. Файлы не потеряны — я сообщил Руслану.')}}).catch(function(){})},2000)})
+  .catch(function(){fail('Нет связи — файлы не отправлены.')})}}
+function zone(id,hint,small,accept,multi){return '<label class="dz" id="'+id+'-dz"><input type="file" id="'+id+'-fi" accept="'+accept+'"'+(multi?' multiple':'')+' hidden><span id="'+id+'-dzt">'+hint+'<br><small>'+small+'</small></span></label>'}
+function ctl(id,btn){return '<span class="sp"></span><button type="button" class="btn" id="'+id+'-go" disabled>'+btn+'</button><button type="button" class="btn w2" id="'+id+'-rm" hidden>✕ Убрать файл</button><div id="'+id+'-pr" hidden><div class="bar"><i id="'+id+'-pb"></i></div><div class="st" id="'+id+'-ps"></div></div><div class="er" id="'+id+'-er" role="alert"></div>'}
 function draw(me){
  W.innerHTML='<h1>Новая работа</h1><p class="s">Выберите, с чего начать. Один выбор — и работа сразу у нужного помощника.</p><div class="ds">'+
  '<div class="d"><div class="av">С</div><b>Сократ · методист</b><div class="in">Есть тема или материалы, урока ещё нет</div><div class="out">Результат: тексты слайдов</div><span class="sp"></span><a class="btn" href="/pe/start/">Начать с темы</a></div>'+
- '<div class="d"><div class="av">М</div><b>Малевич · дизайнер</b><div class="in">Презентация уже есть</div><div class="out">Результат: слайды в стиле Академии, текст не меняется</div><span class="sp"></span><a class="btn" href="/pe/malevich/">Прикрепить презентацию</a></div>'+
- '<div class="d"><div class="av">Г</div><b>Гудвин · видео</b><div class="in">Слайды уже готовы (свои или от Малевича)</div><div class="out">Результат: записанный и смонтированный урок</div>'+
- '<label class="dz" id="dz"><input type="file" id="fi" accept=".pptx,.pdf,.png,.jpg,.jpeg,.webp" multiple hidden><span id="dzt">Перетащите слайды сюда или нажмите, чтобы выбрать<br><small>PowerPoint, PDF или картинки слайдов</small></span></label>'+
- '<span class="sp"></span><button type="button" class="btn" id="go" disabled>Прикрепить готовые слайды</button><button type="button" class="btn w2" id="rm" hidden>✕ Убрать файлы</button><div id="pr" hidden><div class="bar"><i id="pb"></i></div><div class="st" id="ps"></div></div><div class="er" id="er" role="alert"></div></div></div>';
- var F=[],busy=false,H={apikey:SB.key,Authorization:'Bearer '+SB.key},DZ0=$('dzt').innerHTML;
- function pick(fs){var er=$('er');er.textContent='';fs=[].slice.call(fs||[]);if(!fs.length)return;
-  var ok=fs.filter(function(f){return /\.(pptx|pdf|png|jpe?g|webp)$/i.test(f.name)});if(ok.length!==fs.length){er.textContent='Подходят PowerPoint, PDF и картинки слайдов — остальное я не беру.'}if(!ok.length)return;
-  if(ok.some(function(f){return f.size>50*1048576})){er.textContent='Файл больше 50 МБ — сохраните полегче.';return}
-  var doc=ok.filter(function(f){return /\.(pptx|pdf)$/i.test(f.name)});if(doc.length>1||(doc.length&&ok.length>1)){er.textContent='Возьмите один файл PowerPoint или PDF — либо только картинки слайдов.';return}
-  F=ok;$('dz').classList.add('has');$('dzt').innerHTML='<b>✓ '+esc(F.length>1?F.length+' картинок':F[0].name)+'</b>';$('go').disabled=false;$('rm').hidden=false}
- $('fi').onchange=function(){pick(this.files)};var dz=$('dz');
- ['dragenter','dragover'].forEach(function(e){dz.addEventListener(e,function(ev){ev.preventDefault();dz.classList.add('on')})});['dragleave','drop'].forEach(function(e){dz.addEventListener(e,function(ev){ev.preventDefault();dz.classList.remove('on')})});
- dz.addEventListener('drop',function(ev){pick(ev.dataTransfer&&ev.dataTransfer.files)});
- $('rm').onclick=function(){if(busy)return;F=[];$('fi').value='';$('dz').classList.remove('has');$('dzt').innerHTML=DZ0;$('go').disabled=true;$('rm').hidden=true;$('er').textContent=''};
- function prog(p,t){$('pr').hidden=false;$('pb').style.width=p+'%';$('ps').textContent=t}
- function fail(t){busy=false;$('go').disabled=!F.length;$('rm').hidden=!F.length;$('go').textContent='Прикрепить готовые слайды';$('pr').hidden=true;$('er').textContent=t+' Файлы остались выбранными — нажмите кнопку ещё раз.'}
- $('go').onclick=function(){if(busy||!F.length)return;busy=true;$('go').disabled=true;$('rm').hidden=true;$('go').textContent='Отправляю…';$('er').textContent='';prog(5,'Загружаю слайды…');
-  var vt=ls('pe-mal-voter')||('v'+Math.random().toString(36).slice(2,12));try{localStorage.setItem('pe-mal-voter',vt)}catch(e){}
-  var ts=Date.now(),up=F.map(function(f,i){var path='start/'+vt+'/'+ts+'_'+(i+1)+'_'+safe(f.name);return fetch(SB.url.replace(/\/$/,'')+'/storage/v1/object/pe-uploads/'+path.split('/').map(encodeURIComponent).join('/'),{method:'POST',headers:Object.assign({'Content-Type':'application/octet-stream','x-upsert':'false'},H),body:f}).then(function(r){if(!r.ok)throw 1;return {path:path,name:f.name,size:f.size,kind:'slides'}})});
-  Promise.all(up).then(function(files){prog(30,'Передаю Гудвину…');var nm=((me&&me.io)||'эксперт').slice(0,120);
-   return fetch(SB.url.replace(/\/$/,'')+'/rest/v1/pe_jobs',{method:'POST',headers:Object.assign({'Content-Type':'application/json',Prefer:'return=representation'},H),body:JSON.stringify({deck:'start',kind:'upload',round:1,status:'queued',author:nm,payload:{action:'start',gudwin:true,name:nm,text:'',files:files,voter:vt,login:(me&&me.code)||'',kind:'урок'}})})})
-  .then(function(r){if(!r.ok)throw 2;return r.text()}).then(function(tx){var a=tx?JSON.parse(tx):[],jid=a&&a[0]&&a[0].id;if(!jid)throw 3;prog(40,'Гудвин принимает слайды…');var t0=Date.now(),ti=setInterval(function(){
-    fetch(SB.url.replace(/\/$/,'')+'/rest/v1/pe_jobs?select=status,deck,note&id=eq.'+jid,{headers:H,cache:'no-store'}).then(function(r){return r.text()}).then(function(x){var j=(x?JSON.parse(x):[])[0];if(!j)return;var el=(Date.now()-t0)/1e3;
-     if(j.status==='error'){clearInterval(ti);fail(j.note||'Не получилось принять слайды.');return}
-     if(j.status==='done'&&j.deck&&j.deck!=='start'){clearInterval(ti);prog(100,'✓ Готово — открываю запись');setTimeout(function(){location.href='/pe/'+j.deck+'/zapis/'},500);return}
-     prog(Math.min(92,40+el*0.5),j.status==='processing'?(j.note&&!/^Принято/.test(j.note)?j.note:'Гудвин разбирает слайды…'):'Гудвин читает слайды…');
-     if(el>300){clearInterval(ti);fail('Задерживаюсь: ответа ещё нет. Слайды не потеряны — я сообщил Руслану.')}}).catch(function(){})},2000)})
-  .catch(function(){fail('Нет связи — слайды не отправлены.')})}}
+ '<div class="d"><div class="av">А</div><b>Академик · по базе Академии</b><div class="in">То же, что Сократ, но только по материалам Академии — без интернета</div><div class="out">Результат: тексты слайдов по базе Академии</div><span class="sp"></span><span class="btn" style="background:#C9D1E3;cursor:default">Скоро — в разработке</span><div class="st" style="margin-top:8px">Поиск по базе Академии подключаем — пока работа помечается «по базе Академии»</div></div>'+
+ '<div class="d"><div class="av">М</div><b>Малевич · дизайнер</b><div class="in">Презентация уже есть</div><div class="out">Результат: слайды в стиле Академии, текст не меняется</div>'+zone('ml','Перетащите презентацию сюда или нажмите, чтобы выбрать','PowerPoint (.pptx)','.pptx',false)+ctl('ml','Оформить в стиле Академии')+'</div>'+
+ '<div class="d"><div class="av">Г</div><b>Гудвин · видео</b><div class="in">Слайды уже готовы (свои или от Малевича)</div><div class="out">Результат: записанный и смонтированный урок</div>'+zone('gd','Перетащите слайды сюда или нажмите, чтобы выбрать','PowerPoint, PDF или картинки слайдов','.pptx,.pdf,.png,.jpg,.jpeg,.webp',true)+ctl('gd','Прикрепить готовые слайды')+'</div>'+
+ '<div class="d"><div class="av">Г</div><b>Гудвин · монтажёр</b><div class="in">Видео уже записано</div><div class="out">Результат: смонтированный урок</div>'+zone('mt','Перетащите видео сюда или нажмите, чтобы выбрать','Достаточно одного видео · слайды — по желанию (скоро: слайды из видео)','.mp4,.mov,.m4v,.webm,.mkv,.pptx,.pdf,.png,.jpg,.jpeg,.webp',true)+ctl('mt','Прикрепить видео')+'</div></div>';
+ door(me,'ml',{re:/\.pptx$/i,max:50,bad:'Нужен файл PowerPoint (.pptx).',btn:'Оформить в стиле Академии',who:'Малевич',extra:{malevich:true},to:function(d){return '/pe/malevich/#'+d}});
+ door(me,'gd',{re:/\.(pptx|pdf|png|jpe?g|webp)$/i,max:50,bad:'Подходят PowerPoint, PDF и картинки слайдов — остальное я не беру.',btn:'Прикрепить готовые слайды',who:'Гудвин',extra:{gudwin:true},
+  check:function(o){var d=o.filter(function(f){return /\.(pptx|pdf)$/i.test(f.name)});return (d.length>1||(d.length&&o.length>1))?'Возьмите один файл PowerPoint или PDF — либо только картинки слайдов.':''},to:function(d){return '/pe/'+d+'/zapis/'}});
+ door(me,'mt',{re:/\.(mp4|mov|m4v|webm|mkv|pptx|pdf|png|jpe?g|webp)$/i,max:2000,bad:'Подходят видео (.mp4, .mov, .webm) и по желанию слайды.',btn:'Скоро — в разработке',who:'Гудвин',extra:{montage:true},wait:900,
+  check:function(o){return o.some(function(f){return /\.(mp4|mov|m4v|webm|mkv)$/i.test(f.name)})?'':'Нужно хотя бы одно видео.'},to:function(d){return '/pe/'+d+'/montazh/'}})}
 if(M.test){draw(null);return}
 var kb=ls('pe-hub-k'),ah=ls('pe-hub-acc'),exp=+ls('pe-hub-exp')||0;if(!(kb&&ah&&exp>Date.now())){gate();return}
 (async function(){var me=null;try{if(M.acc[ah])me=await dec(b64(kb),M.acc[ah].data)}catch(e){}if(!me){gate();return}draw(me)})()})();
