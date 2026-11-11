@@ -76,7 +76,7 @@ main{grid-template-columns:minmax(0,1fr) 320px}.stage .vs{max-width:none}.stage 
 .mver{font-size:12px;color:#8A909C;white-space:nowrap}.mver b{color:#1745E0}
 @media (max-width:900px){.mh{padding:8px 12px}.mh nav{margin-left:0}}
 </style></head><body><div class="mh" id="mh"><div><div class="who"><span class="mav" aria-hidden="true">М.</span><div>Малевич · дизайнер<small id="mt"></small></div></div>
-<nav aria-label="Шаги урока"><a class="ok" id="ms1" href="/pe/sokrat/">✓ Тексты от Сократа</a><span class="now" id="ms2">● Слайды</span><span>○ Запись</span><span>○ Монтаж</span></nav><span class="mver" title="Номер версии сервиса">Малевич · версия <b>1.5</b> · 11.11 22:13</span></div></div>
+<nav aria-label="Шаги урока"><a class="ok" id="ms1" href="/pe/sokrat/">✓ Тексты от Сократа</a><span class="now" id="ms2">● Слайды</span><span>○ Запись</span><span>○ Монтаж</span></nav><span class="mver" title="Номер версии сервиса">Малевич · версия <b>1.6</b> · 11.11 22:23</span></div></div>
 <div class="gl"><div><span class="av" aria-hidden="true">М.</span><div><small>Малевич · дизайнер Академии Сметного Дела</small><ul id="gl"></ul></div></div></div>
 <div class="pgw" id="pgw"><div class="pgt" id="pgt"></div><div class="pgbar" aria-hidden="true"><i id="pgi"></i></div></div>
 <main id="mn"><section class="card stage" aria-live="polite"><div class="hd"><h2 id="ttl"></h2><span id="vt"></span><button type="button" class="btn p hb" id="hok" hidden></button><span class="hn" id="hn"></span></div><div class="big" id="big"></div><div class="vs" id="vs"></div><div id="ed"></div></section>
@@ -209,7 +209,7 @@ function unok(id){var s=ST[id];if(!s||s.st!=='approved')return;job({action:'slid
 function stuck(){var s=ST[cur];$('#dl').showModal?$('#dl').showModal():$('#dl').setAttribute('open','')}
 $('#dpdf').onclick=function(){pack('pdf')};$('#dppt').onclick=function(){pack('pptx')};
 $('#hok').onclick=function(){var s=ST[cur];if(!s)return;if(s.st==='approved')unok(cur);else ok(cur)};
-$('#bok').onclick=function(){if(this.dataset.all){location.href=S.next||'/pe/';return}if(this.dataset.mode==='send'){send();return}if(this.dataset.mode==='next'){var n=nextReady();if(n){cur=n;S.keep=1;paint()}return}ok()};
+$('#bok').onclick=function(){if(this.dataset.all){var nx=S.next||'/pe/';job({action:'slide25_handoff'}).then(function(){location.href=nx});return}if(this.dataset.mode==='send'){send();return}if(this.dataset.mode==='next'){var n=nextReady();if(n){cur=n;S.keep=1;paint()}return}ok()};
 $('#bst').onclick=stuck;$('#dc').onclick=function(){$('#dl').close()};
 $('#dg').onclick=function(){var s=ST[cur],note=$('#nt').value.trim();job({action:'slide25_stuck',slide:cur,variant:s.sel,note:note}).then(function(g){if(!g){say('Нет связи — нажмите ещё раз.');return}s.st='skipped';$('#dl').close();$('#nt').value='';say('Слайд '+s.k+' оставлен как есть — Руслан получит сообщение');cur=null;paint()})};
 $('#vs').onclick=function(e){var b=e.target.closest('[data-v]');if(!b)return;var q=E[cur];if(q&&q.L&&nch(q)&&q.L!==b.dataset.v){say('Вы исправили текст в варианте '+q.L+'. Сначала отправьте правку Малевичу или нажмите «Отменить правку».');return}ST[cur].sel=b.dataset.v;ST[cur].showPrev=0;paint()};
