@@ -1,0 +1,56 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Новая работа</title>
+<style>:root{--act:#1745E0;--ink:#15171C;--mut:#555C69;--line:#E3E6EC;--bg:#F3F2EF;--ok:#1E8A4C;--ok-soft:#E7F5EC;--bad:#B4321E;--g:#E9EBEF}*{box-sizing:border-box}html,body{margin:0}
+body{font-family:"Golos Text",Onest,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);font-size:17px;line-height:1.4}
+.w{max-width:1100px;margin:0 auto;padding:22px 16px}h1{font-size:26px;margin:0 0 4px}.s{color:var(--mut);margin:0 0 18px}
+.ds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}@media(max-width:860px){.ds{grid-template-columns:1fr}}
+.d{background:#fff;border-radius:16px;padding:18px;border:1px solid var(--line);display:flex;flex-direction:column}.av{width:38px;height:38px;border-radius:10px;background:#15171C;color:#fff;font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.d b{font-size:20px}.in{margin:8px 0;color:var(--mut)}.out{font-weight:600;margin-bottom:12px}.sp{flex:1}
+.btn{display:block;text-align:center;background:var(--act);color:#fff;font:700 17px inherit;border:0;border-radius:12px;padding:13px 18px;text-decoration:none;cursor:pointer;min-height:46px;width:100%}.btn:disabled{background:#B9C3E8;cursor:default}.btn.w2{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;margin-top:8px;min-height:40px;font-size:16px}
+.dz{display:block;border:2px dashed #B8C2DA;border-radius:12px;background:#fff;padding:14px;text-align:center;cursor:pointer;margin-bottom:10px;font-size:15px}.dz.has{border-style:solid;border-color:var(--ok);background:var(--ok-soft)}.dz.on{border-color:var(--act)}
+.bar{height:10px;border-radius:99px;background:var(--g);overflow:hidden;margin:12px 0 6px}.bar i{display:block;height:100%;width:3%;background:var(--act);transition:width .6s}.st{color:var(--mut);font-size:15px}.er{color:var(--bad);font-size:15px;margin-top:8px}
+.gate{max-width:520px;margin:60px auto;background:#fff;border-radius:16px;padding:28px;text-align:center}</style></head><body><div class="w" id="w"></div>
+<script>window.SF_SB={"url": "https://twtxrtgknenldyqmwymy.supabase.co", "key": "sb_publishable_N5Zaxf5mfaMc67JoaCWxVA_fp_fnlLE"};window.DV={acc:{"68a65ce466f495e6c1b17bea662e1e18e0cf95e07ac38110e27f3577a838dfcd": {"salt": "d6e437a4bfa7ac3b", "data": "U2FsdGVkX1/W5Dekv6esO9Q7BSiQbemlmzioGPXGiVEIJMXAjHhEGuwluw9xZXTHeyC3c6wgab0tF2VgUoG3x5/mf5Q8E53LYMhQltGUqgYpQJDJdp13bNcKjXdHOooD"}, "48abaa3600cf333679aa01a92e0bba5d24e1c247188b4413647e45043978f84d": {"salt": "81cffbac4b44fb40", "data": "U2FsdGVkX1+Bz/usS0T7QJ3ll1ojmq++ZZXvynZej5yAoT/XkKAeIx0a4pguTtNRZkc1i5MO7G0BXawX45BBfmXriN+7E0XKGd9CAoIhWZ66pNpv66WCCUXxB9VOS0NLbB6vN1uNf5IzBO/UiZEFMFX4EtJHktpL79zhycanyoVCaO9xjWT9C1+pb0798oP6dn0tAqjq3Ygh6QmeYroXuovVyqWyzYAmuYbHaGmRyuTaO8V+Ek3TK9wsVXQJO3nup0eIkjyTPIz8tV1gJ3bj0g=="}},test:false};</script>
+<script>
+(function(){
+function ls(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function b64(s){var b=atob(s),a=new Uint8Array(b.length);for(var i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a}
+async function dec(b,data){var ct=b64(data);if(String.fromCharCode.apply(null,ct.slice(0,8))==='Salted__')ct=ct.slice(16);var key=await crypto.subtle.importKey('raw',b.slice(0,32),'AES-CBC',false,['decrypt']);return JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-CBC',iv:b.slice(32,48)},key,ct)))}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+var W=document.getElementById('w'),M=window.DV,SB=window.SF_SB,$=function(i){return document.getElementById(i)};
+function gate(){W.innerHTML='<div class="gate"><h1>Войдите в кабинет</h1><p class="s">Новая работа открывается после входа в «Мои работы» Академии — тем же логином и паролем.</p><a class="btn" href="/pe/">Открыть мои работы →</a></div>'}
+function safe(n){var m=String(n).match(/\.([A-Za-z0-9]{1,6})$/),x=m?m[1].toLowerCase():'bin';return (String(n).replace(/\.[^.]*$/,'').replace(/[^A-Za-z0-9_-]+/g,'_').replace(/^_+|_+$/g,'').slice(0,40)||'file')+'.'+x}
+function draw(me){
+ W.innerHTML='<h1>Новая работа</h1><p class="s">Выберите, с чего начать. Один выбор — и работа сразу у нужного помощника.</p><div class="ds">'+
+ '<div class="d"><div class="av">С</div><b>Сократ · методист</b><div class="in">Есть тема или материалы, урока ещё нет</div><div class="out">Результат: тексты слайдов</div><span class="sp"></span><a class="btn" href="/pe/start/">Начать с темы</a></div>'+
+ '<div class="d"><div class="av">М</div><b>Малевич · дизайнер</b><div class="in">Презентация уже есть</div><div class="out">Результат: слайды в стиле Академии, текст не меняется</div><span class="sp"></span><a class="btn" href="/pe/malevich/">Прикрепить презентацию</a></div>'+
+ '<div class="d"><div class="av">Г</div><b>Гудвин · видео</b><div class="in">Слайды уже готовы (свои или от Малевича)</div><div class="out">Результат: записанный и смонтированный урок</div>'+
+ '<label class="dz" id="dz"><input type="file" id="fi" accept=".pptx,.pdf,.png,.jpg,.jpeg,.webp" multiple hidden><span id="dzt">Перетащите слайды сюда или нажмите, чтобы выбрать<br><small>PowerPoint, PDF или картинки слайдов</small></span></label>'+
+ '<span class="sp"></span><button type="button" class="btn" id="go" disabled>Прикрепить готовые слайды</button><button type="button" class="btn w2" id="rm" hidden>✕ Убрать файлы</button><div id="pr" hidden><div class="bar"><i id="pb"></i></div><div class="st" id="ps"></div></div><div class="er" id="er" role="alert"></div></div></div>';
+ var F=[],busy=false,H={apikey:SB.key,Authorization:'Bearer '+SB.key},DZ0=$('dzt').innerHTML;
+ function pick(fs){var er=$('er');er.textContent='';fs=[].slice.call(fs||[]);if(!fs.length)return;
+  var ok=fs.filter(function(f){return /\.(pptx|pdf|png|jpe?g|webp)$/i.test(f.name)});if(ok.length!==fs.length){er.textContent='Подходят PowerPoint, PDF и картинки слайдов — остальное я не беру.'}if(!ok.length)return;
+  if(ok.some(function(f){return f.size>50*1048576})){er.textContent='Файл больше 50 МБ — сохраните полегче.';return}
+  var doc=ok.filter(function(f){return /\.(pptx|pdf)$/i.test(f.name)});if(doc.length>1||(doc.length&&ok.length>1)){er.textContent='Возьмите один файл PowerPoint или PDF — либо только картинки слайдов.';return}
+  F=ok;$('dz').classList.add('has');$('dzt').innerHTML='<b>✓ '+esc(F.length>1?F.length+' картинок':F[0].name)+'</b>';$('go').disabled=false;$('rm').hidden=false}
+ $('fi').onchange=function(){pick(this.files)};var dz=$('dz');
+ ['dragenter','dragover'].forEach(function(e){dz.addEventListener(e,function(ev){ev.preventDefault();dz.classList.add('on')})});['dragleave','drop'].forEach(function(e){dz.addEventListener(e,function(ev){ev.preventDefault();dz.classList.remove('on')})});
+ dz.addEventListener('drop',function(ev){pick(ev.dataTransfer&&ev.dataTransfer.files)});
+ $('rm').onclick=function(){if(busy)return;F=[];$('fi').value='';$('dz').classList.remove('has');$('dzt').innerHTML=DZ0;$('go').disabled=true;$('rm').hidden=true;$('er').textContent=''};
+ function prog(p,t){$('pr').hidden=false;$('pb').style.width=p+'%';$('ps').textContent=t}
+ function fail(t){busy=false;$('go').disabled=!F.length;$('rm').hidden=!F.length;$('go').textContent='Прикрепить готовые слайды';$('pr').hidden=true;$('er').textContent=t+' Файлы остались выбранными — нажмите кнопку ещё раз.'}
+ $('go').onclick=function(){if(busy||!F.length)return;busy=true;$('go').disabled=true;$('rm').hidden=true;$('go').textContent='Отправляю…';$('er').textContent='';prog(5,'Загружаю слайды…');
+  var vt=ls('pe-mal-voter')||('v'+Math.random().toString(36).slice(2,12));try{localStorage.setItem('pe-mal-voter',vt)}catch(e){}
+  var ts=Date.now(),up=F.map(function(f,i){var path='start/'+vt+'/'+ts+'_'+(i+1)+'_'+safe(f.name);return fetch(SB.url.replace(/\/$/,'')+'/storage/v1/object/pe-uploads/'+path.split('/').map(encodeURIComponent).join('/'),{method:'POST',headers:Object.assign({'Content-Type':'application/octet-stream','x-upsert':'false'},H),body:f}).then(function(r){if(!r.ok)throw 1;return {path:path,name:f.name,size:f.size,kind:'slides'}})});
+  Promise.all(up).then(function(files){prog(30,'Передаю Гудвину…');var nm=((me&&me.io)||'эксперт').slice(0,120);
+   return fetch(SB.url.replace(/\/$/,'')+'/rest/v1/pe_jobs',{method:'POST',headers:Object.assign({'Content-Type':'application/json',Prefer:'return=representation'},H),body:JSON.stringify({deck:'start',kind:'upload',round:1,status:'queued',author:nm,payload:{action:'start',gudwin:true,name:nm,text:'',files:files,voter:vt,login:(me&&me.code)||'',kind:'урок'}})})})
+  .then(function(r){if(!r.ok)throw 2;return r.text()}).then(function(tx){var a=tx?JSON.parse(tx):[],jid=a&&a[0]&&a[0].id;if(!jid)throw 3;prog(40,'Гудвин принимает слайды…');var t0=Date.now(),ti=setInterval(function(){
+    fetch(SB.url.replace(/\/$/,'')+'/rest/v1/pe_jobs?select=status,deck,note&id=eq.'+jid,{headers:H,cache:'no-store'}).then(function(r){return r.text()}).then(function(x){var j=(x?JSON.parse(x):[])[0];if(!j)return;var el=(Date.now()-t0)/1e3;
+     if(j.status==='error'){clearInterval(ti);fail(j.note||'Не получилось принять слайды.');return}
+     if(j.status==='done'&&j.deck&&j.deck!=='start'){clearInterval(ti);prog(100,'✓ Готово — открываю запись');setTimeout(function(){location.href='/pe/'+j.deck+'/zapis/'},500);return}
+     prog(Math.min(92,40+el*0.5),j.status==='processing'?(j.note&&!/^Принято/.test(j.note)?j.note:'Гудвин разбирает слайды…'):'Гудвин читает слайды…');
+     if(el>300){clearInterval(ti);fail('Задерживаюсь: ответа ещё нет. Слайды не потеряны — я сообщил Руслану.')}}).catch(function(){})},2000)})
+  .catch(function(){fail('Нет связи — слайды не отправлены.')})}}
+if(M.test){draw(null);return}
+var kb=ls('pe-hub-k'),ah=ls('pe-hub-acc'),exp=+ls('pe-hub-exp')||0;if(!(kb&&ah&&exp>Date.now())){gate();return}
+(async function(){var me=null;try{if(M.acc[ah])me=await dec(b64(kb),M.acc[ah].data)}catch(e){}if(!me){gate();return}draw(me)})()})();
+</script></body></html>
