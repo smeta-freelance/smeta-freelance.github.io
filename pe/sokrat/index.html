@@ -202,7 +202,10 @@ function works(){var a=ME.decks||[];$('#works').innerHTML=a.length?a.map(functio
   '<div class="empty">Пока нет работ у Сократа. Начните новую работу — Сократ прочитает материалы и предложит программу урока.</div>'}
 
 function H(json){var h={apikey:SB.key,Authorization:'Bearer '+SB.key};if(CUR&&CUR.tok)h['x-pe-token']=CUR.tok;if(json){h['Content-Type']='application/json';h.Prefer='return=minimal'}return h}
-function job(action,extra){if(!CUR)return Promise.resolve(false);if(CUR.pending){toast('Секунду — подключаю работу. Повторите, пожалуйста, через минуту.',4000);return Promise.resolve(false)}
+function job(action,extra){if(!CUR)return Promise.resolve(false);var vt='';try{vt=localStorage.getItem('sf-voter')||''}catch(e){}
+  if(CUR.pending&&vt){return fetch(SB.url.replace(/\/$/,'')+'/rest/v1/pe_jobs',{method:'POST',headers:{apikey:SB.key,Authorization:'Bearer '+SB.key,'Content-Type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({deck:'start',kind:'upload',round:1,status:'queued',
+    author:String(ME.io||'эксперт').slice(0,120),payload:Object.assign({action:action,deck:CUR.deck,voter:vt},extra||{})})}).then(function(r){return r.ok}).catch(function(){return false})}   /* rel50: новая работа без ключа — через «start», без ожидания */
+  if(CUR.pending){toast('Секунду — подключаю работу. Повторите, пожалуйста, через минуту.',4000);return Promise.resolve(false)}
   return fetch(SB.url.replace(/\/$/,'')+'/rest/v1/pe_jobs',{method:'POST',headers:H(true),body:JSON.stringify({deck:CUR.deck,kind:'upload',round:1,status:'queued',
     author:String(ME.io||'эксперт').slice(0,120),payload:Object.assign({action:action},extra||{})})}).then(function(r){return r.ok}).catch(function(){return false})}
 
@@ -221,7 +224,7 @@ async function openWork(){
   STOPH=G2L.watch(dk,'hist',hr&&hr.rev||0,function(r){if(!CUR||CUR.deck!==dk)return;HIST=r.data;histDraw();if(!WAIT&&!EDIT)render()},20)}
 
 function ask(mode,text,lastW,wrev){
-  if(CUR&&CUR.pending&&text!==''){toast('Секунду — подключаю работу. Повторите, пожалуйста, через минуту.',4000);return}
+  if(CUR&&CUR.pending&&text!==''&&!vtr()){toast('Секунду — подключаю работу. Повторите, пожалуйста, через минуту.',4000);return}
   ST=ST||{msgs:[]};if(text)ST.msgs.push({id:'l'+Date.now(),who:'me',text:text});
   WAIT={id:null,t0:Date.now(),lastW:lastW!=null?lastW:LASTW,mode:mode,text:''};render();scrollEnd();
   job('sokrat_chat',{mode:mode,text:text||''}).then(function(ok){if(!ok){WAIT=null;render();toast('Нет связи — сообщение не ушло. Проверьте интернет и отправьте ещё раз.',4000)}});
@@ -329,6 +332,7 @@ function waitNew(id){   /* rel48 (Руслан 11.11: «ни на каком э�
         if(x){clearInterval(tm);ACC=A;D.tok=x.tok;D.url=x.url||D.url;D.title=x.title||D.title;delete D.pending;ME.decks=[D].concat((M.decks||[]).filter(function(d){return d.deck!==id}));works();head();if(PENDQ&&CUR===D){var tx=$('#tx');if(tx&&!tx.value.trim())tx.value=PENDQ;PENDQ='';var go=function(){if(WAIT){setTimeout(go,1500);return}sendText()};go()}}}}}catch(e){}
     busy=false},10000);
   return app()}
+function vtr(){try{return localStorage.getItem('sf-voter')||''}catch(e){return ''}}
 function waitLine(){var s=Math.round((Date.now()-WAIT.t0)/1000),m=WAIT.mode,what=m==='program'?'Читаю Ваши материалы и пишу программу урока':m==='slides'?'Пишу, что поставить на каждый слайд':'Читаю Ваше сообщение';
   var eta=m==='program'?'обычно 20–40 секунд':m==='slides'?'обычно 1–2 минуты':'обычно до минуты';
   return '<p class="wait"><b>'+what+'…</b> '+(s>90&&!WAIT.text?'Ещё немного — заканчиваю. ':'')+'· '+s+' с · '+eta+'<span class="caret"></span></p>'}
@@ -366,7 +370,7 @@ function editMsg(so,id){var tx=$('.txt',so),ac=$('.acts',so);if(EDIT&&EDIT!==id)
   ac.querySelector('[data-a2=ok]').onclick=function(){var t=back(tx);EDIT=null;tx.contentEditable='false';saveMsg(id,t);render()};
   ac.querySelector('[data-a2=no]').onclick=function(){EDIT=null;render()}}
 
-function sendText(){var t=$('#tx'),v=t.value.trim();if(!v||WAIT)return;if(CUR&&CUR.pending){PENDQ=v;toast('Сохранил. Отправлю Сократу сам, как только работа подключится — обычно 1–3 минуты.',5000);return}   /* rel48b: ответ не теряется */if(ST&&ST.handed){toast('Тексты уже у Малевича. Правки — в его приложении.',3500);return}
+function sendText(){var t=$('#tx'),v=t.value.trim();if(!v||WAIT)return;if(CUR&&CUR.pending&&!vtr()){PENDQ=v;toast('Сохранил. Отправлю Сократу сам, как только работа подключится — обычно 1–3 минуты.',5000);return}   /* rel48b: ответ не теряется */if(ST&&ST.handed){toast('Тексты уже у Малевича. Правки — в его приложении.',3500);return}
   t.value='';t.oninput();var mode=hasSlides()?'edit':'program';if(!hasSlides()&&ST&&ST.doc&&ST.doc.program&&/^\s*да[\s,.!]*(пишем|пиши|давай|верно)?/i.test(v))mode='slides';ask(mode,v)}
 function handoff(){if(!hasSlides()||WAIT)return;var b=$('#hand');b.disabled=true;b.textContent='Передаю…';
   job('sokrat_handoff').then(function(ok){if(!ok){b.disabled=false;b.textContent='Передать Малевичу →';toast('Нет связи — попробуйте ещё раз',4000);return}
