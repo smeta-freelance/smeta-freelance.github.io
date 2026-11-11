@@ -45,6 +45,7 @@ mark{background:var(--mark);color:inherit;padding:0 2px;border-radius:3px}
 .legend .hlx{display:inline-block;background:var(--mark);border-radius:8px;padding:0 8px;font-weight:600}
 .caret{display:inline-block;width:2px;height:1em;background:var(--ink);vertical-align:-2px;animation:b 1s steps(1) infinite;margin-left:2px}@keyframes b{50%{opacity:0}}
 .wait{color:var(--muted)}.wait b{color:var(--ink)}
+.srch{margin:0 0 10px;color:var(--muted);font-size:14px}.srch ul{list-style:none;margin:6px 0 0;padding:0}.srch li{margin:3px 0}.srch li:before{content:'✓ ';color:#177245}.srch li.now:before{content:'⟳ ';color:#2b5cd9}.srch summary{cursor:pointer}
 .done-note{background:#E8F5EE;border:1px solid #BFE3CC;border-radius:12px;padding:10px 14px}
 .dock{position:fixed;left:220px;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:12px 22px;z-index:6}
 .dock .in{max-width:820px;margin:0 auto;display:flex;gap:10px;align-items:flex-end}
@@ -236,7 +237,7 @@ function follow(rev){var cur=rev,busy=false,base=SB.url.replace(/\/$/,'')+'/rest
   var tm=setInterval(function(){if(!WAIT){clearInterval(tm);return}if(busy)return;busy=true;
     fetch(base+'?select=rev&deck=eq.'+encodeURIComponent(CUR.deck)+'&key=eq.sokw&limit=1',{headers:H(),cache:'no-store'}).then(function(r){return r.ok?r.json():[]}).then(function(a){var x=a&&a[0];
       if(x&&x.rev!==cur){cur=x.rev;WREV=cur;return G2L.get(CUR.deck,'sokw',4000).then(function(row){var d=row&&row.data;if(!d||!WAIT)return;
-        if(d.id===WAIT.lastW)return;WAIT.id=d.id;WAIT.text=d.text||'';
+        if(d.id===WAIT.lastW)return;WAIT.id=d.id;WAIT.text=d.text||'';WAIT.steps=d.steps||WAIT.steps||[];
         if(d.done){LASTW=d.id;var tries=0;var grab=function(){return G2L.get(CUR.deck,'sok',5000).then(function(s){var has=s&&s.data&&(s.data.msgs||[]).some(function(m){return m.id===d.id});if(!has&&!d.noop&&tries++<8)return new Promise(function(r){setTimeout(r,1000)}).then(grab);return s})};   /* v1.2: не показываем старое состояние — иначе снова «Да, пишем слайды» */
           return grab().then(function(s){if(s&&s.data)ST=s.data;WAIT=null;render();if(d.err)toast('Не получилось ответить — попробуйте ещё раз через минуту.',4000)})}
         renderWait()})}}).catch(function(){}).then(function(){busy=false;if(WAIT)tick()})},800)}
@@ -279,7 +280,7 @@ function render(){if(!CUR)return;var c=$('#chat'),a=(ST&&ST.msgs)||[],o=[],it=ST
   var lp=lastOf('program'),lsd=lastOf('slides');
   a.forEach(function(m){if(m.who==='me'){o.push('<div class="me"><div class="b">'+esc(m.text)+'</div></div>');return}
     var tools=m.kind==='program'||m.kind==='slides'||m.kind==='edit';
-    o.push('<div class="so" data-id="'+esc(m.id)+'"><img class="ava" src="img/sokrat.png" alt="Сократ"><div class="col" style="flex:1;min-width:0"><div class="txt'+(m.err?' err':'')+'">'+(m.kind==='slides'?LEGEND:'')+
+    o.push('<div class="so" data-id="'+esc(m.id)+'"><img class="ava" src="img/sokrat.png" alt="Сократ"><div class="col" style="flex:1;min-width:0"><div class="txt'+(m.err?' err':'')+'">'+(m.steps&&m.steps.length?'<details class="srch"><summary>Проверил: '+m.steps.length+' '+(m.steps.length%10===1&&m.steps.length%100!==11?'поиск':m.steps.length%10>=2&&m.steps.length%10<=4&&(m.steps.length%100<12||m.steps.length%100>14)?'поиска':'поисков')+' — уроки Академии и официальные источники</summary><ul>'+m.steps.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul></details>':'')+(m.kind==='slides'?LEGEND:'')+
       (m.kind==='note'&&!m.err?'<div class="done-note">✓ '+inl(m.text)+'</div>':md(m.text,m.upd))+'</div>'+
       (tools?'<div class="acts">'+'<button data-a="cp">⧉ Копировать</button><button data-a="ed">✎ Править</button><button data-a="dl">⤓ Скачать</button></div>':'')+
       (m===lp&&!lsd&&!WAIT&&ST.step!=='handed'?'<div class="quick"><button class="main" data-q="yes">Да, пишем слайды →</button><button data-q="add">Добавить пункт</button><button data-q="short">Короче, на 10 минут</button></div>':'')+
@@ -336,8 +337,8 @@ function waitNew(id){   /* rel48 (Руслан 11.11: «ни на каком э�
 function vtr(){try{return localStorage.getItem('sf-voter')||''}catch(e){return ''}}
 function waitLine(){var s0=Math.round((Date.now()-WAIT.t0)/1000);if(CUR&&CUR.pending&&!WAIT.text&&s0>150&&!(ST&&ST.intro))return '<p class="wait"><b>Не нахожу материалы этой работы.</b> Откройте её, пожалуйста, из <a href="/pe/">«Мои работы»</a> — или начните новую работу.</p>';   /* rel51: неверный адрес — без бесконечного ожидания */
   var s=Math.round((Date.now()-WAIT.t0)/1000),m=WAIT.mode,what=m==='program'?'Читаю Ваши материалы и пишу программу урока':m==='slides'?'Пишу, что поставить на каждый слайд':'Читаю Ваше сообщение';
-  var eta=m==='program'?'обычно 20–40 секунд':m==='slides'?'обычно 1–2 минуты':'обычно до минуты';
-  return '<p class="wait"><b>'+what+'…</b> '+(s>90&&!WAIT.text?'Ещё немного — заканчиваю. ':'')+'· '+s+' с · '+eta+'<span class="caret"></span></p>'}
+  var eta=m==='program'?'обычно 1–2 минуты':m==='slides'?'обычно 3–5 минут':'обычно 1–2 минуты',lim=m==='slides'?360:150,st=WAIT.steps||[];   /* умный Сократ (11.11): ищет в уроках Академии и на официальных сайтах, думает основательно */
+  return '<p class="wait"><b>'+(st.length?'Проверяю по урокам Академии и официальным источникам':what)+'…</b> '+(s>lim&&!WAIT.text?'Ещё немного — заканчиваю. ':'')+'· '+s+' с · '+eta+'<span class="caret"></span></p>'+(st.length?'<div class="srch"><ul>'+st.map(function(x,i){return '<li'+(i===st.length-1?' class="now"':'')+'>'+esc(x)+'</li>'}).join('')+'</ul></div>':'')}
 function renderWait(){var e=$('#wtx');if(!e)return;e.innerHTML=WAIT.text?((/###\s*Слайд/.test(WAIT.text)?LEGEND:'')+md(WAIT.text)+'<span class="caret"></span>'):waitLine();
   var nearBottom=window.innerHeight+window.scrollY>document.body.scrollHeight-260;if(nearBottom)scrollEnd()}
 function tick(){if(WAIT&&!WAIT.text)renderWait()}
