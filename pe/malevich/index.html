@@ -233,6 +233,9 @@ function dirty(id){var e=E[id];return !!e&&(nch(e)>0||!!e.note.trim()||e.files.l
 function edWhat(e){var a=[];if(nch(e))a.push('текст');if(e.note.trim())a.push('комментарий');if(e.files.length)a.push(e.files.length===1?'1 файл':e.files.length+(e.files.length<5?' файла':' файлов'));return a.join(', ')}
 function nextReady(){var i=sl.map(function(x){return x.id}).indexOf(cur),o=sl.slice(i+1).concat(sl.slice(0,i)).filter(function(x){var q=ST[x.id];return q.st==='ready'&&!q.red})[0];return o?o.id:null}
 function redLeft(s){var r=s.red,e=(r.eta||3)*60;return e-(Date.now()-(r.t0||Date.now()))/1000}
+function fitRail(){var r=document.querySelector('.rb'),b=$('#rb'),f=$('#ft'),h=$('#rbh');if(!r||!b||!window.matchMedia('(min-width:901px)').matches){if(b)b.style.maxHeight='';return}   /* 12.11: список слайдов не должен уходить под нижнюю панель — последний слайд был недоступен */
+  var top=Math.max(r.getBoundingClientRect().top,12),fh=(f&&f.offsetHeight)||0,hh=(h?h.offsetHeight:0)+36;b.style.maxHeight=Math.max(160,window.innerHeight-top-fh-hh-12)+'px'}
+window.addEventListener('resize',fitRail);window.addEventListener('scroll',fitRail,{passive:true});setInterval(fitRail,600);setTimeout(fitRail,50);
 function keep(){if(KEEPC===cur)return;KEEPC=cur;var b=document.querySelector('#rb .it.cur');if(b&&b.scrollIntoView)b.scrollIntoView({block:'nearest'})}
 function norm(t){return String(t||'').replace(/\s+/g,' ').trim()}
 function els(d){var a=[].slice.call(d.querySelectorAll('h1,h2,h3,p,li')).filter(function(e){return !e.closest('aside')&&norm(e.textContent)});return a.filter(function(e){return !a.some(function(o){return o!==e&&o.contains(e)})})}
