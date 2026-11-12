@@ -93,7 +93,7 @@ main{max-width:none;padding:10px 20px 100px;grid-template-columns:minmax(0,1fr) 
 <div class="pgw" id="pgw"><div class="pgt" id="pgt"></div><div class="pgbar" aria-hidden="true"><i id="pgi"></i></div></div>
 <main id="mn"><section class="card stage" aria-live="polite"><div class="hd"><h2 id="ttl"></h2><span id="vt"></span><a class="btn w hb dl1" id="dl1" hidden download>⬇ Скачать слайд</a><button type="button" class="btn p hb" id="hok" hidden></button><span class="hn" id="hn"></span></div><div class="big" id="big"></div><div class="vs" id="vs"></div><div id="ed"></div></section>
 <aside class="card rb"><h3 id="rbh">Слайды урока</h3><div id="rb"></div><button type="button" id="bst" class="stk">🙁 Малевич меня не понимает</button></aside></main>
-<div class="ft" id="ft"><div><div class="t" id="ftt"></div><div class="bt"><button type="button" class="btn dl" id="dpdf" hidden>Скачать PDF</button><button type="button" class="btn dl" id="dppt" hidden>Скачать слайды (PPTX)</button><button type="button" class="btn p g2s-main" id="bok"></button></div></div></div>
+<div class="ft" id="ft"><div><div class="t" id="ftt"></div><div class="bt"><button type="button" class="btn dl" id="dpdf" hidden style="display:none">Скачать PDF</button><button type="button" class="btn dl" id="dppt" hidden>⬇ Скачать</button><button type="button" class="btn p g2s-main" id="bok"></button></div></div></div>
 <button type="button" class="pp" id="pp">🖍 Выделить жёлтым</button><input type="file" id="fin" hidden multiple accept=".jpg,.jpeg,.png,.webp,.heic,.gif,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv"><dialog id="dl"><h3>Малевич вас не понял — это моя вина</h3><ol><li>Этот слайд останется как есть.</li><li>Мы идём дальше — к следующему слайду.</li><li>Руслан получит сообщение и поможет.</li></ol>
 <label for="nt">Если хотите, напишите, что не так (необязательно):</label><textarea id="nt"></textarea><div class="bt"><button type="button" class="btn" id="dc">Вернуться к слайду</button><button type="button" class="btn p g2s-main" id="dg">Оставить и открыть следующий</button></div></dialog>
 <script>window.SF_SB={"url": "https://twtxrtgknenldyqmwymy.supabase.co", "key": "sb_publishable_N5Zaxf5mfaMc67JoaCWxVA_fp_fnlLE"};window.PE={deck:'',live:''};window.S25={slides:[],io:'',demo:false,built:'1970-01-01T00:00:00Z'};
@@ -197,10 +197,13 @@ function paint(){
   window.G2S_S25=done;try{window.G2S&&G2S.refresh&&G2S.refresh()}catch(e){}}
 /* скачивание: файлы собирает обработчик (slide25_pack) из выбранных вариантов; ссылка — с подписью, из закрытого хранилища */
 var PK={busy:0,t0:0,kind:'',url:{},err:''};
-function packHtml(){if(!PK.chk&&!(PE.test||DEMO)){PK.chk=1;fetch(A+'pe_state?select=data&deck=eq.'+encodeURIComponent(D)+'&key=eq.pack&limit=1',{headers:H(),cache:'no-store'}).then(function(r){return r.json()}).then(function(a){var d=a&&a[0]&&a[0].data;if(d){if(d.pdf)PK.url.pdf=d.pdf;if(d.pptx)PK.url.pptx=d.pptx;paint()}}).catch(function(){})}
-  if(PK.busy){var p=Math.min(94,Math.round((Date.now()-PK.t0)/1000/45*100));return ' · <b>Готовлю '+PK.kind.toUpperCase()+'…</b><span class="pkb"><i style="width:'+Math.max(4,p)+'%"></i></span>'+p+' %'}
-  if(PK.err)return ' · <span style="color:var(--bad)">'+esc(PK.err)+'</span>';var h='';['pdf','pptx'].forEach(function(k){if(PK.url[k])h+=' · <a href="'+esc(PK.url[k])+'" download>✓ '+k.toUpperCase()+' готов — скачать</a>'});return h}
-function pack(kind){if(PK.busy)return;if(PK.url[kind]){dl(PK.url[kind],kind);return}PK.busy=1;PK.kind=kind;PK.t0=Date.now();PK.err='';paint();
+function packHtml(){if(!(PE.test||DEMO)&&!PK.busy&&Date.now()-(PK.chk||0)>8000){PK.chk=Date.now();fetch(A+'pe_state?select=data&deck=eq.'+encodeURIComponent(D)+'&key=eq.pack&limit=1',{headers:H(),cache:'no-store'}).then(function(r){return r.json()}).then(function(a){var d=a&&a[0]&&a[0].data;if(d){if(d.pdf)PK.url.pdf=d.pdf;if(d.pptx)PK.url.pptx=d.pptx;paint()}}).catch(function(){})}
+  if(PK.busy){var p=Math.min(94,Math.round((Date.now()-PK.t0)/1000/45*100));return ' · <b>Готовлю файлы…</b><span class="pkb"><i style="width:'+Math.max(4,p)+'%"></i></span>'+p+' %'}
+  if(PK.err)return ' · <span style="color:var(--bad)">'+esc(PK.err)+'</span>';return ''}
+function pack(kind){if(PK.busy)return;if(PK.url[kind]){dl(PK.url[kind],kind);return}
+  if(!(PE.test||DEMO)&&!PK.pre){PK.pre=1;fetch(A+'pe_state?select=data&deck=eq.'+encodeURIComponent(D)+'&key=eq.pack&limit=1',{headers:H(),cache:'no-store'}).then(function(r){return r.json()}).then(function(a){var d=a&&a[0]&&a[0].data;if(d&&d[kind]){PK.url.pdf=d.pdf||PK.url.pdf;PK.url.pptx=d.pptx||PK.url.pptx;PK.pre=0;dl(d[kind],kind);paint();return}PK.pre=0;pack2(kind)}).catch(function(){PK.pre=0;pack2(kind)});return}
+  pack2(kind)}
+function pack2(kind){if(PK.busy)return;PK.busy=1;PK.kind=kind;PK.t0=Date.now();PK.err='';paint();
   if(PE.test||DEMO){setTimeout(function(){PK.busy=0;PK.url[kind]='#';paint()},1500);return}
   fetch(A+'pe_jobs',{method:'POST',headers:H({'Content-Type':'application/json',Prefer:'return=representation'}),body:JSON.stringify({deck:D,kind:'upload',round:1,status:'queued',author:WHO,payload:{action:'slide25_pack',kind:kind}})})
   .then(function(r){if(!r.ok)throw 1;return r.json()}).then(function(a){var jid=a&&a[0]&&a[0].id;if(!jid)throw 2;
@@ -209,7 +212,9 @@ function pack(kind){if(PK.busy)return;if(PK.url[kind]){dl(PK.url[kind],kind);ret
       else if(j.status==='error'){clearInterval(ti);PK.busy=0;PK.err=j.note||'Не получилось собрать файл — я сообщил Руслану.';paint()}
       else if(Date.now()-PK.t0>300000){clearInterval(ti);PK.busy=0;PK.err='Файл готовится дольше обычного — задача не потеряна, попробуйте ещё раз через пару минут.';paint()}}).catch(function(){})},2000)})
   .catch(function(){PK.busy=0;PK.err='Нет связи — нажмите ещё раз.';paint()})}
-function dl(u,kind){var a=document.createElement('a');a.href=u+(u.indexOf('?')>0?'&':'?')+'download='+encodeURIComponent('Презентация.'+kind);a.download='';document.body.appendChild(a);a.click();a.remove()}
+function dl(u,kind,only){var nm=((document.getElementById('mt')||{}).textContent||(window.S25&&S25.title)||'Презентация').replace(/[\\/:*?"<>|]+/g,' ').trim().slice(0,80)||'Презентация';
+  var a=document.createElement('a');a.href=u+(u.indexOf('?')>0?'&':'?')+'download='+encodeURIComponent(nm+'.'+kind);a.download='';document.body.appendChild(a);a.click();a.remove();
+  if(kind==='pptx'&&!only&&PK.url.pdf)setTimeout(function(){dl(PK.url.pdf,'pdf',1)},1200)}   /* 12.11 (Руслан): одна кнопка «Скачать» — редактируемый PPTX и PDF вместе */
 setInterval(function(){if(PK.busy)paint()},1000);
 function say(t){var e=document.createElement('div');e.className='msg';e.setAttribute('role','status');e.textContent=t;document.body.appendChild(e);setTimeout(function(){e.remove()},4200)}
 function job(pl){window.__jobs=(window.__jobs||[]);window.__jobs.push(pl);
