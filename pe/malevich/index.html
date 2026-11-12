@@ -212,7 +212,14 @@ function pack2(kind){if(PK.busy)return;PK.busy=1;PK.kind=kind;PK.t0=Date.now();P
       else if(j.status==='error'){clearInterval(ti);PK.busy=0;PK.err=j.note||'Не получилось собрать файл — я сообщил Руслану.';paint()}
       else if(Date.now()-PK.t0>300000){clearInterval(ti);PK.busy=0;PK.err='Файл готовится дольше обычного — задача не потеряна, попробуйте ещё раз через пару минут.';paint()}}).catch(function(){})},2000)})
   .catch(function(){PK.busy=0;PK.err='Нет связи — нажмите ещё раз.';paint()})}
-function dl(u,kind,only){var nm=((document.getElementById('mt')||{}).textContent||(window.S25&&S25.title)||'Презентация').replace(/[\\/:*?"<>|]+/g,' ').trim().slice(0,80)||'Презентация';
+function wname(){return ((document.getElementById('mt')||{}).textContent||(window.S25&&S25.title)||'Презентация').replace(/[\\/:*?"<>|]+/g,' ').trim().slice(0,80)||'Презентация'}
+/* 12.11 (Руслан: «должен спрашивать, куда сохранить»): окно «Сохранить как» (Chrome, Edge, Яндекс, Dia); где окна нет (Safari, Firefox) — обычное скачивание */
+var SAVE={};var MIME={pdf:'application/pdf',pptx:'application/vnd.openxmlformats-officedocument.presentationml.presentation',png:'image/png'};
+function askWhere(kind,name){if(!window.showSaveFilePicker)return Promise.resolve(null);var o={};o[MIME[kind]]=['.'+kind];
+  return window.showSaveFilePicker({suggestedName:name+'.'+kind,types:[{description:kind.toUpperCase(),accept:o}]}).catch(function(e){return e&&e.name==='AbortError'?'cancel':null})}
+function saveTo(h,u,kind,name){fetch(u).then(function(r){if(!r.ok)throw r.status;return r.blob()}).then(function(b){return h.createWritable().then(function(w){return w.write(b).then(function(){return w.close()})})}).then(function(){say('✓ Сохранено: '+name+'.'+kind)}).catch(function(){say('Не получилось сохранить — скачиваю обычным способом.');plain(u,kind,name)})}
+function plain(u,kind,name){var a=document.createElement('a');a.href=u+(u.indexOf('?')>0?'&':'?')+'download='+encodeURIComponent(name+'.'+kind);a.download='';document.body.appendChild(a);a.click();a.remove()}
+function dl(u,kind,only){var nm=wname();if(SAVE[kind]&&SAVE[kind]!=='cancel'){var h=SAVE[kind];SAVE[kind]=null;saveTo(h,u,kind,nm);return}SAVE[kind]=null;
   var a=document.createElement('a');a.href=u+(u.indexOf('?')>0?'&':'?')+'download='+encodeURIComponent(nm+'.'+kind);a.download='';document.body.appendChild(a);a.click();a.remove();
 }   /* 12.11 (Руслан: «добавь скачать в pdf»): две кнопки — PowerPoint и PDF, по одному файлу (без запроса браузера «скачать несколько файлов») */
 setInterval(function(){if(PK.busy)paint()},1000);
@@ -225,7 +232,9 @@ function ok(id){id=id||cur;var s=ST[id];if(!s||s.st!=='ready'||s.red)return;if(d
 /* снять утверждение: задача slide25_unok — обработчик снимает отметку в базе; на странице слайд сразу «готов» */
 function unok(id){var s=ST[id];if(!s||s.st!=='approved')return;job({action:'slide25_unok',slide:id}).then(function(g){if(!g){say('Нет связи — нажмите ещё раз.');return}s.st='ready';S.keep=1;cur=id;say('Утверждение слайда '+s.k+' снято');paint()})}
 function stuck(){var s=ST[cur];$('#dl').showModal?$('#dl').showModal():$('#dl').setAttribute('open','')}
-$('#dpdf').onclick=function(){pack('pdf')};$('#dppt').onclick=function(){pack('pptx')};
+function want(kind){if(PK.busy)return;askWhere(kind,wname()).then(function(h){if(h==='cancel')return;SAVE[kind]=h;pack(kind)})}
+$('#dpdf').onclick=function(){want('pdf')};$('#dppt').onclick=function(){want('pptx')};
+$('#dl1').addEventListener('click',function(ev){if(!window.showSaveFilePicker)return;ev.preventDefault();var u=this.href,nm=(this.getAttribute('download')||'Слайд.png').replace(/\.png$/,'');askWhere('png',nm).then(function(h){if(h==='cancel')return;if(h)saveTo(h,u,'png',nm);else plain(u,'png',nm)})});
 $('#hok').onclick=function(){var s=ST[cur];if(!s)return;if(s.st==='approved')unok(cur);else ok(cur)};
 $('#bok').onclick=function(){if(this.dataset.all){var nx=S.next||'/pe/';job({action:'slide25_handoff'}).then(function(){location.href=nx});return}if(this.dataset.mode==='send'){send();return}if(this.dataset.mode==='next'){var n=nextReady();if(n){cur=n;S.keep=1;paint()}return}ok()};
 $('#bst').onclick=stuck;$('#dc').onclick=function(){$('#dl').close()};
