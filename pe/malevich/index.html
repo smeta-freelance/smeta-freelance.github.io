@@ -84,7 +84,7 @@ main{grid-template-columns:minmax(0,1fr) 320px}.stage .vs{max-width:none}.stage 
 .mver{font-size:12px;color:#8A909C;white-space:nowrap}.mver b{color:#1745E0}
 @media (max-width:900px){.mh{padding:8px 12px}.mh nav{margin-left:0}}
 </style></head><body><div class="mh" id="mh"><div><div class="who"><span class="mav" aria-hidden="true">М.</span><div>Малевич · дизайнер<small id="mt"></small></div></div>
-<nav aria-label="Шаги урока"><a class="ok" id="ms1" href="/pe/sokrat/">✓ Тексты от Сократа</a><span class="now" id="ms2">● Слайды</span><span>○ Запись</span><span>○ Монтаж</span></nav><a class="ok" href="/pe/malevich/" style="margin-left:14px;font-weight:600">← Мои презентации</a><span class="mver" title="Номер версии сервиса">Малевич · версия <b>2.3</b> · 12.11 09:27</span></div></div>
+<nav aria-label="Шаги урока"><a class="ok" id="ms1" href="/pe/sokrat/">✓ Тексты от Сократа</a><span class="now" id="ms2">● Слайды</span><span>○ Запись</span><span>○ Монтаж</span></nav><a class="ok" href="/pe/malevich/" style="margin-left:14px;font-weight:600">← Мои презентации</a><span class="mver" title="Номер версии сервиса">Малевич · версия <b>2.4</b> · 12.11 10:50</span></div></div>
 <div class="gl"><div><span class="av" aria-hidden="true">М.</span><div><small>Малевич · дизайнер Академии Сметного Дела</small><ul id="gl"></ul></div></div></div>
 <div class="pgw" id="pgw"><div class="pgt" id="pgt"></div><div class="pgbar" aria-hidden="true"><i id="pgi"></i></div></div>
 <main id="mn"><section class="card stage" aria-live="polite"><div class="hd"><h2 id="ttl"></h2><span id="vt"></span><button type="button" class="btn p hb" id="hok" hidden></button><span class="hn" id="hn"></span></div><div class="big" id="big"></div><div class="vs" id="vs"></div><div id="ed"></div></section>
@@ -371,8 +371,9 @@ var M=window.MAL,kb=ls('pe-hub-k'),ah=ls('pe-hub-acc'),exp=+ls('pe-hub-exp')||0,
 function safe(n){var m=String(n).match(/\.([A-Za-z0-9]{1,6})$/),x=m?m[1].toLowerCase():'bin';return (String(n).replace(/\.[^.]*$/,'').replace(/[^A-Za-z0-9_-]+/g,'_').replace(/^_+|_+$/g,'').slice(0,40)||'file')+'.'+x}
 function upload(me){var SB=window.SF_SB,m=document.getElementById('mn'),f0=document.getElementById('ft'),g=document.querySelector('.gl'),w=document.getElementById('pgw');[f0,g,w].forEach(function(x){if(x)x.style.display='none'});
   m.style.display='block';m.innerHTML='<div class="mup"><h1>Прикрепите презентацию</h1><p class="s">Малевич оформит её в стиле Академии. Текст и смысл остаются Вашими — он ничего не переписывает.</p>'+
+   '<label for="ck" style="display:block;font-weight:700;margin:14px 0 6px">Что готовим?</label><select id="ck" style="width:100%;font:600 17px inherit;padding:12px 14px;border:2px solid #1745E0;border-radius:12px;background:#fff;color:#101840;margin-bottom:12px"><option value="mastermind">Мастер-майнд</option><option value="lesson">Урок</option><option value="selling">Продающая презентация</option><option value="business">Презентация «Деловые навыки»</option></select><div id="ckr" class="s" style="margin:-4px 0 10px;font-size:14px"></div>'+
    '<label class="mdz" id="dz"><input type="file" id="fi" accept=".pptx" hidden><span id="dzt"><b>Перетащите файл PowerPoint сюда</b><small>или нажмите, чтобы выбрать (.pptx, до 50 МБ)</small></span></label>'+
-   '<button type="button" class="btn w" id="rm" hidden >✕ Убрать файл</button><button type="button" class="btn p" id="go" disabled>Оформить в стиле Академии</button><div id="pr" hidden><div class="bar"><i id="pb"></i></div><div class="st" id="ps"></div></div><div class="er" id="er" role="alert"></div></div>';
+   '<button type="button" class="btn w" id="rm" hidden >✕ Убрать файл</button><button type="button" class="btn p" id="go" disabled>Подготовить слайды для мастер-майнда</button><div id="pr" hidden><div class="bar"><i id="pb"></i></div><div class="st" id="ps"></div></div><div class="er" id="er" role="alert"></div></div>';
   (function(){var L=[],seen={};((me&&me.decks)||[]).forEach(function(d){if(d.deck&&!seen[d.deck]){seen[d.deck]=1;L.push({d:d.deck,t:d.title||d.deck,e:d.expert||'',c:d.made||0})}});
    try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf('pe-mal-tok-')===0){var d=k.slice(11);if(d&&!seen[d]){seen[d]=1;L.push({d:d,t:'Работа '+d})}}}}catch(e){}
    var box=document.createElement('div');box.className='mup';box.style.marginTop='8px';m.appendChild(box);
@@ -396,7 +397,11 @@ function upload(me){var SB=window.SF_SB,m=document.getElementById('mn'),f0=docum
   ['dragleave','drop'].forEach(function(e){dz.addEventListener(e,function(ev){ev.preventDefault();dz.classList.remove('on')})});
   dz.addEventListener('drop',function(ev){var f=ev.dataTransfer&&ev.dataTransfer.files[0];if(f)pick(f)});
   function prog(p,t){$('pr').hidden=false;$('pb').style.width=p+'%';$('ps').textContent=t}
-  function fail(t){busy=false;$('rm').hidden=!F;$('go').disabled=!F;$('go').textContent='Оформить в стиле Академии';$('pr').hidden=true;$('er').textContent=t+' Файл остался выбранным — нажмите кнопку ещё раз.'}
+  var KT={mastermind:['Подготовить слайды для мастер-майнда','Правила мастер-майнда применятся сами: вопрос — дословно сверху, ответ — до 5–6 строк ниже, схем не больше одной, оформление Академии.'],lesson:['Оформить урок в стиле Академии',''],selling:['Оформить продающую презентацию в стиле Академии',''],business:['Оформить презентацию «Деловые навыки» в стиле Академии','']};
+  function goText(){var k=($('ck')||{}).value||'mastermind';return (KT[k]||KT.mastermind)[0]}
+  function kindUi(){var k=($('ck')||{}).value||'mastermind';if(!busy&&$('go'))$('go').textContent=goText();$('ckr').textContent=(KT[k]||KT.mastermind)[1]}
+  if($('ck')){$('ck').onchange=kindUi;kindUi()}
+  function fail(t){busy=false;$('rm').hidden=!F;$('go').disabled=!F;$('go').textContent=goText();$('pr').hidden=true;$('er').textContent=t+' Файл остался выбранным — нажмите кнопку ещё раз.'}
   $('go').onclick=function(){if(busy||!F)return;busy=true;$('rm').hidden=true;$('go').disabled=true;$('go').textContent='Отправляю…';$('er').textContent='';prog(6,'Загружаю презентацию…');
     var vt=(ls('pe-mal-voter')||('v'+Math.random().toString(36).slice(2,12)));try{localStorage.setItem('pe-mal-voter',vt)}catch(e){}
     var path='start/'+vt+'/'+Date.now()+'_1_'+safe(F.name);
@@ -404,7 +409,7 @@ function upload(me){var SB=window.SF_SB,m=document.getElementById('mn'),f0=docum
     .then(function(r){if(!r.ok)throw 1;prog(25,'Передаю Малевичу…');
       var nm=((me&&me.io)||'эксперт').slice(0,120);
       return fetch(SB.url.replace(/\/$/,'')+'/rest/v1/pe_jobs',{method:'POST',headers:Object.assign({'Content-Type':'application/json',Prefer:'return=representation'},H),
-        body:JSON.stringify({deck:'start',kind:'upload',round:1,status:'queued',author:nm,payload:{action:'start',malevich:true,name:nm,text:'',files:[{path:path,name:F.name,size:F.size,kind:'slides'}],voter:vt,login:(me&&me.code)||'',kind:'урок'}})})})
+        body:JSON.stringify({deck:'start',kind:'upload',round:1,status:'queued',author:nm,payload:{action:'start',malevich:true,name:nm,text:'',files:[{path:path,name:F.name,size:F.size,kind:'slides'}],voter:vt,login:(me&&me.code)||'',kind:'урок',content_kind:(document.getElementById('ck')||{}).value||'mastermind'}})})})
     .then(function(r){if(!r.ok)throw 2;return r.text()}).then(function(tx){var a=tx?JSON.parse(tx):[],jid=a&&a[0]&&a[0].id;if(!jid)throw 3;prog(40,'Малевич читает слайды…');
       var t0=Date.now(),ti=setInterval(function(){
         fetch(SB.url.replace(/\/$/,'')+'/rest/v1/pe_jobs?select=status,deck,note&id=eq.'+jid,{headers:H,cache:'no-store'}).then(function(r){return r.text()}).then(function(x){var j=(x?JSON.parse(x):[])[0];if(!j)return;
