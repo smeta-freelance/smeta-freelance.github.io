@@ -283,18 +283,20 @@ function rec(id,Lt,el){var e=ed(id);if(e.L&&e.L!==Lt&&nch(e)){return}e.L=Lt;
 /* 12.11 «Смыслы, часть 1» (макет утв. Русланом): выделить слова → ★ Смысл / ＋ Плюс / − Минус → правка уходит Малевичу; оформление в стиле Академии */
 var PEK={a:['★ Смысл','ka','font-weight:800;color:#1745E0;background:#FFF2B3;border-radius:6px;padding:0 .12em'],p:['＋ Плюс','kp','font-weight:800;color:#0B7A3E;background:#DDF5E5;border-radius:6px;padding:0 .12em'],m:['− Минус','km','font-weight:800;color:#B42318;background:#FEE4E2;border-radius:6px;padding:0 .12em']};
 function pop(f,d,id,Lt){var pp=$('#pp'),sel=d.getSelection();if(!sel||sel.isCollapsed||!norm(sel.toString())){pp.style.display='none';return}
-  var r=sel.getRangeAt(0),host=r.commonAncestorContainer;host=host.nodeType===1?host:host.parentNode;var el=host.closest&&host.closest('[contenteditable]');if(!el){pp.style.display='none';return}
-  var mk=host.closest('b[data-pe],mark'),q=r.getBoundingClientRect(),k=f.getBoundingClientRect(),sc=k.width/1920;
+  var r=sel.getRangeAt(0),host=r.commonAncestorContainer;host=host.nodeType===1?host:host.parentNode;var el=host.closest&&host.closest('[contenteditable]');if(!el){pp.style.display='none';if(norm(sel.toString()).length>1)hint('Выделите слова внутри одной строки — смысл ставится в одном абзаце.');return}
+  var mk=host.closest('b[data-pe],mark');if(!mk&&[].some.call(el.querySelectorAll('b[data-pe]'),function(b){return r.intersectsNode(b)})){pp.style.display='none';hint('Здесь уже есть смысл. Сначала снимите его (нажмите на выделенное слово → «Снять смысл») — потом выделите заново.');return}
+  var mk0=mk,q=r.getBoundingClientRect(),k=f.getBoundingClientRect(),sc=k.width/1920;
   pp.innerHTML=mk?'<button type="button" class="kx" data-k="x">Снять смысл</button>':['a','p','m'].map(function(x){return '<button type="button" class="'+PEK[x][1]+'" data-k="'+x+'">'+PEK[x][0]+'</button>'}).join('');
   pp.style.left=(window.scrollX+k.left+q.left*sc)+'px';pp.style.top=(window.scrollY+k.top+q.top*sc-56)+'px';pp.style.display='flex';
   pp.onmousedown=function(ev){var b=ev.target.closest('[data-k]');if(!b)return;ev.preventDefault();var kk=b.dataset.k;
-    if(kk==='x'){unwrap(mk)}else{var m=d.createElement('b');m.setAttribute('data-pe',kk);m.setAttribute('style',PEK[kk][2]);try{r.surroundContents(m)}catch(err){say('Выделите слова внутри одной строки.');return}}
+    if(kk==='x'){unwrap(mk)}else{var m=d.createElement('b');m.setAttribute('data-pe',kk);m.setAttribute('style',PEK[kk][2]);try{r.surroundContents(m)}catch(err){say('Выделите слова внутри одной строки — без начала и конца разных абзацев.');return}}
     sel.removeAllRanges();pp.style.display='none';rec(id,Lt,el)}}
+var HT0=0;function hint(t){if(Date.now()-HT0<2500)return;HT0=Date.now();say(t)}
 function unwrap(mk){if(!mk)return;while(mk.firstChild)mk.parentNode.insertBefore(mk.firstChild,mk);mk.remove()}
 var SM=(S.sm||[]),SMX=null;
 function fidSlide(fid){for(var i=0;i<sl.length;i++){var q=ST[sl[i].id];if(q&&q.fid===fid)return sl[i]}return null}
 function smList(){var box=$('#sml');if(!box)return;var items=SM.slice();var e=E[cur],fr=$('#big iframe');
-  if(fr&&fr.contentDocument&&ST[cur]){var f0=ST[cur].fid;items=items.filter(function(x){return x.fid!==f0});[].forEach.call(fr.contentDocument.querySelectorAll('b[data-pe]'),function(b){var tx=norm(b.textContent);if(tx&&!items.some(function(x){return x.fid===f0&&x.t===tx&&x.k===b.dataset.pe}))items.push({fid:f0,k:b.dataset.pe,t:tx,cur:1})})}
+  if(fr&&fr.contentDocument&&ST[cur]){var f0=ST[cur].fid;[].forEach.call(fr.contentDocument.querySelectorAll('b[data-pe]'),function(b){var tx=norm(b.textContent);if(tx&&!items.some(function(x){return x.fid===f0&&x.t.toLowerCase()===tx.toLowerCase()&&x.k===b.dataset.pe}))items.push({fid:f0,k:b.dataset.pe,t:tx,cur:1})})}   /* 12.11 краш-тест 2: смыслы всех вариантов слайда + новые в открытом */
   if(!items.length){box.hidden=false;box.__h='';box.innerHTML='<h3>Смыслы работы · 0</h3><p class="s0">Выделите слова на слайде мышкой — появятся кнопки «★ Смысл», «＋ Плюс», «− Минус».</p>';return}
   var col={a:'#1745E0',p:'#12A150',m:'#D92D20'},by={},order=[];items.forEach(function(x){var s0=fidSlide(x.fid);var key=s0?s0.id:x.fid;if(!by[key]){by[key]=[];order.push(key)}by[key].push(x)});
   order.sort(function(a,b){var sa=ST[a],sb=ST[b];return ((sa&&sa.k)||0)-((sb&&sb.k)||0)});
