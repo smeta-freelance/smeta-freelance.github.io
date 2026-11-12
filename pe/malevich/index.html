@@ -21,7 +21,7 @@ main{max-width:1180px;margin:0 auto;padding:18px 24px 24px;display:grid;grid-tem
 .it .th{flex:none;width:76px;aspect-ratio:16/9;border-radius:6px;background:var(--g);overflow:hidden}.it .th img{width:100%;height:100%;object-fit:cover;display:block}
 .it .nm{flex:1;min-width:0;font-weight:600;font-size:18px}.it .nm small{display:block;font-weight:400;font-size:15px;color:var(--mut);overflow-wrap:anywhere}
 .it .sx{flex:none;text-align:right;font-size:16px;font-weight:600;color:var(--mut)}
-.sx.ok{color:var(--ok)}.sx.rd{color:var(--ok);border:1.5px solid var(--ok);border-radius:999px;padding:0 10px;font-size:15px}.sx.dr{color:var(--act);font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1}.sx.dr small{display:block;font-size:14px;font-weight:600}.sx.sk{color:var(--bad)}
+.sx.ok{color:var(--ok)}.sx.rd{color:var(--ok);border:1.5px solid var(--ok);border-radius:999px;padding:0 10px;font-size:15px}.sx.dr{color:var(--act);font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1}.sx.dr small{display:block;font-size:14px;font-weight:600}.sx.sk{color:var(--bad)}
 .ft{position:fixed;left:0;right:0;bottom:0;z-index:30;background:#fff;border-top:1px solid var(--line);box-shadow:0 -4px 16px rgba(20,24,40,.06);padding:10px 24px}
 .ft>div{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:14px;justify-content:space-between}.ft .t{min-width:0}
 .btn{min-height:48px;padding:0 22px;border-radius:12px;border:1.5px solid #AEB6C7;background:#fff;color:var(--ink);font-weight:600;font-size:18px;font-family:inherit;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center}
@@ -48,13 +48,13 @@ main{grid-template-columns:minmax(0,1fr) 320px}.stage .vs{max-width:none}.stage 
 .eb{display:flex;align-items:center;gap:8px;border:1.5px solid #AEB6C7;border-radius:12px;padding:6px 6px 6px 14px;margin-top:12px;background:#fff}.eb:focus-within{border-color:var(--act)}
 .eb textarea{flex:1;border:0;outline:0;resize:none;height:52px;font:inherit;font-size:17px;padding:4px 0;line-height:1.3;background:none}
 .ib{min-height:44px;padding:0 14px;border-radius:10px;border:1.5px solid #AEB6C7;background:#fff;font:inherit;font-size:16px;font-weight:600;cursor:pointer;white-space:nowrap;color:var(--ink)}.ib.rec{border-color:var(--bad);color:var(--bad);background:var(--bad-soft)}
-.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}.chip{display:inline-flex;align-items:center;gap:6px;background:var(--g);border-radius:999px;padding:3px 10px;font-size:14px}.chip button{border:0;background:none;cursor:pointer;color:var(--mut);font:inherit;padding:0}
-.it .nm,.it .sx{white-space:nowrap}.chip.u{background:none;border:1.5px solid #AEB6C7;cursor:pointer;font:inherit;font-size:14px}
+.chips{align-items:center;display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}.chip{display:inline-flex;align-items:center;gap:6px;background:var(--g);border-radius:999px;padding:3px 10px;font-size:14px}.chip button{border:0;background:none;cursor:pointer;color:var(--mut);font:inherit;padding:0}
+.it .nm,.it .sx{white-space:nowrap}.chip.u{background:none;margin-right:auto;border:1.5px solid #AEB6C7;cursor:pointer;font:inherit;font-size:14px}
 .sum{margin-top:12px;border-radius:12px;background:#F6F7FA;padding:10px 14px;font-size:16px}.sum b{display:block;margin-bottom:2px}
 .ver{display:inline-flex;gap:6px}.ver button{font:inherit;font-size:15px;border:1.5px solid #AEB6C7;background:#fff;border-radius:999px;padding:3px 12px;cursor:pointer}.ver .on{background:var(--ink);border-color:var(--ink);color:#fff}
 .pp{position:absolute;z-index:45;background:#15171C;color:#fff;border-radius:8px;padding:6px 12px;font-size:15px;font-weight:600;cursor:pointer;display:none;border:0;font-family:inherit}
 @media (max-width:900px){main{grid-template-columns:1fr;padding:12px}.ft{padding:8px 12px}.ft .t{display:none}.ft>div{justify-content:flex-end}.btn{padding:0 14px;font-size:16px}.vs{gap:6px}.gl{padding:10px 12px}}
-</style><style>
+.stk{display:block;margin:14px 0 2px;padding:6px 2px;background:none;border:0;color:#5B6270;font:500 14px/1.3 inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer;text-align:left}.stk:hover{color:#C0392B}.stk:disabled{opacity:.5;cursor:default}</style><style>
 .mh{background:#fff;border-bottom:1px solid var(--line);padding:8px 24px}.mh>div{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:18px;min-height:40px;flex-wrap:wrap}
 .mh .who{display:flex;align-items:center;gap:10px;font-weight:600;font-size:16px}.mh .who small{display:block;font-weight:400;color:var(--mut);font-size:14px;max-width:360px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mav{flex:none;width:34px;height:34px;border-radius:8px;background:#15171C;color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center}
@@ -88,8 +88,8 @@ main{grid-template-columns:minmax(0,1fr) 320px}.stage .vs{max-width:none}.stage 
 <div class="gl"><div><span class="av" aria-hidden="true">М.</span><div><small>Малевич · дизайнер Академии Сметного Дела</small><ul id="gl"></ul></div></div></div>
 <div class="pgw" id="pgw"><div class="pgt" id="pgt"></div><div class="pgbar" aria-hidden="true"><i id="pgi"></i></div></div>
 <main id="mn"><section class="card stage" aria-live="polite"><div class="hd"><h2 id="ttl"></h2><span id="vt"></span><button type="button" class="btn p hb" id="hok" hidden></button><span class="hn" id="hn"></span></div><div class="big" id="big"></div><div class="vs" id="vs"></div><div id="ed"></div></section>
-<aside class="card rb"><h3 id="rbh">Слайды урока</h3><div id="rb"></div></aside></main>
-<div class="ft" id="ft"><div><div class="t" id="ftt"></div><div class="bt"><button type="button" class="btn w" id="bst">🙁 Малевич меня не понимает</button><button type="button" class="btn dl" id="dpdf" hidden>Скачать PDF</button><button type="button" class="btn dl" id="dppt" hidden>Скачать слайды (PPTX)</button><button type="button" class="btn p g2s-main" id="bok"></button></div></div></div>
+<aside class="card rb"><h3 id="rbh">Слайды урока</h3><div id="rb"></div><button type="button" id="bst" class="stk">🙁 Малевич меня не понимает</button></aside></main>
+<div class="ft" id="ft"><div><div class="t" id="ftt"></div><div class="bt"><button type="button" class="btn dl" id="dpdf" hidden>Скачать PDF</button><button type="button" class="btn dl" id="dppt" hidden>Скачать слайды (PPTX)</button><button type="button" class="btn p g2s-main" id="bok"></button></div></div></div>
 <button type="button" class="pp" id="pp">🖍 Выделить жёлтым</button><input type="file" id="fin" hidden multiple accept=".jpg,.jpeg,.png,.webp,.heic,.gif,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv"><dialog id="dl"><h3>Малевич вас не понял — это моя вина</h3><ol><li>Этот слайд останется как есть.</li><li>Мы идём дальше — к следующему слайду.</li><li>Руслан получит сообщение и поможет.</li></ol>
 <label for="nt">Если хотите, напишите, что не так (необязательно):</label><textarea id="nt"></textarea><div class="bt"><button type="button" class="btn" id="dc">Вернуться к слайду</button><button type="button" class="btn p g2s-main" id="dg">Оставить и открыть следующий</button></div></dialog>
 <script>window.SF_SB={"url": "https://twtxrtgknenldyqmwymy.supabase.co", "key": "sb_publishable_N5Zaxf5mfaMc67JoaCWxVA_fp_fnlLE"};window.PE={deck:'',live:''};window.S25={slides:[],io:'',demo:false,built:'1970-01-01T00:00:00Z'};
@@ -149,7 +149,7 @@ function demoTick(){var dr=sl.filter(function(x){return ST[x.id].st==='drawing'}
   dr.forEach(function(x){var s=ST[x.id];if((Date.now()-s.t0)/1000>=s.eta){s.st='ready'}});
   if(!sl.some(function(x){return ST[x.id].st==='drawing'})&&q.length){var n=q[0];ST[n.id].st='drawing';ST[n.id].t0=Date.now();ST[n.id].eta=40}}
 function left(s){var e=s.eta?s.eta*60:120;if(DEMO)e=s.eta;return e-(Date.now()-s.t0)/1000}
-function sx(x){var s=ST[x.id];if(s.red&&s.st!=='approved'){var rr=redLeft(s);return '<span class="sx dr">'+(rr>3?'ещё '+mmss(rr):'ещё чуть-чуть')+'<small>перерисовывается</small></span>'}if(s.st==='ready'&&s.ver>1)return '<span class="sx rd act" role="button" tabindex="0" data-ap="'+esc(x.id)+'" title="Утвердить слайд '+x.k+'">Утвердить · новая версия</span>';
+function sx(x){var s=ST[x.id];if(s.red&&s.st!=='approved'){var rr=redLeft(s);return '<span class="sx dr">перерисовывается</span>'}if(s.st==='ready'&&s.ver>1)return '<span class="sx rd act" role="button" tabindex="0" data-ap="'+esc(x.id)+'" title="Утвердить слайд '+x.k+'">Утвердить · новая версия</span>';
   if(s.st==='approved')return '<span class="sx ok act" role="button" tabindex="0" data-un="'+esc(x.id)+'" title="Снять утверждение">✓ утверждён</span>';if(s.st==='skipped')return '<span class="sx sk">оставлен как есть</span>';if(s.st==='ready')return '<span class="sx rd act" role="button" tabindex="0" data-ap="'+esc(x.id)+'" title="Утвердить слайд '+x.k+'">Утвердить</span>';
   if(s.st==='drawing'){var f0=sl.filter(function(z){return ST[z.id].st==='drawing'})[0];return '<span class="sx" style="color:var(--act)">рисую…</span>';var r=left(s);return '<span class="sx dr">'+(r>3?'ещё '+mmss(r):'ещё чуть-чуть')+'<small>рисуется</small></span>'}
   return '<span class="sx">текст готов</span>'}
@@ -183,7 +183,7 @@ function paint(){
   $('#rbh').textContent='Слайды урока · '+sl.length;
   var go=$('#bok'),dt=dirty(cur),nx=s.red&&nextReady();go.dataset.all=all?'1':'';go.dataset.mode=dt?'send':s.red?'next':'';
   go.textContent=all?'Перейти к Гудвину · оператору':dt?'Отправить правку Малевичу':s.red?(nx?'Пока жду — к слайду '+ST[nx].k+' →':'Малевич перерисовывает…'):'Утвердить слайд '+c.k;
-  go.disabled=!all&&(dt?(s.st!=='ready'&&s.st!=='approved'):s.red?!nx:s.st!=='ready');keep();
+  go.style.display=(!all&&dt)?'none':'';go.disabled=!all&&(dt?(s.st!=='ready'&&s.st!=='approved'):s.red?!nx:s.st!=='ready');keep();
   $('#dpdf').hidden=$('#dppt').hidden=!all;$('#dpdf').disabled=$('#dppt').disabled=!!PK.busy;$('#bst').style.display=(all||s.st==='approved'||s.st==='skipped'||s.red)?'none':'';$('#bst').disabled=!(s.st==='ready');
   if(!all&&dt){var e0=E[cur];$('#ftt').innerHTML='Слайд '+c.k+' · <b>есть правки:</b> '+esc(edWhat(e0))}else if(!all&&s.red)$('#ftt').innerHTML='Слайд '+c.k+' перерисовывается · <b>можно идти дальше</b>';else
   $('#ftt').innerHTML=all?'<b>Сделано:</b> слайды утверждены <span aria-hidden="true">→</span> <b>Дальше:</b> скачать и записать'+packHtml():'Утверждено: <b>'+done+' из '+sl.length+'</b> · '+(s.st==='ready'?'слайд '+c.k+' ждёт Вас':s.st==='drawing'?'слайд '+c.k+' ещё рисуется':'слайд '+c.k+' в очереди');
@@ -271,9 +271,9 @@ function edBar(s,c,ready){var box=$('#ed'),id=c.id;$('#hn').textContent=ready&&!
     $('#fbt').onclick=function(){var fi=$('#fin');fi.dataset.id=id;fi.click()};$('#mic').onclick=function(){mic(id)};chips(id)}}
 function chips(id){var e=E[id],c=$('#chips');if(!c)return;var h='';if(e){if(nch(e))h+='<span class="chip">✏️ Исправлено на слайде: '+nch(e)+'</span>';if(e.voice)h+='<span class="chip">🎤 Голосом — записал в текст</span>';
   e.files.forEach(function(f,k){h+='<span class="chip">'+(f.p?(/^image\//.test(f.type)?'📷 ':'📄 '):'⏳ ')+esc(f.name)+' <button type="button" data-rm="'+k+'" aria-label="Убрать файл">✕</button></span>'});
-  if(dirty(id))h+='<button type="button" class="chip u" data-undo="1">Отменить правку</button>'}
+  if(dirty(id))h+='<button type="button" class="chip u" data-undo="1">Отменить правку</button><button type="button" class="btn p" id="bsend" data-send="1">Отправить правку Малевичу</button>'}
   c.innerHTML=h}
-$('#ed').addEventListener('click',function(ev){var b=ev.target.closest('[data-rm],[data-undo]');if(!b)return;var id=cur,e=E[id];if(!e)return;
+$('#ed').addEventListener('click',function(ev){var b=ev.target.closest('[data-rm],[data-undo],[data-send]');if(!b)return;if(b.dataset.send){send();return}var id=cur,e=E[id];if(!e)return;
   if(b.dataset.undo){E[id]=null;IFK='';$('#ed').__wired='';$('#ed').__h=null;paint();return}e.files.splice(+b.dataset.rm,1);chips(id);paint()});
 function safe(n){var m=String(n).match(/\.([A-Za-z0-9]{1,6})$/),x=m?m[1].toLowerCase():'bin';return (String(n).replace(/\.[^.]*$/,'').replace(/[^A-Za-z0-9_-]+/g,'_').slice(0,40)||'file')+'.'+x}
 $('#fin').addEventListener('change',function(){var fi=this,id=fi.dataset.id||cur,fs=[].slice.call(fi.files||[]);fi.value='';fs.forEach(function(f){
@@ -283,22 +283,39 @@ $('#fin').addEventListener('change',function(){var fi=this,id=fi.dataset.id||cur
   var path='slides/'+D+'/'+id+'_'+Date.now()+'_'+Math.random().toString(36).slice(2,6)+'_'+safe(f.name);
   var put=PE.test||DEMO?Promise.resolve(true):fetch(SB.url.replace(/\/$/,'')+'/storage/v1/object/pe-uploads/'+path.split('/').map(encodeURIComponent).join('/'),{method:'POST',headers:H({'Content-Type':/^application\/(pdf|msword|vnd\.)/.test(f.type)?f.type:'application/octet-stream','x-upsert':'false'}),body:f}).then(function(r){return r.ok});
   put.then(function(okk){if(!okk)throw 0;it.p=path;chips(id);paint()}).catch(function(){e.files.splice(e.files.indexOf(it),1);chips(id);paint();say('Файл «'+f.name+'» не загрузился — попробуйте ещё раз.')})})});
-function mic(id){var R=window.SpeechRecognition||window.webkitSpeechRecognition,b=$('#mic');if(!R){say('В этом браузере диктовка недоступна — напишите, пожалуйста, текстом.');return}
-  if(RECG){try{RECG.stop()}catch(e){}return}var r=new R();RECG=r;r.lang='ru-RU';r.continuous=true;r.interimResults=false;
-  r.onresult=function(ev){var t='';for(var i=ev.resultIndex;i<ev.results.length;i++)if(ev.results[i].isFinal)t+=ev.results[i][0].transcript;t=norm(t);if(!t)return;var e=ed(id),ta=$('#note');e.note=norm((e.note||'')+' '+t);e.voice=1;if(ta)ta.value=e.note;chips(id);paint()};
-  r.onerror=function(){say('Не расслышал — попробуйте ещё раз или напишите текстом.')};r.onend=function(){RECG=null;var bb=$('#mic');if(bb){bb.className='ib';bb.textContent='🎤 Голосом'}};
-  try{r.start();b.className='ib rec';b.textContent='■ Стоп — я записываю';say('Говорите — я записываю в текст. Нажмите «Стоп», когда закончите.')}catch(e){RECG=null}}
+function mic(id){var b=$('#mic');
+  if(RECG){try{RECG.stop()}catch(e){}return}
+  if(!(window.MediaRecorder&&navigator.mediaDevices&&navigator.mediaDevices.getUserMedia)){say('В этом браузере запись голоса недоступна — напишите, пожалуйста, текстом.');return}
+  navigator.mediaDevices.getUserMedia({audio:true}).then(function(st){var ch=[],t0=Date.now(),mt=['audio/webm;codecs=opus','audio/webm','audio/mp4'].filter(function(x){return MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(x)})[0]||'',mr;
+    try{mr=mt?new MediaRecorder(st,{mimeType:mt}):new MediaRecorder(st)}catch(err){st.getTracks().forEach(function(t){t.stop()});say('Запись не запустилась — напишите текстом.');return}
+    var tk=setInterval(function(){var q=Math.round((Date.now()-t0)/1000);b.textContent='■ Стоп · '+Math.floor(q/60)+':'+('0'+q%60).slice(-2)},500);
+    RECG={stop:function(){clearInterval(tk);try{if(mr.state==='recording')mr.stop()}catch(e){}RECG=null}};
+    mr.ondataavailable=function(ev){if(ev.data&&ev.data.size)ch.push(ev.data)};
+    mr.onstop=function(){st.getTracks().forEach(function(t){t.stop()});clearInterval(tk);RECG=null;var bb=$('#mic');if(bb){bb.className='ib';bb.textContent='🎤 Голосом'}
+      var sec=Math.round((Date.now()-t0)/1000),ty=(mr.mimeType||'audio/webm').split(';')[0],blob=new Blob(ch,{type:ty});
+      if(blob.size<2000){say('Не расслышал — запишите ещё раз чуть подольше или напишите текстом.');return}
+      var sk='pe_'+PE.deck+'_s25',vt=(function(){try{var v=localStorage.getItem('pe-mal-voter');if(!v){v='v'+Math.random().toString(36).slice(2,12);localStorage.setItem('pe-mal-voter',v)}return v}catch(e){return 'v'+Date.now()}})(),
+        p=sk+'/'+Date.now()+(ty.indexOf('mp4')>=0?'.m4a':'.webm'),since=new Date(Date.now()-5000).toISOString(),base=SB.url.replace(/\/$/,'');
+      say('📝 Расшифровываю — обычно до 30 секунд. Текст появится в поле.');
+      fetch(base+'/storage/v1/object/sf-voice/'+p.split('/').map(encodeURIComponent).join('/'),{method:'POST',headers:H({'Content-Type':ty||'audio/webm'}),body:blob})
+        .then(function(r){if(!r.ok)throw r.status;return fetch(base+'/rest/v1/sf_comments',{method:'POST',headers:H({'Content-Type':'application/json',Prefer:'return=minimal'}),body:JSON.stringify({section:sk,voter:vt,author:'Эксперт',body:'[голос] '+p+'|'+sec})})})
+        .then(function(r){if(!r.ok)throw r.status;var n=0,tmr=setInterval(function(){if(++n>48){clearInterval(tmr);say('Расшифровка задерживается — напишите, пожалуйста, текстом.');return}
+          fetch(base+'/rest/v1/sf_comments?select=body&section=eq.'+encodeURIComponent(sk)+'&author=like.'+encodeURIComponent('Расшифровка*')+'&created_at=gt.'+encodeURIComponent(since)+'&order=created_at&limit=1',{headers:H()})
+            .then(function(r){return r.ok?r.text():''}).then(function(t){var a=t?JSON.parse(t):[];if(!a[0])return;clearInterval(tmr);var t2=norm(a[0].body);if(!t2)return;var e=ed(id),ta=$('#note');e.note=norm((e.note||'')+' '+t2);e.voice=1;if(ta)ta.value=e.note;chips(id);paint();say('✓ Я поняла так — проверьте текст в поле и поправьте, если нужно.')}).catch(function(){})},2500)})
+        .catch(function(){say('Голосовое не отправилось — проверьте интернет и запишите ещё раз.')})};
+    try{mr.start(1000);b.className='ib rec';b.textContent='■ Стоп · 0:00';say('Говорите… нажмите «Стоп», когда закончите.')}catch(err){RECG&&RECG.stop();say('Запись не запустилась — напишите текстом.')}
+  },function(err){var n=(err&&err.name)||'';say(n==='NotAllowedError'||n==='SecurityError'?'Нет доступа к микрофону — разрешите его значком слева от адреса и нажмите «Голосом» ещё раз. Или напишите текстом.':'Микрофон не нашёлся — напишите текстом.')})}
 window.addEventListener('beforeunload',function(ev){if(sl.some(function(x){return dirty(x.id)})){ev.preventDefault();ev.returnValue=''}});
 function send(){var s=ST[cur],e=E[cur];if(!dirty(cur)||(s.st!=='ready'&&s.st!=='approved'))return;if(Object.keys(e.ch).some(function(k){var d=document.createElement('div');d.innerHTML=e.ch[k].new||'';return !norm(d.textContent)})){say('Пустой текст я не ставлю — напишите, что должно быть на слайде, или нажмите «Отменить правку».');return}if(e.files.some(function(f){return !f.p})){say('Подождите — файл ещё загружается.');return}
   if(RECG)try{RECG.stop()}catch(x){}
   var ch=Object.keys(e.ch).map(function(k){return e.ch[k]}),heavy=!!(e.note.trim()||e.files.length);
   var sum=(nch(e)?'✏️ Текст на слайде: '+nch(e)+' '+(nch(e)===1?'правка':'правки')+'<br>':'')+(e.note.trim()?'💬 '+esc(e.note.trim())+'<br>':'')+(e.files.length?'📎 '+e.files.map(function(f){return esc(f.name)}).join(', '):'');
-  var btn=$('#bok');btn.disabled=true;
-  job({action:'slide25_edit',slide:cur,variant:e.L||s.sel,changes:ch,note:e.note.trim(),files:e.files.map(function(f){return {b:f.b,p:f.p,name:f.name}})}).then(function(g){btn.disabled=false;
+  var btn=$('#bok'),bs=$('#bsend');btn.disabled=true;if(bs)bs.disabled=true;
+  job({action:'slide25_edit',slide:cur,variant:e.L||s.sel,changes:ch,note:e.note.trim(),files:e.files.map(function(f){return {b:f.b,p:f.p,name:f.name}})}).then(function(g){btn.disabled=false;var bs2=$('#bsend');if(bs2)bs2.disabled=false;
     if(!g){say('Нет связи — нажмите ещё раз. Ничего не потеряно.');return}
     s.red={t0:Date.now(),eta:heavy?3:0.3,sum:sum,heavy:heavy};E[cur]=null;IFK='';$('#ed').__wired='';say('✓ Правка у Малевича');paint()})}
 function redBig(s,c){var big=$('#big'),r=redLeft(s),tot=(s.red.eta||3)*60,pc=Math.max(4,Math.min(96,100-r*100/tot)),heavy=s.red.heavy!==false;
-  var h='<img src="'+esc((s.v&&s.v[s.sel])||'')+'" alt=""><div class="ov"><b>'+(heavy?'Малевич перерисовывает слайд '+s.k:'Малевич вносит правку текста')+'</b><span class="tm">'+(r>3?'ещё '+mmss(r):'ещё чуть-чуть')+'</span><div class="ovb"><i style="width:'+Math.round(pc)+'%"></i></div>'+
+  var h='<img src="'+esc((s.v&&s.v[s.sel])||'')+'" alt=""><div class="ov"><b>'+(heavy?'Малевич перерисовывает слайд '+s.k:'Малевич вносит правку текста')+'</b><div class="ovb"><i style="width:'+Math.round(pc)+'%"></i></div>'+
     '<div class="stp"><span class="'+(s.red.on?'d':'n')+'">'+(s.red.on?'✓ ':'')+'Прочитал правку</span>'+(heavy?'<span class="'+(s.red.text?'d':'')+'">'+(s.red.text?'✓ ':'')+'Текст поправил</span><span class="'+(s.red.on?'n':'')+'">Рисую A, B, C</span>':'')+'</div></div>';
   IFK='';var w=big.querySelector('.ovb i');if(w&&big.__h&&big.__h.split('<div class="ovb">')[0]===h.split('<div class="ovb">')[0]){w.style.width=Math.round(pc)+'%';var tm=big.querySelector('.tm');if(tm)tm.textContent=(r>3?'ещё '+mmss(r):'ещё чуть-чуть');return}
   big.__h=h;big.innerHTML=h}
