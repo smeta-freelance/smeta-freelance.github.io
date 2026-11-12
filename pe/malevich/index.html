@@ -78,7 +78,7 @@ main{grid-template-columns:minmax(0,1fr) 320px}.stage .vs{max-width:none}.stage 
 .mver{font-size:12px;color:#8A909C;white-space:nowrap}.mver b{color:#1745E0}
 @media (max-width:900px){.mh{padding:8px 12px}.mh nav{margin-left:0}}
 </style></head><body><div class="mh" id="mh"><div><div class="who"><span class="mav" aria-hidden="true">М.</span><div>Малевич · дизайнер<small id="mt"></small></div></div>
-<nav aria-label="Шаги урока"><a class="ok" id="ms1" href="/pe/sokrat/">✓ Тексты от Сократа</a><span class="now" id="ms2">● Слайды</span><span>○ Запись</span><span>○ Монтаж</span></nav><a class="ok" href="/pe/" style="margin-left:14px;font-weight:600">Мои работы</a><span class="mver" title="Номер версии сервиса">Малевич · версия <b>1.9</b> · 12.11 07:56</span></div></div>
+<nav aria-label="Шаги урока"><a class="ok" id="ms1" href="/pe/sokrat/">✓ Тексты от Сократа</a><span class="now" id="ms2">● Слайды</span><span>○ Запись</span><span>○ Монтаж</span></nav><a class="ok" href="/pe/" style="margin-left:14px;font-weight:600">Мои работы</a><span class="mver" title="Номер версии сервиса">Малевич · версия <b>2.0</b> · 12.11 08:06</span></div></div>
 <div class="gl"><div><span class="av" aria-hidden="true">М.</span><div><small>Малевич · дизайнер Академии Сметного Дела</small><ul id="gl"></ul></div></div></div>
 <div class="pgw" id="pgw"><div class="pgt" id="pgt"></div><div class="pgbar" aria-hidden="true"><i id="pgi"></i></div></div>
 <main id="mn"><section class="card stage" aria-live="polite"><div class="hd"><h2 id="ttl"></h2><span id="vt"></span><button type="button" class="btn p hb" id="hok" hidden></button><span class="hn" id="hn"></span></div><div class="big" id="big"></div><div class="vs" id="vs"></div><div id="ed"></div></section>
@@ -350,6 +350,11 @@ function upload(me){var SB=window.SF_SB,m=document.getElementById('mn'),f0=docum
   m.style.display='block';m.innerHTML='<div class="mup"><h1>Прикрепите презентацию</h1><p class="s">Малевич оформит её в стиле Академии. Текст и смысл остаются Вашими — он ничего не переписывает.</p>'+
    '<label class="mdz" id="dz"><input type="file" id="fi" accept=".pptx" hidden><span id="dzt"><b>Перетащите файл PowerPoint сюда</b><small>или нажмите, чтобы выбрать (.pptx, до 50 МБ)</small></span></label>'+
    '<button type="button" class="btn w" id="rm" hidden style="margin-top:10px;min-height:40px;font-size:16px;width:auto;padding:0 16px">✕ Убрать файл</button><button type="button" class="btn p" id="go" disabled>Оформить в стиле Академии</button><div id="pr" hidden><div class="bar"><i id="pb"></i></div><div class="st" id="ps"></div></div><div class="er" id="er" role="alert"></div><a class="btn w" href="/pe/" style="text-align:center;text-decoration:none">Мои работы — все презентации в работе →</a></div>';
+  (function(){var L=[],seen={};((me&&me.decks)||[]).forEach(function(d){if(d.deck&&!seen[d.deck]){seen[d.deck]=1;L.push({d:d.deck,t:d.title||d.deck})}});
+   try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf('pe-mal-tok-')===0){var d=k.slice(11);if(d&&!seen[d]){seen[d]=1;L.push({d:d,t:'Работа '+d})}}}}catch(e){}
+   var h='<div class="mup" style="margin-top:28px"><h2 style="font-size:22px;margin:0 0 10px">Презентации у Малевича</h2>';
+   h+=L.length?L.map(function(x){return '<a class="btn w" style="text-align:left;text-decoration:none;margin-top:8px" href="/pe/malevich/#'+encodeURIComponent(x.d)+'">'+esc(x.t)+' →</a>'}).join(''):'<p class="s">Пока нет ни одной. Прикрепите презентацию выше — она появится здесь.</p>';
+   m.insertAdjacentHTML('beforeend',h+'</div>')})();
   window.onhashchange=function(){location.reload()};
   var F=null,busy=false,$=function(i){return document.getElementById(i)},H={apikey:SB.key,Authorization:'Bearer '+SB.key};
   function pick(f){var er=$('er');er.textContent='';if(!f)return;
