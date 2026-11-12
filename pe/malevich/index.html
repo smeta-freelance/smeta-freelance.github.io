@@ -71,7 +71,7 @@ main{grid-template-columns:minmax(0,1fr) 320px}.stage .vs{max-width:none}.stage 
 .pc>span{display:flex;flex-direction:column;justify-content:center;padding:12px 16px;box-sizing:border-box}.pc small{display:block;color:#5B6270;font-size:13px;line-height:1.35}.pc b{display:block;font-size:16px;line-height:1.35;overflow-wrap:anywhere}
 .pl{flex:0 0 132px;border-right:1px solid #D6DBE6}.pl b{white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:600}.pm{flex:1;min-width:0}.pm b{font-size:17px;font-weight:600;margin-bottom:2px}.pr{flex:0 0 160px;border-left:1px solid #D6DBE6;text-align:right}.pc.ok .pl,.pc.ok .pr{border-color:#BFE3CD}.pc.ok .pm small{color:#1F7A44}
 @media(max-width:560px){.mup{margin:24px auto}.pc{display:grid;grid-template-columns:1fr 1fr;min-height:0}.pc>span{padding:10px 14px}.pm{grid-column:1/-1;order:-1;border-bottom:1px solid #D6DBE6}.pl{flex:none;border-right:1px solid #D6DBE6}.pr{flex:none;border-left:0}.pc.ok .pm{border-color:#BFE3CD}.mdz{min-height:112px;padding:20px 14px}}
-.btn[hidden]{display:none!important}.mup .btn{width:100%;margin-top:14px;min-height:48px;font-size:18px}.mup #rm{margin-top:10px;min-height:44px;font-size:16px;width:auto;padding:0 16px}
+.fl{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:12px}.fx{position:relative;background:#fff;border:1.5px solid #D6DBE6;border-radius:12px;padding:12px;padding-top:30px}.fx.main{border-color:#1745E0}.fxx{position:absolute;right:8px;top:8px;width:26px;height:26px;border-radius:99px;border:0;background:#F3F2EF;color:#5B6270;font-weight:700;cursor:pointer;line-height:1}.fxx:hover{background:#FDE3EA;color:#C0392B}.ftag{position:absolute;left:10px;top:8px;background:#1745E0;color:#fff;font-size:11px;font-weight:700;border-radius:6px;padding:2px 7px}.fth{height:64px;border-radius:8px;background:#DCE4FF;display:flex;align-items:center;justify-content:center;font-weight:800;color:#1745E0;margin-bottom:8px}.fth.img{background:linear-gradient(135deg,#8FA3F5,#38C6F4);color:#fff}.fx b{display:block;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.fx small{color:#5B6270;font-size:12px}.btn[hidden]{display:none!important}.mup .btn{width:100%;margin-top:14px;min-height:48px;font-size:18px}.mup #rm{margin-top:10px;min-height:44px;font-size:16px;width:auto;padding:0 16px}
 .mup .bar{height:10px;border-radius:99px;background:var(--g);overflow:hidden;margin:16px 0 8px}.mup .bar i{display:block;height:100%;width:3%;background:var(--act);transition:width .6s}.mup .st{color:var(--mut);font-size:15px;min-height:22px}.mup .er{color:var(--bad);font-size:15px;margin-top:10px}
 .mbar{max-width:1180px;margin:2px auto 0}.mbt{font-size:14px;color:var(--mut);margin-bottom:4px}.mbb{height:8px;border-radius:99px;background:var(--g);overflow:hidden}.mbb i{display:block;height:100%;width:2%;background:var(--act);transition:width .6s}
 .gh{position:absolute;inset:0;background:#fff;display:flex;flex-direction:column;justify-content:center;padding:6% 7%;text-align:left;border-top:6px solid var(--act)}
@@ -370,10 +370,11 @@ var M=window.MAL,kb=ls('pe-hub-k'),ah=ls('pe-hub-acc'),exp=+ls('pe-hub-exp')||0,
 /* вход Малевича (Руслан 11.11): без адреса работы — «Прикрепите презентацию»; файл → новая работа → переход на #<работа> */
 function safe(n){var m=String(n).match(/\.([A-Za-z0-9]{1,6})$/),x=m?m[1].toLowerCase():'bin';return (String(n).replace(/\.[^.]*$/,'').replace(/[^A-Za-z0-9_-]+/g,'_').replace(/^_+|_+$/g,'').slice(0,40)||'file')+'.'+x}
 function upload(me){var SB=window.SF_SB,m=document.getElementById('mn'),f0=document.getElementById('ft'),g=document.querySelector('.gl'),w=document.getElementById('pgw');[f0,g,w].forEach(function(x){if(x)x.style.display='none'});
-  m.style.display='block';m.innerHTML='<div class="mup"><h1>Прикрепите презентацию</h1><p class="s">Малевич оформит её в стиле Академии. Текст и смысл остаются Вашими — он ничего не переписывает.</p>'+
+  m.style.display='block';m.innerHTML='<div class="mup"><h1>Добавьте файлы</h1><p class="s">Презентация PowerPoint. Малевич оформит её в стиле Академии — текст и смысл остаются Вашими.</p>'+
    '<label for="ck" style="display:block;font-weight:700;margin:14px 0 6px">Что готовим?</label><select id="ck" style="width:100%;font:600 17px inherit;padding:12px 14px;border:2px solid #1745E0;border-radius:12px;background:#fff;color:#101840;margin-bottom:12px"><option value="mastermind">Мастер-майнд</option><option value="lesson">Урок</option><option value="selling">Продающая презентация</option><option value="business">Презентация «Деловые навыки»</option></select><div id="ckr" class="s" style="margin:-4px 0 10px;font-size:14px"></div>'+
-   '<label class="mdz" id="dz"><input type="file" id="fi" accept=".pptx" hidden><span id="dzt"><b>Перетащите файл PowerPoint сюда</b><small>или нажмите, чтобы выбрать (.pptx, до 50 МБ)</small></span></label>'+
-   '<button type="button" class="btn w" id="rm" hidden >✕ Убрать файл</button><button type="button" class="btn p" id="go" disabled>Подготовить слайды для мастер-майнда</button><div id="pr" hidden><div class="bar"><i id="pb"></i></div><div class="st" id="ps"></div></div><div class="er" id="er" role="alert"></div></div>';
+   '<label style="display:block;font-weight:700;margin:14px 0 6px">Файлы</label><label class="mdz" id="dz"><input type="file" id="fi" multiple accept=".pptx,.pdf,.png,.jpg,.jpeg,.webp,.doc,.docx,.txt" hidden><span id="dzt"><b>＋ Добавить файлы</b><small>Основа — презентация PowerPoint (.pptx). Фото и документы — как материалы. Обычно достаточно одного файла.</small></span></label><div id="fl" class="fl"></div>'+
+   '<label for="cm" style="display:block;font-weight:700;margin:14px 0 6px">Комментарий (необязательно)</label><textarea id="cm" rows="3" placeholder="Что важно учесть: например, слайд 5 без схемы, фото эксперта на заставку…" style="width:100%;font:16px inherit;padding:10px 14px;border:1.5px solid #D6DBE6;border-radius:12px;background:#fff;color:#101840;resize:vertical"></textarea><div style="display:flex;align-items:center;gap:10px;margin:8px 0 0"><button type="button" class="btn w" id="mic" style="width:auto;margin:0;padding:0 16px;min-height:40px;font-size:15px">🎤 Голосом</button><span id="mst" class="s" style="font-size:14px"></span></div>'+
+   '<button type="button" class="btn p" id="go" disabled>Подготовить слайды для мастер-майнда</button><div id="pr" hidden><div class="bar"><i id="pb"></i></div><div class="st" id="ps"></div></div><div class="er" id="er" role="alert"></div></div>';
   (function(){var L=[],seen={};((me&&me.decks)||[]).forEach(function(d){if(d.deck&&!seen[d.deck]){seen[d.deck]=1;L.push({d:d.deck,t:d.title||d.deck,e:d.expert||'',c:d.made||0})}});
    try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf('pe-mal-tok-')===0){var d=k.slice(11);if(d&&!seen[d]){seen[d]=1;L.push({d:d,t:'Работа '+d})}}}}catch(e){}
    var box=document.createElement('div');box.className='mup';box.style.marginTop='8px';m.appendChild(box);
@@ -386,41 +387,66 @@ function upload(me){var SB=window.SF_SB,m=document.getElementById('mn'),f0=docum
    draw({});
    if(L.length){var H={apikey:SB.key,Authorization:'Bearer '+SB.key};fetch(SB.url.replace(/\/$/,'')+'/rest/v1/pe_state?select=deck,key,data,updated_at&key=in.(s25,pack)&deck=in.('+L.map(function(x){return encodeURIComponent(x.d)}).join(',')+')',{headers:H,cache:'no-store'}).then(function(r){return r.ok?r.json():[]}).then(function(a){var S={};(a||[]).forEach(function(r){var o=S[r.deck]=S[r.deck]||{};if(r.key==='s25'){o.s25=r.data;o.s25at=r.updated_at}else o.pack=r.data});draw(S)}).catch(function(){})}})();
   window.onhashchange=function(){location.reload()};
-  var F=null,busy=false,$=function(i){return document.getElementById(i)},H={apikey:SB.key,Authorization:'Bearer '+SB.key};
-  function pick(f){var er=$('er');er.textContent='';if(!f)return;
-    if(!/\.pptx$/i.test(f.name)){er.textContent='Нужен файл PowerPoint (.pptx). «'+f.name+'» не подходит — выберите, пожалуйста, другой.';return}
-    if(f.size>50*1048576){er.textContent='Файл больше 50 МБ. Сохраните презентацию полегче и выберите её ещё раз.';return}
-    F=f;$('dz').classList.add('has');$('dzt').innerHTML='<b>✓ '+esc(f.name)+'</b><small>'+(f.size>1048576?(f.size/1048576).toFixed(1)+' МБ':Math.max(1,Math.round(f.size/1024))+' КБ')+' · нажмите, чтобы выбрать другой</small>';$('go').disabled=false;$('rm').hidden=false}
-  var DZ0=$('dzt').innerHTML;$('rm').onclick=function(){if(busy)return;F=null;$('fi').value='';$('dz').classList.remove('has');$('dzt').innerHTML=DZ0;$('go').disabled=true;$('rm').hidden=true;$('er').textContent=''}
-  $('fi').onchange=function(){pick(this.files[0])};
+  var FS=[],busy=false,$=function(i){return document.getElementById(i)},H={apikey:SB.key,Authorization:'Bearer '+SB.key},OKX=/\.(pptx|pdf|png|jpe?g|webp|docx?|txt)$/i,BASEX=/\.pptx$/i;
+  function sz(f){return f.size>1048576?(f.size/1048576).toFixed(1)+' МБ':Math.max(1,Math.round(f.size/1024))+' КБ'}
+  function baseOf(){for(var i=0;i<FS.length;i++)if(BASEX.test(FS[i].name))return i;return -1}
+  function ext(n){var m=String(n).match(/\.([A-Za-z0-9]{1,5})$/);return m?m[1].toUpperCase():'ФАЙЛ'}
+  function renderFiles(){var bi=baseOf(),h='';FS.forEach(function(f,i){var isImg=/\.(png|jpe?g|webp)$/i.test(f.name);h+='<div class="fx'+(i===bi?' main':'')+'">'+(i===bi?'<span class="ftag">Основа</span>':'')+'<button type="button" class="fxx" data-i="'+i+'" aria-label="Убрать файл">✕</button><div class="fth'+(isImg?' img':'')+'">'+(isImg?'фото':ext(f.name))+'</div><b>'+esc(f.name)+'</b><small>'+sz(f)+'</small></div>'});
+    $('fl').innerHTML=h;[].forEach.call($('fl').querySelectorAll('.fxx'),function(x){x.onclick=function(){if(busy)return;FS.splice(+this.getAttribute('data-i'),1);renderFiles()}});
+    $('dz').classList.toggle('has',FS.length>0);$('dzt').innerHTML=FS.length?'<b>＋ ещё файл</b><small>Основа — PowerPoint (.pptx)</small>':DZ0;
+    $('go').disabled=busy||bi<0;if(FS.length&&bi<0)$('er').textContent='Нужна основа — презентация PowerPoint (.pptx). Добавьте её, остальное идёт как материалы.';else if(/Нужна основа/.test($('er').textContent))$('er').textContent=''}
+  var DZ0=$('dzt').innerHTML;
+  function pick(files){var er=$('er');er.textContent='';var bad=[];[].forEach.call(files||[],function(f){if(!OKX.test(f.name)){bad.push(f.name);return}if(f.size>50*1048576){er.textContent='Файл «'+f.name+'» больше 50 МБ — сохраните полегче.';return}FS.push(f)});
+    if(bad.length)er.textContent='«'+bad[0]+'» не подошёл. Основа — PowerPoint (.pptx); как материалы подходят фото, PDF, Word и текст.';renderFiles()}
+  $('fi').onchange=function(){pick(this.files);this.value=''};
   var dz=$('dz');['dragenter','dragover'].forEach(function(e){dz.addEventListener(e,function(ev){ev.preventDefault();dz.classList.add('on')})});
   ['dragleave','drop'].forEach(function(e){dz.addEventListener(e,function(ev){ev.preventDefault();dz.classList.remove('on')})});
-  dz.addEventListener('drop',function(ev){var f=ev.dataTransfer&&ev.dataTransfer.files[0];if(f)pick(f)});
-  function prog(p,t){$('pr').hidden=false;$('pb').style.width=p+'%';$('ps').textContent=t}
+  dz.addEventListener('drop',function(ev){pick(ev.dataTransfer&&ev.dataTransfer.files)});
+  function prog(p,t){$('pr').hidden=false;$('pb').style.width=p+'%';$('ps').textContent=t+' · '+Math.round(p)+'%'}
   var KT={mastermind:['Подготовить слайды для мастер-майнда','Правила мастер-майнда применятся сами: вопрос — дословно сверху, ответ — до 5–6 строк ниже, схем не больше одной, оформление Академии.'],lesson:['Оформить урок в стиле Академии',''],selling:['Оформить продающую презентацию в стиле Академии',''],business:['Оформить презентацию «Деловые навыки» в стиле Академии','']};
   function goText(){var k=($('ck')||{}).value||'mastermind';return (KT[k]||KT.mastermind)[0]}
   function kindUi(){var k=($('ck')||{}).value||'mastermind';if(!busy&&$('go'))$('go').textContent=goText();$('ckr').textContent=(KT[k]||KT.mastermind)[1]}
   if($('ck')){$('ck').onchange=kindUi;kindUi()}
-  function fail(t){busy=false;$('rm').hidden=!F;$('go').disabled=!F;$('go').textContent=goText();$('pr').hidden=true;$('er').textContent=t+' Файл остался выбранным — нажмите кнопку ещё раз.'}
-  $('go').onclick=function(){if(busy||!F)return;busy=true;$('rm').hidden=true;$('go').disabled=true;$('go').textContent='Отправляю…';$('er').textContent='';prog(6,'Загружаю презентацию…');
-    var vt=(ls('pe-mal-voter')||('v'+Math.random().toString(36).slice(2,12)));try{localStorage.setItem('pe-mal-voter',vt)}catch(e){}
-    var path='start/'+vt+'/'+Date.now()+'_1_'+safe(F.name);
-    fetch(SB.url.replace(/\/$/,'')+'/storage/v1/object/pe-uploads/'+path.split('/').map(encodeURIComponent).join('/'),{method:'POST',headers:Object.assign({'Content-Type':'application/octet-stream','x-upsert':'false'},H),body:F})
-    .then(function(r){if(!r.ok)throw 1;prog(25,'Передаю Малевичу…');
-      var nm=((me&&me.io)||'эксперт').slice(0,120);
+  function fail(t){busy=false;renderFiles();$('go').textContent=goText();$('pr').hidden=true;$('er').textContent=t+' Файлы остались выбранными — нажмите кнопку ещё раз.'}
+  /* голос: запись → sf-voice → расшифровка (voice_pe) → в поле «Комментарий» */
+  var REC=null;
+  function vt0(){var v=ls('pe-mal-voter')||('v'+Math.random().toString(36).slice(2,12));try{localStorage.setItem('pe-mal-voter',v)}catch(e){}return v}
+  $('mic').onclick=function(){if(REC){REC.stop();return}
+    if(!(window.MediaRecorder&&navigator.mediaDevices&&navigator.mediaDevices.getUserMedia)){$('mst').textContent='В этом браузере запись голоса недоступна — напишите текстом.';return}
+    navigator.mediaDevices.getUserMedia({audio:true}).then(function(st){var ch=[],t0=Date.now(),mt=['audio/webm;codecs=opus','audio/webm','audio/mp4'].filter(function(x){return MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(x)})[0]||'',mr;
+      try{mr=mt?new MediaRecorder(st,{mimeType:mt}):new MediaRecorder(st)}catch(e){st.getTracks().forEach(function(t){t.stop()});$('mst').textContent='Запись не запустилась — напишите текстом.';return}
+      var tk=setInterval(function(){var q=Math.round((Date.now()-t0)/1000);$('mic').textContent='■ Стоп · '+Math.floor(q/60)+':'+('0'+q%60).slice(-2)},500);
+      REC={stop:function(){clearInterval(tk);try{if(mr.state==='recording')mr.stop()}catch(e){}REC=null}};
+      mr.ondataavailable=function(ev){if(ev.data&&ev.data.size)ch.push(ev.data)};
+      mr.onstop=function(){st.getTracks().forEach(function(t){t.stop()});clearInterval(tk);REC=null;$('mic').textContent='🎤 Голосом';
+        var sec=Math.round((Date.now()-t0)/1000),ty=(mr.mimeType||'audio/webm').split(';')[0],blob=new Blob(ch,{type:ty});
+        if(blob.size<2000){$('mst').textContent='Не расслышал — запишите ещё раз чуть подольше или напишите текстом.';return}
+        var vt=vt0(),sk='pe_start_'+vt,p=sk+'/'+Date.now()+(ty.indexOf('mp4')>=0?'.m4a':'.webm'),since=new Date(Date.now()-5000).toISOString(),base=SB.url.replace(/\/$/,'');
+        $('mst').textContent='📝 Расшифровываю — обычно до 30 секунд…';
+        fetch(base+'/storage/v1/object/sf-voice/'+p.split('/').map(encodeURIComponent).join('/'),{method:'POST',headers:Object.assign({'Content-Type':ty||'audio/webm'},H),body:blob})
+          .then(function(r){if(!r.ok)throw r.status;return fetch(base+'/rest/v1/sf_comments',{method:'POST',headers:Object.assign({'Content-Type':'application/json',Prefer:'return=minimal'},H),body:JSON.stringify({section:sk,voter:vt,author:'Эксперт',body:'[голос] '+p+'|'+sec})})})
+          .then(function(r){if(!r.ok)throw r.status;var n=0,tmr=setInterval(function(){if(++n>48){clearInterval(tmr);$('mst').textContent='Расшифровка задерживается — напишите, пожалуйста, текстом.';return}
+            fetch(base+'/rest/v1/sf_comments?select=body&section=eq.'+encodeURIComponent(sk)+'&author=like.'+encodeURIComponent('Расшифровка*')+'&created_at=gt.'+encodeURIComponent(since)+'&order=created_at&limit=1',{headers:H}).then(function(r){return r.ok?r.text():''}).then(function(t){var a=t?JSON.parse(t):[];if(!a[0])return;clearInterval(tmr);var c=$('cm');c.value=(c.value.trim()?c.value.replace(/\s*$/,'')+'\n':'')+a[0].body;$('mst').textContent='✓ Расшифровано — проверьте текст и поправьте, если нужно.'}).catch(function(){})},2500)})
+          .catch(function(){$('mst').textContent='Голосовое не отправилось — проверьте интернет и запишите ещё раз.'})};
+      try{mr.start(1000);$('mic').textContent='■ Стоп · 0:00';$('mst').textContent='Говорите… нажмите «Стоп», когда закончите.'}catch(e){REC&&REC.stop();$('mst').textContent='Запись не запустилась — напишите текстом.'}
+    },function(err){var n=(err&&err.name)||'';$('mst').textContent=(n==='NotAllowedError'||n==='SecurityError')?'Нет доступа к микрофону — разрешите его значком слева от адреса и нажмите ещё раз.':'Микрофон не нашёлся — напишите текстом.'})};
+  $('go').onclick=function(){var bi=baseOf();if(busy||bi<0)return;busy=true;$('go').disabled=true;$('go').textContent='Отправляю…';$('er').textContent='';prog(6,'Загружаю файлы');
+    var vt=vt0(),ts=Date.now(),n=0,order=FS.slice();order.unshift(order.splice(bi,1)[0]);          // основа — первой
+    var up=order.map(function(f,i){var path='start/'+vt+'/'+ts+'_'+(i+1)+'_'+safe(f.name);return fetch(SB.url.replace(/\/$/,'')+'/storage/v1/object/pe-uploads/'+path.split('/').map(encodeURIComponent).join('/'),{method:'POST',headers:Object.assign({'Content-Type':'application/octet-stream','x-upsert':'false'},H),body:f}).then(function(r){if(!r.ok)throw 1;n++;prog(6+Math.round(19*n/order.length),'Загружаю файлы · '+n+' из '+order.length);return {path:path,name:f.name,size:f.size,kind:i===0?'slides':'material'}})});
+    Promise.all(up).then(function(files){prog(27,'Передаю Малевичу');var nm=((me&&me.io)||'эксперт').slice(0,120);
       return fetch(SB.url.replace(/\/$/,'')+'/rest/v1/pe_jobs',{method:'POST',headers:Object.assign({'Content-Type':'application/json',Prefer:'return=representation'},H),
-        body:JSON.stringify({deck:'start',kind:'upload',round:1,status:'queued',author:nm,payload:{action:'start',malevich:true,name:nm,text:'',files:[{path:path,name:F.name,size:F.size,kind:'slides'}],voter:vt,login:(me&&me.code)||'',kind:'урок',content_kind:(document.getElementById('ck')||{}).value||'mastermind'}})})})
-    .then(function(r){if(!r.ok)throw 2;return r.text()}).then(function(tx){var a=tx?JSON.parse(tx):[],jid=a&&a[0]&&a[0].id;if(!jid)throw 3;prog(40,'Малевич читает слайды…');
+        body:JSON.stringify({deck:'start',kind:'upload',round:1,status:'queued',author:nm,payload:{action:'start',malevich:true,name:nm,text:($('cm').value||'').trim().slice(0,3000),files:files,voter:vt,login:(me&&me.code)||'',kind:'урок',content_kind:(document.getElementById('ck')||{}).value||'mastermind'}})})})
+    .then(function(r){if(!r.ok)throw 2;return r.text()}).then(function(tx){var a=tx?JSON.parse(tx):[],jid=a&&a[0]&&a[0].id;if(!jid)throw 3;prog(40,'Малевич читает файлы');
       var t0=Date.now(),ti=setInterval(function(){
         fetch(SB.url.replace(/\/$/,'')+'/rest/v1/pe_jobs?select=status,deck,note&id=eq.'+jid,{headers:H,cache:'no-store'}).then(function(r){return r.text()}).then(function(x){var j=(x?JSON.parse(x):[])[0];if(!j)return;
           var el=(Date.now()-t0)/1e3;
-          if(j.status==='error'){clearInterval(ti);fail(j.note||'Не получилось принять презентацию.');return}
+          if(j.status==='error'){clearInterval(ti);fail(j.note||'Не получилось принять файлы.');return}
           if(j.status==='done'&&j.deck&&j.deck!=='start'){clearInterval(ti);prog(100,'✓ Готово — открываю слайды');try{localStorage.setItem('pe-mal-tok-'+j.deck,'1');localStorage.setItem('pe-mal-direct-'+j.deck,'1')}catch(e){}
             setTimeout(function(){location.hash='#'+j.deck},500);return}
-          prog(Math.min(92,40+el*0.6),j.status==='processing'?(j.note&&!/^Принято/.test(j.note)?j.note:'Малевич разбирает слайды…'):'Малевич читает слайды…');
-          if(el>240){clearInterval(ti);fail('Задерживаюсь: Малевич ещё не ответил. Презентация не потеряна — я сообщил Руслану.')}
+          prog(Math.min(92,40+el*0.6),j.status==='processing'?(j.note&&!/^Принято/.test(j.note)?j.note:'Малевич разбирает слайды'):'Малевич читает файлы');
+          if(el>240){clearInterval(ti);fail('Задерживаюсь: Малевич ещё не ответил. Файлы не потеряны — я сообщил Руслану.')}
         }).catch(function(){})},2000)})
-    .catch(function(){fail('Нет связи — презентация не отправлена.')})}}
+    .catch(function(){fail('Нет связи — файлы не отправлены.')})}}
 var D=decodeURIComponent((location.hash||'').slice(1));
 if(!D){
   if(M.test){upload(null);return}
