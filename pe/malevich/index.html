@@ -295,7 +295,7 @@ var SM=(S.sm||[]),SMX=null;
 function fidSlide(fid){for(var i=0;i<sl.length;i++){var q=ST[sl[i].id];if(q&&q.fid===fid)return sl[i]}return null}
 function smList(){var box=$('#sml');if(!box)return;var items=SM.slice();var e=E[cur],fr=$('#big iframe');
   if(fr&&fr.contentDocument&&ST[cur]){var f0=ST[cur].fid;items=items.filter(function(x){return x.fid!==f0});[].forEach.call(fr.contentDocument.querySelectorAll('b[data-pe]'),function(b){var tx=norm(b.textContent);if(tx&&!items.some(function(x){return x.fid===f0&&x.t===tx&&x.k===b.dataset.pe}))items.push({fid:f0,k:b.dataset.pe,t:tx,cur:1})})}
-  if(!items.length){box.hidden=false;box.__h='';box.innerHTML='<h3>Смыслы работы · 0</h3><p class="s0">Выделите слова на слайде мышкой — появятся кнопки «★ Смысл», «＋ Плюс», «− Минус».</p>';return}
+  if(!items.length){box.hidden=false;box.innerHTML='<h3>Смыслы работы · 0</h3><p class="s0">Выделите слова на слайде мышкой — появятся кнопки «★ Смысл», «＋ Плюс», «− Минус».</p>';return}
   var col={a:'#1745E0',p:'#12A150',m:'#D92D20'},by={},order=[];items.forEach(function(x){var s0=fidSlide(x.fid);var key=s0?s0.id:x.fid;if(!by[key]){by[key]=[];order.push(key)}by[key].push(x)});
   order.sort(function(a,b){var sa=ST[a],sb=ST[b];return ((sa&&sa.k)||0)-((sb&&sb.k)||0)});
   var h='<h3>Смыслы работы · '+items.length+'</h3>';order.forEach(function(key){var s0=ST[key];h+='<div class="smg">Слайд '+(s0?s0.k:key)+(key===cur?' · сейчас':'')+'</div>';by[key].forEach(function(x){h+='<div class="smi" role="button" tabindex="0" data-go="'+esc(key)+'" title="Открыть слайд"><span class="smd" style="background:'+col[x.k]+'"></span><span>'+esc(x.t)+'</span><button type="button" class="rm" data-rm="'+esc(key)+'" data-t="'+esc(x.t)+'" aria-label="Снять смысл">✕</button></div>'})});
