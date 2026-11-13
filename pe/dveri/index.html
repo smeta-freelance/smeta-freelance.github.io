@@ -62,7 +62,7 @@ function draw(me){ME=me;var h=(location.hash||'').slice(1);
   check:function(o){var d=o.filter(function(f){return /\.(pptx|pdf)$/i.test(f.name)});return (d.length>1||(d.length&&o.length>1))?'Возьмите один файл PowerPoint или PDF — либо только картинки слайдов.':''},to:function(d){return '/pe/'+d+'/zapis/'}});
   return}
  W.innerHTML=top()+'<h1>С чего начать?</h1><div class="pls">'+
-  tile('С','Сократ · методист','Есть тема или материалы — готовлю тексты слайдов','/pe/start/')+
+  tile('С','Сократ · методист','Есть тема или материалы — готовлю тексты слайдов','/pe/sokrat/')+
   tile('А','Академик · по базе Академии','То же, что Сократ, по материалам Академии','#akademik')+
   tile('М','Малевич · дизайнер','Презентация уже есть — оформлю в стиле Академии','/pe/malevich/')+
   tile('ГО','Гудвин · оператор','Слайды готовы — записываем урок','#go')+
