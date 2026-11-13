@@ -198,7 +198,7 @@ function app(){
   $('#root').innerHTML='<div class="app"><aside class="rail" id="rail"><a class="logo" href="/pe/"><img src="img/logo.png" alt="Академия Сметного Дела"></a>'+
     '<a class="new" href="/pe/#new">+ Новая работа</a><div class="app-nm"><img src="img/sokrat.png" alt="">Сократ · методист</div><div class="hint">Работы у Сократа</div><div id="works"></div>'+
     '<a class="back" href="/pe/">← Все мои работы</a></aside><main><div class="top"><button class="burger" id="bg" aria-label="Работы">☰</button><b class="nm" id="nm"></b><span class="steps" id="steps"></span><button class="hbtn" id="hbtn" type="button" aria-haspopup="dialog" title="История урока" aria-label="История урока">🕘 История урока</button><span class="pc" id="pc"></span></div>'+
-    '<div class="chat" id="chat"></div><div class="dock"><div class="in"><div class="field"><textarea id="tx" rows="1" placeholder="Напишите Сократу, что поправить"></textarea>'+
+    '<div class="chat" id="chat"></div><div class="dock"><label class="srcopt" style="display:flex;gap:10px;align-items:center;min-height:40px;margin:0 0 4px;padding:0 4px;font-size:15px;line-height:1.3;color:#555C69;cursor:pointer"><input type="checkbox" id="srcfree" style="width:22px;height:22px;flex:none;margin:0"> <span>Нет своих материалов — опираться на возможности Сократа</span></label><div class="in"><div class="field"><textarea id="tx" rows="1" placeholder="Напишите Сократу, что поправить"></textarea>'+
     '<button class="ib" id="mic" title="Сказать голосом" aria-label="Сказать голосом">🎤</button><button class="ib send" id="send" title="Отправить" aria-label="Отправить">↑</button></div>'+
     '<button class="go2" id="dlb">⤓ Скачать</button><button class="go" id="hand">Передать Малевичу →</button></div></div></main></div>'+
     '<aside class="hist" id="hist" role="dialog" aria-label="История урока"><div class="hh"><b>🕘 История урока</b><button class="hx" id="hx" type="button" aria-label="Закрыть">×</button></div>'+
@@ -222,7 +222,7 @@ function job(action,extra){if(!CUR)return Promise.resolve(false);var vt='';try{v
     author:String(ME.io||'эксперт').slice(0,120),payload:Object.assign({action:action},extra||{})})}).then(function(r){return r.ok}).catch(function(){return false})}
 
 async function openWork(){
-  if(STOPW){STOPW();STOPW=null}if(STOPH){STOPH();STOPH=null}WAIT=null;EDIT=null;ST=null;HIST=null;HOK={};histDraw();
+  if(STOPW){STOPW();STOPW=null}if(STOPH){STOPH();STOPH=null}WAIT=null;EDIT=null;ST=null;HIST=null;HOK={};SRC=null;(function(f){if(f)f.checked=false})(document.getElementById('srcfree'));histDraw();
   if(!CUR){$('#chat').innerHTML='<div class="so"><img class="ava" src="img/sokrat.png" alt=""><div class="txt"><p>Здравствуйте! Здесь будут Ваши работы у Сократа. Начните новую работу в кабинете — я прочитаю материалы и предложу программу урока.</p><p><a href="/pe/#new">+ Новая работа</a></p></div></div>';head();return}
   $('#chat').innerHTML='<p class="wait">Открываю работу…</p>';head();
   var row=await G2L.get(CUR.deck,'sok',4000);ST=row&&row.data||null;var rev=row&&row.rev||0;
@@ -239,7 +239,7 @@ function ask(mode,text,lastW,wrev){
   if(CUR&&CUR.pending&&text!==''&&!vtr()){toast('Секунду — подключаю работу. Повторите, пожалуйста, через минуту.',4000);return}
   ST=ST||{msgs:[]};if(text)ST.msgs.push({id:'l'+Date.now(),who:'me',text:text});
   WAIT={id:null,t0:Date.now(),lastW:lastW!=null?lastW:LASTW,mode:mode,text:''};render();scrollEnd();
-  job('sokrat_chat',{mode:mode,text:text||''}).then(function(ok){if(!ok){WAIT=null;if(text&&ST&&ST.msgs){var lm=ST.msgs[ST.msgs.length-1];if(lm&&lm.who==='me'&&lm.text===text)ST.msgs.pop();var tx=$('#tx');if(tx&&!tx.value.trim()){tx.value=text;tx.oninput&&tx.oninput()}}render();toast('Нет связи — сообщение не ушло. Проверьте интернет и отправьте ещё раз.',4000)}});
+  job('sokrat_chat',{mode:mode,text:text||'',src:SRC||'mine'}).then(function(ok){if(!ok){WAIT=null;if(text&&ST&&ST.msgs){var lm=ST.msgs[ST.msgs.length-1];if(lm&&lm.who==='me'&&lm.text===text)ST.msgs.pop();var tx=$('#tx');if(tx&&!tx.value.trim()){tx.value=text;tx.oninput&&tx.oninput()}}render();toast('Нет связи — сообщение не ушло. Проверьте интернет и отправьте ещё раз.',4000)}});
   follow(wrev||WREV)}
 
 /* поток ответа: раз в 0,8 с — номер версии «sokw» (несколько байт), текст — только при изменении */
@@ -285,7 +285,8 @@ var LEGEND='<div class="legend"><mark>Жёлтым</mark> — ключевые �
 function okf(f){return ['источник.txt','текст_слайдов.md'].indexOf(f)<0}
 function lastOf(k){var a=(ST&&ST.msgs)||[];for(var i=a.length-1;i>=0;i--)if(a[i].kind===k)return a[i];return null}
 function hasSlides(){return !!(ST&&ST.doc&&ST.doc.slides)}
-function render(){if(!CUR)return;var c=$('#chat'),a=(ST&&ST.msgs)||[],o=[],it=ST&&ST.intro;
+var SRC=null;
+function render(){if(!CUR)return;var sf=document.getElementById('srcfree');if(sf&&SRC===null&&ST&&ST.src&&(ST.msgs||[]).length){SRC=ST.src;sf.checked=(SRC==='free')}if(sf&&!sf.__w){sf.__w=1;sf.onchange=function(){SRC=sf.checked?'free':'mine';if(WAIT||!ST||!(ST.msgs||[]).length)return;toast(SRC==='free'?'Режим: опираюсь на возможности Сократа. Перестраиваю программу.':'Режим: только Ваши материалы. Перестраиваю программу.',4000);ask('program','Перестрой программу: режим источников изменён')}};var c=$('#chat'),a=(ST&&ST.msgs)||[],o=[],it=ST&&ST.intro;
   if(it)o.push('<div class="me"><div class="b">'+esc(it.text)+((it.files||[]).filter(okf).length?'<div class="files">'+it.files.filter(okf).map(function(f){return '<span>📎 '+esc(f)+'</span>'}).join('')+'</div>':'')+'</div></div>');
   var pv=prevCard();if(pv)o.push(pv);
   var lp=lastOf('program'),lsd=lastOf('slides'),lastT=-1;a.forEach(function(m,i){if(m.who==='so'&&(m.kind==='program'||m.kind==='slides'||m.kind==='edit'))lastT=i});
@@ -464,5 +465,5 @@ document.addEventListener('mousedown',function(e){var h=e.target.closest&&e.targ
 boot();
 })();
 </script>
-<!--PEVER--><div id="pever" title="Номер версии" style="position:fixed;left:12px;bottom:10px;z-index:60;font:12px/1.4 system-ui,sans-serif;color:#5B6270;background:rgba(255,255,255,.94);border:1px solid #E4E6EB;border-radius:8px;padding:2px 9px;pointer-events:none">Сократ · версия <b style="color:#1745E0">1.3</b> · 12.11 07:56</div><!--/PEVER-->
+<!--PEVER--><div id="pever" title="Номер версии" style="position:fixed;left:12px;bottom:10px;z-index:60;font:12px/1.4 system-ui,sans-serif;color:#5B6270;background:rgba(255,255,255,.94);border:1px solid #E4E6EB;border-radius:8px;padding:2px 9px;pointer-events:none">Сократ · версия <b style="color:#1745E0">1.4</b> · 13.11 13:07</div><!--/PEVER-->
 </body></html>
