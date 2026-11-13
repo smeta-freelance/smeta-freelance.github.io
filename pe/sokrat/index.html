@@ -51,7 +51,7 @@ mark{background:var(--mark);color:inherit;padding:0 2px;border-radius:3px}
 .mava{flex:none;width:36px;height:36px;border-radius:8px;background:#15171C;color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center}
 .ma-note{background:#E8F5EE;border:1px solid #BFE3CC;border-radius:12px;padding:12px 16px;font-size:17px}.ma-note b{display:block;margin-bottom:2px}
 .ma-go{margin-top:10px;height:48px}
-.dock{position:fixed;left:220px;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:12px 22px;z-index:6}
+.dock{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:12px 22px;z-index:6}
 .dock .in{max-width:820px;margin:0 auto;display:flex;gap:10px;align-items:flex-end}
 .field{flex:1;display:flex;align-items:flex-end;gap:6px;border:1.5px solid var(--line);border-radius:12px;padding:6px 8px 6px 14px;background:#fff}
 .field:focus-within{border-color:var(--blue)}
@@ -112,6 +112,22 @@ mark{background:var(--mark);color:inherit;padding:0 2px;border-radius:3px}
 /* SOKRAT_MAT12 v1.2: кнопка сверки и ответ сверки */
 .acts button.ck{border-color:var(--blue);color:var(--blue);font-weight:600}.acts button.ck:hover{background:#EEF2FF;color:var(--blue)}
 .txt.k-check{border-left:4px solid var(--blue);padding-left:14px}
+/* «Сократ 2.0» (13.11, макет v2): без левого меню — шапка «⌂ Двери» / «Мои работы», блок «На что опираюсь», новая работа прямо здесь */
+.app{display:block}.rail,.burger{display:none!important}
+.top .who{display:flex;align-items:center;gap:8px;font-weight:700;flex:none}.top .who img{width:28px;height:28px}
+.top .sep{color:var(--line);flex:none}
+.top .lk{flex:none;color:var(--ink);text-decoration:none;border:1.5px solid var(--line);border-radius:10px;padding:5px 12px;font-weight:600;font-size:15px}.top .lk:hover{background:var(--side)}
+.top .lk.home{margin-left:auto}.top .pc+.lk.home,.top .hbtn~.lk.home{margin-left:0}
+.chat{padding-bottom:250px}
+.srcs{max-width:820px;margin:0 auto 6px;display:flex;flex-wrap:wrap;gap:2px 14px;align-items:center;font-size:15px;color:var(--muted)}
+.srcs .sh{color:var(--ink);font-size:14px;text-transform:uppercase;letter-spacing:.03em}
+.srcs .sx{display:flex;gap:8px;align-items:center;min-height:32px;cursor:pointer;color:var(--ink)}
+.srcs .sx input{width:20px;height:20px;margin:0;flex:none}.srcs .sx.auto{cursor:default}.srcs .sx small{color:var(--muted);font-size:14px}
+.srcs .sa{border:1.5px dashed var(--blue);color:var(--blue);background:#fff;border-radius:10px;padding:4px 12px;font-size:15px;font-weight:600;min-height:36px}
+.srcs .sa.on{border-style:solid;background:var(--blue-soft)}.srcs .sah{font-size:14px}
+.nwf{display:flex;gap:8px;flex-wrap:wrap;max-width:820px;margin:0 auto 6px}.nwf span{font-size:14px;background:var(--side);border:1px solid var(--line);border-radius:8px;padding:3px 6px 3px 10px;display:inline-flex;gap:6px;align-items:center}
+.nwf button{border:0;background:none;font-size:16px;color:var(--muted);width:24px;height:24px;border-radius:6px}.nwf button:hover{background:#fff}
+@media (max-width:1180px){.top.w .who b{display:none}.top.w .sep{display:none}.top.w .steps{display:none}.top b.nm{max-width:none}}
 </style></head>
 <body>
 <div id="root"></div>
@@ -193,24 +209,80 @@ function login(){
 /* ---------- приложение ---------- */
 function deckOf(id){return (ME.decks||[]).filter(function(d){return d.deck===id})[0]}
 function app(){
-  var h=decodeURIComponent((location.hash||'').slice(1));if(h&&!deckOf(h)&&/^[a-z0-9][\w\-]{3,80}$/i.test(h))return waitNew(h);   /* dev39: новая работа из кабинета — страница ещё обновляется на сайте */
-  CUR=deckOf(h)||(ME.decks||[])[0]||null;
-  $('#root').innerHTML='<div class="app"><aside class="rail" id="rail"><a class="logo" href="/pe/"><img src="img/logo.png" alt="Академия Сметного Дела"></a>'+
-    '<a class="new" href="/pe/#new">+ Новая работа</a><div class="app-nm"><img src="img/sokrat.png" alt="">Сократ · методист</div><div class="hint">Работы у Сократа</div><div id="works"></div>'+
-    '<a class="back" href="/pe/">← Все мои работы</a></aside><main><div class="top"><button class="burger" id="bg" aria-label="Работы">☰</button><b class="nm" id="nm"></b><span class="steps" id="steps"></span><button class="hbtn" id="hbtn" type="button" aria-haspopup="dialog" title="История урока" aria-label="История урока">🕘 История урока</button><span class="pc" id="pc"></span></div>'+
-    '<div class="chat" id="chat"></div><div class="dock"><label class="srcopt" style="display:flex;gap:10px;align-items:center;min-height:40px;margin:0 0 4px;padding:0 4px;font-size:15px;line-height:1.3;color:#555C69;cursor:pointer"><input type="checkbox" id="srcfree" style="width:22px;height:22px;flex:none;margin:0"> <span>Нет своих материалов — опираться на возможности Сократа</span></label><div class="in"><div class="field"><textarea id="tx" rows="1" placeholder="Напишите Сократу, что поправить"></textarea>'+
-    '<button class="ib" id="mic" title="Сказать голосом" aria-label="Сказать голосом">🎤</button><button class="ib send" id="send" title="Отправить" aria-label="Отправить">↑</button></div>'+
-    '<button class="go2" id="dlb">⤓ Скачать</button><button class="go" id="hand">Передать Малевичу →</button></div></div></main></div>'+
+  var h=decodeURIComponent((location.hash||'').slice(1));if(!h||h==='new')return newWork();   /* «Сократ 2.0»: с «Дверей» — сразу новая работа; свои работы — «Мои работы» */
+  if(h&&!deckOf(h)&&/^[a-z0-9][\w\-]{3,80}$/i.test(h))return waitNew(h);   /* dev39: новая работа из кабинета — страница ещё обновляется на сайте */
+  CUR=deckOf(h)||null;if(!CUR)return newWork();NEWW=null;
+  $('#root').innerHTML=shell(false)+
     '<aside class="hist" id="hist" role="dialog" aria-label="История урока"><div class="hh"><b>🕘 История урока</b><button class="hx" id="hx" type="button" aria-label="Закрыть">×</button></div>'+
     '<div class="ht" id="htabs"></div><input class="hs" id="hq" type="search" placeholder="Поиск по истории" aria-label="Поиск по истории"><div class="hb" id="hbody"></div></aside>';
-  works();$('#bg').onclick=function(){$('#rail').classList.toggle('open')};
   var tx=$('#tx');tx.oninput=function(){tx.style.height='auto';tx.style.height=Math.min(180,tx.scrollHeight)+'px'};
   tx.onkeydown=function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendText()}};$('#send').onclick=sendText;
   $('#dlb').onclick=function(e){openDl(e.currentTarget)};$('#hand').onclick=handoff;mic();histBind();
-  window.onhashchange=function(){var d=deckOf(decodeURIComponent(location.hash.slice(1)));if(d&&d!==CUR){CUR=d;works();openWork()}};
+  window.onhashchange=function(){var hh=decodeURIComponent(location.hash.slice(1));if(!hh||hh==='new'){app();return}var d=deckOf(hh);if(d&&d!==CUR){CUR=d;openWork()}};
   window.onkeydown=function(e){if(e.key==='Escape')histShow(false)};
   openWork()}
-function works(){var a=ME.decks||[];$('#works').innerHTML=a.length?a.map(function(d){return '<a class="w'+(d===CUR?' on':'')+'" href="#'+encodeURIComponent(d.deck)+'">'+esc(d.title)+'<small>'+esc(d.st||'Новая')+'</small></a>'}).join(''):
+/* ---------- «Сократ 2.0»: каркас без левого меню ---------- */
+var WORKS_URL='/pe/malevich/?works=1',DOORS_URL='/pe/dveri/',SW=null,SA=false,SWT=false,NEWW=null;
+function shell(nw){return '<div class="app"><main><div class="top'+(nw?'':' w')+'"><span class="who"><img src="img/sokrat.png" alt=""><b>Сократ · методист</b></span><span class="sep">·</span><b class="nm" id="nm">'+(nw?'Новая работа':'')+'</b>'+
+    (nw?'':'<span class="steps" id="steps"></span><button class="hbtn" id="hbtn" type="button" aria-haspopup="dialog" title="История урока" aria-label="История урока">🕘 История урока</button><span class="pc" id="pc"></span>')+
+    '<a class="lk home" href="'+DOORS_URL+'">⌂ Двери</a><a class="lk" href="'+WORKS_URL+'">Мои работы</a></div>'+
+    '<div class="chat" id="chat"></div><div class="dock"><div class="nwf" id="nwf"></div><div class="srcs" id="srcs"></div><div class="in"><div class="field"><textarea id="tx" rows="1" placeholder="'+(nw?'Напишите или скажите тему урока…':'Напишите Сократу, что поправить')+'"></textarea>'+
+    (nw?'<button class="ib" id="att" type="button" title="Прикрепить файл" aria-label="Прикрепить файл">📎</button><input type="file" id="fi" multiple hidden accept=".pdf,.pptx,.ppt,.docx,.doc,.txt,.md,.rtf,.odt,.odp,.xlsx">':'')+
+    '<button class="ib" id="mic" title="Сказать голосом" aria-label="Сказать голосом">🎤</button><button class="ib send" id="send" title="Отправить" aria-label="Отправить">↑</button></div>'+
+    (nw?'':'<button class="go2" id="dlb">⤓ Скачать</button><button class="go" id="hand">Передать Малевичу →</button>')+'</div></div></main></div>'}
+function matFiles(){return NEWW?NEWW.files.map(function(f){return f.name}):(((ST&&ST.intro&&ST.intro.files)||[]).filter(okf))}
+function srcKey(){return CUR?'pe-sok-src-'+CUR.deck:NEWW?'pe-sok-src-new':''}
+function srcInit(){var nf=matFiles().length;SWT=false;SA=false;SW=null;
+  if(ST&&ST.v2){if(ST.web!=null){SW=!!ST.web;SWT=true}SA=!!ST.acad}
+  try{var k=srcKey(),v=k&&JSON.parse(localStorage.getItem(k)||'null');if(v){if(v.w!=null){SW=!!v.w;SWT=true}SA=!!v.a}}catch(e){}
+  if(SW===null)SW=!nf}
+function srcSave(){try{var k=srcKey();if(k)localStorage.setItem(k,JSON.stringify({w:SW,a:SA}))}catch(e){}}
+function srcDraw(){var e=$('#srcs');if(!e)return;var f=matFiles(),nf=f.length;if(!SWT)SW=!nf;
+  e.innerHTML='<b class="sh">На что опираюсь</b>'+
+    '<label class="sx auto" title="Включается само, когда прикреплён файл"><input type="checkbox" disabled'+(nf?' checked':'')+'><span>📎 Мои материалы</span><small>'+(nf?'— '+esc(f.slice(0,2).map(function(x){return '«'+x+'»'}).join(', ')+(nf>2?' и ещё '+(nf-2):'')):'— файлов пока нет'+(NEWW?'; прикрепите — галочка включится сама':''))+'</small></label>'+
+    '<label class="sx"><input type="checkbox" id="s_web"'+(SW?' checked':'')+'><span>🌐 Проверять и дополнять по официальным сайтам (интернет)</span></label>'+
+    '<button type="button" class="sa'+(SA?' on':'')+'" id="s_acad" title="Подключу Академика: как эту тему объясняли в наших курсах">'+(SA?'✓ База Академии подключена':'＋ Добавить из базы Академии')+'</button>';
+  var later=function(){if(CUR&&ST&&(ST.msgs||[]).length)toast('Учту со следующего ответа',2600)};
+  $('#s_web').onchange=function(){SW=this.checked;SWT=true;srcSave();later()};
+  $('#s_acad').onclick=function(){SA=!SA;srcSave();srcDraw();later()}}
+function greet(){var h=new Date().getHours();return h>=5&&h<12?'Доброе утро':h<18&&h>=12?'Добрый день':h>=18&&h<23?'Добрый вечер':'Здравствуйте'}
+function newWork(){CUR=null;ST=null;NEWW={files:[]};$('#root').innerHTML=shell(true);
+  var io=String(ME.io||'').trim();
+  $('#chat').innerHTML='<div class="so"><img class="ava" src="img/sokrat.png" alt="Сократ"><div class="txt"><p>'+greet()+(io?', '+esc(io):'')+'! Я Сократ — методист Академии Сметного Дела. Какой урок готовим?</p><p>Можно написать тему, сказать голосом или прикрепить свою книгу, презентацию, документ.</p></div></div>';
+  var tx=$('#tx');tx.oninput=function(){tx.style.height='auto';tx.style.height=Math.min(180,tx.scrollHeight)+'px'};
+  tx.onkeydown=function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();createWork()}};$('#send').onclick=createWork;mic();
+  $('#att').onclick=function(){$('#fi').click()};$('#fi').onchange=function(){[].forEach.call(this.files,function(f){if(!NEWW.files.some(function(x){return x.name===f.name&&x.size===f.size}))NEWW.files.push(f)});this.value='';nwfDraw()};
+  window.onhashchange=function(){location.reload()};
+  srcInit();srcDraw();nwfDraw();setTimeout(function(){tx.focus()},50)}
+function nwfDraw(){var e=$('#nwf');if(!e||!NEWW)return;e.innerHTML=NEWW.files.map(function(f,i){return '<span>📎 '+esc(f.name)+'<button type="button" data-rm="'+i+'" aria-label="Убрать файл">×</button></span>'}).join('');
+  e.querySelectorAll('[data-rm]').forEach(function(b){b.onclick=function(){NEWW.files.splice(+b.getAttribute('data-rm'),1);nwfDraw();srcDraw()}});srcDraw()}
+function nwSafe(n){var m=String(n).match(/\.([A-Za-z0-9]{1,6})$/),ext=m?m[1].toLowerCase():'bin',b=String(n).replace(/\.[^.]*$/,'').replace(/[^A-Za-z0-9_-]+/g,'_').replace(/^_+|_+$/g,'').slice(0,40)||'file';return b+'.'+ext}
+function nwVoter(){var v='';try{v=localStorage.getItem('sf-voter')||'';if(!v){v='st'+Math.random().toString(36).slice(2,12);localStorage.setItem('sf-voter',v)}}catch(e){v='st'+Date.now()}return v}
+function nwSay(html){var c=$('#chat'),d=document.createElement('div');d.className='so';d.innerHTML='<img class="ava" src="img/sokrat.png" alt="Сократ"><div class="txt">'+html+'</div>';c.appendChild(d);scrollEnd();return d}
+function createWork(){if(!NEWW||NEWW.busy)return;var tx=$('#tx'),t=tx.value.trim(),F=NEWW.files.slice();
+  if(!t&&!F.length){toast('Напишите тему урока или прикрепите файл',3000);tx.focus();return}
+  NEWW.busy=true;$('#send').disabled=true;
+  var c=$('#chat'),me=document.createElement('div');me.className='me';me.innerHTML='<div class="b">'+esc(t||'Вот мои материалы.')+(F.length?'<div class="files">'+F.map(function(f){return '<span>📎 '+esc(f.name)+'</span>'}).join('')+'</div>':'')+'</div>';c.appendChild(me);
+  tx.value='';tx.oninput();NEWW.files=[];$('#nwf').innerHTML='';
+  var w=nwSay('<p class="wait" id="nwst">'+(F.length?'Сохраняю файлы…':'Принял тему. Открываю работу…')+'</p>');
+  function st(x){var e=$('#nwst');if(e)e.innerHTML=x}
+  function fail(){NEWW.busy=false;$('#send').disabled=false;NEWW.files=F;tx.value=t;tx.oninput();nwfDraw();st('<b>Не получилось отправить.</b> Проверьте интернет и нажмите ↑ ещё раз — тема и файлы на месте.')}
+  if(TEST){setTimeout(function(){st('Стенд: работа не создаётся (проверка экрана). Тема: «'+esc(t)+'», файлов: '+F.length+', интернет: '+(SW?'да':'нет')+', база Академии: '+(SA?'да':'нет')+'.');NEWW.busy=false;$('#send').disabled=false},400);return}
+  var API=SB.url.replace(/\/$/,''),HB={apikey:SB.key,Authorization:'Bearer '+SB.key},vt=nwVoter(),ts=Date.now(),n=0;
+  function put(f,i){return fetch(API+'/storage/v1/object/pe-uploads/'+('start/'+vt+'/'+ts+'_'+(i+1)+'_'+nwSafe(f.name)).split('/').map(encodeURIComponent).join('/'),{method:'POST',headers:Object.assign({'Content-Type':/^application\/(pdf|msword|vnd\.)/.test(f.type)?f.type:'application/octet-stream','x-upsert':'false'},HB),body:f})
+    .then(function(r){if(!r.ok)throw r.status;n++;if(F.length>1)st('Сохраняю файлы… '+n+' из '+F.length);return {path:'start/'+vt+'/'+ts+'_'+(i+1)+'_'+nwSafe(f.name),name:f.name,size:f.size,kind:'slides'}})}
+  Promise.all(F.map(put)).then(function(files){st('Принял. Открываю работу — обычно до минуты…');
+    return fetch(API+'/rest/v1/pe_jobs',{method:'POST',headers:Object.assign({'Content-Type':'application/json',Prefer:'return=representation'},HB),body:JSON.stringify({deck:'start',kind:'upload',round:1,status:'queued',author:String(ME.io||'эксперт').slice(0,120),
+      payload:{action:'start',name:String(ME.io||'').slice(0,120),text:t||'Вот мои материалы.',files:files,voices:[],voter:vt,login:ME.code||'',kind:'урок',topic:t.slice(0,300),fill_mode:F.length?'source':'self',fill_mode_by:'expert',web:!!SW,acad:!!SA,v2:1,via:'sokrat'}})})})
+  .then(function(r){if(!r.ok)throw r.status;return r.json()}).then(function(a){var jid=a&&a[0]&&a[0].id;if(!jid)throw 0;var k=0,tm=setInterval(function(){
+      fetch(API+'/rest/v1/pe_jobs?select=status,deck,note&id=eq.'+jid,{headers:HB,cache:'no-store'}).then(function(r){return r.ok?r.json():[]}).then(function(b){var x=b&&b[0];if(!x)return;
+        if(x.status==='error'){clearInterval(tm);NEWW.busy=false;$('#send').disabled=false;st('<b>'+esc(x.note||'Не получилось открыть работу.')+'</b> Я сообщил Руслану — ничего не потеряно.');return}
+        if(x.deck&&x.deck!=='start'&&(/Открываю Сократа/.test(x.note||'')||x.status==='done')){clearInterval(tm);try{localStorage.setItem('pe-g2-lastdeck',JSON.stringify({deck:x.deck,t:Date.now()}));var kk='pe-sok-src-'+x.deck;localStorage.setItem(kk,JSON.stringify({w:SW,a:SA}))}catch(e){}
+          try{localStorage.removeItem('pe-sok-src-new')}catch(e){}NEWW=null;history.replaceState(null,'','#'+encodeURIComponent(x.deck));waitNew(x.deck)}}).catch(function(){});
+      if(++k>240){clearInterval(tm);st('Задерживаюсь — я сообщил Руслану. Работа сохранена, она появится в «Мои работы».')}},2500)})
+  .catch(fail)}
+function works(){}
+function works_old(){var a=ME.decks||[];$('#works').innerHTML=a.length?a.map(function(d){return '<a class="w'+(d===CUR?' on':'')+'" href="#'+encodeURIComponent(d.deck)+'">'+esc(d.title)+'<small>'+esc(d.st||'Новая')+'</small></a>'}).join(''):
   '<div class="empty">Пока нет работ у Сократа. Начните новую работу — Сократ прочитает материалы и предложит программу урока.</div>'}
 
 function H(json){var h={apikey:SB.key,Authorization:'Bearer '+SB.key};if(CUR&&CUR.tok)h['x-pe-token']=CUR.tok;if(json){h['Content-Type']='application/json';h.Prefer='return=minimal'}return h}
@@ -222,7 +294,7 @@ function job(action,extra){if(!CUR)return Promise.resolve(false);var vt='';try{v
     author:String(ME.io||'эксперт').slice(0,120),payload:Object.assign({action:action},extra||{})})}).then(function(r){return r.ok}).catch(function(){return false})}
 
 async function openWork(){
-  if(STOPW){STOPW();STOPW=null}if(STOPH){STOPH();STOPH=null}WAIT=null;EDIT=null;ST=null;HIST=null;HOK={};SRC=null;(function(f){if(f)f.checked=false})(document.getElementById('srcfree'));histDraw();
+  if(STOPW){STOPW();STOPW=null}if(STOPH){STOPH();STOPH=null}WAIT=null;EDIT=null;ST=null;HIST=null;HOK={};SRC=null;SW=null;SA=false;SWT=false;srcDraw();histDraw();
   if(!CUR){$('#chat').innerHTML='<div class="so"><img class="ava" src="img/sokrat.png" alt=""><div class="txt"><p>Здравствуйте! Здесь будут Ваши работы у Сократа. Начните новую работу в кабинете — я прочитаю материалы и предложу программу урока.</p><p><a href="/pe/#new">+ Новая работа</a></p></div></div>';head();return}
   $('#chat').innerHTML='<p class="wait">Открываю работу…</p>';head();
   var row=await G2L.get(CUR.deck,'sok',4000);ST=row&&row.data||null;var rev=row&&row.rev||0;
@@ -239,7 +311,7 @@ function ask(mode,text,lastW,wrev){
   if(CUR&&CUR.pending&&text!==''&&!vtr()){toast('Секунду — подключаю работу. Повторите, пожалуйста, через минуту.',4000);return}
   ST=ST||{msgs:[]};if(text)ST.msgs.push({id:'l'+Date.now(),who:'me',text:text});
   WAIT={id:null,t0:Date.now(),lastW:lastW!=null?lastW:LASTW,mode:mode,text:''};render();scrollEnd();
-  job('sokrat_chat',{mode:mode,text:text||'',src:SRC||'mine'}).then(function(ok){if(!ok){WAIT=null;if(text&&ST&&ST.msgs){var lm=ST.msgs[ST.msgs.length-1];if(lm&&lm.who==='me'&&lm.text===text)ST.msgs.pop();var tx=$('#tx');if(tx&&!tx.value.trim()){tx.value=text;tx.oninput&&tx.oninput()}}render();toast('Нет связи — сообщение не ушло. Проверьте интернет и отправьте ещё раз.',4000)}});
+  job('sokrat_chat',{mode:mode,text:text||'',src:matFiles().length?'mine':'free',web:!!SW,acad:!!SA,v2:1}).then(function(ok){if(!ok){WAIT=null;if(text&&ST&&ST.msgs){var lm=ST.msgs[ST.msgs.length-1];if(lm&&lm.who==='me'&&lm.text===text)ST.msgs.pop();var tx=$('#tx');if(tx&&!tx.value.trim()){tx.value=text;tx.oninput&&tx.oninput()}}render();toast('Нет связи — сообщение не ушло. Проверьте интернет и отправьте ещё раз.',4000)}});
   follow(wrev||WREV)}
 
 /* поток ответа: раз в 0,8 с — номер версии «sokw» (несколько байт), текст — только при изменении */
@@ -286,7 +358,7 @@ function okf(f){return ['источник.txt','текст_слайдов.md'].i
 function lastOf(k){var a=(ST&&ST.msgs)||[];for(var i=a.length-1;i>=0;i--)if(a[i].kind===k)return a[i];return null}
 function hasSlides(){return !!(ST&&ST.doc&&ST.doc.slides)}
 var SRC=null;
-function render(){if(!CUR)return;var sf=document.getElementById('srcfree');if(sf&&SRC===null&&ST&&ST.src&&(ST.msgs||[]).length){SRC=ST.src;sf.checked=(SRC==='free')}if(sf&&!sf.__w){sf.__w=1;sf.onchange=function(){SRC=sf.checked?'free':'mine';if(WAIT||!ST||!(ST.msgs||[]).length)return;toast(SRC==='free'?'Режим: опираюсь на возможности Сократа. Перестраиваю программу.':'Режим: только Ваши материалы. Перестраиваю программу.',4000);ask('program','Перестрой программу: режим источников изменён')}};var c=$('#chat'),a=(ST&&ST.msgs)||[],o=[],it=ST&&ST.intro;
+function render(){if(!CUR)return;if(!render.__s||render.__s!==CUR.deck+'|'+!!(ST&&ST.intro)){render.__s=CUR.deck+'|'+!!(ST&&ST.intro);srcInit();srcDraw()}var c=$('#chat'),a=(ST&&ST.msgs)||[],o=[],it=ST&&ST.intro;
   if(it)o.push('<div class="me"><div class="b">'+esc(it.text)+((it.files||[]).filter(okf).length?'<div class="files">'+it.files.filter(okf).map(function(f){return '<span>📎 '+esc(f)+'</span>'}).join('')+'</div>':'')+'</div></div>');
   var pv=prevCard();if(pv)o.push(pv);
   var lp=lastOf('program'),lsd=lastOf('slides'),lastT=-1;a.forEach(function(m,i){if(m.who==='so'&&(m.kind==='program'||m.kind==='slides'||m.kind==='edit'))lastT=i});
@@ -465,5 +537,5 @@ document.addEventListener('mousedown',function(e){var h=e.target.closest&&e.targ
 boot();
 })();
 </script>
-<!--PEVER--><div id="pever" title="Номер версии" style="position:fixed;left:12px;bottom:10px;z-index:60;font:12px/1.4 system-ui,sans-serif;color:#5B6270;background:rgba(255,255,255,.94);border:1px solid #E4E6EB;border-radius:8px;padding:2px 9px;pointer-events:none">Сократ · версия <b style="color:#1745E0">1.5</b> · 13.11 16:18</div><!--/PEVER-->
+<!--PEVER--><div id="pever" title="Номер версии" style="position:fixed;left:12px;bottom:10px;z-index:60;font:12px/1.4 system-ui,sans-serif;color:#5B6270;background:rgba(255,255,255,.94);border:1px solid #E4E6EB;border-radius:8px;padding:2px 9px;pointer-events:none">Сократ · версия <b style="color:#1745E0">2.0</b> · 13.11 18:02</div><!--/PEVER-->
 </body></html>
