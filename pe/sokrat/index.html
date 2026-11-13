@@ -244,7 +244,7 @@ function app(){
   window.onkeydown=function(e){if(e.key==='Escape')histShow(false)};
   openWork()}
 /* ---------- «Сократ 2.0»: каркас без левого меню ---------- */
-var WORKS_URL='/pe/malevich/?works=1',DOORS_URL='/pe/dveri/',SW=null,SA=false,SWT=false,NEWW=null;
+var WORKS_URL='/pe/raboty/',DOORS_URL='/pe/dveri/',SW=null,SA=false,SWT=false,NEWW=null;
 function shell(nw){return '<div class="app"><main><div class="top'+(nw?'':' w')+'"><span class="who"><img src="img/sokrat.png" alt=""><b>Сократ · методист</b></span><span class="sep">·</span><b class="nm" id="nm">'+(nw?'Новая работа':'')+'</b>'+
     (nw?'':'<span class="steps" id="steps"></span><button class="hbtn" id="hbtn" type="button" aria-haspopup="dialog" title="История урока" aria-label="История урока">🕘 История урока</button><span class="pc" id="pc"></span>')+
     '<a class="lk home" href="'+DOORS_URL+'">⌂ Двери</a><a class="lk" href="'+WORKS_URL+'">Мои работы</a></div>'+
@@ -566,5 +566,5 @@ document.addEventListener('mousedown',function(e){var h=e.target.closest&&e.targ
 boot();
 })();
 </script>
-<!--PEVER--><div id="pever" title="Номер версии" style="position:fixed;left:12px;bottom:10px;z-index:60;font:12px/1.4 system-ui,sans-serif;color:#5B6270;background:rgba(255,255,255,.94);border:1px solid #E4E6EB;border-radius:8px;padding:2px 9px;pointer-events:none">Сократ · версия <b style="color:#1745E0">2.1</b> · 13.11 19:18</div><!--/PEVER-->
+<!--PEVER--><div id="pever" title="Номер версии" style="position:fixed;right:12px;top:62px;z-index:60;font:12px/1.4 system-ui,sans-serif;color:#5B6270;background:rgba(255,255,255,.94);border:1px solid #E4E6EB;border-radius:8px;padding:2px 9px;pointer-events:none">Сократ · версия <b style="color:#1745E0">2.2</b> · 13.11 19:56</div><!--/PEVER-->
 </body></html>
