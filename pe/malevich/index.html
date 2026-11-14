@@ -277,7 +277,11 @@ function setup(f,id,Lt){var d=f.contentDocument,st=d.createElement('style');
   a.forEach(function(el,i){el.__old=norm(el.textContent);el.__oh=el.innerHTML;el.__i=i;if(e&&e.L===Lt&&e.ch[i]){el.innerHTML=e.ch[i].new;el.classList.add('pe-ed')}
     el.setAttribute('contenteditable','true');el.setAttribute('spellcheck','false');el.addEventListener('input',function(){rec(id,Lt,el)})});
   d.addEventListener('paste',function(ev){var tx=(ev.clipboardData||window.clipboardData).getData('text/plain');ev.preventDefault();d.execCommand('insertText',false,tx)});   /* 12.11 краш-тест: вставка — только текст (из Word/сайта не приносим разметку) */
-  d.addEventListener('mouseup',function(){setTimeout(function(){pop(f,d,id,Lt)},0)});d.addEventListener('keyup',function(){$('#pp').style.display='none'});setTimeout(function(){smDo();smList()},0)}
+  d.addEventListener('mouseup',function(){setTimeout(function(){pop(f,d,id,Lt)},0)});
+  d.addEventListener('dblclick',function(){setTimeout(function(){var s=d.getSelection();   /* 14.11: двойной щелчок — выделить слово целиком и показать ★/＋/− */
+    try{if(s&&s.rangeCount&&s.modify){if(s.isCollapsed){s.modify('move','backward','word');s.modify('extend','forward','word')}
+      var tx=s.toString();if(/\s$/.test(tx)){var r=s.getRangeAt(0);var n=tx.length-tx.replace(/\s+$/,'').length;if(r.endContainer.nodeType===3&&r.endOffset>=n){r.setEnd(r.endContainer,r.endOffset-n);s.removeAllRanges();s.addRange(r)}}}}catch(e){}
+    pop(f,d,id,Lt)},30)});d.addEventListener('keyup',function(){$('#pp').style.display='none'});setTimeout(function(){smDo();smList()},0)}
 function rec(id,Lt,el){var e=ed(id);if(e.L&&e.L!==Lt&&nch(e)){return}e.L=Lt;
   if(el.innerHTML===el.__oh){delete e.ch[el.__i];el.classList.remove('pe-ed')}else{e.ch[el.__i]={i:el.__i,old:el.__old,new:el.innerHTML};el.classList.add('pe-ed')}
   if(!nch(e))e.L=null;chips(id);paint()}
