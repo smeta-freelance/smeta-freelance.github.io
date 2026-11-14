@@ -536,7 +536,7 @@ if(!D){
     upload(me)})();return}
 if(!/^[a-z0-9][\w\-]{3,80}$/i.test(D)){gate('Слайды у Малевича','Откройте работу из «Мои работы» или из чата Сократа.');return}
 function go(x){var site=(x&&x.site)||('pe/'+D);window.PE={deck:D,live:D,tok:(x&&x.tok)||(mk&&mk!=='1'?mk:null)};
-  window.__VB='/'+site.replace(/^\/|\/$/g,'')+'/img/variants/';window.S25.next='/'+site.replace(/^\/|\/$/g,'')+'/zapis/';window.S25.kind=(x&&x.kind)||'';
+  window.__VB='/'+site.replace(/^\/|\/$/g,'')+'/img/variants/';window.S25.next='/pe/zapis/#'+encodeURIComponent(D);window.S25.kind=(x&&x.kind)||'';
   window.__fixS=function(a){return (a||[]).map(function(s){var v=s.v||{},o={};for(var k in v)o[k]=String(v[k]).replace(/^\.\.\/img\/variants\//,window.__VB);s.v=o;return s})};
   window.__setDirect=function(){window.__direct=1;var s1=document.getElementById('ms1');s1.textContent='✓ Ваша презентация';s1.removeAttribute('href');s1.style.pointerEvents='none'};
   if(ls('pe-mal-direct-'+D))window.__setDirect();
