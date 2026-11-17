@@ -362,13 +362,21 @@ function createWork(){if(!NEWW||NEWW.busy)return;var tx=$('#tx'),t=tx.value.trim
   var w=nwSay('<p class="wait" id="nwst">'+(F.length?'Сохраняю файлы…':'Принял тему. Открываю работу…')+'</p>');
   function st(x){var e=$('#nwst');if(e)e.innerHTML=x}
   function fail(){NEWW.busy=false;$('#send').disabled=false;NEWW.files=F;tx.value=t;tx.oninput();nwfDraw();st('<b>Не получилось отправить.</b> Проверьте интернет и нажмите ↑ ещё раз — тема и файлы на месте.')}
-  if(TEST){setTimeout(function(){st('Стенд: работа не создаётся (проверка экрана). Тема: «'+esc(t)+'», файлов: '+F.length+', интернет: '+(SW?'да':'нет')+', база Академии: '+(SA?'да':'нет')+'.');NEWW.busy=false;$('#send').disabled=false},400);return}
+  if(TEST&&!window.__SOK_SEND){setTimeout(function(){st('Стенд: работа не создаётся (проверка экрана). Работ будет: '+Math.max(1,F.filter(function(f){return /\.(pptx?|key|odp)$/i.test(f.name)}).length>1?F.filter(function(f){return /\.(pptx?|key|odp)$/i.test(f.name)}).length:1)+'. Тема: «'+esc(t)+'», файлов: '+F.length+', интернет: '+(SW?'да':'нет')+', база Академии: '+(SA?'да':'нет')+'.');NEWW.busy=false;$('#send').disabled=false},400);return}
   var API=SB.url.replace(/\/$/,''),HB={apikey:SB.key,Authorization:'Bearer '+SB.key},vt=nwVoter(),ts=Date.now(),n=0;
   function put(f,i){return fetch(API+'/storage/v1/object/pe-uploads/'+('start/'+vt+'/'+ts+'_'+(i+1)+'_'+nwSafe(f.name)).split('/').map(encodeURIComponent).join('/'),{method:'POST',headers:Object.assign({'Content-Type':/^application\/(pdf|msword|vnd\.)/.test(f.type)?f.type:'application/octet-stream','x-upsert':'false'},HB),body:f})
     .then(function(r){if(!r.ok)throw r.status;n++;if(F.length>1)st('Сохраняю файлы… '+n+' из '+F.length);return {path:'start/'+vt+'/'+ts+'_'+(i+1)+'_'+nwSafe(f.name),name:f.name,size:f.size,kind:'slides'}})}
-  Promise.all(F.map(put)).then(function(files){st('Принял. Открываю работу — обычно до минуты…');
-    return fetch(API+'/rest/v1/pe_jobs',{method:'POST',headers:Object.assign({'Content-Type':'application/json',Prefer:'return=representation'},HB),body:JSON.stringify({deck:'start',kind:'upload',round:1,status:'queued',author:String(ME.io||'эксперт').slice(0,120),
-      payload:{action:'start',name:String(ME.io||'').slice(0,120),text:t||'Вот мои материалы.',files:files,voices:[],voter:vt,login:ME.code||'',kind:'урок',topic:t.slice(0,300),fill_mode:F.length?'source':'self',fill_mode_by:'expert',web:!!SW,acad:!!SA,v2:1,via:'sokrat'}})})})
+  Promise.all(F.map(put)).then(function(files){
+    /* С2 (Zoom 17.11, Руслан: «Сам создаёт N работ»): каждая исходная презентация — отдельный урок, отдельная работа; прочие файлы — к каждой */
+    var isP=function(f){return /\.(pptx?|key|odp)$/i.test(f.name||'')},pres=files.filter(isP),rest=files.filter(function(f){return !isP(f)}),
+      packs=pres.length>1?pres.map(function(f){return [f].concat(rest)}):[files];
+    var N=packs.length,pl=function(a,b,c){var m=N%10,h=N%100;return (m===1&&h!==11)?a:(m>=2&&m<=4&&(h<12||h>14))?b:c};
+    st(N>1?'Вы прислали '+N+' '+pl('презентацию','презентации','презентаций')+' — это '+N+' '+pl('отдельный урок','отдельных урока','отдельных уроков')+'. Создаю '+N+' '+pl('работу','работы','работ')+': первую открою здесь, остальные появятся в <a href="'+WORKS_URL+'">«Моих работах»</a>.':'Принял. Открываю работу — обычно до минуты…');
+    function job(fs){var nm=packs.length>1?String(fs[0].name).replace(/\.[^.]+$/,''):'';
+      return fetch(API+'/rest/v1/pe_jobs',{method:'POST',headers:Object.assign({'Content-Type':'application/json',Prefer:'return=representation'},HB),body:JSON.stringify({deck:'start',kind:'upload',round:1,status:'queued',author:String(ME.io||'эксперт').slice(0,120),
+        payload:{action:'start',name:String(ME.io||'').slice(0,120),text:(t||'Вот мои материалы.')+(nm?'\n\nЭтот урок — по презентации «'+nm+'».':''),files:fs,voices:[],voter:vt,login:ME.code||'',kind:'урок',topic:(nm||t).slice(0,300),work_title:nm||undefined,fill_mode:F.length?'source':'self',fill_mode_by:'expert',web:!!SW,acad:!!SA,v2:1,via:'sokrat',series:packs.length>1?packs.length:undefined}})})}
+    var first=job(packs[0]);packs.slice(1).reduce(function(pr,fs){return pr.then(function(){return job(fs)}).catch(function(){return job(fs)})},first.then(function(r){return r.clone()}).catch(function(){}));
+    return first})
   .then(function(r){if(!r.ok)throw r.status;return r.json()}).then(function(a){var jid=a&&a[0]&&a[0].id;if(!jid)throw 0;var k=0,tm=setInterval(function(){
       fetch(API+'/rest/v1/pe_jobs?select=status,deck,note&id=eq.'+jid,{headers:HB,cache:'no-store'}).then(function(r){return r.ok?r.json():[]}).then(function(b){var x=b&&b[0];if(!x)return;
         if(x.status==='error'){clearInterval(tm);NEWW.busy=false;$('#send').disabled=false;st('<b>'+esc(x.note||'Не получилось открыть работу.')+'</b> Я сообщил Руслану — ничего не потеряно.');return}
@@ -634,5 +642,5 @@ document.addEventListener('mousedown',function(e){var h=e.target.closest&&e.targ
 boot();
 })();
 </script>
-<!--PEVER--><div id="pever" title="Номер версии" style="position:fixed;right:12px;top:62px;z-index:60;font:12px/1.4 system-ui,sans-serif;color:#5B6270;background:rgba(255,255,255,.94);border:1px solid #E4E6EB;border-radius:8px;padding:2px 9px;pointer-events:none">Сократ · версия <b style="color:#1745E0">2.3</b> · 14.11 18:16</div><!--/PEVER-->
+<!--PEVER--><div id="pever" title="Номер версии" style="position:fixed;right:12px;top:62px;z-index:60;font:12px/1.4 system-ui,sans-serif;color:#5B6270;background:rgba(255,255,255,.94);border:1px solid #E4E6EB;border-radius:8px;padding:2px 9px;pointer-events:none">Сократ · версия <b style="color:#1745E0">2.4</b> · 17.11 21:07</div><!--/PEVER-->
 </body></html>

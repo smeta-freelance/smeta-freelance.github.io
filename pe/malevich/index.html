@@ -43,7 +43,8 @@ main{grid-template-columns:minmax(0,1fr) 320px}.stage .vs{max-width:none}.stage 
 .vs{grid-template-columns:repeat(3,minmax(0,165px))!important;justify-content:start}.v span{font-size:15px}
 .big iframe{position:absolute;left:0;top:0;width:1920px;height:1080px;border:0;transform-origin:0 0;background:#fff}
 .big .ov{position:absolute;inset:0;background:rgba(255,255,255,.8);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:12px}
-.ov b{font-size:22px}.ov .tm{font-size:34px;font-weight:700;color:var(--act);font-variant-numeric:tabular-nums}.ov .stp{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;font-size:15px}.ov .stp span{padding:4px 10px;border-radius:999px;background:var(--g)}.ov .stp .d{background:var(--ok-soft);color:var(--ok)}.ov .stp .n{background:var(--act-soft);color:var(--act);font-weight:600}
+.ov b{font-size:22px}.ov .tm{font-size:15px;color:#5B6270;font-variant-numeric:tabular-nums}.ov .stp{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;font-size:15px}.ov .stp span{padding:4px 10px;border-radius:999px;background:var(--g)}.ov .stp .d{background:var(--ok-soft);color:var(--ok)}.ov .stp .n{background:var(--act-soft);color:var(--act);font-weight:600}
+#bok:disabled{opacity:.45;cursor:default}.ov .cx{margin-top:4px;border:2px solid #D6DBE6;background:#fff;border-radius:12px;padding:8px 14px;font-weight:700;font-size:15px;cursor:pointer}
 .ovb{width:60%;height:8px;border-radius:9px;background:#DDE3F0;overflow:hidden}.ovb i{display:block;height:100%;background:var(--act);border-radius:9px;transition:width 1s linear}
 .eb{display:flex;align-items:center;gap:8px;border:1.5px solid #AEB6C7;border-radius:12px;padding:6px 6px 6px 14px;margin-top:12px;background:#fff}.eb:focus-within{border-color:var(--act)}
 .eb textarea{flex:1;border:0;outline:0;resize:none;height:52px;font:inherit;font-size:17px;padding:4px 0;line-height:1.3;background:none}
@@ -88,7 +89,7 @@ main{max-width:none;padding:10px 20px 100px;grid-template-columns:minmax(0,1fr) 
 .mver{font-size:12px;color:#8A909C;white-space:nowrap}.mver b{color:#1745E0}
 @media (max-width:900px){.mh{padding:8px 12px}.mh nav{margin-left:0}}
 </style></head><body><div class="mh" id="mh"><div><div class="who"><span class="mav" aria-hidden="true">М.</span><div>Малевич · дизайнер<small id="mt"></small><button type="button" id="mren" hidden title="Переименовать работу" style="margin-left:8px;border:1px solid #D6DBE6;border-radius:8px;background:#fff;color:#1745E0;font:600 13px system-ui,sans-serif;padding:2px 8px;cursor:pointer">✎ Переименовать</button></div></div>
-<nav aria-label="Шаги урока" class="mnav-off"><a class="ok" id="ms1" tabindex="-1" aria-disabled="true">✓ Тексты от Сократа</a><span class="now" id="ms2">● Слайды</span><span>○ Запись</span><span>○ Монтаж</span></nav><button type="button" id="march" class="march" hidden title="Убрать презентацию в архив">🗄 В архив</button><a class="ok" href="/pe/dveri/" style="margin-left:14px;font-weight:600">⌂ Главная</a><a class="ok" id="mlk" href="/pe/raboty/" style="margin-left:12px;font-weight:600;white-space:nowrap">Мои работы</a><span class="mver" title="Номер версии сервиса">Малевич · версия <b>3.18</b> · 14.11 09:42</span></div></div>
+<nav aria-label="Шаги урока" class="mnav-off"><a class="ok" id="ms1" tabindex="-1" aria-disabled="true">✓ Тексты от Сократа</a><span class="now" id="ms2">● Слайды</span><span>○ Запись</span><span>○ Монтаж</span></nav><button type="button" id="march" class="march" hidden title="Убрать презентацию в архив">🗄 В архив</button><a class="ok" href="/pe/dveri/" style="margin-left:14px;font-weight:600">⌂ Главная</a><a class="ok" id="mlk" href="/pe/raboty/" style="margin-left:12px;font-weight:600;white-space:nowrap">Мои работы</a><span class="mver" title="Номер версии сервиса">Малевич · версия <b>3.19</b> · 17.11 21:11</span></div></div>
 <div class="gl"><div><span class="av" aria-hidden="true">М.</span><div><small>Малевич · дизайнер Академии Сметного Дела</small><ul id="gl"></ul></div></div></div>
 <div class="pgw" id="pgw"><div class="pgt" id="pgt"></div><div class="pgbar" aria-hidden="true"><i id="pgi"></i></div></div>
 <main id="mn"><section class="card stage" aria-live="polite"><div class="hd"><h2 id="ttl"></h2><span id="vt"></span><a class="btn w hb dl1" id="dl1" hidden download>⬇ Скачать слайд</a><button type="button" class="btn p hb" id="hok" hidden></button><span class="hn" id="hn"></span></div><div class="big" id="big"></div><div class="vs" id="vs"></div><div id="ed"></div><div class="sml" id="sml" hidden></div></section>
@@ -171,8 +172,9 @@ function paint(){
   $('#ttl').textContent='Слайд '+c.k+(c.t?' · '+c.t:'');
   var d1=$('#dl1');if(d1){var vb=(window.__VB||'../img/variants/');if(ready&&s.fid&&s.sel){d1.hidden=false;d1.href=vb+s.fid+'_'+s.sel+'.png';d1.setAttribute('download','Слайд '+c.k+' (вариант '+s.sel+').png')}else d1.hidden=true}
   var hb=$('#hok');if(s.st==='approved'){hb.hidden=false;hb.className='btn hb u';hb.textContent='Снять утверждение'}else if(s.st==='ready'&&!s.red&&!dirty(cur)){hb.hidden=false;hb.className='btn p hb';hb.textContent='Утвердить слайд '+c.k}else hb.hidden=true;
-  var big=$('#big');
-  if(ready&&s.red)redBig(s,c);
+  var big=$('#big'),MM0=/мастер|mastermind/i.test(String(S.kind||''));if(!all){HF.ready=0;HF.t0=0}
+  if(all&&!MM0&&!HF.ready)hfBig(big,sl.length);
+  else if(ready&&s.red)redBig(s,c);
   else if(ready&&s.v&&s.v[s.sel])bigEdit(s,cur);
   else if(ready)setH(big,'<div class="wt"><b>Слайд '+c.k+' готов</b><span class="tm">загружаю картинку…</span></div>');
   else if(s.st==='drawing'){setH(big,window.__ghost(c,s,0));window.__ghostTxt(s,0)}
@@ -187,9 +189,9 @@ function paint(){
   while(RB.children.length>sl.length)RB.removeChild(RB.lastChild);
   $('#rbh').textContent='Слайды урока · '+sl.length;
   var go=$('#bok'),dt=dirty(cur),nx=s.red&&nextReady();go.dataset.all=all?'1':'';go.dataset.mode=dt?'send':s.red?'next':'';
-  go.textContent=all?'Перейти к Гудвину · оператору':dt?'Отправить правку Малевичу':s.red?(nx?'Пока жду — к слайду '+ST[nx].k+' →':'Малевич перерисовывает…'):'Утвердить слайд '+c.k;
+  go.textContent=all?(HF.ready?'✓ Готово! Перейти к Гудвину · оператору':'Перейти к Гудвину · оператору'):dt?'Отправить правку Малевичу':s.red?(nx?'Пока жду — к слайду '+ST[nx].k+' →':'Малевич перерисовывает…'):'Утвердить слайд '+c.k;
   var MM=/мастер|mastermind/i.test(String(S.kind||''));   /* 13.11 (Руслан): мастер-майнд заканчивается скачиванием файлов — без записи урока */
-  go.style.display=((!all&&dt)||(all&&MM))?'none':'';go.disabled=!all&&(dt?(s.st!=='ready'&&s.st!=='approved'):s.red?!nx:s.st!=='ready');keep();
+  go.style.display=((!all&&dt)||(all&&MM))?'none':'';go.disabled=all?!HF.ready:(dt?(s.st!=='ready'&&s.st!=='approved'):s.red?!nx:s.st!=='ready');keep();
   $('#dpdf').hidden=$('#dppt').hidden=!all;$('#dpdf').disabled=$('#dppt').disabled=!!PK.busy;$('#bst').style.display=(all||s.st==='approved'||s.st==='skipped'||s.red)?'none':'';$('#bst').disabled=!(s.st==='ready');
   if(!all&&dt){var e0=E[cur];$('#ftt').innerHTML='Слайд '+c.k+' · <b>есть правки:</b> '+esc(edWhat(e0))}else if(!all&&s.red)$('#ftt').innerHTML='Слайд '+c.k+' перерисовывается · <b>можно идти дальше</b>';else
   $('#ftt').innerHTML=all?'<b>Сделано:</b> слайды утверждены <span aria-hidden="true">→</span> <b>Дальше:</b> '+(MM?'скачайте PowerPoint или PDF':'скачать и записать')+packHtml():'Утверждено: <b>'+done+' из '+sl.length+'</b> · '+(s.st==='ready'?'слайд '+c.k+' ждёт Вас':s.st==='drawing'?'слайд '+c.k+' ещё рисуется':'слайд '+c.k+' в очереди');
@@ -230,7 +232,7 @@ function job(pl){window.__jobs=(window.__jobs||[]);window.__jobs.push(pl);
   if(PE.test||DEMO)return Promise.resolve(true);   /* проверочная сборка: задача в живую очередь не уходит */
   return fetch(A+'pe_jobs',{method:'POST',headers:H({'Content-Type':'application/json',Prefer:'return=minimal'}),body:JSON.stringify({deck:D,kind:'upload',round:1,status:'queued',author:WHO,payload:pl})}).then(function(r){return r.ok}).catch(function(){return false})}
 function ok(id){id=id||cur;var s=ST[id];if(!s||s.st!=='ready'||s.red)return;if(dirty(id)){askSave(id);return}
-  var was=cur;job({action:'slide25_ok',slide:id,variant:s.sel}).then(function(g){if(!g){say('Нет связи — нажмите ещё раз. Ничего не потеряно.');return}s.st='approved';say('✓ Слайд '+s.k+' утверждён');if(was===id||!was)cur=null;paint()})}
+  var was=cur;HF.ok0=Date.now();HF.ready=0;job({action:'slide25_ok',slide:id,variant:s.sel}).then(function(g){if(!g){say('Нет связи — нажмите ещё раз. Ничего не потеряно.');return}s.st='approved';say('✓ Слайд '+s.k+' утверждён');if(was===id||!was)cur=null;paint()})}
 /* снять утверждение: задача slide25_unok — обработчик снимает отметку в базе; на странице слайд сразу «готов» */
 function unok(id){var s=ST[id];if(!s||s.st!=='approved')return;job({action:'slide25_unok',slide:id}).then(function(g){if(!g){say('Нет связи — нажмите ещё раз.');return}s.st='ready';S.keep=1;cur=id;say('Утверждение слайда '+s.k+' снято');paint()})}
 function stuck(){var s=ST[cur];$('#dl').showModal?$('#dl').showModal():$('#dl').setAttribute('open','')}
@@ -239,6 +241,7 @@ $('#dpdf').onclick=function(){want('pdf')};$('#dppt').onclick=function(){want('p
 $('#dl1').addEventListener('click',function(ev){if(!window.showSaveFilePicker)return;ev.preventDefault();var u=this.href,nm=(this.getAttribute('download')||'Слайд.png').replace(/\.png$/,'');askWhere('png',nm).then(function(h){if(h==='cancel')return;if(h)saveTo(h,u,'png',nm);else plain(u,'png',nm)})});
 $('#hok').onclick=function(){var s=ST[cur];if(!s)return;if(s.st==='approved')unok(cur);else ok(cur)};
 $('#bok').onclick=function(){if(this.dataset.all){var nx=S.next||'/pe/';job({action:'slide25_handoff'}).then(function(){location.href=nx});return}if(this.dataset.mode==='send'){send();return}if(this.dataset.mode==='next'){var n=nextReady();if(n){cur=n;S.keep=1;paint()}return}ok()};
+$('#big').addEventListener('click',function(ev){if(!ev.target.closest('[data-cancel]'))return;var s=ST[cur];if(!s||!s.red)return;if(s.red.jid){IGN[s.red.jid]=1;job({action:'slide25_edit_cancel',slide:cur,of:s.red.jid})}else s.ign=1;s.red=null;$('#big').__h=null;IFK='';say('Правку отменил — слайд '+s.k+' остаётся как был.');paint()});   /* 17.11 (Zoom М3): «Отменить правку» и во время перерисовки */
 $('#bst').onclick=stuck;$('#dc').onclick=function(){$('#dl').close()};
 $('#dg').onclick=function(){var s=ST[cur],note=$('#nt').value.trim();job({action:'slide25_stuck',slide:cur,variant:s.sel,note:note}).then(function(g){if(!g){say('Нет связи — нажмите ещё раз.');return}s.st='skipped';$('#dl').close();$('#nt').value='';say('Слайд '+s.k+' оставлен как есть — Руслан получит сообщение');cur=null;paint()})};
 $('#vs').onclick=function(e){var b=e.target.closest('[data-v]');if(!b)return;var q=E[cur];if(q&&q.L&&nch(q)&&q.L!==b.dataset.v){say('Вы исправили текст в варианте '+q.L+'. Сначала отправьте правку Малевичу или нажмите «Отменить правку».');return}ST[cur].sel=b.dataset.v;ST[cur].showPrev=0;paint()};
@@ -270,7 +273,7 @@ function bigEdit(s,id){var big=$('#big'),k=id+'|'+s.sel+'|'+(s.ver||1)+'|'+(s.sh
   if(src===null){setH(big,img(s,s.sel,id));if(Date.now()-(+HT['_'+key]||0)>15000){delete HT[key];delete HT['_'+key];setTimeout(paint,100)}return}   /* 12.11: вариант ещё не опубликован — пробуем снова, иначе правка на нём не включалась */
   IFK=k;big.__h=null;big.innerHTML='';var f=document.createElement('iframe');f.title='Слайд '+s.k+': нажмите на текст, чтобы исправить';big.appendChild(f);fit();
   f.onload=function(){try{setup(f,id,s.sel)}catch(e){}};
-  f.srcdoc=String(src).replace(/src="img(?:_[A-Z])?\/(logo|logo_monogram|ab_logo_light|logo_monogram_light)\.png"/g,'src="/pe/img/brand/$1.png"').replace(/<head([^>]*)>/i,'<head$1><base href="'+new URL(window.__VB,location.href).href+'">')}   /* 12.11: логотипы — из общей папки сайта (в папке работы их могло не быть — в правке показывался «битый» логотип) */
+  f.srcdoc=String(src).replace(/(src=["']|url\(["']?)(img\/[^"')\s]+)/g,function(m0,a,b){return IM[b]?a+IM[b]:m0}).replace(/src="img(?:_[A-Z])?\/(logo|logo_monogram|ab_logo_light|logo_monogram_light)\.png"/g,'src="/pe/img/brand/$1.png"').replace(/<head([^>]*)>/i,'<head$1><base href="'+new URL(window.__VB,location.href).href+'">')}   /* 12.11: логотипы — из общей папки сайта (в папке работы их могло не быть — в правке показывался «битый» логотип) */
 function setup(f,id,Lt){var d=f.contentDocument,st=d.createElement('style');
   st.textContent='[contenteditable]{cursor:text}[contenteditable]:hover{outline:4px dashed #9AA8D6;outline-offset:6px}[contenteditable]:focus{outline:4px solid #1745E0;outline-offset:6px}.pe-ed{outline:5px solid #F5A524!important;outline-offset:8px}mark{background:#FFE45C;color:inherit}';
   d.head.appendChild(st);var e=E[id],a=els(d);
@@ -365,14 +368,32 @@ function send(){var s=ST[cur],e=E[cur];if(!dirty(cur)||(s.st!=='ready'&&s.st!=='
   var btn=$('#bok'),bs=$('#bsend');btn.disabled=true;if(bs)bs.disabled=true;
   job({action:'slide25_edit',slide:cur,variant:e.L||s.sel,changes:ch,note:e.note.trim(),files:e.files.map(function(f){return {b:f.b,p:f.p,name:f.name}})}).then(function(g){btn.disabled=false;var bs2=$('#bsend');if(bs2)bs2.disabled=false;
     if(!g){say('Нет связи — нажмите ещё раз. Ничего не потеряно.');return}
-    s.red={t0:Date.now(),eta:heavy?3:0.3,sum:sum,heavy:heavy};E[cur]=null;IFK='';$('#ed').__wired='';say('✓ Правки сохранены — Малевич вносит их в слайд '+s.k+'. Потом нажмите «Утвердить».');paint()})}
-function redBig(s,c){var big=$('#big'),r=redLeft(s),tot=(s.red.eta||3)*60,pc=Math.max(4,Math.min(96,100-r*100/tot)),heavy=s.red.heavy!==false;
-  var h='<img src="'+esc((s.v&&s.v[s.sel])||'')+'" alt=""><div class="ov"><b>'+(heavy?'Малевич перерисовывает слайд '+s.k:'Малевич вносит правку текста')+'</b><div class="ovb"><i style="width:'+Math.round(pc)+'%"></i></div>'+
-    '<div class="stp"><span class="'+(s.red.on?'d':'n')+'">'+(s.red.on?'✓ ':'')+'Прочитал правку</span>'+(heavy?'<span class="'+(s.red.text?'d':'')+'">'+(s.red.text?'✓ ':'')+'Текст поправил</span><span class="'+(s.red.on?'n':'')+'">Рисую A, B, C</span>':'')+'</div></div>';
-  IFK='';var w=big.querySelector('.ovb i');if(w&&big.__h&&big.__h.split('<div class="ovb">')[0]===h.split('<div class="ovb">')[0]){w.style.width=Math.round(pc)+'%';var tm=big.querySelector('.tm');if(tm)tm.textContent=(r>3?'ещё '+mmss(r):'ещё чуть-чуть');return}
-  big.__h=h;big.innerHTML=h}
-function res2(jid,id,fin,q){fetch(A+'pe_jobs?select=r:payload-%3Eresult&id=eq.'+jid,{headers:H(),cache:'no-store'}).then(function(r){return r.json()}).then(function(a){var x=a&&a[0]&&a[0].r,s=ST[id];if(!x||!s)return;if(s.edj&&jid<s.edj)return;s.edj=jid;
-  if(x.v&&x.v[id]&&x.v[id].A){s.v=x.v[id];s.bad=0}if(x.h&&x.h[id])s.h=x.h[id];if(x.sm&&jid>=(window.__SMJ||0)){window.__SMJ=jid;SM=x.sm}   /* 13.11: список — из самой свежей правки, старые ответы не перебивают */if(x.prev&&x.prev[id]&&x.prev[id].A&&!(s.prev&&fin&&s.ver===x.ver))s.prev=x.prev[id];if(x.ver)s.ver=x.ver;s.showPrev=0;IFK='';try{var hh=x.h&&x.h[id]&&x.h[id][s.sel],m1=hh&&hh.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);if(m1){var it=sl.filter(function(z){return z.id===id})[0],tx=document.createElement('div');tx.innerHTML=m1[1].replace(/<br\s*\/?>/gi,' ');if(it)it.t=norm(tx.textContent)}}catch(er){}
+    s.ign=0;s.red={t0:Date.now(),eta:heavy?3:0.3,sum:sum,heavy:heavy};E[cur]=null;IFK='';$('#ed').__wired='';say('✓ Правки сохранены — Малевич вносит их в слайд '+s.k+'. Потом нажмите «Утвердить».');paint()})}
+/* 17.11 (Zoom М2, макет «Ход работы» утв. Русланом): «Перейти к Гудвину» — только когда слайды уже у Гудвина (блок zap в базе свежее последнего «Утвердить»); до того — ход работы */
+var IM={},IGN={};   /* IGN: отменённые правки — их результат не ставим */
+   /* 17.11: «img/…» варианта → подписанная ссылка хранилища (из результата задачи), пока сайт не выложен */
+var HF={ok0:0,t0:0,chk:0,ready:0,zat:'',pat:'',late:0};
+function hfFresh(a){return !!a&&Date.parse(a)>HF.ok0-120000}
+function hfPoll(){if(PE.test||DEMO){if(Date.now()-HF.t0>4000)HF.ready=1;return}if(Date.now()-HF.chk<4000)return;HF.chk=Date.now();
+  fetch(A+'pe_state?select=key,at:data-%3E%3Eat&deck=eq.'+encodeURIComponent(D)+'&key=in.(zap,pack)',{headers:H(),cache:'no-store'}).then(function(r){return r.json()}).then(function(a){(a||[]).forEach(function(x){if(x.key==='zap')HF.zat=x.at;else if(x.key==='pack')HF.pat=x.at});
+    if(hfFresh(HF.zat)&&!HF.ready){HF.ready=1;say('✓ Готово! Слайды у Гудвина — можно переходить к записи.')}paint()}).catch(function(){})}
+function hfBig(big,n){if(!HF.t0)HF.t0=Date.now();hfPoll();var el=(Date.now()-HF.t0)/1000,tot=180,pc=Math.max(4,Math.min(96,el*100/tot));
+  if(el>360&&!HF.ready){HF.ready=1;HF.late=1;say('Задерживаюсь — работа сохранена. Можно переходить: слайды появятся у Гудвина сами.')}
+  var pk=hfFresh(HF.pat),h='<div class="ov" style="background:#fff"><div style="font-size:34px" aria-hidden="true">🎬</div><b>Готовлю слайды для записи — около 3 минут</b><div class="ovb"><i style="width:'+Math.round(pc)+'%"></i></div>'+
+    '<div class="stp"><span class="d">✓ Все '+n+' слайдов утверждены</span><span class="'+(pk?'d':'')+'">'+(pk?'✓ ':'')+'PowerPoint и PDF</span><span class="n">Страница записи</span><span>Передаю Гудвину</span></div><div class="tm"></div></div>';
+  var tx=(el<tot?'Прошло '+mmss(el)+'.':'Ещё немного — заканчиваю…')+' Пока можно скачать PowerPoint или PDF.';
+  var w=big.querySelector('.ovb i');if(w&&big.__h===h){w.style.width=Math.round(pc)+'%';var tm=big.querySelector('.tm');if(tm)tm.textContent=tx;return}
+  big.__h=h;big.innerHTML=h;var tm2=big.querySelector('.tm');if(tm2)tm2.textContent=tx;IFK=''}
+function redBig(s,c){var big=$('#big'),heavy=s.red.heavy!==false;if(heavy&&(s.red.eta||0)<2)s.red.eta=2;var r=redLeft(s),tot=(s.red.eta||3)*60,pc=Math.max(4,Math.min(96,100-r*100/tot));   /* 17.11 (Zoom М3, макет «Ход работы» утв. Русланом): время, очередь, этапы, сколько прошло */
+  var dr=Object.keys(ST).filter(function(k){return ST[k].st==='drawing'}).map(function(k){return ST[k].k}),q=!s.red.on&&dr.length,mn=Math.max(1,Math.round(s.red.eta||2))+(q?1:0);
+  var tt=heavy?(q?'Сначала заканчиваю слайд'+(dr.length>1?'ы ':' ')+dr.join(', ')+', потом возьмусь за Вашу правку — около '+mn+' мин':'Я перерисовываю слайд '+s.k+' по Вашей правке — около '+mn+' мин'):'Я вношу правку текста в слайд '+s.k;
+  var h='<img src="'+esc((s.v&&s.v[s.sel])||'')+'" alt=""><div class="ov"><b>'+esc(tt)+'</b><div class="ovb"><i style="width:'+Math.round(pc)+'%"></i></div>'+
+    '<div class="stp"><span class="d">✓ Правку получил</span><span class="'+(s.red.on?'d':'n')+'">'+(s.red.on?'✓ Очередь: Ваша правка в работе':q?'Очередь: жду слайды '+esc(dr.join(', ')):'Очередь')+'</span>'+(heavy?'<span class="'+(s.red.on?'n':'')+'">Рисую A, B, C</span><span>Показываю 3 варианта</span>':'')+'</div><div class="tm"></div><button type="button" class="cx" data-cancel="1">Отменить правку</button></div>';
+  var el=Math.max(0,(Date.now()-(s.red.s0||(s.red.s0=s.red.t0||Date.now())))/1000),tx=(r>0?'Прошло '+mmss(el)+'.':'Ещё немного — заканчиваю…')+' Пока можно смотреть и утверждать другие слайды.';
+  IFK='';var w=big.querySelector('.ovb i');if(w&&big.__h===h){w.style.width=Math.round(pc)+'%';var tm=big.querySelector('.tm');if(tm)tm.textContent=tx;return}
+  big.__h=h;big.innerHTML=h;var tm2=big.querySelector('.tm');if(tm2)tm2.textContent=tx}
+function res2(jid,id,fin,q){fetch(A+'pe_jobs?select=r:payload-%3Eresult&id=eq.'+jid,{headers:H(),cache:'no-store'}).then(function(r){return r.json()}).then(function(a){var x=a&&a[0]&&a[0].r,s=ST[id];if(!x||!s||IGN[jid])return;if(s.edj&&jid<s.edj)return;s.edj=jid;
+  if(x.v&&x.v[id]&&x.v[id].A){s.v=x.v[id];s.bad=0}if(x.h&&x.h[id])s.h=x.h[id];if(x.im)for(var ik in x.im)IM[ik]=x.im[ik];if(x.sm&&jid>=(window.__SMJ||0)){window.__SMJ=jid;SM=x.sm}   /* 13.11: список — из самой свежей правки, старые ответы не перебивают */if(x.prev&&x.prev[id]&&x.prev[id].A&&!(s.prev&&fin&&s.ver===x.ver))s.prev=x.prev[id];if(x.ver)s.ver=x.ver;s.showPrev=0;IFK='';try{var hh=x.h&&x.h[id]&&x.h[id][s.sel],m1=hh&&hh.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);if(m1){var it=sl.filter(function(z){return z.id===id})[0],tx=document.createElement('div');tx.innerHTML=m1[1].replace(/<br\s*\/?>/gi,' ');if(it)it.t=norm(tx.textContent)}}catch(er){}
   if(fin&&x.stage==='none'){s.red=null;if(id===cur&&!q)say(x.miss&&x.miss.length?'Такого текста в варианте '+x.miss.join(', ')+' нет — там я ничего не менял. Напишите в «Что ещё поменять?» — перерисую.':'Текст на слайде не изменился.');paint();return}
   if(fin&&x.miss&&x.miss.length&&id===cur&&!q)setTimeout(function(){say('В варианте '+x.miss.join(', ')+' такого текста нет — там оставил как было.')},2600);
   if(fin){s.light=!(x.usd>0);if(s.red&&(!s.red.jid||s.red.jid===jid)){s.red=null;if(id===cur)say('✓ Готово! Слайд '+s.k+' — новая версия')}}paint()}).catch(function(){})}
@@ -380,7 +401,7 @@ function live(){if(DEMO){demoTick();paint();return}
   fetch(A+'pe_jobs?select=id,status,eta_min,started_at,payload-%3Eaction,payload-%3Eslides,payload-%3Eslide,payload-%3Evariant,note&deck=eq.'+encodeURIComponent(D)+'&payload-%3E%3Eaction=in.(slide25_draw,design_batch,slide25_ok,slide25_stuck,slide25_unok,slide25_edit)&order=id.asc&limit=300',{headers:H(),cache:'no-store'})
   .then(function(r){if(!r.ok)throw r.status;return r.json()}).then(function(rows){
     rows.forEach(function(j){var a=j.action,ids=(a==='design_batch'||a==='slide25_draw')?(j.slides||[]):[j.slide];ids.forEach(function(id){var s=ST[id];if(!s)return;
-      if(a==='slide25_edit'){if(j.status==='queued'||j.status==='processing'){FETCHED['e'+j.id]=1;s.red=s.red||{t0:Date.now(),eta:3,sum:''};s.red.jid=j.id;if(j.status==='processing'){s.red.on=1;s.red.eta=+j.eta_min||s.red.eta;s.red.t0=Date.parse(j.started_at)||s.red.t0}
+      if(a==='slide25_edit'){if(IGN[j.id]||(s.ign&&!FETCHED['e'+j.id]&&j.status!=='done'&&(IGN[j.id]=1)&&(s.ign=0,job({action:'slide25_edit_cancel',slide:id,of:j.id}),1)))return;if(s.ign&&j.status==='done'&&!FETCHED[j.id]){s.ign=0}if(j.status==='queued'||j.status==='processing'){FETCHED['e'+j.id]=1;s.red=s.red||{t0:Date.now(),eta:3,sum:''};s.red.jid=j.id;if(j.status==='processing'){s.red.on=1;s.red.eta=+j.eta_min||s.red.eta;s.red.t0=Date.parse(j.started_at)||s.red.t0}
           if(/Текст поправил/.test(j.note||'')&&!FETCHED[j.id+'t']){FETCHED[j.id+'t']=1;s.red.text=1;res2(j.id,id)}}
         else if(j.status==='done'){if(!FETCHED[j.id]){FETCHED[j.id]=1;res2(j.id,id,1,!LV)}else if(s.red&&s.red.jid===j.id&&s.red.got)s.red=null}
         else if(j.status==='error'&&s.red&&(s.red.jid===j.id||!s.red.jid&&!FETCHED['e'+j.id])){FETCHED['e'+j.id]=1;s.red=null;say('Не получилось перерисовать слайд '+s.k+'. Правка сохранена — Руслан получил сообщение.')}return}
