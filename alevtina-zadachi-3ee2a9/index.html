@@ -65,6 +65,8 @@ textarea{min-height:72px;resize:vertical}
   <div><b>3</b><span>Внизу нажмите «Сформировать список», скопируйте результат и отправьте Руслану.</span></div>
 </div>
 
+<div class="how" style="grid-template-columns:1fr"><div><b>★</b><span><strong>Принцип.</strong> Всё, что можно, мы переносим в сервисы. Ручная работа сейчас временная: по каждой такой задаче напишите, что из неё можно автоматизировать.</span></div></div>
+
 <div class="bar">
   <span class="cnt" id="cnt"></span>
   <div class="prog"><i id="prog"></i></div>
@@ -98,7 +100,7 @@ textarea{min-height:72px;resize:vertical}
 <script>
 (function(){
 var KEY="alevtina-tasks-v1";
-var KIND={have:"Уже есть",make:"Нужно создать",hand:"Пока вручную"};
+var KIND={have:"Уже есть",make:"Нужно создать",hand:"Пока вручную, потом в сервис"};
 var G=[
 {id:"upl",name:"Выкладка уроков",note:"Урок доходит до учеников",tasks:[
  {id:"u1",k:"hand",t:"Принять готовый урок и проверить комплект",d:"Видео, слайды, тест, материалы: всё на месте и открывается."},
@@ -132,7 +134,7 @@ var G=[
  {id:"p1",k:"have",t:"Вести Пульт отдела обучения",d:"Рабочий сервис отдела обучения. Что именно вы в нём делаете, уточним вместе."}
 ]}
 ];
-var D={dec:{},c:{},custom:[]};
+var D={dec:{},c:{},a:{},custom:[]};
 try{var r=localStorage.getItem(KEY);if(r){var p=JSON.parse(r);if(p&&typeof p==="object")D=Object.assign(D,p)}}catch(e){}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(D))}catch(e){}}
 function el(t,a,c){var e=document.createElement(t);if(a)for(var k in a){if(k==="class")e.className=a[k];else e.setAttribute(k,a[k])}(c||[]).forEach(function(x){e.appendChild(typeof x==="string"?document.createTextNode(x):x)});return e}
@@ -152,6 +154,7 @@ G.forEach(function(g){
   var ta=el("textarea",{id:"c-"+t.id,placeholder:"Ваш комментарий"});ta.value=D.c[t.id]||"";
   ta.oninput=function(){D.c[t.id]=ta.value;save()};
   card.appendChild(top);card.appendChild(dec);card.appendChild(el("label",{for:"c-"+t.id},["Комментарий",ta]));
+  if(t.k==="hand"){var au=el("textarea",{id:"a-"+t.id,placeholder:"Что из этого можно автоматизировать"});au.value=D.a[t.id]||"";au.oninput=function(){D.a[t.id]=au.value;save()};card.appendChild(el("label",{for:"a-"+t.id},["Что можно автоматизировать",au]))}
   box.appendChild(card)});
  root.appendChild(box)});
 function stat(){var n=0;G.forEach(function(g){g.tasks.forEach(function(t){if(D.dec[t.id])n++})});
@@ -174,7 +177,8 @@ function build(){
   s+="\n"+g.name.toUpperCase()+"\n";
   g.tasks.forEach(function(t){n++;
    s+=n+". "+t.t+" ["+KIND[t.k]+"] — "+(L[D.dec[t.id]]||"решения нет")+"\n";
-   if((D.c[t.id]||"").trim())s+="   Комментарий: "+D.c[t.id].trim().replace(/\n/g,"\n   ")+"\n"})});
+   if((D.c[t.id]||"").trim())s+="   Комментарий: "+D.c[t.id].trim().replace(/\n/g,"\n   ")+"\n";
+   if((D.a&&D.a[t.id]||"").trim())s+="   Можно автоматизировать: "+D.a[t.id].trim().replace(/\n/g,"\n   ")+"\n"})});
  if(D.custom.length){s+="\nМОИ ЗАДАЧИ\n";D.custom.forEach(function(c,i){s+=(i+1)+". "+c.t+(c.d?" — "+c.d:"")+"\n"})}
  return s}
 function make(){var o=document.getElementById("out");o.value=build();document.getElementById("res").scrollIntoView({behavior:"smooth"})}
