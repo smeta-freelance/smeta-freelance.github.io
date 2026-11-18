@@ -60,7 +60,7 @@ textarea{min-height:72px;resize:vertical}
 </header>
 
 <div class="how">
-  <div><b>1</b><span>Прочитайте задачу и нажмите «Беру», «Обсудить» или «Не беру».</span></div>
+  <div><b>1</b><span>Прочитайте задачу и нажмите «Беру» или «Обсудить».</span></div>
   <div><b>2</b><span>Под задачей напишите комментарий: что нужно, чего не хватает, что вы бы изменили.</span></div>
   <div><b>3</b><span>Внизу нажмите «Сформировать список», скопируйте результат и отправьте Руслану.</span></div>
 </div>
@@ -145,7 +145,7 @@ G.forEach(function(g){
   var card=el("div",{class:"task"});
   var top=el("div",{class:"top"},[el("div",{class:"t"},[el("strong",0,[t.t]),el("p",0,[t.d])]),el("span",{class:"kind "+t.k},[KIND[t.k]])]);
   var dec=el("div",{class:"dec",role:"group","aria-label":"Решение по задаче"});
-  [["yes","Беру"],["mb","Обсудить"],["no","Не беру"]].forEach(function(o){
+  [["yes","Беру"],["mb","Обсудить"]].forEach(function(o){
    var b=el("button",{type:"button",class:o[0],"aria-pressed":D.dec[t.id]===o[0]?"true":"false"},[o[1]]);
    b.onclick=function(){D.dec[t.id]=D.dec[t.id]===o[0]?"":o[0];save();Array.prototype.forEach.call(dec.children,function(c){c.setAttribute("aria-pressed","false")});if(D.dec[t.id])b.setAttribute("aria-pressed","true");stat()};
    dec.appendChild(b)});
