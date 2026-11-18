@@ -7,47 +7,53 @@
 <title>Задачи Алевтины</title>
 <style>
 :root{--bg:#F4F6FA;--card:#fff;--ink:#1B2430;--mute:#5E6B7B;--line:#E1E6EE;--accent:#2B5CD9;--accent-soft:#E8EEFC;
---ok:#1F7A4D;--ok-soft:#E4F4EB;--make:#2B5CD9;--hand:#B25E12;--hand-soft:#FCEEDC;--no:#B3382C;--no-soft:#FBE9E7;--maybe:#8A6A12;--maybe-soft:#FBF1D8;color-scheme:light}
+--auto:#1F7A4D;--auto-soft:#E4F4EB;--need:#2B5CD9;--need-soft:#E8EEFC;--hand:#B25E12;--hand-soft:#FCEEDC;--unk:#6B5E8A;--unk-soft:#EFEAF8;
+--maybe:#8A6A12;--maybe-soft:#FBF1D8;--ok:#1F7A4D;--ok-soft:#E4F4EB;color-scheme:light}
 *{box-sizing:border-box}
 html,body{background:var(--bg)}
-body{margin:0;color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;padding:24px 16px 64px}
-.wrap{max-width:920px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
-h1{font-size:clamp(26px,4vw,34px);line-height:1.15;margin:0}
-.lead{margin:6px 0 0;color:var(--mute);max-width:62ch}
+body{margin:0;color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;padding:24px 16px 72px}
+.wrap{max-width:940px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1{font-size:clamp(26px,4vw,36px);line-height:1.15;margin:0}
+.lead{margin:6px 0 0;color:var(--mute);max-width:64ch}
 .how{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 18px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .how div{display:flex;gap:10px;align-items:flex-start;font-size:14px}
 .how b{flex:none;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px}
+.legend{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:14px;color:var(--mute)}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:2px 10px;border-radius:999px;white-space:nowrap}
+.tag.auto{background:var(--auto-soft);color:var(--auto)}
+.tag.need{background:var(--need-soft);color:var(--need)}
+.tag.hand{background:var(--hand-soft);color:var(--hand)}
+.tag.unk{background:var(--unk-soft);color:var(--unk)}
 .bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:8px 0;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .bar .cnt{font-weight:600}
 .prog{flex:1;min-width:120px;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
 .prog i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s}
 button{font:inherit;cursor:pointer;min-height:44px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:0 16px}
-button:focus-visible,textarea:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button:focus-visible,textarea:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 button.main{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
 .grp{display:flex;flex-direction:column;gap:12px}
-.grp>h2{margin:8px 0 0;font-size:20px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
-.grp>h2 small{font-size:14px;font-weight:400;color:var(--mute)}
+.grp>h2{margin:10px 0 0;font-size:22px}
+.grp>p.sub{margin:-6px 0 0;color:var(--mute);font-size:14px}
 .task{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
 .top{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap}
 .top .t{flex:1;min-width:220px}
-.top strong{display:block;font-size:16px}
+.top strong{display:block}
 .top p{margin:2px 0 0;color:var(--mute);font-size:14px}
-.kind{font-size:12px;font-weight:600;padding:2px 10px;border-radius:999px;white-space:nowrap}
-.kind.have{background:var(--ok-soft);color:var(--ok)}
-.kind.make{background:var(--accent-soft);color:var(--make)}
-.kind.hand{background:var(--hand-soft);color:var(--hand)}
-.dec{display:flex;gap:8px;flex-wrap:wrap}
+.dec{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .dec button[aria-pressed=true].yes{background:var(--ok-soft);border-color:var(--ok);color:var(--ok);font-weight:600}
 .dec button[aria-pressed=true].mb{background:var(--maybe-soft);border-color:var(--maybe);color:var(--maybe);font-weight:600}
-.dec button[aria-pressed=true].no{background:var(--no-soft);border-color:var(--no);color:var(--no);font-weight:600}
-label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute)}
-textarea,input[type=text]{font:inherit;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px;width:100%;min-height:44px}
+.dec .sp{flex:1}
+label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute);min-width:0}
+textarea,input[type=text],select{font:inherit;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px;width:100%;min-height:44px}
 textarea{min-height:72px;resize:vertical}
-.add{background:var(--card);border:1px dashed var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+select{width:auto;min-width:200px}
+.add{background:var(--card);border:2px dashed var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.add strong{font-size:16px}
+.mine{border-color:#C9D6F7;background:#FBFCFF}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
 .res{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px}
 .res h2{margin:0;font-size:20px}
-.out{min-height:240px;font:14px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
-.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.out{min-height:260px;font:14px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
 .note{color:var(--mute);font-size:13px}
 @media(max-width:680px){.how{grid-template-columns:1fr}}
 </style>
@@ -56,16 +62,21 @@ textarea{min-height:72px;resize:vertical}
 <div class="wrap">
 <header>
   <h1>Задачи Алевтины</h1>
-  <p class="lead">Академия Сметного Дела. Здесь собраны все направления и задачи, которые мы обсуждали. По каждой задаче отметьте, берёте ли вы её, и оставьте комментарий. В конце нажмите кнопку, и всё соберётся в один список.</p>
+  <p class="lead">Академия Сметного Дела. Здесь собраны задачи по трём направлениям: эксперты, клиенты и выкладка урока. Нам важна ваша обратная связь по каждой задаче и ваши собственные задачи.</p>
 </header>
 
 <div class="how">
-  <div><b>1</b><span>Прочитайте задачу и нажмите «Беру» или «Обсудить».</span></div>
-  <div><b>2</b><span>Под задачей напишите комментарий: что нужно, чего не хватает, что вы бы изменили.</span></div>
+  <div><b>1</b><span>Прочитайте задачу, нажмите «Беру» или «Обсудить» и напишите комментарий.</span></div>
+  <div><b>2</b><span>Если тег автоматизации стоит неверно, поменяйте его. Если чего-то не хватает, добавьте свою задачу в окошке направления.</span></div>
   <div><b>3</b><span>Внизу нажмите «Сформировать список», скопируйте результат и отправьте Руслану.</span></div>
 </div>
 
-<div class="how" style="grid-template-columns:1fr"><div><b>★</b><span><strong>Принцип.</strong> Всё, что можно, мы переносим в сервисы. Ручная работа сейчас временная: по каждой такой задаче напишите, что из неё можно автоматизировать.</span></div></div>
+<div class="legend">Теги автоматизации:
+  <span class="tag auto">Автоматизировано</span>
+  <span class="tag need">Нужно автоматизировать</span>
+  <span class="tag hand">Пока вручную</span>
+  <span class="tag unk">Уточнить</span>
+</div>
 
 <div class="bar">
   <span class="cnt" id="cnt"></span>
@@ -73,20 +84,17 @@ textarea{min-height:72px;resize:vertical}
   <button class="main" id="go1" type="button">Сформировать список</button>
 </div>
 
-<div id="groups" class="wrap" style="gap:24px"></div>
+<div id="groups" class="wrap" style="gap:28px"></div>
 
 <div class="add">
-  <strong>Своя задача</strong>
-  <span class="note">Если чего-то не хватает, добавьте здесь. Она попадёт в итоговый список.</span>
-  <label for="ntitle">Название задачи<input type="text" id="ntitle" placeholder="Например: подготовить инструкцию для новых учеников"></label>
-  <label for="ntext">Пояснение<textarea id="ntext" placeholder="Что нужно сделать и зачем"></textarea></label>
-  <div class="row"><button type="button" id="nadd">Добавить задачу</button><span class="note" id="nmsg"></span></div>
-  <div id="custom" style="display:flex;flex-direction:column;gap:6px"></div>
+  <strong>Общий комментарий</strong>
+  <span class="note">Всё остальное, что хотите сказать: что мешает работе, чего не хватает, что бы вы изменили.</span>
+  <textarea id="gen" placeholder="Ваши мысли"></textarea>
 </div>
 
 <div class="res" id="res">
   <h2>Итоговый список</h2>
-  <p class="note" style="margin:0">Нажмите «Сформировать список»: задачи встанут столбиком с вашими решениями и комментариями. Список можно скопировать или сохранить файлом.</p>
+  <p class="note" style="margin:0">Нажмите «Сформировать список»: задачи встанут столбиком по направлениям, с вашими решениями, тегами, комментариями и добавленными задачами.</p>
   <div class="row"><button class="main" id="go2" type="button">Сформировать список</button></div>
   <textarea class="out" id="out" readonly placeholder="Здесь появится список"></textarea>
   <div class="row">
@@ -99,87 +107,106 @@ textarea{min-height:72px;resize:vertical}
 
 <script>
 (function(){
-var KEY="alevtina-tasks-v1";
-var KIND={have:"Уже есть",make:"Нужно создать",hand:"Пока вручную, потом в сервис"};
+var KEY="alevtina-tasks-v2";
+var TAG={auto:"Автоматизировано",need:"Нужно автоматизировать",hand:"Пока вручную",unk:"Уточнить"};
 var G=[
-{id:"upl",name:"Выкладка уроков",note:"Урок доходит до учеников",tasks:[
- {id:"u1",k:"hand",t:"Принять готовый урок и проверить комплект",d:"Видео, слайды, тест, материалы: всё на месте и открывается."},
- {id:"u2",k:"have",t:"Выложить урок на платформу",d:"В системе, где идёт выкладка. Где именно, уточним вместе."},
- {id:"u3",k:"hand",t:"Проверить, что урок открывается и видео играет",d:"Открыть урок как ученик и убедиться, что всё воспроизводится."},
- {id:"u4",k:"hand",t:"Сообщить эксперту или куратору, что урок вышел",d:"Коротко и вовремя, чтобы эксперт знал результат."},
- {id:"u5",k:"make",t:"Журнал выкладки",d:"Видно, какой урок, когда и кем выложен, чтобы ничего не терялось."}
+{id:"exp",name:"Эксперты",note:"Служба заботы экспертов: эксперт знает, что делать дальше",tasks:[
+ {id:"e1",tag:"hand",t:"Встретить нового эксперта",d:"Дать логин и доступ в кабинет «Презентации экспертов»."},
+ {id:"e2",tag:"hand",t:"Объяснить кабинет «Двери» и первый вход",d:"Куда нажимать, с чего начать работу."},
+ {id:"e3",tag:"hand",t:"Отвечать на вопросы по кабинету, срокам и правилам",d:"Вопросы действующих и новых экспертов."},
+ {id:"e4",tag:"auto",t:"Помощь при записи урока",d:"Страница записи сама проверяет звук и камеру и подсказывает по дублям. Личная помощь, если что-то не получается, идёт вручную."},
+ {id:"e5",tag:"auto",t:"Ход работы эксперта",d:"Страница показывает, что работа принята и в процессе."},
+ {id:"e6",tag:"hand",t:"Разбор зависших работ",d:"Когда работа эксперта не дошла до результата, причину ищут вручную."},
+ {id:"e7",tag:"need",t:"Письма эксперту: «файл получен» и «работа готова»",d:"Сейчас они не уходят: почта не настроена."},
+ {id:"e8",tag:"need",t:"Вход эксперта по своей электронной почте",d:"Идея Руслана. Решение пока не принято."},
+ {id:"e9",tag:"need",t:"Онбординг эксперта: цепочка и журнал",d:"Стандартная последовательность для нового эксперта и запись, что ему отправлено."}
 ]},
-{id:"exp",name:"Эксперты",note:"Эксперт знает, что делать дальше",tasks:[
- {id:"e1",k:"hand",t:"Встретить нового эксперта",d:"Дать логин и доступ в кабинет «Презентации экспертов», объяснить, с чего начать."},
- {id:"e2",k:"hand",t:"Отвечать действующим экспертам",d:"Вопросы по кабинету, по записи урока, по срокам."},
- {id:"e3",k:"hand",t:"Помогать при записи урока",d:"Свет, звук, слайды, дубли. Если что-то идёт не так, помочь разобраться."},
- {id:"e4",k:"hand",t:"Сопровождать работы эксперта до результата",d:"Следить, что работы не зависают, и сообщать эксперту, что происходит."},
- {id:"e5",k:"make",t:"Письма экспертам",d:"Автоматические «Файл получен» и «Работа готова». Сейчас они не уходят: почта не настроена."}
+{id:"cli",name:"Клиенты",note:"Служба заботы клиентов: человек с проблемой получает помощь с первого обращения",tasks:[
+ {id:"c1",tag:"need",t:"Принять обращение: единая точка входа и журнал",d:"Одно место, куда пишет клиент, и запись, что с обращением сделано."},
+ {id:"c2",tag:"hand",t:"Первичные ответы клиентам",d:"Выслушать, понять проблему, помочь."},
+ {id:"c3",tag:"need",t:"База типовых ответов",d:"По ГРАНД-Смете, видео и доступам, чтобы ответы не держались на памяти одного человека."},
+ {id:"c4",tag:"unk",t:"Выдача доступов",d:"К курсам и сервисам. Как именно выдаётся сейчас, нужно уточнить. В GetCourse нужно отдельное разрешение Руслана."},
+ {id:"c5",tag:"unk",t:"Ключи ГРАНД-Сметы: выдача",d:"Где хранятся ключи и как выдаются, уточним."},
+ {id:"c6",tag:"hand",t:"ГРАНД-Смета не запускается: первичная помощь",d:"Проверить типовые причины по инструкции."},
+ {id:"c7",tag:"hand",t:"Видео не воспроизводится, урок не открывается",d:"Найти причину и вернуть работоспособность."},
+ {id:"c8",tag:"auto",t:"Онбординг: рассылка инструкции новому человеку",d:"Почти автоматизирована. Инструкция уже передана."},
+ {id:"c9",tag:"hand",t:"Онбординг: личная связь, если человек не разобрался",d:"Только когда инструкции не хватило."},
+ {id:"c10",tag:"hand",t:"Передать сложный случай в техническую часть",d:"Кому передаётся и в какой срок, пока не решено."}
 ]},
-{id:"care",name:"Служба заботы",note:"Клиент получает помощь с первого обращения (ученики и эксперты при записи)",tasks:[
- {id:"c1",k:"hand",t:"Принять обращение и ответить первым",d:"Первичная техподдержка: выслушать, понять проблему, помочь."},
- {id:"c2",k:"hand",t:"Выдать доступы",d:"К курсам и сервисам. Как именно выдаются сейчас, нужно уточнить. В GetCourse нужно отдельное разрешение Руслана."},
- {id:"c3",k:"hand",t:"Починить поломку: видео не воспроизводится, не открывается урок",d:"Найти причину и вернуть работоспособность."},
- {id:"c4",k:"have",t:"Ключи ГРАНД-Сметы",d:"Выдача ключей и лицензий. Где они хранятся, уточним."},
- {id:"c5",k:"hand",t:"ГРАНД-Смета не запускается: первичная помощь",d:"Проверить типовые причины по инструкции. Сложные случаи передаются дальше."},
- {id:"c6",k:"make",t:"Единая точка входа для обращений и журнал",d:"Одно место, куда пишет клиент, и запись, что с обращением сделано."},
- {id:"c7",k:"make",t:"База типовых ответов",d:"По ГРАНД-Смете, видео и доступам, чтобы ответы не держались на памяти одного человека."}
-]},
-{id:"onb",name:"Онбординг",note:"Новый человек сразу понимает, что делать",tasks:[
- {id:"o1",k:"hand",t:"Отправить новому человеку инструкцию",d:"Сейчас высылается вручную, инструкция уже передана."},
- {id:"o2",k:"hand",t:"Связаться лично, если человек совсем не разобрался",d:"Только если инструкции не хватило."},
- {id:"o3",k:"make",t:"Сделать онбординг программой",d:"Стандартная цепочка: что высылается и в каком порядке, с журналом отправок."}
-]},
-{id:"pult",name:"Пульт отдела обучения",note:"",tasks:[
- {id:"p1",k:"have",t:"Вести Пульт отдела обучения",d:"Рабочий сервис отдела обучения. Что именно вы в нём делаете, уточним вместе."}
+{id:"upl",name:"Выкладка урока",note:"Урок доходит до учеников",tasks:[
+ {id:"u1",tag:"hand",t:"Принять урок и проверить комплект",d:"Видео, слайды, тест, материалы: всё на месте и открывается."},
+ {id:"u2",tag:"unk",t:"Приёмка урока",d:"Кто ведёт приёмку и какая роль у Даши, нужно уточнить."},
+ {id:"u3",tag:"unk",t:"Выложить урок на платформу",d:"Выкладка есть как сервис. Насколько она автоматизирована, уточним."},
+ {id:"u4",tag:"need",t:"Проверить, что урок открывается и видео играет",d:"Автоматическая проверка после выкладки."},
+ {id:"u5",tag:"need",t:"Сообщить эксперту или куратору, что урок вышел",d:"Автоматическое письмо или сообщение."},
+ {id:"u6",tag:"need",t:"Журнал выкладки",d:"Видно, какой урок, когда и кем выложен, чтобы ничего не терялось."},
+ {id:"u7",tag:"unk",t:"Пульт отдела обучения",d:"Рабочий сервис отдела обучения. Что именно вы в нём делаете, уточним."}
 ]}
 ];
-var D={dec:{},c:{},a:{},custom:[]};
-try{var r=localStorage.getItem(KEY);if(r){var p=JSON.parse(r);if(p&&typeof p==="object")D=Object.assign(D,p)}}catch(e){}
+var D={dec:{},c:{},tag:{},custom:{exp:[],cli:[],upl:[]},gen:""};
+try{var r=localStorage.getItem(KEY);if(r){var p=JSON.parse(r);if(p&&typeof p==="object"){D=Object.assign(D,p);D.custom=Object.assign({exp:[],cli:[],upl:[]},p.custom||{})}}}catch(e){}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(D))}catch(e){}}
 function el(t,a,c){var e=document.createElement(t);if(a)for(var k in a){if(k==="class")e.className=a[k];else e.setAttribute(k,a[k])}(c||[]).forEach(function(x){e.appendChild(typeof x==="string"?document.createTextNode(x):x)});return e}
+function curTag(t){return D.tag[t.id]||t.tag}
 var total=0;G.forEach(function(g){total+=g.tasks.length});
 var root=document.getElementById("groups");
+function tagSel(id,val,onch){var s=el("select",{id:id});Object.keys(TAG).forEach(function(k){var o=el("option",{value:k},[TAG[k]]);if(k===val)o.selected=true;s.appendChild(o)});s.onchange=function(){onch(s.value)};return s}
 G.forEach(function(g){
  var box=el("div",{class:"grp"});
- var h=el("h2",0,[g.name]);if(g.note)h.appendChild(el("small",0,[g.note]));box.appendChild(h);
+ box.appendChild(el("h2",0,[g.name]));box.appendChild(el("p",{class:"sub"},[g.note]));
  g.tasks.forEach(function(t){
   var card=el("div",{class:"task"});
-  var top=el("div",{class:"top"},[el("div",{class:"t"},[el("strong",0,[t.t]),el("p",0,[t.d])]),el("span",{class:"kind "+t.k},[KIND[t.k]])]);
+  var tg=el("span",{class:"tag "+curTag(t)},[TAG[curTag(t)]]);
+  card.appendChild(el("div",{class:"top"},[el("div",{class:"t"},[el("strong",0,[t.t]),el("p",0,[t.d])]),tg]));
   var dec=el("div",{class:"dec",role:"group","aria-label":"Решение по задаче"});
   [["yes","Беру"],["mb","Обсудить"]].forEach(function(o){
    var b=el("button",{type:"button",class:o[0],"aria-pressed":D.dec[t.id]===o[0]?"true":"false"},[o[1]]);
-   b.onclick=function(){D.dec[t.id]=D.dec[t.id]===o[0]?"":o[0];save();Array.prototype.forEach.call(dec.children,function(c){c.setAttribute("aria-pressed","false")});if(D.dec[t.id])b.setAttribute("aria-pressed","true");stat()};
+   b.onclick=function(){D.dec[t.id]=D.dec[t.id]===o[0]?"":o[0];save();Array.prototype.forEach.call(dec.querySelectorAll("button"),function(c){c.setAttribute("aria-pressed","false")});if(D.dec[t.id])b.setAttribute("aria-pressed","true");stat()};
    dec.appendChild(b)});
+  dec.appendChild(el("span",{class:"sp"}));
+  var sel=tagSel("tg-"+t.id,curTag(t),function(v){D.tag[t.id]=v;save();tg.className="tag "+v;tg.textContent=TAG[v]});
+  dec.appendChild(el("label",{for:"tg-"+t.id},["Тег автоматизации",sel]));
+  card.appendChild(dec);
   var ta=el("textarea",{id:"c-"+t.id,placeholder:"Ваш комментарий"});ta.value=D.c[t.id]||"";
   ta.oninput=function(){D.c[t.id]=ta.value;save()};
-  card.appendChild(top);card.appendChild(dec);card.appendChild(el("label",{for:"c-"+t.id},["Комментарий",ta]));
-  if(t.k==="hand"){var au=el("textarea",{id:"a-"+t.id,placeholder:"Что из этого можно автоматизировать"});au.value=D.a[t.id]||"";au.oninput=function(){D.a[t.id]=au.value;save()};card.appendChild(el("label",{for:"a-"+t.id},["Что можно автоматизировать",au]))}
+  card.appendChild(el("label",{for:"c-"+t.id},["Комментарий",ta]));
   box.appendChild(card)});
+ var mine=el("div",{id:"mine-"+g.id,style:"display:flex;flex-direction:column;gap:12px"});box.appendChild(mine);
+ var add=el("div",{class:"add"});
+ add.appendChild(el("strong",0,["Добавить свою задачу в направление «"+g.name+"»"]));
+ var ti=el("input",{type:"text",id:"nt-"+g.id,placeholder:"Название задачи"});
+ var tx=el("textarea",{id:"nx-"+g.id,placeholder:"Что нужно сделать и зачем"});
+ var ts=tagSel("ns-"+g.id,"hand",function(){});
+ var m=el("span",{class:"note"});
+ var bt=el("button",{type:"button"},["Добавить задачу"]);
+ bt.onclick=function(){if(!ti.value.trim()){m.textContent="Введите название задачи";return}
+  D.custom[g.id].push({t:ti.value.trim(),d:tx.value.trim(),tag:ts.value});save();ti.value="";tx.value="";m.textContent="Добавлено";renderMine(g.id)};
+ add.appendChild(el("label",{for:"nt-"+g.id},["Название",ti]));
+ add.appendChild(el("label",{for:"nx-"+g.id},["Пояснение",tx]));
+ add.appendChild(el("label",{for:"ns-"+g.id},["Тег автоматизации",ts]));
+ add.appendChild(el("div",{class:"row"},[bt,m]));
+ box.appendChild(add);
  root.appendChild(box)});
+function renderMine(id){var c=document.getElementById("mine-"+id);c.textContent="";
+ D.custom[id].forEach(function(x,i){
+  var rm=el("button",{type:"button"},["Убрать"]);rm.onclick=function(){D.custom[id].splice(i,1);save();renderMine(id)};
+  c.appendChild(el("div",{class:"task mine"},[el("div",{class:"top"},[el("div",{class:"t"},[el("strong",0,[x.t]),el("p",0,[x.d||"Без пояснения"]),el("p",0,["Добавлено вами"])]),el("span",{class:"tag "+x.tag},[TAG[x.tag]])]),el("div",{class:"row"},[rm])]))})}
+G.forEach(function(g){renderMine(g.id)});
 function stat(){var n=0;G.forEach(function(g){g.tasks.forEach(function(t){if(D.dec[t.id])n++})});
  document.getElementById("cnt").textContent="Отмечено "+n+" из "+total;
  document.getElementById("prog").style.width=Math.round(n/total*100)+"%"}
 stat();
-var cu=document.getElementById("custom");
-function renderCustom(){cu.textContent="";D.custom.forEach(function(c,i){
- var b=el("button",{type:"button"},["Убрать"]);b.onclick=function(){D.custom.splice(i,1);save();renderCustom()};
- cu.appendChild(el("div",{class:"row"},[el("span",0,["• "+c.t+(c.d?" — "+c.d:"")]),b]))})}
-renderCustom();
-document.getElementById("nadd").onclick=function(){
- var t=document.getElementById("ntitle"),d=document.getElementById("ntext"),m=document.getElementById("nmsg");
- if(!t.value.trim()){m.textContent="Введите название задачи";return}
- D.custom.push({t:t.value.trim(),d:d.value.trim()});save();t.value="";d.value="";m.textContent="Добавлено";renderCustom()};
-var L={yes:"беру",mb:"обсудить",no:"не беру"};
+var gen=document.getElementById("gen");gen.value=D.gen||"";gen.oninput=function(){D.gen=gen.value;save()};
+var L={yes:"беру",mb:"обсудить"};
 function build(){
  var s="Задачи Алевтины — Академия Сметного Дела\n";var n=0;
  G.forEach(function(g){
   s+="\n"+g.name.toUpperCase()+"\n";
   g.tasks.forEach(function(t){n++;
-   s+=n+". "+t.t+" ["+KIND[t.k]+"] — "+(L[D.dec[t.id]]||"решения нет")+"\n";
-   if((D.c[t.id]||"").trim())s+="   Комментарий: "+D.c[t.id].trim().replace(/\n/g,"\n   ")+"\n";
-   if((D.a&&D.a[t.id]||"").trim())s+="   Можно автоматизировать: "+D.a[t.id].trim().replace(/\n/g,"\n   ")+"\n"})});
- if(D.custom.length){s+="\nМОИ ЗАДАЧИ\n";D.custom.forEach(function(c,i){s+=(i+1)+". "+c.t+(c.d?" — "+c.d:"")+"\n"})}
+   s+=n+". "+t.t+" ["+TAG[curTag(t)]+"] — "+(L[D.dec[t.id]]||"решения нет")+"\n";
+   if((D.c[t.id]||"").trim())s+="   Комментарий: "+D.c[t.id].trim().replace(/\n/g,"\n   ")+"\n"});
+  if(D.custom[g.id].length){s+="  Добавлено Алевтиной:\n";D.custom[g.id].forEach(function(x){s+="  + "+x.t+" ["+TAG[x.tag]+"]"+(x.d?" — "+x.d:"")+"\n"})}});
+ if((D.gen||"").trim())s+="\nОБЩИЙ КОММЕНТАРИЙ\n"+D.gen.trim()+"\n";
  return s}
 function make(){var o=document.getElementById("out");o.value=build();document.getElementById("res").scrollIntoView({behavior:"smooth"})}
 document.getElementById("go1").onclick=make;document.getElementById("go2").onclick=make;
