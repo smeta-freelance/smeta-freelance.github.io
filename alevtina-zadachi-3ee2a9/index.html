@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Задачи Алевтины</title>
+<style>
+:root{--bg:#F4F6FA;--card:#fff;--ink:#1B2430;--mute:#5E6B7B;--line:#E1E6EE;--accent:#2B5CD9;--accent-soft:#E8EEFC;
+--ok:#1F7A4D;--ok-soft:#E4F4EB;--make:#2B5CD9;--hand:#B25E12;--hand-soft:#FCEEDC;--no:#B3382C;--no-soft:#FBE9E7;--maybe:#8A6A12;--maybe-soft:#FBF1D8;color-scheme:light}
+*{box-sizing:border-box}
+html,body{background:var(--bg)}
+body{margin:0;color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;padding:24px 16px 64px}
+.wrap{max-width:920px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1{font-size:clamp(26px,4vw,34px);line-height:1.15;margin:0}
+.lead{margin:6px 0 0;color:var(--mute);max-width:62ch}
+.how{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 18px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.how div{display:flex;gap:10px;align-items:flex-start;font-size:14px}
+.how b{flex:none;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:8px 0;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.bar .cnt{font-weight:600}
+.prog{flex:1;min-width:120px;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s}
+button{font:inherit;cursor:pointer;min-height:44px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:0 16px}
+button:focus-visible,textarea:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button.main{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.grp{display:flex;flex-direction:column;gap:12px}
+.grp>h2{margin:8px 0 0;font-size:20px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.grp>h2 small{font-size:14px;font-weight:400;color:var(--mute)}
+.task{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.top{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap}
+.top .t{flex:1;min-width:220px}
+.top strong{display:block;font-size:16px}
+.top p{margin:2px 0 0;color:var(--mute);font-size:14px}
+.kind{font-size:12px;font-weight:600;padding:2px 10px;border-radius:999px;white-space:nowrap}
+.kind.have{background:var(--ok-soft);color:var(--ok)}
+.kind.make{background:var(--accent-soft);color:var(--make)}
+.kind.hand{background:var(--hand-soft);color:var(--hand)}
+.dec{display:flex;gap:8px;flex-wrap:wrap}
+.dec button[aria-pressed=true].yes{background:var(--ok-soft);border-color:var(--ok);color:var(--ok);font-weight:600}
+.dec button[aria-pressed=true].mb{background:var(--maybe-soft);border-color:var(--maybe);color:var(--maybe);font-weight:600}
+.dec button[aria-pressed=true].no{background:var(--no-soft);border-color:var(--no);color:var(--no);font-weight:600}
+label{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--mute)}
+textarea,input[type=text]{font:inherit;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px;width:100%;min-height:44px}
+textarea{min-height:72px;resize:vertical}
+.add{background:var(--card);border:1px dashed var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.res{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.res h2{margin:0;font-size:20px}
+.out{min-height:240px;font:14px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.note{color:var(--mute);font-size:13px}
+@media(max-width:680px){.how{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Задачи Алевтины</h1>
+  <p class="lead">Академия Сметного Дела. Здесь собраны все направления и задачи, которые мы обсуждали. По каждой задаче отметьте, берёте ли вы её, и оставьте комментарий. В конце нажмите кнопку, и всё соберётся в один список.</p>
+</header>
+
+<div class="how">
+  <div><b>1</b><span>Прочитайте задачу и нажмите «Беру», «Обсудить» или «Не беру».</span></div>
+  <div><b>2</b><span>Под задачей напишите комментарий: что нужно, чего не хватает, что вы бы изменили.</span></div>
+  <div><b>3</b><span>Внизу нажмите «Сформировать список», скопируйте результат и отправьте Руслану.</span></div>
+</div>
+
+<div class="bar">
+  <span class="cnt" id="cnt"></span>
+  <div class="prog"><i id="prog"></i></div>
+  <button class="main" id="go1" type="button">Сформировать список</button>
+</div>
+
+<div id="groups" class="wrap" style="gap:24px"></div>
+
+<div class="add">
+  <strong>Своя задача</strong>
+  <span class="note">Если чего-то не хватает, добавьте здесь. Она попадёт в итоговый список.</span>
+  <label for="ntitle">Название задачи<input type="text" id="ntitle" placeholder="Например: подготовить инструкцию для новых учеников"></label>
+  <label for="ntext">Пояснение<textarea id="ntext" placeholder="Что нужно сделать и зачем"></textarea></label>
+  <div class="row"><button type="button" id="nadd">Добавить задачу</button><span class="note" id="nmsg"></span></div>
+  <div id="custom" style="display:flex;flex-direction:column;gap:6px"></div>
+</div>
+
+<div class="res" id="res">
+  <h2>Итоговый список</h2>
+  <p class="note" style="margin:0">Нажмите «Сформировать список»: задачи встанут столбиком с вашими решениями и комментариями. Список можно скопировать или сохранить файлом.</p>
+  <div class="row"><button class="main" id="go2" type="button">Сформировать список</button></div>
+  <textarea class="out" id="out" readonly placeholder="Здесь появится список"></textarea>
+  <div class="row">
+    <button type="button" id="copy">Скопировать</button>
+    <button type="button" id="save">Сохранить файлом</button>
+    <span class="note" id="msg"></span>
+  </div>
+</div>
+</div>
+
+<script>
+(function(){
+var KEY="alevtina-tasks-v1";
+var KIND={have:"Уже есть",make:"Нужно создать",hand:"Пока вручную"};
+var G=[
+{id:"upl",name:"Выкладка уроков",note:"Урок доходит до учеников",tasks:[
+ {id:"u1",k:"hand",t:"Принять готовый урок и проверить комплект",d:"Видео, слайды, тест, материалы: всё на месте и открывается."},
+ {id:"u2",k:"have",t:"Выложить урок на платформу",d:"В системе, где идёт выкладка. Где именно, уточним вместе."},
+ {id:"u3",k:"hand",t:"Проверить, что урок открывается и видео играет",d:"Открыть урок как ученик и убедиться, что всё воспроизводится."},
+ {id:"u4",k:"hand",t:"Сообщить эксперту или куратору, что урок вышел",d:"Коротко и вовремя, чтобы эксперт знал результат."},
+ {id:"u5",k:"make",t:"Журнал выкладки",d:"Видно, какой урок, когда и кем выложен, чтобы ничего не терялось."}
+]},
+{id:"exp",name:"Эксперты",note:"Эксперт знает, что делать дальше",tasks:[
+ {id:"e1",k:"hand",t:"Встретить нового эксперта",d:"Дать логин и доступ в кабинет «Презентации экспертов», объяснить, с чего начать."},
+ {id:"e2",k:"hand",t:"Отвечать действующим экспертам",d:"Вопросы по кабинету, по записи урока, по срокам."},
+ {id:"e3",k:"hand",t:"Помогать при записи урока",d:"Свет, звук, слайды, дубли. Если что-то идёт не так, помочь разобраться."},
+ {id:"e4",k:"hand",t:"Сопровождать работы эксперта до результата",d:"Следить, что работы не зависают, и сообщать эксперту, что происходит."},
+ {id:"e5",k:"make",t:"Письма экспертам",d:"Автоматические «Файл получен» и «Работа готова». Сейчас они не уходят: почта не настроена."}
+]},
+{id:"care",name:"Служба заботы",note:"Клиент получает помощь с первого обращения (ученики и эксперты при записи)",tasks:[
+ {id:"c1",k:"hand",t:"Принять обращение и ответить первым",d:"Первичная техподдержка: выслушать, понять проблему, помочь."},
+ {id:"c2",k:"hand",t:"Выдать доступы",d:"К курсам и сервисам. Как именно выдаются сейчас, нужно уточнить. В GetCourse нужно отдельное разрешение Руслана."},
+ {id:"c3",k:"hand",t:"Починить поломку: видео не воспроизводится, не открывается урок",d:"Найти причину и вернуть работоспособность."},
+ {id:"c4",k:"have",t:"Ключи ГРАНД-Сметы",d:"Выдача ключей и лицензий. Где они хранятся, уточним."},
+ {id:"c5",k:"hand",t:"ГРАНД-Смета не запускается: первичная помощь",d:"Проверить типовые причины по инструкции. Сложные случаи передаются дальше."},
+ {id:"c6",k:"make",t:"Единая точка входа для обращений и журнал",d:"Одно место, куда пишет клиент, и запись, что с обращением сделано."},
+ {id:"c7",k:"make",t:"База типовых ответов",d:"По ГРАНД-Смете, видео и доступам, чтобы ответы не держались на памяти одного человека."}
+]},
+{id:"onb",name:"Онбординг",note:"Новый человек сразу понимает, что делать",tasks:[
+ {id:"o1",k:"hand",t:"Отправить новому человеку инструкцию",d:"Сейчас высылается вручную, инструкция уже передана."},
+ {id:"o2",k:"hand",t:"Связаться лично, если человек совсем не разобрался",d:"Только если инструкции не хватило."},
+ {id:"o3",k:"make",t:"Сделать онбординг программой",d:"Стандартная цепочка: что высылается и в каком порядке, с журналом отправок."}
+]},
+{id:"pult",name:"Пульт отдела обучения",note:"",tasks:[
+ {id:"p1",k:"have",t:"Вести Пульт отдела обучения",d:"Рабочий сервис отдела обучения. Что именно вы в нём делаете, уточним вместе."}
+]}
+];
+var D={dec:{},c:{},custom:[]};
+try{var r=localStorage.getItem(KEY);if(r){var p=JSON.parse(r);if(p&&typeof p==="object")D=Object.assign(D,p)}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(D))}catch(e){}}
+function el(t,a,c){var e=document.createElement(t);if(a)for(var k in a){if(k==="class")e.className=a[k];else e.setAttribute(k,a[k])}(c||[]).forEach(function(x){e.appendChild(typeof x==="string"?document.createTextNode(x):x)});return e}
+var total=0;G.forEach(function(g){total+=g.tasks.length});
+var root=document.getElementById("groups");
+G.forEach(function(g){
+ var box=el("div",{class:"grp"});
+ var h=el("h2",0,[g.name]);if(g.note)h.appendChild(el("small",0,[g.note]));box.appendChild(h);
+ g.tasks.forEach(function(t){
+  var card=el("div",{class:"task"});
+  var top=el("div",{class:"top"},[el("div",{class:"t"},[el("strong",0,[t.t]),el("p",0,[t.d])]),el("span",{class:"kind "+t.k},[KIND[t.k]])]);
+  var dec=el("div",{class:"dec",role:"group","aria-label":"Решение по задаче"});
+  [["yes","Беру"],["mb","Обсудить"],["no","Не беру"]].forEach(function(o){
+   var b=el("button",{type:"button",class:o[0],"aria-pressed":D.dec[t.id]===o[0]?"true":"false"},[o[1]]);
+   b.onclick=function(){D.dec[t.id]=D.dec[t.id]===o[0]?"":o[0];save();Array.prototype.forEach.call(dec.children,function(c){c.setAttribute("aria-pressed","false")});if(D.dec[t.id])b.setAttribute("aria-pressed","true");stat()};
+   dec.appendChild(b)});
+  var ta=el("textarea",{id:"c-"+t.id,placeholder:"Ваш комментарий"});ta.value=D.c[t.id]||"";
+  ta.oninput=function(){D.c[t.id]=ta.value;save()};
+  card.appendChild(top);card.appendChild(dec);card.appendChild(el("label",{for:"c-"+t.id},["Комментарий",ta]));
+  box.appendChild(card)});
+ root.appendChild(box)});
+function stat(){var n=0;G.forEach(function(g){g.tasks.forEach(function(t){if(D.dec[t.id])n++})});
+ document.getElementById("cnt").textContent="Отмечено "+n+" из "+total;
+ document.getElementById("prog").style.width=Math.round(n/total*100)+"%"}
+stat();
+var cu=document.getElementById("custom");
+function renderCustom(){cu.textContent="";D.custom.forEach(function(c,i){
+ var b=el("button",{type:"button"},["Убрать"]);b.onclick=function(){D.custom.splice(i,1);save();renderCustom()};
+ cu.appendChild(el("div",{class:"row"},[el("span",0,["• "+c.t+(c.d?" — "+c.d:"")]),b]))})}
+renderCustom();
+document.getElementById("nadd").onclick=function(){
+ var t=document.getElementById("ntitle"),d=document.getElementById("ntext"),m=document.getElementById("nmsg");
+ if(!t.value.trim()){m.textContent="Введите название задачи";return}
+ D.custom.push({t:t.value.trim(),d:d.value.trim()});save();t.value="";d.value="";m.textContent="Добавлено";renderCustom()};
+var L={yes:"беру",mb:"обсудить",no:"не беру"};
+function build(){
+ var s="Задачи Алевтины — Академия Сметного Дела\n";var n=0;
+ G.forEach(function(g){
+  s+="\n"+g.name.toUpperCase()+"\n";
+  g.tasks.forEach(function(t){n++;
+   s+=n+". "+t.t+" ["+KIND[t.k]+"] — "+(L[D.dec[t.id]]||"решения нет")+"\n";
+   if((D.c[t.id]||"").trim())s+="   Комментарий: "+D.c[t.id].trim().replace(/\n/g,"\n   ")+"\n"})});
+ if(D.custom.length){s+="\nМОИ ЗАДАЧИ\n";D.custom.forEach(function(c,i){s+=(i+1)+". "+c.t+(c.d?" — "+c.d:"")+"\n"})}
+ return s}
+function make(){var o=document.getElementById("out");o.value=build();document.getElementById("res").scrollIntoView({behavior:"smooth"})}
+document.getElementById("go1").onclick=make;document.getElementById("go2").onclick=make;
+var msg=document.getElementById("msg");
+document.getElementById("copy").onclick=function(){var o=document.getElementById("out");if(!o.value)o.value=build();
+ function fb(){o.focus();o.select();msg.textContent="Текст выделен. Нажмите Ctrl+C (на Mac Cmd+C)"}
+ try{navigator.clipboard.writeText(o.value).then(function(){msg.textContent="Скопировано"},fb)}catch(e){fb()}};
+document.getElementById("save").onclick=function(){var o=document.getElementById("out");if(!o.value)o.value=build();
+ try{var b=new Blob([o.value],{type:"text/plain;charset=utf-8"});var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="Задачи Алевтины.txt";document.body.appendChild(a);a.click();a.remove();msg.textContent="Файл сохранён"}catch(e){msg.textContent="Не удалось сохранить. Нажмите «Скопировать»."}};
+})();
+</script>
+</body>
+</html>
