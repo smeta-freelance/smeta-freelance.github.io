@@ -102,7 +102,14 @@ function login(){
     try{var b=await bits(npw(P),ACC[ah].salt);ME=await dec(b,ACC[ah].data)}catch(x){m.textContent='Пароль не подошёл. Проверьте раскладку и попробуйте ещё раз.';return}
     ls('pe-hub-k',b2s(b));ls('pe-hub-acc',ah);ls('pe-hub-who',lat(L));ls('pe-hub-exp',String(Date.now()+30*864e5));app()}}
 function dt(t){if(!t)return '';var d=new Date(t*1000);return d.toLocaleDateString('ru-RU',{day:'numeric',month:'short'})}
-function app(){var W=ME.decks||[],nw=W.filter(function(x){return !x.done}).length,nd=W.length-nw;
+/* 19.11 (отзыв тестировщицы: «пустой, но я уже создала презентацию»): список «Моих работ» собирается при выкладке и не знает о работах, созданных после неё —
+   добавляем работы, переданные Малевичу в этом браузере (отметка pe-mal-tok-<работа>), а статус берём из базы (livePoll) */
+function addLocal(){var have={};(ME.decks||[]).forEach(function(x){have[x.deck]=1});ME.decks=ME.decks||[];
+  try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf('pe-mal-tok-')===0){var d=k.slice(11);if(!d||have[d])continue;have[d]=1;var mm={};try{mm=JSON.parse(localStorage.getItem('pe-mal-meta-'+d)||'{}')||{}}catch(e){}
+    var dm=/-(\d\d)(\d\d)(\d\d)(?:-|$)/.exec(d),t=mm.c?Math.round(mm.c/1000):(dm?Math.round(Date.parse('20'+dm[1]+'-'+dm[2]+'-'+dm[3]+'T12:00:00')/1000):0);
+    ME.decks.push({deck:d,title:(mm.t||'Презентация от '+(dm?dm[3]+'.'+dm[2]+'.20'+dm[1]:d)).slice(0,140),who:'Малевича',st:'Оформление слайдов',btn:'Открыть',href:'/pe/malevich/#'+d,done:false,t:t,expert:mm.e||'',loc:1})}}}catch(e){}
+  ME.decks.sort(function(a,b){return (b.t||0)-(a.t||0)})}
+function app(){addLocal();var W=ME.decks||[],nw=W.filter(function(x){return !x.done}).length,nd=W.length-nw;
   $('#root').innerHTML='<div class="top"><span class="who"><i>≡</i><span>Мои работы</span></span><a class="new" href="/pe/dveri/">+ Новая работа</a><a class="lk" href="/pe/dveri/">⌂ Двери</a></div>'+
     '<main><div class="tabs" role="tablist"><button data-t="all">Все · '+W.length+'</button><button data-t="work">В работе · '+nw+'</button><button data-t="done">Готовые · '+nd+'</button></div><div id="list"></div></main>';
   document.querySelectorAll('.tabs button').forEach(function(b){b.onclick=function(){TAB=b.getAttribute('data-t');draw()}});draw()}
@@ -120,6 +127,11 @@ function liveSt(x){var v=LIVE[x.deck];if(v&&v.t0){var s=Math.max(0,Date.now()/10
   if(v&&v.stopped)return 'Остановлено — всё сохранено';return esc(x.st)}
 var LBUSY=false;
 async function livePoll(){if(LBUSY||!ME||(TEST&&!window.__RB_LIVE)||document.hidden)return;LBUSY=true;var ch=false;
+  try{var M=(ME.decks||[]).filter(function(x){return !x.done&&x.who==='Малевича'}).slice(0,40);   /* 19.11: «Утверждено N из M» — из базы, а не из снимка при выкладке */
+    if(M.length){var r0=await fetch(SB.url.replace(/\/$/,'')+'/rest/v1/pe_state?select=deck,data&key=eq.s25&deck=in.('+M.map(function(x){return encodeURIComponent(x.deck)}).join(',')+')',{headers:{apikey:SB.key,Authorization:'Bearer '+SB.key},cache:'no-store'});
+      if(r0.ok){var rows=await r0.json(),by={};rows.forEach(function(q){by[q.deck]=q.data});
+        M.forEach(function(x){var sl=(by[x.deck]&&by[x.deck].slides)||[],n=sl.length,ok=sl.filter(function(q){return q.st==='approved'||q.st==='skipped'}).length,st=n?(ok===n?'Все '+n+' слайдов утверждены':'Утверждено '+ok+' из '+n+' слайдов — остальные ждут Вас'):x.st;
+          if(st!==x.st){x.st=st;ch=true}})}}}catch(e){}
   try{var W=(ME.decks||[]).filter(function(x){return !x.done&&x.who==='Сократа'});
     for(var i=0;i<W.length;i++){var x=W[i];window.PE={tok:x.tok||''};var r=await G2L.get(x.deck,'sokw',3000),d=r&&r.data,nv=null;
       if(d&&!d.done&&d.t0&&Date.now()/1000-d.t0<1500)nv={mode:d.mode,t0:d.t0,stopping:(LIVE[x.deck]||{}).stopping};else if(d&&d.done&&d.stopped)nv={stopped:true};
