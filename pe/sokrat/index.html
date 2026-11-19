@@ -116,7 +116,7 @@ mark{background:var(--mark);color:inherit;padding:0 2px;border-radius:3px}
 .app{display:block}.rail,.burger{display:none!important}
 .top .who{display:flex;align-items:center;gap:8px;font-weight:700;flex:none}.top .who img{width:28px;height:28px}
 .top .sep{color:var(--line);flex:none}
-.top .lk{flex:none;color:var(--ink);text-decoration:none;border:1.5px solid var(--line);border-radius:10px;padding:5px 12px;font-weight:600;font-size:15px}.top .lk:hover{background:var(--side)}
+.top .lk{flex:none;min-height:40px;display:inline-flex;align-items:center;color:var(--ink);text-decoration:none;border:1.5px solid var(--line);border-radius:10px;padding:5px 12px;font-weight:600;font-size:15px}.top .lk:hover{background:var(--side)}
 .top .lk.home{margin-left:auto}.top .pc+.lk.home,.top .hbtn~.lk.home{margin-left:0}
 .chat{padding-bottom:250px}
 .srcs{max-width:820px;margin:0 auto 6px;display:flex;flex-wrap:wrap;gap:2px 14px;align-items:center;font-size:15px;color:var(--muted)}
@@ -150,6 +150,22 @@ mark{background:var(--mark);color:inherit;padding:0 2px;border-radius:3px}
 @media (max-width:760px){.swg{grid-template-columns:1fr}}
 .sw.locked:hover,.sw.na:hover{background:var(--blue-soft)}.sw.na{cursor:default;background:#fff}.sw.na:hover{background:#fff}
 @media (max-width:1180px){.top.w .who b{display:none}.top.w .sep{display:none}.top.w .steps{display:none}.top b.nm{max-width:none}}
+/* 19.11 «Двери 2.0», слой 1 */
+.hbtn,.quick button,.acts button,.hist .hx,.hist .ht button,.hist .ins,.prev .qb button,.prev .more,.wq button,.vl button{min-height:44px}.hist .hx{min-width:44px}.acts button{padding-left:14px;padding-right:14px}
+@media (max-width:1280px){.hbtn{min-width:44px}}
+/* телефон: нижняя панель не выше 38 % экрана (остальное — прокрутка внутри панели); чат отступает на её высоту, кнопки «Остановлено» не прячутся */
+@media (max-width:640px){.dock{max-height:38vh;overflow-y:auto;padding:8px 12px}.srcs .sh{display:none}.hh2{font-size:13px}}
+.sband{max-width:820px;margin:0 auto 8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:15px;color:var(--muted)}
+.sband b{color:var(--ink);margin-right:4px}.sband i{font-style:normal;padding:2px 10px;border-radius:20px}.sband .ok{color:var(--green)}.sband .now{color:var(--blue);font-weight:600;border:1.5px solid var(--blue)}
+.vl,.wq{max-width:820px;margin:0 auto 8px;display:none;gap:10px;align-items:center;flex-wrap:wrap;background:var(--blue-soft);border:1px solid #C9D5FB;border-radius:10px;padding:8px 12px;font-size:16px}
+.vl.on,.wq.on{display:flex}.vl span,.wq span{flex:1;min-width:200px}
+.vl button,.wq button{border:1.5px solid var(--blue);background:#fff;color:var(--blue);border-radius:10px;height:40px;padding:0 14px;font:inherit;font-size:15px;font-weight:600}.wq button.pri{background:var(--blue);color:#fff}
+.ib.send{width:auto;min-width:40px;padding:0 14px;font-size:16px;font-weight:600;white-space:nowrap}.ib.send .tf,.ib.send .ts{margin-left:6px}.ib.send .ts{display:none}
+.ib.send.stop{background:var(--red);color:#fff}.ib.send.stop:disabled{background:#E9A9AF}
+@media (max-width:640px){.ib.send .tf{display:none}.ib.send.stop .ts{display:inline}.dock .in{flex-wrap:wrap}.dock .in .field{flex:1 1 100%}.dock .in .go,.dock .in .go2{flex:1 1 auto;justify-content:center;white-space:normal;height:48px}}
+.hh2{max-width:820px;margin:6px auto 0;font-size:14px;color:var(--muted)}.hh2:empty{display:none}
+.stop-acts .go{height:48px}.stop-acts .stop-new{min-height:48px;height:auto;padding:8px 18px;display:inline-flex;align-items:center;text-decoration:none;line-height:1.3;white-space:normal}.stop-note{background:var(--side);border:1px solid var(--line);border-radius:12px;padding:10px 14px}.stop-acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.planok{background:#E8F5EE;border:1px solid #BFE3CC;border-radius:12px;padding:10px 14px;margin:0 0 10px}
 </style></head>
 <body>
 <div id="root"></div>
@@ -221,39 +237,50 @@ function why(err){var n=(err&&err.name)||'';
   if(n==='NotFoundError'||n==='DevicesNotFoundError'||n==='OverconstrainedError')return T.nodevice;
   if(n==='NotReadableError'||n==='TrackStartError'||n==='AbortError')return T.busy;
   return T.fail}
-function attach(btn,o){if(!btn)return null;o=o||{};var say=o.status||function(){},S={rec:null,busy:false,ask:false},label=btn.innerHTML;
+function attach(btn,o){if(!btn)return null;o=o||{};var say=o.status||function(){},S={rec:null,busy:false,ask:false,gen:0,discard:false},label=btn.innerHTML,title0=btn.title;
+  function st(x){try{o.onState&&o.onState(x)}catch(e){}}   /* 19.11 (Двери 2.0): 'rec' | 'wait' | 'idle' — страница знает, идёт ли расшифровка */
   function can(){return !!(W.MediaRecorder&&N.mediaDevices&&N.mediaDevices.getUserMedia)}
-  function reset(){btn.classList.remove('rec');btn.innerHTML=label;btn.disabled=false;btn.style.minWidth=''}
+  function reset(){btn.classList.remove('rec');btn.innerHTML=label;btn.disabled=false;btn.style.minWidth='';btn.title=title0}
+  function cancelWait(){S.gen++;S.busy=false;reset();st('idle')}
   btn.addEventListener('click',function(e){e.preventDefault();
-    if(S.rec){S.rec.stop();return}if(S.busy||S.ask)return;   /* двойное нажатие, пока браузер спрашивает разрешение, — не запускаем вторую запись */
+    if(S.rec){S.rec.stop();return}
+    if(S.busy){cancelWait();say('Расшифровку отменил — нажмите 🎤 и скажите ещё раз или напишите текстом.','err');return}   /* 19.11: 🎤 не «замирает» на время расшифровки — повторное нажатие отменяет её */
+    if(S.ask)return;   /* двойное нажатие, пока браузер спрашивает разрешение, — не запускаем вторую запись */
     if(W.isSecureContext===false&&!/^(localhost|127\.0\.0\.1)$/.test(location.hostname)){say(T.insecure,'err');return}
     if(!can()){say(T.nosupport(),'err');return}
-    S.ask=true;N.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}}).then(function(st){S.ask=false;var ch=[],t0=Date.now(),mt=fmt(),mr;
-      try{mr=mt?new MediaRecorder(st,{mimeType:mt}):new MediaRecorder(st)}catch(x){st.getTracks().forEach(function(t){t.stop()});say(T.fail,'err');return}
+    S.ask=true;var askTm=setTimeout(function(){S.ask=false},25000);   /* окно разрешения закрыли, не ответив, — кнопка не залипает */
+    N.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}}).then(function(stream){clearTimeout(askTm);S.ask=false;var ch=[],t0=Date.now(),mt=fmt(),mr;
+      try{mr=mt?new MediaRecorder(stream,{mimeType:mt}):new MediaRecorder(stream)}catch(x){stream.getTracks().forEach(function(t){t.stop()});say(T.fail,'err');return}
       var tk=setInterval(function(){var q=Math.round((Date.now()-t0)/1000);btn.textContent='■ '+Math.floor(q/60)+':'+('0'+q%60).slice(-2)},500);
-      S.rec={stop:function(){clearInterval(tk);try{if(mr.state==='recording')mr.stop()}catch(x){}S.rec=null}};
+      S.rec={stop:function(){clearInterval(tk);try{if(mr.state==='recording')mr.stop()}catch(x){}S.rec=null}};st('rec');
       mr.ondataavailable=function(ev){if(ev.data&&ev.data.size)ch.push(ev.data)};
-      mr.onerror=function(){clearInterval(tk);S.rec=null;st.getTracks().forEach(function(t){t.stop()});reset();say(T.fail,'err')};
-      mr.onstop=function(){st.getTracks().forEach(function(t){t.stop()});clearInterval(tk);S.rec=null;reset();
+      mr.onerror=function(){clearInterval(tk);S.rec=null;S.discard=false;stream.getTracks().forEach(function(t){t.stop()});reset();st('idle');say(T.fail,'err')};
+      mr.onstop=function(){stream.getTracks().forEach(function(t){t.stop()});clearInterval(tk);S.rec=null;reset();
+        if(S.discard){S.discard=false;st('idle');return}   /* 19.11: «■ Остановить» — запись выбросили, микрофон отпущен */
         var sec=Math.max(1,Math.round((Date.now()-t0)/1000)),ty=(mr.mimeType||mt||'audio/webm').split(';')[0],blob=new Blob(ch,{type:ty});
-        if(blob.size<2000){say(T.short,'err');return}
-        if(o.dry&&!W.__G2V_SEND){say('Стенд: голосовое записано ('+sec+' с), в базу не отправляю.','ok');return}
+        if(blob.size<2000){st('idle');say(T.short,'err');return}
+        if(o.dry&&!W.__G2V_SEND){st('idle');say('Стенд: голосовое записано ('+sec+' с), в базу не отправляю.','ok');return}
         send(blob,ty,sec)};
-      try{mr.start(1000);btn.classList.add('rec');btn.style.minWidth='72px';btn.textContent='■ 0:00';say(T.start,'rec')}catch(x){S.rec&&S.rec.stop();say(T.fail,'err')}
-    },function(err){S.ask=false;say(why(err),'err')})});
+      try{mr.start(1000);btn.classList.add('rec');btn.style.minWidth='72px';btn.textContent='■ 0:00';say(T.start,'rec')}catch(x){S.rec&&S.rec.stop();st('idle');say(T.fail,'err')}
+    },function(err){clearTimeout(askTm);S.ask=false;st('idle');say(why(err),'err')})});
   function send(blob,ty,sec){var sb=o.sb||W.SF_SB||{},base=String(sb.url||'').replace(/\/$/,''),H={apikey:sb.key,Authorization:'Bearer '+sb.key},
       vt=(o.voter&&o.voter())||('v'+Math.random().toString(36).slice(2,12)),sk='pe_start_'+vt,
       p=sk+'/'+Date.now()+'_v'+(ty.indexOf('mp4')>=0||ty.indexOf('aac')>=0?'.m4a':'.webm'),since=new Date(Date.now()-5000).toISOString();
-    S.busy=true;btn.disabled=true;say(T.wait,'wait');
-    function end(t,k){S.busy=false;btn.disabled=false;say(t,k)}
+    var gen=++S.gen,authorOut=(String((o.author&&o.author())||'Эксперт').slice(0,100)+' ·'+Math.random().toString(36).slice(2,6)),authorIn='Расшифровка голосового ('+authorOut+')';   /* 19.11: у каждой записи свой «автор» — расшифровка привязана к записи, а не ко времени: после отмены и новой записи старая не вставит чужой текст */
+    S.busy=true;btn.textContent='…';btn.title='Нажмите, чтобы отменить расшифровку';st('wait');say(T.wait,'wait');   /* 19.11: кнопка не блокируется */
+    function end(t,k){if(gen!==S.gen)return;S.busy=false;reset();st('idle');say(t,k)}
     fetch(base+'/storage/v1/object/sf-voice/'+p.split('/').map(encodeURIComponent).join('/'),{method:'POST',headers:Object.assign({'Content-Type':ty||'audio/webm'},H),body:blob})
      .then(function(r){if(!r.ok)throw r.status;return fetch(base+'/rest/v1/sf_comments',{method:'POST',headers:Object.assign({'Content-Type':'application/json',Prefer:'return=minimal'},H),
-       body:JSON.stringify({section:sk,voter:vt,author:String((o.author&&o.author())||'Эксперт').slice(0,120),body:'[голос] '+p+'|'+sec})})})
-     .then(function(r){if(!r.ok)throw r.status;var n=0,tm=setInterval(function(){if(++n>48){clearInterval(tm);end(T.slow,'err');return}
-        fetch(base+'/rest/v1/sf_comments?select=body&section=eq.'+encodeURIComponent(sk)+'&author=like.'+encodeURIComponent('Расшифровка*')+'&created_at=gt.'+encodeURIComponent(since)+'&order=created_at&limit=1',{headers:H,cache:'no-store'})
+       body:JSON.stringify({section:sk,voter:vt,author:authorOut,body:'[голос] '+p+'|'+sec})})})
+     .then(function(r){if(!r.ok)throw r.status;var n=0,tm=setInterval(function(){if(gen!==S.gen){clearInterval(tm);return}if(++n>48){clearInterval(tm);end(T.slow,'err');return}
+        fetch(base+'/rest/v1/sf_comments?select=body&section=eq.'+encodeURIComponent(sk)+'&author=eq.'+encodeURIComponent(authorIn)+'&created_at=gt.'+encodeURIComponent(since)+'&order=created_at&limit=1',{headers:H,cache:'no-store'})
          .then(function(r){return r.ok?r.json():[]}).then(function(a){if(!a||!a[0])return;clearInterval(tm);var tx=String(a[0].body||'').trim();if(!tx||/^\(не удалось расшифровать/.test(tx)){end(T.notext,'err');return}try{o.onText&&o.onText(tx)}catch(x){}end(T.ok,'ok')}).catch(function(){})},2500)})
      .catch(function(){end(T.net,'err')})}
-  return {supported:can(),format:fmt()}}
+  /* 19.11: управление со страницы — stop() закончить запись и расшифровать; cancel() выбросить запись/расшифровку и отпустить микрофон */
+  function stopRec(){if(S.rec)S.rec.stop()}
+  function cancel(){if(S.rec){S.discard=true;S.rec.stop()}if(S.busy)cancelWait()}
+  W.addEventListener('pagehide',function(){if(S.rec){S.discard=true;S.rec.stop()}});
+  return {supported:can(),format:fmt(),state:function(){return S.rec?'rec':S.busy?'wait':'idle'},stop:stopRec,cancel:cancel}}
 W.G2Voice={attach:attach,format:fmt,texts:T};
 })();
 </script>
@@ -304,7 +331,7 @@ function app(){
     '<aside class="hist" id="hist" role="dialog" aria-label="История урока"><div class="hh"><b>🕘 История урока</b><button class="hx" id="hx" type="button" aria-label="Закрыть">×</button></div>'+
     '<div class="ht" id="htabs"></div><input class="hs" id="hq" type="search" placeholder="Поиск по истории" aria-label="Поиск по истории"><div class="hb" id="hbody"></div></aside>';
   var tx=$('#tx');tx.oninput=function(){tx.style.height='auto';tx.style.height=Math.min(Math.round(window.innerHeight*.4),tx.scrollHeight)+'px'};
-  tx.onkeydown=function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendText()}};$('#send').onclick=sendText;
+  tx.onkeydown=function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendText()}};$('#send').onclick=function(){if(WAIT)stopWork();else sendText()};
   $('#dlb').onclick=function(e){openDl(e.currentTarget)};$('#hand').onclick=handoff;mic();histBind();
   window.onhashchange=function(){var hh=decodeURIComponent(location.hash.slice(1));if(!hh||hh==='new'){app();return}var d=deckOf(hh);if(d&&d!==CUR){CUR=d;openWork()}};
   window.onkeydown=function(e){if(e.key==='Escape')histShow(false)};
@@ -314,10 +341,10 @@ var WORKS_URL='/pe/raboty/',DOORS_URL='/pe/dveri/',SW=null,SA=false,SWT=false,NE
 function shell(nw){return '<div class="app"><main><div class="top'+(nw?'':' w')+'"><span class="who"><img src="img/sokrat.png" alt=""><b>Сократ · методист</b></span><span class="sep">·</span><b class="nm" id="nm">'+(nw?'Новая работа':'')+'</b>'+
     (nw?'':'<span class="steps" id="steps"></span><button class="hbtn" id="hbtn" type="button" aria-haspopup="dialog" title="История урока" aria-label="История урока">🕘 История урока</button><span class="pc" id="pc"></span>')+
     '<a class="lk home" href="'+DOORS_URL+'">⌂ Двери</a><a class="lk" href="'+WORKS_URL+'">Мои работы</a></div>'+
-    '<div class="chat" id="chat"></div><div class="dock"><div class="nwf" id="nwf"></div><div class="srcs" id="srcs"></div><div class="in"><div class="field"><textarea id="tx" rows="2" placeholder="'+(nw?'Напишите или скажите тему урока…':'Напишите Сократу, что поправить')+'"></textarea>'+
+    '<div class="chat" id="chat"></div><div class="dock">'+(nw?'':'<div class="sband" id="sband"></div>')+'<div class="vl" id="vl"></div><div class="wq" id="wq"></div><div class="nwf" id="nwf"></div><div class="srcs" id="srcs"></div><div class="in"><div class="field"><textarea id="tx" rows="2" placeholder="'+(nw?'Напишите или скажите тему урока…':'Напишите Сократу, что поправить')+'"></textarea>'+
     (nw?'<button class="ib" id="att" type="button" title="Прикрепить файл" aria-label="Прикрепить файл">📎</button><input type="file" id="fi" multiple hidden accept=".pdf,.pptx,.ppt,.docx,.doc,.txt,.md,.rtf,.odt,.odp,.xlsx">':'')+
-    '<button class="ib" id="mic" title="Сказать голосом" aria-label="Сказать голосом">🎤</button><button class="ib send" id="send" title="Отправить" aria-label="Отправить">↑</button></div>'+
-    (nw?'':'<button class="go2" id="dlb">⤓ Скачать</button><button class="go" id="hand">Передать Малевичу →</button>')+'</div></div></main></div>'}
+    '<button class="ib" id="mic" title="Сказать голосом" aria-label="Сказать голосом">🎤</button><button class="ib send" id="send" title="Отправить" aria-label="Отправить">↑<span class="tf">Отправить</span></button></div>'+
+    (nw?'':'<button class="go2" id="dlb">⤓ Скачать</button><button class="go" id="hand">Передать Малевичу →</button>')+'</div><div class="hh2" id="handh"></div></div></main></div>'}
 function matFiles(){return NEWW?NEWW.files.map(function(f){return f.name}):(((ST&&ST.intro&&ST.intro.files)||[]).filter(okf))}
 function srcKey(){return CUR?'pe-sok-src-'+CUR.deck:NEWW?'pe-sok-src-new':''}
 function srcInit(){var nf=matFiles().length;SWT=false;SA=false;SW=null;
@@ -354,7 +381,7 @@ function nwfDraw(){var e=$('#nwf');if(!e||!NEWW)return;e.innerHTML=NEWW.files.ma
 function nwSafe(n){var m=String(n).match(/\.([A-Za-z0-9]{1,6})$/),ext=m?m[1].toLowerCase():'bin',b=String(n).replace(/\.[^.]*$/,'').replace(/[^A-Za-z0-9_-]+/g,'_').replace(/^_+|_+$/g,'').slice(0,40)||'file';return b+'.'+ext}
 function nwVoter(){var v='';try{v=localStorage.getItem('sf-voter')||'';if(!v){v='st'+Math.random().toString(36).slice(2,12);localStorage.setItem('sf-voter',v)}}catch(e){v='st'+Date.now()}return v}
 function nwSay(html){var c=$('#chat'),d=document.createElement('div');d.className='so';d.innerHTML='<img class="ava" src="img/sokrat.png" alt="Сократ"><div class="txt">'+html+'</div>';c.appendChild(d);scrollEnd();return d}
-function createWork(){if(!NEWW||NEWW.busy)return;var tx=$('#tx'),t=tx.value.trim(),F=NEWW.files.slice();
+function createWork(){if(!NEWW||NEWW.busy)return;if(guardSend(createWork))return;var tx=$('#tx'),t=tx.value.trim(),F=NEWW.files.slice();
   if(!t&&!F.length){toast('Напишите тему урока или прикрепите файл',3000);tx.focus();return}
   NEWW.busy=true;$('#send').disabled=true;
   var c=$('#chat'),me=document.createElement('div');me.className='me';me.innerHTML='<div class="b">'+esc(t||'Вот мои материалы.')+(F.length?'<div class="files">'+F.map(function(f){return '<span>📎 '+esc(f.name)+'</span>'}).join('')+'</div>':'')+'</div>';c.appendChild(me);
@@ -403,7 +430,7 @@ async function openWork(){
   var row=await G2L.get(CUR.deck,'sok',4000);ST=row&&row.data||null;var rev=row&&row.rev||0;
   var w=await G2L.get(CUR.deck,'sokw',3000);WAIT=null;var lastW=w&&w.data&&w.data.id||'';LASTW=lastW;WREV=w&&w.rev||0;
   render();
-  if(ST&&ST.busy&&!(w&&w.data&&w.data.id===ST.busy&&w.data.done)){WAIT={id:ST.busy,t0:Date.now(),lastW:lastW,mode:'',text:(w&&w.data&&w.data.id===ST.busy)?w.data.text:''};render();follow(w&&w.rev||0)}
+  if(ST&&ST.busy&&!(w&&w.data&&w.data.id===ST.busy&&w.data.done)){var same=!!(w&&w.data&&w.data.id===ST.busy);WAIT={id:ST.busy,t0:same&&w.data.t0?w.data.t0*1000:Date.now(),lastW:same?'':lastW,mode:same&&w.data.mode||'',text:same?w.data.text:'',steps:same?(w.data.steps||[]):[]};render();follow(w&&w.rev||0)}   /* 19.11: страницу открыли посреди работы — ход и «Остановить» работают */
   else if(!ST||!(ST.msgs||[]).length){if(CUR.pending){WAIT={id:null,t0:Date.now(),lastW:lastW,mode:'program',text:''};render();follow(w&&w.rev||0)}else ask('program','',lastW,w&&w.rev||0)}
   else if(!CUR.pending)job('sokrat_hello');
   STOPW=G2L.watch(CUR.deck,'sok',rev,function(r){if(WAIT||EDIT)return;if(LOCAL&&(Date.parse(r.data&&r.data.at)||0)<LOCAL-1500)return;ST=r.data;render()},10);
@@ -423,7 +450,7 @@ function follow(rev){var cur=rev,busy=false,base=SB.url.replace(/\/$/,'')+'/rest
   var tm=setInterval(function(){if(!WAIT){clearInterval(tm);return}if(busy)return;busy=true;
     fetch(base+'?select=rev&deck=eq.'+encodeURIComponent(CUR.deck)+'&key=eq.sokw&limit=1',{headers:H(),cache:'no-store'}).then(function(r){return r.ok?r.json():[]}).then(function(a){var x=a&&a[0];
       if(x&&x.rev!==cur){cur=x.rev;WREV=cur;return G2L.get(CUR.deck,'sokw',4000).then(function(row){var d=row&&row.data;if(!d||!WAIT)return;
-        if(d.id===WAIT.lastW)return;WAIT.id=d.id;WAIT.text=d.text||'';WAIT.steps=d.steps||WAIT.steps||[];
+        if(d.id===WAIT.lastW)return;WAIT.id=d.id;WAIT.text=d.text||'';WAIT.steps=d.steps||WAIT.steps||[];if(d.mode&&!WAIT.mode)WAIT.mode=d.mode;
         if(d.done){LASTW=d.id;var tries=0;var grab=function(){return G2L.get(CUR.deck,'sok',5000).then(function(s){var has=s&&s.data&&(s.data.msgs||[]).some(function(m){return m.id===d.id});if(!has&&!d.noop&&tries++<8)return new Promise(function(r){setTimeout(r,1000)}).then(grab);return s})};   /* v1.2: не показываем старое состояние — иначе снова «Да, пишем слайды» */
           return grab().then(function(s){if(s&&s.data)ST=s.data;WAIT=null;render();if(d.err)toast('Не получилось ответить — попробуйте ещё раз через минуту.',4000)})}
         renderWait()})}}).catch(function(){}).then(function(){busy=false;if(WAIT)tick()})},800)}
@@ -470,12 +497,12 @@ function render(){if(!CUR)return;if(!render.__s||render.__s!==CUR.deck+'|'+!!(ST
     if(m.who==='ma'){o.push(maCard(m));return}   /* dev47: реплика Малевича */
     var tools=m.kind==='program'||m.kind==='slides'||m.kind==='edit';
     o.push('<div class="so" data-id="'+esc(m.id)+'"><img class="ava" src="img/sokrat.png" alt="Сократ"><div class="col" style="flex:1;min-width:0"><div class="txt k-'+esc(m.kind||'')+(m.err?' err':'')+'">'+(m.steps&&m.steps.length?'<details class="srch"><summary>Проверил: '+m.steps.length+' '+(m.steps.length%10===1&&m.steps.length%100!==11?'поиск':m.steps.length%10>=2&&m.steps.length%10<=4&&(m.steps.length%100<12||m.steps.length%100>14)?'поиска':'поисков')+(m.kind==='check'?' — официальные источники':' — уроки Академии и официальные источники')+'</summary><ul>'+m.steps.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul></details>':'')+(m.kind==='slides'?LEGEND:'')+
-      (m.kind==='program'?'<div class="ptitle">Программа урока</div>':'')+(m.kind==='note'&&!m.err?'<div class="done-note">✓ '+inl(m.text)+'</div>':md(m.text,m.upd))+'</div>'+
+      (m.kind==='program'?'<div class="ptitle">Программа урока</div>':'')+(m.kind==='stop'?stopCard(m,mi===a.length-1):m.kind==='note'&&!m.err?'<div class="done-note">✓ '+inl(m.text)+'</div>':md(m.text,m.upd))+'</div>'+
       (tools?'<div class="acts">'+'<button data-a="cp">⧉ Копировать</button><button data-a="ed">✎ Править</button><button data-a="dl">⤓ Скачать</button>'+(mi===lastT&&!ckAfter&&!WAIT&&!(ST&&ST.handed)?'<button data-a="ck" class="ck">🔎 Сверить с официальными источниками</button>':'')+'</div>':'')+
-      (m===lp&&!lsd&&!WAIT&&ST.step!=='handed'?'<div class="quick"><button class="main" data-q="yes">Да, пишем слайды →</button><button data-q="add">Добавить пункт</button></div>':'')+
+      (m===lp&&!lsd&&!WAIT&&ST.step!=='handed'?'<div class="quick"><button class="main" data-q="yes">Утвердить план — писать слайды →</button><button data-q="add">Добавить пункт</button></div>':'')+
       '</div></div>')});
   if(WAIT)o.push('<div class="so" id="wt"><img class="ava" src="img/sokrat.png" alt="Сократ"><div class="col" style="flex:1;min-width:0"><div class="txt" id="wtx"></div></div></div>');
-  c.innerHTML=o.join('');if(WAIT)renderWait();head();bind();prevBind()}
+  c.innerHTML=o.join('');if(WAIT)renderWait();head();bind();prevBind();if(!WAIT&&QMODE)afterWait()}
 /* ---------- dev39: История урока (Руслан 11.11: «чтобы всегда можно было вернуться… найти, что уже было сказано») ---------- */
 function dm(t){var d=new Date(t);return ('0'+d.getDate()).slice(-2)+'.'+('0'+(d.getMonth()+1)).slice(-2)}
 function hm(t){var d=new Date(t);return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)}
@@ -527,7 +554,8 @@ function vtr(){try{return localStorage.getItem('sf-voter')||''}catch(e){return '
 function waitLine(){var s0=Math.round((Date.now()-WAIT.t0)/1000);if(CUR&&CUR.pending&&!WAIT.text&&s0>150&&!(ST&&ST.intro))return '<p class="wait"><b>Не нахожу материалы этой работы.</b> Откройте её, пожалуйста, из <a href="/pe/">«Мои работы»</a> — или начните новую работу.</p>';   /* rel51: неверный адрес — без бесконечного ожидания */
   var s=Math.round((Date.now()-WAIT.t0)/1000),m=WAIT.mode,what=m==='answer'?'Готовлю ответ на Ваш вопрос':m==='check'?'Сверяю с официальными источниками':m==='program'?'Читаю Ваши материалы и пишу программу урока':m==='slides'?'Пишу, что поставить на каждый слайд':'Читаю Ваше сообщение';
   var eta=m==='check'?'обычно 3–5 минут':m==='program'?'обычно 1–2 минуты':m==='slides'?'обычно 2–4 минуты':'обычно 1–2 минуты',lim=m==='slides'?300:m==='check'?330:m==='answer'?90:150,st=WAIT.steps||[];   /* умный Сократ (11.11): ищет в уроках Академии и на официальных сайтах, думает основательно */
-  return '<p class="wait"><b>'+(st.length&&m!=='check'?srcWhat(m,what):what)+'…</b> '+(s>lim&&!WAIT.text?'Ещё немного — заканчиваю. ':'')+'· '+s+' с · '+eta+'<span class="caret"></span></p><div style="max-width:380px;margin:6px 0 8px"><div style="height:8px;border-radius:99px;background:#E9EBEF;overflow:hidden"><i style="display:block;height:100%;width:'+Math.min(95,Math.max(3,Math.round(s/lim*100)))+'%;background:#1745E0;transition:width .8s"></i></div><div style="font-size:14px;color:#555C69;margin-top:4px">'+(function(){var ls=st.length?st[st.length-1]:'';   /* 14.11 (Руслан): честный статус вместо «95 %» */
+  if(WAIT.stopping)return WAIT.stopFail?'<p class="wait"><b style="color:#B54708">Остановка не подтверждается.</b> Файлы и тексты в безопасности. Обновите страницу — если Сократ ещё работает, нажмите «Остановить» снова.</p>':WAIT.slow?'<p class="wait"><b>Останавливаю дольше обычного.</b> Ваши файлы в безопасности — подождите минуту.</p>':'<p class="wait"><b>Останавливаю…</b> Файлы и тексты сохранены.</p>';
+  return (m==='slides'&&!WAIT.text?'<p class="planok"><b>План утверждён ✓.</b> Теперь я пишу, что будет на каждом слайде (2–4 минуты). Потом вы проверите, и я передам Малевичу — он нарисует.</p>':'')+'<p class="wait"><b>'+(st.length&&m!=='check'?srcWhat(m,what):what)+'…</b> '+(s>lim&&!WAIT.text?'Ещё немного — заканчиваю. ':'')+'· '+s+' с · '+eta+'<span class="caret"></span></p><div style="max-width:380px;margin:6px 0 8px"><div style="height:8px;border-radius:99px;background:#E9EBEF;overflow:hidden"><i style="display:block;height:100%;width:'+Math.min(95,Math.max(3,Math.round(s/lim*100)))+'%;background:#1745E0;transition:width .8s"></i></div><div style="font-size:14px;color:#555C69;margin-top:4px">'+(function(){var ls=st.length?st[st.length-1]:'';   /* 14.11 (Руслан): честный статус вместо «95 %» */
     if(/не отвечает/.test(ls))return '<b style="color:#B54708">'+esc(ls)+'</b>';if(s>lim&&ls)return 'Сейчас: '+esc(ls);return 'Готово примерно на '+Math.min(95,Math.max(3,Math.round(s/lim*100)))+' % · '+what})()+'</div></div>'+(st.length?'<div class="srch"><ul>'+st.map(function(x,i){return '<li'+(i===st.length-1?' class="now"':'')+'>'+esc(x)+'</li>'}).join('')+'</ul></div>':'')}
 /* 18.11 (отзыв Инны Митрофановой): в статусе — только включённые источники */
 function srcWhat(m,what){var a=[];if(ST&&ST.acad)a.push('урокам Академии');if(ST&&ST.web)a.push('официальным источникам');return m==='answer'?what:a.length?'Проверяю по '+a.join(' и '):what}
@@ -540,12 +568,19 @@ function maCard(m){var t=String(m.text||''),i=t.indexOf('. ',t.indexOf('Прин
   return '<div class="so" data-id="'+esc(m.id)+'"><span class="mava" aria-label="Малевич">М.</span><div class="col" style="flex:1;min-width:0"><div class="ma-note"><b>'+esc(a)+'</b> '+esc(b)+'</div>'+
     '<a class="go ma-go" href="'+maHref()+'" onclick="maKeep()">Смотреть слайды у Малевича →</a></div></div>'}
 function scrollEnd(){window.scrollTo(0,document.body.scrollHeight)}
-function head(){if(!CUR)return;$('#nm').textContent=(ST&&ST.title)||CUR.title;var hp=!!(ST&&ST.doc&&ST.doc.program),hs=hasSlides(),hd=!!(ST&&ST.handed);
-  var s=[['Материалы',1],['Программа урока',hs||hd?1:0],['Слайды',hd?1:0],['Передать Малевичу',hd?1:0]],now=hd?-1:hs?2:1;
-  $('#steps').innerHTML=s.map(function(x,i){return '<i class="'+(x[1]?'ok':i===now?'now':'')+'">'+(x[1]?'✓ ':i===now?'● ':'○ ')+x[0]+'</i>'}).join('—');
-  $('#pc').innerHTML=hd?'Работа у Малевича':'У Сократа · шаг <b>'+(now+1)+' из 4</b>';
+/* 19.11: нижняя панель на телефоне выше (кнопки в два ряда) — чат не прячется под ней */
+function dockPad(){var d=$('.dock'),c=$('#chat');if(d&&c)c.style.paddingBottom=(d.offsetHeight+24)+'px'}
+window.addEventListener('resize',dockPad);setInterval(dockPad,600);
+function head(){dockPad();if(!CUR)return;$('#nm').textContent=(ST&&ST.title)||CUR.title;var hp=!!(ST&&ST.doc&&ST.doc.program),hs=hasSlides(),hd=!!(ST&&ST.handed);
+  var k=hd?3:(hs||(WAIT&&WAIT.mode==='slides'))?2:1,L=['План урока','Что на каждом слайде','Малевич рисует'];
+  $('#steps').innerHTML='';
+  var sb=$('#sband');if(sb)sb.innerHTML='<b>Шаг '+k+' из 3</b>'+L.map(function(x,n){var q=n+1,d=q<k;return '<i class="'+(d?'ok':q===k?'now':'')+'">'+(d?'✓ ':'')+['①','②','③'][n]+' '+x+'</i>'}).join(' → ');
+  $('#pc').innerHTML=hd?'Работа у Малевича':'У Сократа · шаг <b>'+k+' из 3</b>';
   var hb=$('#hand'),ma=hd&&((ST&&ST.msgs)||[]).some(function(m){return m.who==='ma'});if(ma){hb.outerHTML='<a class="go" id="hand" href="'+maHref()+'" onclick="maKeep()">Смотреть слайды у Малевича →</a>'}else if(hd){hb.outerHTML='<span class="go" id="hand" style="background:#E8F5EE;color:#177245;cursor:default">✓ Передано Малевичу</span>'}   /* v1.2: страница Малевича для работ Сократа — следующий шаг; не ведём на техническую страницу */else{hb.disabled=!hs||!!WAIT;hb.title=hs?'':'Сначала — тексты слайдов'}
-  $('#dlb').disabled=!hp;$('#send').disabled=!!WAIT;
+  $('#dlb').disabled=!hp;
+  var hb3=$('#hand');if(hb3&&hb3.tagName==='BUTTON')hb3.disabled=!hs||!!WAIT;
+  var hh=$('#handh');if(hh)hh.textContent=(WAIT?'Чтобы остановить помощника — красная кнопка справа. Файлы и тексты сохранятся.':'')+(WAIT&&!hd&&!hs?' ':'')+((!hd&&!hs)?'«Передать Малевичу» станет активной, когда слайды будут написаны и вы их утвердите.':'');
+  var sd=$('#send');if(sd&&!(NEWW&&NEWW.busy)){if(WAIT){sd.disabled=false;sd.classList.add('stop');sd.innerHTML='■<span class="tf">Остановить</span><span class="ts">Стоп</span>';sd.title='Остановить — файлы и тексты сохранятся';sd.setAttribute('aria-label','Остановить. Файлы и тексты сохранятся')}else{sd.classList.remove('stop');sd.innerHTML='↑<span class="tf">Отправить</span>';sd.title='Отправить';sd.setAttribute('aria-label','Отправить')}}
   CUR.st=hd?'Передано Малевичу':hs?'Тексты слайдов':hp?'Программа урока':'Сократ читает материалы';var w=document.querySelector('.rail .w.on small');if(w)w.textContent=CUR.st}
 
 function bind(){document.querySelectorAll('.so [data-a]').forEach(function(b){var so=b.closest('.so'),id=so.getAttribute('data-id'),a=b.getAttribute('data-a');
@@ -553,6 +588,9 @@ function bind(){document.querySelectorAll('.so [data-a]').forEach(function(b){va
       if(a==='cp'){var m=msg(id);navigator.clipboard.writeText(plain(m&&m.text)).then(function(){toast('Скопировано')},function(){toast('Не получилось скопировать — выделите текст и нажмите Cmd+C')})}
       else if(a==='ck'){if(WAIT)return;ask('check','')}
       else if(a==='ed')editMsg(so,id);else if(a==='dl')openDl(b)}});
+  document.querySelectorAll('[data-sa]').forEach(function(b){b.onclick=function(){if(WAIT)return;var md2=b.getAttribute('data-sa');
+    if(md2==='program'||md2==='slides'||md2==='check'){ask(md2,md2==='slides'?'Да, пишем слайды':'');return}
+    var lm=((ST&&ST.msgs)||[]).filter(function(m){return m.who==='me'}).pop();var tx=$('#tx');if(lm&&tx&&!tx.value.trim()){tx.value=lm.text;tx.oninput&&tx.oninput();tx.focus();toast('Ваш последний текст вернул в поле — нажмите «Отправить»',4500)}else toast('Напишите, что поправить, и нажмите «Отправить»',3500)}});
   document.querySelectorAll('[data-q]').forEach(function(b){b.onclick=function(){if(WAIT)return;var q=b.getAttribute('data-q');if(q!=='add'){var qq=b.closest('.quick');if(qq)qq.remove()}
     if(q==='yes')ask('slides','Да, пишем слайды');else if(q==='short')ask('program','Короче, на 10 минут');else{var t=$('#tx');t.value='Добавьте пункт: ';t.focus();t.oninput()}}})}
 function msg(id){return ((ST&&ST.msgs)||[]).filter(function(m){return m.id===id&&m.who==='so'})[0]}
@@ -571,7 +609,7 @@ function editMsg(so,id){var tx=$('.txt',so),ac=$('.acts',so);if(EDIT&&EDIT!==id)
   ac.querySelector('[data-a2=ok]').onclick=function(){var t=back(tx);EDIT=null;tx.contentEditable='false';saveMsg(id,t);render()};
   ac.querySelector('[data-a2=no]').onclick=function(){EDIT=null;render()}}
 
-function sendText(){var t=$('#tx'),v=t.value.trim();if(!v||WAIT)return;if(CUR&&CUR.pending&&!vtr()){PENDQ=v;toast('Сохранил. Отправлю Сократу сам, как только работа подключится — обычно 1–3 минуты.',5000);return}   /* rel48b: ответ не теряется */if(ST&&ST.handed){toast('Тексты уже у Малевича. Правки — в его приложении.',3500);return}
+function sendText(){var t=$('#tx'),v=t.value.trim();if(guardSend(sendText))return;if(!v)return;if(WAIT){wqAsk();return}if(CUR&&CUR.pending&&!vtr()){PENDQ=v;toast('Сохранил. Отправлю Сократу сам, как только работа подключится — обычно 1–3 минуты.',5000);return}   /* rel48b: ответ не теряется */if(ST&&ST.handed){toast('Тексты уже у Малевича. Правки — в его приложении.',3500);return}
   t.value='';t.oninput();var mode=hasSlides()?'edit':'program';if(!hasSlides()&&ST&&ST.doc&&ST.doc.program&&/^\s*да[\s,.!]*(пишем|пиши|давай|верно)?/i.test(v))mode='slides';else if(isQ(v)&&(hasSlides()||(ST&&ST.doc&&ST.doc.program)))mode='answer';ask(mode,v)}
 function isQ(t){t=String(t||'').trim();if(!t||t.length>600||/^Поправка к моему ответу/.test(t)||/(добавь|замени|убери|удали|исправь|перепиши|поменяй|сократи|измени|поправ|включи|сделай|давай|да,|пиши)/i.test(t.slice(0,60)))return false;return /\?$/.test(t)||/^\s*(возьми|найди|подскажи|скажи|расскажи|объясни|что|как|почему|зачем|где|когда|какой|какая|какие|какое|сколько|есть ли|можно ли|а если|кто)(?![а-яё])/i.test(t)}
 function handoff(){if(!hasSlides()||WAIT)return;var b=$('#hand'),H0=ST&&ST.handed;b.disabled=true;b.textContent='Передаю…';
@@ -583,10 +621,36 @@ function handoff(){if(!hasSlides()||WAIT)return;var b=$('#hand'),H0=ST&&ST.hande
 /* ---------- голос: распознавание речи браузера (если есть) ---------- */
 /* 14.11 (Руслан: «чтобы подобные проблемы не возникали ни в одном браузере»): голос — общий модуль g2_voice.js
    (запись → sf-voice → расшифровка обработчиком), без распознавания браузера */
-function mic(){var b=$('#mic');if(!b||!window.G2Voice)return;
-  G2Voice.attach(b,{sb:SB,dry:TEST,voter:function(){return vtr()||nwVoter()},author:function(){return (ME&&ME.io)||'Эксперт'},
-    onText:function(t){var tx=$('#tx');tx.value=(tx.value.trim()?tx.value.replace(/\s*$/,'')+' ':'')+t;tx.oninput&&tx.oninput();tx.focus()},
-    status:function(m,k){toast(k==='ok'&&!/Стенд/.test(m)?m+' Нажмите ↑, чтобы отправить.':m,k==='rec'||k==='wait'?3500:k==='err'?6000:3500)}})}
+function mic(){var b=$('#mic');VS='idle';PSEND=null;VAPI=null;if(!b||!window.G2Voice)return;
+  VAPI=G2Voice.attach(b,{sb:SB,dry:TEST,voter:function(){return vtr()||nwVoter()},author:function(){return (ME&&ME.io)||'Эксперт'},
+    onText:function(t){var tx=$('#tx');tx.value=(tx.value.trim()?tx.value.replace(/\s*$/,'')+' ':'')+t;tx.oninput&&tx.oninput();tx.focus();if(PSEND){var f=PSEND;PSEND=null;setTimeout(f,0)}},
+    onState:function(s){VS=s;if(s==='idle'&&PSEND){PSEND=null;toast('Расшифровка не получилась — ничего не отправлено. Скажите ещё раз или напишите текстом.',5000)}voiceUi()},
+    status:function(m,k){VERR=k==='err'?m:'';voiceUi();if(k!=='err')toast(k==='ok'&&!/Стенд/.test(m)?m+' Нажмите «Отправить».':m,3500)}})}   /* ошибка — только плашкой с кнопками, без дубля тостом */
+/* 19.11 («Двери 2.0», слой 1): пока идёт расшифровка, помощник не стартует; «Отправить» ждёт и запускает сам */
+var VS='idle',VAPI=null,PSEND=null,QMODE='',VERR='';
+function voiceUi(){var e=$('#vl');if(!e)return;
+  if(VERR&&VS==='idle'&&!PSEND){e.className='vl on';e.innerHTML='<span>🎤 '+esc(VERR)+'</span><button type="button" class="pri" id="vle">Попробовать ещё раз</button><button type="button" id="vlt">Написать текстом</button>';
+    $('#vle').onclick=function(){VERR='';voiceUi();var b=$('#mic');if(b)b.click()};$('#vlt').onclick=function(){VERR='';voiceUi();var t=$('#tx');if(t)t.focus()};return}
+  if(!(VS==='wait'||PSEND)){e.className='vl';e.innerHTML='';return}
+  e.className='vl on';e.innerHTML='<span>🎤 Расшифровываю вашу речь — обычно до 30 секунд. '+(PSEND?'Отправлю сам, как только закончу.':'Нажмите «Отправить» — отправлю сразу после расшифровки.')+'</span><button type="button" id="vlc">Отменить запись</button>';
+  $('#vlc').onclick=function(){PSEND=null;if(VAPI)VAPI.cancel();voiceUi()}}
+function guardSend(fn){if(VS==='rec'&&VAPI){PSEND=fn;VAPI.stop();voiceUi();return true}if(VS==='wait'){PSEND=fn;voiceUi();return true}return false}
+/* «■ Остановить» и правка текста, пока помощник работает */
+function stopWork(){if(!WAIT||(WAIT.stopping&&!WAIT.stopFail))return;WAIT.stopping=true;WAIT.slow=false;WAIT.stopFail=false;if(VAPI)VAPI.cancel();var d=CUR&&CUR.deck,w=WAIT,t0=Date.now();renderWait();
+  job('sokrat_stop').then(function(ok){if(!ok&&WAIT===w){w.stopping=false;QMODE='';wqHide();renderWait();toast('Нет связи — остановить не получилось, попробуйте ещё раз',4000)}});
+  var chk=setInterval(function(){if(WAIT!==w||!CUR||CUR.deck!==d){clearInterval(chk);return}var q=Date.now()-t0;
+    G2L.get(d,'sok',3000).then(function(r){if(WAIT!==w||!(r&&r.data))return;if(!r.data.busy){clearInterval(chk);ST=r.data;WAIT=null;render();return}   /* сверяем настоящий статус: «Остановил» — только когда «занято» снято */
+      if(q>25000&&!w.slow){w.slow=true;renderWait()}if(q>120000){clearInterval(chk);w.stopFail=true;QMODE='';wqHide();renderWait()}})},4000)}
+function wqAsk(){var e=$('#wq');if(!e)return;e.className='wq on';
+  e.innerHTML='<span><b>Сократ ещё работает.</b> Ваш новый текст не потерян.</span><button type="button" class="pri" id="wq1">Остановить и учесть новое</button><button type="button" id="wq2">Дождаться и отправить после</button>';
+  $('#wq1').onclick=function(){QMODE='now';wqNote('Останавливаю — потом отправлю ваш текст.');stopWork()};
+  $('#wq2').onclick=function(){QMODE='later';wqNote('Отправлю, когда Сократ закончит. Текст остался в поле.')};
+  setTimeout(function(){var b=$('#wq2');if(b)b.focus()},0)}   /* по умолчанию — «Дождаться»: случайный Enter ничего не ломает */
+function wqNote(x){var e=$('#wq');if(!e)return;e.className='wq on';e.innerHTML='<span>'+esc(x)+'</span><button type="button" id="wqc">Отменить</button>';$('#wqc').onclick=function(){QMODE='';wqHide()}}
+function wqHide(){var e=$('#wq');if(e){e.className='wq';e.innerHTML=''}}
+function afterWait(){QMODE='';wqHide();var tx=$('#tx');if(tx&&tx.value.trim())setTimeout(sendText,50)}
+function stopCard(m,last){var md2=m.mode||'program';
+  return '<div class="stop-note"><b>■ Остановлено.</b> '+esc(String(m.text||'').replace(/^Остановлено\.\s*/,''))+'</div>'+(last?'<div class="stop-acts"><button class="go" type="button" data-sa="'+esc(md2)+'">Запустить заново</button><a class="go2 stop-new" href="'+DOORS_URL+'">Загрузить другие файлы и запустить заново</a></div>':'')}
 
 /* ---------- скачать: без вызова модели ---------- */
 function openDl(btn){var m=$('#dl'),r=btn.getBoundingClientRect();m.classList.add('on');var top=r.top-m.offsetHeight-8;m.style.top=(top<8?r.bottom+8:top)+'px';m.style.left=Math.max(8,Math.min(innerWidth-m.offsetWidth-8,r.left))+'px';
@@ -645,5 +709,5 @@ document.addEventListener('mousedown',function(e){var h=e.target.closest&&e.targ
 boot();
 })();
 </script>
-<!--PEVER--><div id="pever" title="Номер версии" style="position:fixed;right:12px;top:62px;z-index:60;font:12px/1.4 system-ui,sans-serif;color:#5B6270;background:rgba(255,255,255,.94);border:1px solid #E4E6EB;border-radius:8px;padding:2px 9px;pointer-events:none">Сократ · версия <b style="color:#1745E0">2.6</b> · 18.11 13:13</div><!--/PEVER-->
+<!--PEVER--><div id="pever" title="Номер версии" style="position:fixed;right:12px;top:62px;z-index:60;font:12px/1.4 system-ui,sans-serif;color:#5B6270;background:rgba(255,255,255,.94);border:1px solid #E4E6EB;border-radius:8px;padding:2px 9px;pointer-events:none">Сократ · версия <b style="color:#1745E0">2.7</b> · 19.11 20:19</div><!--/PEVER-->
 </body></html>
