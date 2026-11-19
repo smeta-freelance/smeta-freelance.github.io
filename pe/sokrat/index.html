@@ -55,7 +55,7 @@ mark{background:var(--mark);color:inherit;padding:0 2px;border-radius:3px}
 .dock .in{max-width:820px;margin:0 auto;display:flex;gap:10px;align-items:flex-end}
 .field{flex:1;display:flex;align-items:flex-end;gap:6px;border:1.5px solid var(--line);border-radius:12px;padding:6px 8px 6px 14px;background:#fff}
 .field:focus-within{border-color:var(--blue)}
-.field textarea{flex:1;border:0;outline:0;resize:none;font:inherit;font-size:17px;line-height:1.45;max-height:40vh;min-height:48px;padding:6px 0;background:none;color:var(--ink)}
+.field textarea{flex:1;border:0;outline:0;resize:none;font:inherit;font-size:17px;line-height:1.45;max-height:40vh;min-height:84px;padding:6px 0;background:none;color:var(--ink)}   /* 19.11 (отзыв Инны): большое поле, растёт по тексту до 40 % экрана */
 .ib{border:0;background:none;width:40px;height:40px;border-radius:10px;font-size:19px;color:var(--muted)}.ib:hover{background:var(--side)}.ib.rec{color:var(--red);background:#FDECEE}
 .ib.send{background:var(--blue);color:#fff}.ib.send:disabled{background:#C9D3F5}
 .go{background:var(--blue);color:#fff;border:0;border-radius:12px;padding:0 22px;height:52px;font-weight:600;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center}
@@ -108,7 +108,8 @@ mark{background:var(--mark);color:inherit;padding:0 2px;border-radius:3px}
 .newwait .bar{height:8px;border-radius:6px;background:var(--side);overflow:hidden;margin:16px 0 8px}.newwait .bar i{display:block;height:100%;background:var(--blue);width:3%;transition:width .8s}
 .newwait p{color:var(--muted);margin:4px 0}
 .top{overflow:hidden}.steps{min-width:0;overflow:hidden;flex-shrink:1}   /* тест rel46: без горизонтальной прокрутки на 1000–1024 px */
-@media (max-width:1280px){.hbtn{font-size:0;padding:4px 8px;flex:none}.hbtn::before{content:"🕘";font-size:18px}.top .pc{display:none}}
+@media (max-width:1280px){.hbtn{font-size:0;padding:4px 8px;flex:none}.hbtn::before{content:"🕘";font-size:18px}.top .pc:not(.ho){display:none}.top .pc.ho{font-size:14px;max-width:320px;line-height:1.2;white-space:normal;margin-left:0}}
+@media (max-width:760px){.top .pc.ho{display:none}}
 /* SOKRAT_MAT12 v1.2: кнопка сверки и ответ сверки */
 .acts button.ck{border-color:var(--blue);color:var(--blue);font-weight:600}.acts button.ck:hover{background:#EEF2FF;color:var(--blue)}
 .txt.k-check{border-left:4px solid var(--blue);padding-left:14px}
@@ -341,10 +342,10 @@ var WORKS_URL='/pe/raboty/',DOORS_URL='/pe/dveri/',SW=null,SA=false,SWT=false,NE
 function shell(nw){return '<div class="app"><main><div class="top'+(nw?'':' w')+'"><span class="who"><img src="img/sokrat.png" alt=""><b>Сократ · методист</b></span><span class="sep">·</span><b class="nm" id="nm">'+(nw?'Новая работа':'')+'</b>'+
     (nw?'':'<span class="steps" id="steps"></span><button class="hbtn" id="hbtn" type="button" aria-haspopup="dialog" title="История урока" aria-label="История урока">🕘 История урока</button><span class="pc" id="pc"></span>')+
     '<a class="lk home" href="'+DOORS_URL+'">⌂ Двери</a><a class="lk" href="'+WORKS_URL+'">Мои работы</a></div>'+
-    '<div class="chat" id="chat"></div><div class="dock">'+(nw?'':'<div class="sband" id="sband"></div>')+'<div class="vl" id="vl"></div><div class="wq" id="wq"></div><div class="nwf" id="nwf"></div><div class="srcs" id="srcs"></div><div class="in"><div class="field"><textarea id="tx" rows="2" placeholder="'+(nw?'Напишите или скажите тему урока…':'Напишите Сократу, что поправить')+'"></textarea>'+
+    '<div class="chat" id="chat"></div><div class="dock">'+(nw?'':'<div class="sband" id="sband"></div>')+'<div class="vl" id="vl"></div><div class="wq" id="wq"></div><div class="nwf" id="nwf"></div><div class="srcs" id="srcs"></div><div class="in"><div class="field"><textarea id="tx" rows="3" placeholder="'+(nw?'Напишите или скажите тему урока…':'Напишите Сократу, что поправить')+'"></textarea>'+
     (nw?'<button class="ib" id="att" type="button" title="Прикрепить файл" aria-label="Прикрепить файл">📎</button><input type="file" id="fi" multiple hidden accept=".pdf,.pptx,.ppt,.docx,.doc,.txt,.md,.rtf,.odt,.odp,.xlsx">':'')+
     '<button class="ib" id="mic" title="Сказать голосом" aria-label="Сказать голосом">🎤</button><button class="ib send" id="send" title="Отправить" aria-label="Отправить">↑<span class="tf">Отправить</span></button></div>'+
-    (nw?'':'<button class="go2" id="dlb">⤓ Скачать</button><button class="go" id="hand">Передать Малевичу →</button>')+'</div><div class="hh2" id="handh"></div></div></main></div>'}
+    (nw?'':'<button class="go2" id="dlb">⤓ Скачать</button><a class="go2" id="mlink" href="#" hidden style="text-decoration:none;display:none;align-items:center">Смотреть слайды у Малевича →</a><button class="go" id="hand">Передать Малевичу →</button>')+'</div><div class="hh2" id="handh"></div></div></main></div>'}
 function matFiles(){return NEWW?NEWW.files.map(function(f){return f.name}):(((ST&&ST.intro&&ST.intro.files)||[]).filter(okf))}
 function srcKey(){return CUR?'pe-sok-src-'+CUR.deck:NEWW?'pe-sok-src-new':''}
 function srcInit(){var nf=matFiles().length;SWT=false;SA=false;SW=null;
@@ -575,11 +576,12 @@ function head(){dockPad();if(!CUR)return;$('#nm').textContent=(ST&&ST.title)||CU
   var k=hd?3:(hs||(WAIT&&WAIT.mode==='slides'))?2:1,L=['План урока','Что на каждом слайде','Малевич рисует'];
   $('#steps').innerHTML='';
   var sb=$('#sband');if(sb)sb.innerHTML='<b>Шаг '+k+' из 3</b>'+L.map(function(x,n){var q=n+1,d=q<k;return '<i class="'+(d?'ok':q===k?'now':'')+'">'+(d?'✓ ':'')+['①','②','③'][n]+' '+x+'</i>'}).join(' → ');
-  $('#pc').innerHTML=hd?'Работа у Малевича':'У Сократа · шаг <b>'+k+' из 3</b>';
-  var hb=$('#hand'),ma=hd&&((ST&&ST.msgs)||[]).some(function(m){return m.who==='ma'});if(ma){hb.outerHTML='<a class="go" id="hand" href="'+maHref()+'" onclick="maKeep()">Смотреть слайды у Малевича →</a>'}else if(hd){hb.outerHTML='<span class="go" id="hand" style="background:#E8F5EE;color:#177245;cursor:default">✓ Передано Малевичу</span>'}   /* v1.2: страница Малевича для работ Сократа — следующий шаг; не ведём на техническую страницу */else{hb.disabled=!hs||!!WAIT;hb.title=hs?'':'Сначала — тексты слайдов'}
+  $('#pc').className=hd?'pc ho':'pc';$('#pc').innerHTML=hd?'У Малевича · тексты можно доработать':'У Сократа · шаг <b>'+k+' из 3</b>';
+  var ml=$('#mlink');if(ml){if(hd){ml.hidden=false;ml.style.display='inline-flex';ml.href=maHref();ml.onclick=maKeep}else{ml.hidden=true;ml.style.display='none'}}   /* 19.11 (отзыв Инны): работа остаётся у Сократа — можно доработать и передать заново */
+  var hb=$('#hand');if(hb&&hb.tagName==='BUTTON'&&!(HANDING)){hb.textContent=hd?'Передать заново →':'Передать Малевичу →'}
   $('#dlb').disabled=!hp;
-  var hb3=$('#hand');if(hb3&&hb3.tagName==='BUTTON')hb3.disabled=!hs||!!WAIT;
-  var hh=$('#handh');if(hh)hh.textContent=(WAIT?'Чтобы остановить помощника — красная кнопка справа. Файлы и тексты сохранятся.':'')+(WAIT&&!hd&&!hs?' ':'')+((!hd&&!hs)?'«Передать Малевичу» станет активной, когда слайды будут написаны и вы их утвердите.':'');
+  var hb3=$('#hand');if(hb3&&hb3.tagName==='BUTTON'&&!HANDING)hb3.disabled=!hs||!!WAIT;
+  var hh=$('#handh');if(hh)hh.textContent=(hd&&!WAIT?'Тексты у Малевича. Поправили здесь — нажмите «Передать заново»: Малевич получит новые тексты (уже нарисованные слайды он не меняет — их правьте у него).':'')+(WAIT?'Чтобы остановить помощника — красная кнопка справа. Файлы и тексты сохранятся.':'')+(WAIT&&!hd&&!hs?' ':'')+((!hd&&!hs)?'«Передать Малевичу» станет активной, когда слайды будут написаны и вы их утвердите.':'');
   var sd=$('#send');if(sd&&!(NEWW&&NEWW.busy)){if(WAIT){sd.disabled=false;sd.classList.add('stop');sd.innerHTML='■<span class="tf">Остановить</span><span class="ts">Стоп</span>';sd.title='Остановить — файлы и тексты сохранятся';sd.setAttribute('aria-label','Остановить. Файлы и тексты сохранятся')}else{sd.classList.remove('stop');sd.innerHTML='↑<span class="tf">Отправить</span>';sd.title='Отправить';sd.setAttribute('aria-label','Отправить')}}
   CUR.st=hd?'Передано Малевичу':hs?'Тексты слайдов':hp?'Программа урока':'Сократ читает материалы';var w=document.querySelector('.rail .w.on small');if(w)w.textContent=CUR.st}
 
@@ -609,14 +611,15 @@ function editMsg(so,id){var tx=$('.txt',so),ac=$('.acts',so);if(EDIT&&EDIT!==id)
   ac.querySelector('[data-a2=ok]').onclick=function(){var t=back(tx);EDIT=null;tx.contentEditable='false';saveMsg(id,t);render()};
   ac.querySelector('[data-a2=no]').onclick=function(){EDIT=null;render()}}
 
-function sendText(){var t=$('#tx'),v=t.value.trim();if(guardSend(sendText))return;if(!v)return;if(WAIT){wqAsk();return}if(CUR&&CUR.pending&&!vtr()){PENDQ=v;toast('Сохранил. Отправлю Сократу сам, как только работа подключится — обычно 1–3 минуты.',5000);return}   /* rel48b: ответ не теряется */if(ST&&ST.handed){toast('Тексты уже у Малевича. Правки — в его приложении.',3500);return}
+function sendText(){var t=$('#tx'),v=t.value.trim();if(guardSend(sendText))return;if(!v)return;if(WAIT){wqAsk();return}if(CUR&&CUR.pending&&!vtr()){PENDQ=v;toast('Сохранил. Отправлю Сократу сам, как только работа подключится — обычно 1–3 минуты.',5000);return}   /* rel48b: ответ не теряется */
   t.value='';t.oninput();var mode=hasSlides()?'edit':'program';if(!hasSlides()&&ST&&ST.doc&&ST.doc.program&&/^\s*да[\s,.!]*(пишем|пиши|давай|верно)?/i.test(v))mode='slides';else if(isQ(v)&&(hasSlides()||(ST&&ST.doc&&ST.doc.program)))mode='answer';ask(mode,v)}
 function isQ(t){t=String(t||'').trim();if(!t||t.length>600||/^Поправка к моему ответу/.test(t)||/(добавь|замени|убери|удали|исправь|перепиши|поменяй|сократи|измени|поправ|включи|сделай|давай|да,|пиши)/i.test(t.slice(0,60)))return false;return /\?$/.test(t)||/^\s*(возьми|найди|подскажи|скажи|расскажи|объясни|что|как|почему|зачем|где|когда|какой|какая|какие|какое|сколько|есть ли|можно ли|а если|кто)(?![а-яё])/i.test(t)}
-function handoff(){if(!hasSlides()||WAIT)return;var b=$('#hand'),H0=ST&&ST.handed;b.disabled=true;b.textContent='Передаю…';
+var HANDING=false;
+function handoff(){if(!hasSlides()||WAIT||HANDING)return;var b=$('#hand'),H0=ST&&ST.handed;HANDING=true;b.disabled=true;b.textContent='Передаю…';
   var c=$('#chat'),hc=document.createElement('div');hc.className='so';hc.id='hcard';hc.innerHTML='<img class="ava" src="img/sokrat.png" alt="Сократ"><div class="col" style="flex:1"><div class="done-note" style="background:#EEF2FE;border-color:#C9D5FB"><b>Передаю тексты слайдов Малевичу…</b><div style="height:8px;border-radius:6px;background:#fff;margin:8px 0;overflow:hidden"><i id="hbar" style="display:block;height:100%;width:10%;background:#1745E0;transition:width .8s"></i></div><span style="color:#5B6270;font-size:15px">Собираю тексты, ключевые слова и источники в один пакет</span></div></div>';c.appendChild(hc);scrollEnd();
   var hp=10,ht=setInterval(function(){var x=$('#hbar');if(!x){clearInterval(ht);return}hp=Math.min(92,hp+8);x.style.width=hp+'%'},700);
-  job('sokrat_handoff').then(function(ok){if(!ok){b.disabled=false;b.textContent='Передать Малевичу →';toast('Нет связи — попробуйте ещё раз',4000);return}
-    var n=0,tm=setInterval(function(){G2L.get(CUR.deck,'sok',3000).then(function(r){n++;if(r&&r.data&&r.data.handed&&r.data.handed!==H0){clearInterval(tm);clearInterval(ht);ST=r.data;maKeep();render();scrollEnd()}else if(n>40){clearInterval(tm);b.disabled=false;b.textContent='Передать Малевичу →';toast('Задерживаюсь — я сообщил Руслану. Тексты сохранены.',5000)}})},1500)})}
+  job('sokrat_handoff').then(function(ok){if(!ok){HANDING=false;b.disabled=false;b.textContent=H0?'Передать заново →':'Передать Малевичу →';toast('Нет связи — попробуйте ещё раз',4000);return}
+    var n=0,tm=setInterval(function(){G2L.get(CUR.deck,'sok',3000).then(function(r){n++;if(r&&r.data&&r.data.handed&&r.data.handed!==H0){clearInterval(tm);clearInterval(ht);HANDING=false;ST=r.data;maKeep();render();scrollEnd()}else if(n>40){clearInterval(tm);HANDING=false;b.disabled=false;b.textContent=H0?'Передать заново →':'Передать Малевичу →';toast('Задерживаюсь — я сообщил Руслану. Тексты сохранены.',5000)}})},1500)})}
 
 /* ---------- голос: распознавание речи браузера (если есть) ---------- */
 /* 14.11 (Руслан: «чтобы подобные проблемы не возникали ни в одном браузере»): голос — общий модуль g2_voice.js
@@ -709,5 +712,5 @@ document.addEventListener('mousedown',function(e){var h=e.target.closest&&e.targ
 boot();
 })();
 </script>
-<!--PEVER--><div id="pever" title="Номер версии" style="position:fixed;right:12px;top:62px;z-index:60;font:12px/1.4 system-ui,sans-serif;color:#5B6270;background:rgba(255,255,255,.94);border:1px solid #E4E6EB;border-radius:8px;padding:2px 9px;pointer-events:none">Сократ · версия <b style="color:#1745E0">2.7</b> · 19.11 20:19</div><!--/PEVER-->
+<!--PEVER--><div id="pever" title="Номер версии" style="position:fixed;right:12px;top:62px;z-index:60;font:12px/1.4 system-ui,sans-serif;color:#5B6270;background:rgba(255,255,255,.94);border:1px solid #E4E6EB;border-radius:8px;padding:2px 9px;pointer-events:none">Сократ · версия <b style="color:#1745E0">2.8</b> · 19.11 22:54</div><!--/PEVER-->
 </body></html>
