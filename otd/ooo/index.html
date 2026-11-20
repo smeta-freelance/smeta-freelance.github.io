@@ -44,7 +44,7 @@ button.main:hover{background:var(--acc2)}button.main:disabled{opacity:.6;cursor:
    <button class="tile" data-tab="exp"><b>Эксперты</b><small>Кого ждём, что получили</small></button>
   </div>
  </div>
- <p class="foot">Версия 20.11.2026 14:30</p>
+ <p class="foot">Версия 20.11.2026 15:58</p>
 </div>
 <script>
 (function(){
@@ -61,13 +61,15 @@ function toLogin(msg){sess=null;staff=null;show("login");$("err").textContent=ms
 async function afterAuth(){
   staff=await loadStaff();
   if(!staff){setRt(null);toLogin("Этого адреса нет в списке отдела обучения. Напишите Руслану.");return}
+  var nx=(new URLSearchParams(location.search)).get("next");
+  if(nx&&/^\/[^\/\\]/.test(nx)){location.replace(nx);return}
   var h=(location.hash||"").slice(1);
   if(h){openCrm(h)}else{$("nm").textContent=NM[staff.me]||"коллега";show("hub")}
 }
 function openCrm(tab){
   var bytes=Uint8Array.from(atob(TPL),function(c){return c.charCodeAt(0)});
   var html=new TextDecoder("utf-8").decode(bytes);
-  var o={me:staff.me,sb:{url:SB,key:KEY},tok:sess.access_token,rt:sess.refresh_token,ver:"20.11.2026 14:30"};
+  var o={me:staff.me,sb:{url:SB,key:KEY},tok:sess.access_token,rt:sess.refresh_token,ver:"20.11.2026 15:58"};
   if(staff.ck)o.ck=staff.ck;
   html=html.replace("<head>","<head><script>window.OTD="+JSON.stringify(o).replace(/</g,"\\u003c")+";<\/script>");
   try{history.replaceState(null,"","#"+tab)}catch(e){}
