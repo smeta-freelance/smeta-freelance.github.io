@@ -80,7 +80,7 @@ th:first-child,td:first-child{text-align:left}th{background:#FAFBFD;color:var(--
   <p class="legend">Нажатие на квадрат — дать или забрать доступ. Сохраняется сразу, отменить можно в течение 8 секунд. Администраторов не меньше двух. Новых людей пока добавляет Руслан.</p>
   <p class="legend" id="admwarn" hidden></p>
  </section>
- <p class="foot">Версия 23.11.2026 18:12</p>
+ <p class="foot">Версия 23.11.2026 21:00</p>
 </main>
 <div class="toast" id="toast" role="status"><span id="tmsg"></span><button id="undo" type="button">Отменить</button></div>
 <script>
@@ -101,9 +101,10 @@ function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp
 function view(v){["load","v-login","v-home","v-noaccess","v-admin"].forEach(function(x){var e=$(x);if(x===v){e.hidden=false;e.style.display=(x==="v-home"||x==="v-admin")?"flex":""}else{e.hidden=true;e.style.display="none"}});$("hd").hidden=(v==="v-login"||v==="load")}
 function api(path,opt){opt=opt||{};opt.headers=Object.assign({apikey:KEY,"Content-Type":"application/json"},opt.headers||{});if(sess)opt.headers.Authorization="Bearer "+sess.access_token;return fetch(SB+path,opt)}
 function setRt(rt){try{if(rt)localStorage.setItem("ooo_rt",rt);else localStorage.removeItem("ooo_rt")}catch(e){}}
-var PE_KEYS=["pe-hub-k","pe-hub-acc","pe-hub-who","pe-hub-exp"];
+var PE_KEYS=["pe-hub-k","pe-hub-acc","pe-hub-who","pe-hub-exp","pe-hub-me","pe-hub-new"];
 function clearPe(){try{PE_KEYS.forEach(function(k){localStorage.removeItem(k)})}catch(e){}}
 function syncWho(me){try{if(localStorage.getItem("ooo_who")!==me){clearPe();localStorage.setItem("ooo_who",me)}}catch(e){}}
+function checkPe(st){try{var w=localStorage.getItem("pe-hub-who");if(st&&st.role==="expert"&&w&&w!==st.me)clearPe()}catch(e){}}
 function getRt(){try{return localStorage.getItem("ooo_rt")}catch(e){return null}}
 async function token(grant,body){try{var r=await fetch(SB+"/auth/v1/token?grant_type="+grant,{method:"POST",headers:{apikey:KEY,"Content-Type":"application/json"},body:JSON.stringify(body)});if(!r.ok)return null;return r.json()}catch(e){return null}}
 async function loadStaff(){
@@ -149,21 +150,21 @@ function openCrm(tab){
   var p=permOfHash(tab);var dd=doors.filter(function(x){return x.url==="#"+tab})[0];if(dd&&!canDoor(dd)){showNoAccess();return}
   var bytes=Uint8Array.from(atob(TPL),function(c){return c.charCodeAt(0)});
   var html=new TextDecoder("utf-8").decode(bytes);
-  var o={me:staff.me,sb:{url:SB,key:KEY},tok:sess.access_token,rt:sess.refresh_token,ver:"23.11.2026 18:12"};
+  var o={me:staff.me,sb:{url:SB,key:KEY},tok:sess.access_token,rt:sess.refresh_token,ver:"23.11.2026 21:00"};
   if(staff.ck)o.ck=staff.ck;
   html=html.replace("<head>","<head><script>window.OTD="+JSON.stringify(o).replace(/</g,"\\u003c")+";window.addEventListener(\"hashchange\",function(){if(!location.hash||location.hash===\"#\")location.reload()});window.addEventListener(\"pageshow\",function(e){if(e.persisted&&!location.hash)location.reload()});<\/script>");
   try{if(location.hash!=="#"+tab)history.pushState(null,"","#"+tab)}catch(e){}
   document.open();document.write(html);document.close();
 }
 function showNoAccess(){view("v-noaccess")}
-function showHome(){
+function showHome(){checkPe(staff);
   try{history.replaceState(null,"",location.pathname)}catch(e){}
   $("nm").textContent=staff.role==="expert"?nm(staff).split(" ")[0]:nm(staff);$("role").textContent=nm(staff).split(" ")[0]+" · "+roleText();drawHome();view("v-home")}
 function toLogin(msg){sess=null;staff=null;view("v-login");var e=$("err");e.textContent=msg||"";e.hidden=!msg;$("go").disabled=false}
 async function afterAuth(){
   staff=await loadStaff();
   if(!staff){setRt(null);toLogin("Этого адреса нет в списке отдела обучения. Напишите Руслану.");return}
-  syncWho(staff.me);
+  syncWho(staff.me);checkPe(staff);
   var nx=(new URLSearchParams(location.search)).get("next");
   if(nx&&/^\/[^\/\\]/.test(nx)){location.replace(nx);return}
   await loadDoors();
