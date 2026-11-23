@@ -70,10 +70,10 @@ th:first-child,td:first-child{text-align:left}th{background:#FAFBFD;color:var(--
  <section id="v-admin" hidden style="display:none;flex-direction:column;gap:18px">
   <div class="bar"><b style="font-size:20px">Доступы</b><span class="sp"></span><button class="ghost" id="admback" type="button">← Все двери</button></div>
   <table id="tbl"><thead id="thd"></thead><tbody id="tbd"></tbody></table>
-  <p class="legend">Нажатие на квадрат — дать или забрать доступ. Сохраняется сразу, отменить можно в течение 8 секунд. Администраторов не меньше двух. Новых людей пока добавляет Руслан через SQL.</p>
+  <p class="legend">Нажатие на квадрат — дать или забрать доступ. Сохраняется сразу, отменить можно в течение 8 секунд. Администраторов не меньше двух. Новых людей пока добавляет Руслан.</p>
   <p class="legend" id="admwarn" hidden></p>
  </section>
- <p class="foot">Версия 23.11.2026 08:06</p>
+ <p class="foot">Версия 23.11.2026 08:09</p>
 </main>
 <div class="toast" id="toast" role="status"><span id="tmsg"></span><button id="undo" type="button">Отменить</button></div>
 <script>
@@ -130,7 +130,7 @@ function openCrm(tab){
   var p=permOfHash(tab);if(p&&!can(p)){showNoAccess();return}
   var bytes=Uint8Array.from(atob(TPL),function(c){return c.charCodeAt(0)});
   var html=new TextDecoder("utf-8").decode(bytes);
-  var o={me:staff.me,sb:{url:SB,key:KEY},tok:sess.access_token,rt:sess.refresh_token,ver:"23.11.2026 08:06"};
+  var o={me:staff.me,sb:{url:SB,key:KEY},tok:sess.access_token,rt:sess.refresh_token,ver:"23.11.2026 08:09"};
   if(staff.ck)o.ck=staff.ck;
   html=html.replace("<head>","<head><script>window.OTD="+JSON.stringify(o).replace(/</g,"\\u003c")+";<\/script>");
   try{history.replaceState(null,"","#"+tab)}catch(e){}
@@ -156,11 +156,11 @@ async function afterAuth(){
 async function openAdmin(){
   if(!can("admin")){showNoAccess();return}
   $("admwarn").hidden=true;
-  if(!tabled){$("admwarn").hidden=false;$("admwarn").textContent="Таблицы доступов ещё не созданы (нужно выполнить supabase_doors.sql). Сейчас права считаются по прежним правилам, менять нельзя."}
+  if(!tabled){$("admwarn").hidden=false;$("admwarn").textContent="Доступы пока нельзя менять: база ещё не подготовлена. Права действуют по прежним правилам. Напишите Руслану."}
   var r=await api("/rest/v1/otd_staff?select=email,me,name,role&order=name.asc");people=r.ok?await r.json():[];
   matrix={};
   if(tabled){var m=await api("/rest/v1/door_access?select=email,perm&limit=1000");(m.ok?await m.json():[]).forEach(function(x){(matrix[x.email.toLowerCase()]=matrix[x.email.toLowerCase()]||{})[x.perm]=1})}
-  else people.forEach(function(p){var k=p.email.toLowerCase();matrix[k]={plan:1};if(p.role==="lead")PERMS.forEach(function(q){matrix[k][q[0]]=1});else if(LEGACY_LES.indexOf(p.me)>=0){matrix[k].les=1;matrix[k].exp=1}});
+  else people.forEach(function(p){var k=p.email.toLowerCase();matrix[k]={plan:1};if(p.role==="lead")PERMS.forEach(function(q){matrix[k][q[0]]=1});else if(LEGACY_LES.indexOf(p.me)>=0){matrix[k].les=1;matrix[k].exp=1}if(p.me==="alevtina"||p.me==="natalya")matrix[k].prod=1});
   try{history.replaceState(null,"","#admin")}catch(e){}
   drawAdmin();view("v-admin")}
 function roleName(p){return p.role==="lead"?"руководитель":"сотрудник"}
