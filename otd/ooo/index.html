@@ -80,7 +80,7 @@ th:first-child,td:first-child{text-align:left}th{background:#FAFBFD;color:var(--
   <p class="legend">Нажатие на квадрат — дать или забрать доступ. Сохраняется сразу, отменить можно в течение 8 секунд. Администраторов не меньше двух. Новых людей пока добавляет Руслан.</p>
   <p class="legend" id="admwarn" hidden></p>
  </section>
- <p class="foot">Версия 23.11.2026 17:46</p>
+ <p class="foot">Версия 23.11.2026 18:12</p>
 </main>
 <div class="toast" id="toast" role="status"><span id="tmsg"></span><button id="undo" type="button">Отменить</button></div>
 <script>
@@ -149,10 +149,10 @@ function openCrm(tab){
   var p=permOfHash(tab);var dd=doors.filter(function(x){return x.url==="#"+tab})[0];if(dd&&!canDoor(dd)){showNoAccess();return}
   var bytes=Uint8Array.from(atob(TPL),function(c){return c.charCodeAt(0)});
   var html=new TextDecoder("utf-8").decode(bytes);
-  var o={me:staff.me,sb:{url:SB,key:KEY},tok:sess.access_token,rt:sess.refresh_token,ver:"23.11.2026 17:46"};
+  var o={me:staff.me,sb:{url:SB,key:KEY},tok:sess.access_token,rt:sess.refresh_token,ver:"23.11.2026 18:12"};
   if(staff.ck)o.ck=staff.ck;
-  html=html.replace("<head>","<head><script>window.OTD="+JSON.stringify(o).replace(/</g,"\\u003c")+";<\/script>");
-  try{history.replaceState(null,"","#"+tab)}catch(e){}
+  html=html.replace("<head>","<head><script>window.OTD="+JSON.stringify(o).replace(/</g,"\\u003c")+";window.addEventListener(\"hashchange\",function(){if(!location.hash||location.hash===\"#\")location.reload()});window.addEventListener(\"pageshow\",function(e){if(e.persisted&&!location.hash)location.reload()});<\/script>");
+  try{if(location.hash!=="#"+tab)history.pushState(null,"","#"+tab)}catch(e){}
   document.open();document.write(html);document.close();
 }
 function showNoAccess(){view("v-noaccess")}
@@ -169,8 +169,10 @@ async function afterAuth(){
   await loadDoors();
   route();
 }
+var entered=false;
 function route(){
   var h=(location.hash||"").slice(1);
+  if(!entered){entered=true;if(h){try{history.replaceState(null,"",location.pathname);history.pushState(null,"","#"+h)}catch(e){}}}
   if(h==="admin"){if(can("admin"))openAdmin();else showNoAccess();return}
   if(h&&permOfHash(h)!==null){openCrm(h);return}
   showHome();
@@ -185,7 +187,7 @@ async function openAdmin(){
   matrix={};
   if(tabled){var m=await api("/rest/v1/door_access?select=email,perm&limit=1000");(m.ok?await m.json():[]).forEach(function(x){(matrix[x.email.toLowerCase()]=matrix[x.email.toLowerCase()]||{})[x.perm]=1})}
   else people.forEach(function(p){var k=p.email.toLowerCase();matrix[k]={plan:1};if(p.role==="lead")PERMS.forEach(function(q){matrix[k][q[0]]=1});else if(LEGACY_LES.indexOf(p.me)>=0){matrix[k].les=1;matrix[k].exp=1}if(p.me==="alevtina"||p.me==="natalya")matrix[k].prod=1});
-  try{history.replaceState(null,"","#admin")}catch(e){}
+  try{if(location.hash!=="#admin")history.pushState(null,"","#admin")}catch(e){}
   drawAdmin();view("v-admin")}
 function roleName(p){return p.role==="lead"?"руководитель":p.role==="expert"?"эксперт":"сотрудник"}
 function drawAdmin(){
