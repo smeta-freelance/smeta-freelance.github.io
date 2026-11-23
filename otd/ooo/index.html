@@ -51,7 +51,7 @@ th:first-child,td:first-child{text-align:left}th{background:#FAFBFD;color:var(--
 </header>
 <main>
  <div id="load" class="center">Загружаю…</div>
- <section id="v-login" hidden><form class="box" id="login" autocomplete="on">
+ <section id="v-login" hidden><form class="box" id="login" autocomplete="on" novalidate>
   <h1>Вход</h1>
   <input class="f" id="em" type="email" name="email" placeholder="Почта" autocomplete="username" aria-label="Почта" required>
   <input class="f" id="pw" type="password" name="password" placeholder="Пароль" autocomplete="current-password" aria-label="Пароль" required>
@@ -73,7 +73,7 @@ th:first-child,td:first-child{text-align:left}th{background:#FAFBFD;color:var(--
   <p class="legend">Нажатие на квадрат — дать или забрать доступ. Сохраняется сразу, отменить можно в течение 8 секунд. Администраторов не меньше двух. Новых людей пока добавляет Руслан.</p>
   <p class="legend" id="admwarn" hidden></p>
  </section>
- <p class="foot">Версия 23.11.2026 09:30</p>
+ <p class="foot">Версия 23.11.2026 09:49</p>
 </main>
 <div class="toast" id="toast" role="status"><span id="tmsg"></span><button id="undo" type="button">Отменить</button></div>
 <script>
@@ -136,7 +136,7 @@ function openCrm(tab){
   var p=permOfHash(tab);if(p&&!can(p)){showNoAccess();return}
   var bytes=Uint8Array.from(atob(TPL),function(c){return c.charCodeAt(0)});
   var html=new TextDecoder("utf-8").decode(bytes);
-  var o={me:staff.me,sb:{url:SB,key:KEY},tok:sess.access_token,rt:sess.refresh_token,ver:"23.11.2026 09:30"};
+  var o={me:staff.me,sb:{url:SB,key:KEY},tok:sess.access_token,rt:sess.refresh_token,ver:"23.11.2026 09:49"};
   if(staff.ck)o.ck=staff.ck;
   html=html.replace("<head>","<head><script>window.OTD="+JSON.stringify(o).replace(/</g,"\\u003c")+";<\/script>");
   try{history.replaceState(null,"","#"+tab)}catch(e){}
@@ -153,11 +153,15 @@ async function afterAuth(){
   var nx=(new URLSearchParams(location.search)).get("next");
   if(nx&&/^\/[^\/\\]/.test(nx)){location.replace(nx);return}
   await loadDoors();
+  route();
+}
+function route(){
   var h=(location.hash||"").slice(1);
   if(h==="admin"){if(can("admin"))openAdmin();else showNoAccess();return}
   if(h&&permOfHash(h)!==null){openCrm(h);return}
   showHome();
 }
+window.addEventListener("hashchange",function(){if(staff&&sess)route()});
 /* ---------- админ-панель ---------- */
 async function openAdmin(){
   if(!can("admin")){showNoAccess();return}
@@ -204,7 +208,9 @@ $("nahome").onclick=function(){showHome()};
 $("logo").onclick=function(){if(staff)showHome()};
 /* ---------- вход ---------- */
 $("login").addEventListener("submit",async function(e){
-  e.preventDefault();$("err").hidden=true;$("go").disabled=true;
+  e.preventDefault();$("err").hidden=true;
+  if(!$("em").value.trim()||!$("pw").value){toLogin(!$("em").value.trim()?"Введите почту.":"Введите пароль.");return}
+  $("go").disabled=true;
   var j=await token("password",{email:$("em").value.trim(),password:$("pw").value});
   if(!j||!j.access_token){toLogin("Почта или пароль не подходят. Проверьте раскладку и регистр букв.");return}
   sess=j;setRt(j.refresh_token);afterAuth()});
