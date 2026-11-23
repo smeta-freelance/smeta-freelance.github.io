@@ -80,7 +80,7 @@ th:first-child,td:first-child{text-align:left}th{background:#FAFBFD;color:var(--
   <p class="legend">Нажатие на квадрат — дать или забрать доступ. Сохраняется сразу, отменить можно в течение 8 секунд. Администраторов не меньше двух. Новых людей пока добавляет Руслан.</p>
   <p class="legend" id="admwarn" hidden></p>
  </section>
- <p class="foot">Версия 23.11.2026 21:00</p>
+ <p class="foot">Версия 23.11.2026 21:40</p>
 </main>
 <div class="toast" id="toast" role="status"><span id="tmsg"></span><button id="undo" type="button">Отменить</button></div>
 <script>
@@ -105,6 +105,40 @@ var PE_KEYS=["pe-hub-k","pe-hub-acc","pe-hub-who","pe-hub-exp","pe-hub-me","pe-h
 function clearPe(){try{PE_KEYS.forEach(function(k){localStorage.removeItem(k)})}catch(e){}}
 function syncWho(me){try{if(localStorage.getItem("ooo_who")!==me){clearPe();localStorage.setItem("ooo_who",me)}}catch(e){}}
 function checkPe(st){try{var w=localStorage.getItem("pe-hub-who");if(st&&st.role==="expert"&&w&&w!==st.me)clearPe()}catch(e){}}
+/* Единый вход «Двери» → /pe/ (23.11.2026). Вставляется в ooo_shell.html (блок скриптов, рядом с clearPe/syncWho).
+   Пароль в памяти до конца входа и нигде не сохраняется; в localStorage — тот же ключ pe-hub-k, что пишет /pe/ при своём входе.
+   Не подошло (другой логин/пароль, нет аккаунта в /pe/) — молча ничего не делаем: /pe/ спросит логин как раньше. */
+var PEPW=null,PELG="";
+var PE_RU='йцукенгшщзхъфывапролджэячсмитьбюё',PE_EN="qwertyuiop[]asdfghjkl;'zxcvbnm,.`";
+function peLat(s){return String(s||'').trim().toLowerCase().split('').map(function(c){var k=PE_RU.indexOf(c);return k>=0?PE_EN[k]:c}).join('')}
+function peNpw(s){return peLat(s).replace(/[\s–—-]+/g,'').toUpperCase()}
+function peHex(h){var a=new Uint8Array(h.length/2);for(var i=0;i<a.length;i++)a[i]=parseInt(h.substr(i*2,2),16);return a}
+function peB64(s){var b=atob(s),a=new Uint8Array(b.length);for(var i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a}
+async function peSha(s){var d=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(d)).map(function(x){return('0'+x.toString(16)).slice(-2)}).join('')}
+async function peSso(me){
+  var pw=PEPW,lg=PELG;PEPW=null;PELG="";if(!pw)return false;
+  try{
+    var t=await (await fetch('/pe/raboty/?sso='+Date.now(),{cache:'no-store'})).text();
+    var m=t.match(/var ITER=(\d+),ACC=(\{[\s\S]*?\}),SB=/);if(!m)return false;
+    var ITER=+m[1],ACC=JSON.parse(m[2]),seen={},cands=[lg.split('@')[0],me].filter(function(x){x=peLat(x);if(!x||seen[x])return false;return seen[x]=1});
+    for(var i=0;i<cands.length;i++){
+      var who=peLat(cands[i]),ah=await peSha('acc:'+who);if(!ACC[ah])continue;
+      try{
+        var key=await crypto.subtle.importKey('raw',new TextEncoder().encode(peNpw(pw)),'PBKDF2',false,['deriveBits']);
+        var b=new Uint8Array(await crypto.subtle.deriveBits({name:'PBKDF2',salt:peHex(ACC[ah].salt),iterations:ITER,hash:'SHA-256'},key,384));
+        var ct=peB64(ACC[ah].data);if(String.fromCharCode.apply(null,ct.slice(0,8))==='Salted__')ct=ct.slice(16);
+        var k2=await crypto.subtle.importKey('raw',b.slice(0,32),'AES-CBC',false,['decrypt']);
+        var body=JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-CBC',iv:b.slice(32,48)},k2,ct)));
+        clearPe();
+        localStorage.setItem('pe-hub-k',btoa(String.fromCharCode.apply(null,b)));localStorage.setItem('pe-hub-acc',ah);
+        localStorage.setItem('pe-hub-who',who);localStorage.setItem('pe-hub-exp',String(Date.now()+30*864e5));
+        if(body&&body.g2n)localStorage.setItem('pe-hub-g2n','1');
+        return true;
+      }catch(e){}
+    }
+  }catch(e){}
+  return false}
+
 function getRt(){try{return localStorage.getItem("ooo_rt")}catch(e){return null}}
 async function token(grant,body){try{var r=await fetch(SB+"/auth/v1/token?grant_type="+grant,{method:"POST",headers:{apikey:KEY,"Content-Type":"application/json"},body:JSON.stringify(body)});if(!r.ok)return null;return r.json()}catch(e){return null}}
 async function loadStaff(){
@@ -150,7 +184,7 @@ function openCrm(tab){
   var p=permOfHash(tab);var dd=doors.filter(function(x){return x.url==="#"+tab})[0];if(dd&&!canDoor(dd)){showNoAccess();return}
   var bytes=Uint8Array.from(atob(TPL),function(c){return c.charCodeAt(0)});
   var html=new TextDecoder("utf-8").decode(bytes);
-  var o={me:staff.me,sb:{url:SB,key:KEY},tok:sess.access_token,rt:sess.refresh_token,ver:"23.11.2026 21:00"};
+  var o={me:staff.me,sb:{url:SB,key:KEY},tok:sess.access_token,rt:sess.refresh_token,ver:"23.11.2026 21:40"};
   if(staff.ck)o.ck=staff.ck;
   html=html.replace("<head>","<head><script>window.OTD="+JSON.stringify(o).replace(/</g,"\\u003c")+";window.addEventListener(\"hashchange\",function(){if(!location.hash||location.hash===\"#\")location.reload()});window.addEventListener(\"pageshow\",function(e){if(e.persisted&&!location.hash)location.reload()});<\/script>");
   try{if(location.hash!=="#"+tab)history.pushState(null,"","#"+tab)}catch(e){}
@@ -165,6 +199,7 @@ async function afterAuth(){
   staff=await loadStaff();
   if(!staff){setRt(null);toLogin("Этого адреса нет в списке отдела обучения. Напишите Руслану.");return}
   syncWho(staff.me);checkPe(staff);
+  await peSso(staff.me);
   var nx=(new URLSearchParams(location.search)).get("next");
   if(nx&&/^\/[^\/\\]/.test(nx)){location.replace(nx);return}
   await loadDoors();
@@ -231,8 +266,8 @@ $("login").addEventListener("submit",async function(e){
   var lg=$("em").value.trim();if(lg.indexOf("@")<0)lg=lg.toLowerCase()+"@doors.local";
   var j=await token("password",{email:lg,password:$("pw").value});
   if(!j||!j.access_token){toLogin("Почта или пароль не подходят. Проверьте раскладку и регистр букв.");return}
-  sess=j;setRt(j.refresh_token);afterAuth()});
-$("out").onclick=function(){setRt(null);clearPe();try{localStorage.removeItem("ooo_who")}catch(e){}sess=null;staff=null;try{history.replaceState(null,"",location.pathname)}catch(e){}$("pw").value="";view("v-login")};
+  PEPW=$("pw").value;PELG=$("em").value;sess=j;setRt(j.refresh_token);afterAuth()});
+$("out").onclick=function(){setRt(null);clearPe();try{localStorage.removeItem("ooo_who")}catch(e){}sess=null;staff=null;try{history.replaceState(null,"",location.pathname)}catch(e){}$("pw").value="";$("go").disabled=false;view("v-login")};
 $("groups").addEventListener("click",function(e){var a=e.target.closest("a.t");if(!a)return;e.preventDefault();goDoor(a.getAttribute("href"))});
 /* ---------- поиск по дверям ---------- */
 var q=$("q"),res=$("res"),sel=-1;
