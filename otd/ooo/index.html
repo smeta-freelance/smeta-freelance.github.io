@@ -73,7 +73,7 @@ th:first-child,td:first-child{text-align:left}th{background:#FAFBFD;color:var(--
   <p class="legend">Нажатие на квадрат — дать или забрать доступ. Сохраняется сразу, отменить можно в течение 8 секунд. Администраторов не меньше двух. Новых людей пока добавляет Руслан.</p>
   <p class="legend" id="admwarn" hidden></p>
  </section>
- <p class="foot">Версия 23.11.2026 09:24</p>
+ <p class="foot">Версия 23.11.2026 09:30</p>
 </main>
 <div class="toast" id="toast" role="status"><span id="tmsg"></span><button id="undo" type="button">Отменить</button></div>
 <script>
@@ -86,6 +86,8 @@ var DOORS_DEF=[{"id": "plan", "grp": "Отдел обучения", "title": "П
 var PERMS=[["plan","План"],["les","Выкладка"],["exp","Эксперты"],["prod","Производство уроков"],["admin","Админ"]];
 var GROUPS=["Отдел обучения","Производство уроков"];
 var LEGACY_LES=["ruslan","ildar","natalya","marina","regina","firaya","alevtina"];
+var NAMES={"ruslan": "Руслан", "ildar": "Ильдар", "regina": "Регина", "marina": "Марина Кулиш", "natalya": "Наталья Николаевна Митькова", "firaya": "Фирая Ярхамовна", "sitnikova": "Наталья Ситникова", "alevtina": "Алевтина Штукина"};
+function nm(p){return NAMES[p.me]||p.name}
 var doors=DOORS_DEF.slice(),mine=[],tabled=false,matrix=null,people=[],lastChange=null,tm=null;
 var $=function(i){return document.getElementById(i)};
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
@@ -106,18 +108,22 @@ async function loadDoors(){
     var a=r.ok?await r.json():null;
     var m=await api("/rest/v1/door_access?select=perm&email=ilike."+encodeURIComponent(staff.email.replace(/[%_*]/g,""))+"&limit=20");
     var b=m.ok?await m.json():null;
-    if(a&&b&&a.length){tabled=true;doors=a;mine=b.map(function(x){return x.perm});return}
+    if(a&&b&&a.length){tabled=true;doors=mergeDoors(a);mine=b.map(function(x){return x.perm});return}
   }catch(e){}
   /* резерв: права по прежним правилам ООО */
   mine=["plan"];if(LEGACY_LES.indexOf(staff.me)>=0)mine.push("les","exp");
   if(staff.role==="lead"){mine=["plan","les","exp","prod","admin"]}else if(staff.me==="alevtina"||staff.me==="natalya")mine.push("prod");
 }
+/* Тексты, группы и ссылки известных дверей берём из встроенного реестра (устойчиво к кодировке в базе); из базы — права и новые двери. */
+function mergeDoors(a){var def={};DOORS_DEF.forEach(function(d){def[d.id]=d});
+  return a.map(function(d){var k=def[d.id];return k?Object.assign({},d,{grp:k.grp,title:k.title,sub:k.sub,url:k.url,perm:k.perm}):d}).sort(function(x,y){return x.sort-y.sort})}
 function can(p){return mine.indexOf(p)>=0}
 function myDoors(){return doors.filter(function(d){return can(d.perm)})}
 function roleText(){return can("admin")?"администратор":staff.role==="lead"?"руководитель":"сотрудник"}
+function groupsOf(){var g=GROUPS.slice();myDoors().forEach(function(d){if(g.indexOf(d.grp)<0)g.push(d.grp)});return g}
 function drawHome(){
   var h="",any=false;
-  GROUPS.forEach(function(g){
+  groupsOf().forEach(function(g){
     var l=myDoors().filter(function(d){return d.grp===g});if(!l.length)return;any=true;
     h+='<div class="grp"><h2>'+esc(g)+'</h2><div class="tiles">'+l.map(function(d){return '<a class="t" href="'+esc(d.url)+'" data-id="'+esc(d.id)+'"><strong>'+esc(d.title)+'</strong><p>'+esc(d.sub||"")+'</p></a>'}).join("")+'</div></div>'});
   $("groups").innerHTML=h;$("empty").hidden=any;$("toadm").hidden=!can("admin");
@@ -130,7 +136,7 @@ function openCrm(tab){
   var p=permOfHash(tab);if(p&&!can(p)){showNoAccess();return}
   var bytes=Uint8Array.from(atob(TPL),function(c){return c.charCodeAt(0)});
   var html=new TextDecoder("utf-8").decode(bytes);
-  var o={me:staff.me,sb:{url:SB,key:KEY},tok:sess.access_token,rt:sess.refresh_token,ver:"23.11.2026 09:24"};
+  var o={me:staff.me,sb:{url:SB,key:KEY},tok:sess.access_token,rt:sess.refresh_token,ver:"23.11.2026 09:30"};
   if(staff.ck)o.ck=staff.ck;
   html=html.replace("<head>","<head><script>window.OTD="+JSON.stringify(o).replace(/</g,"\\u003c")+";<\/script>");
   try{history.replaceState(null,"","#"+tab)}catch(e){}
@@ -139,7 +145,7 @@ function openCrm(tab){
 function showNoAccess(){view("v-noaccess")}
 function showHome(){
   try{history.replaceState(null,"",location.pathname)}catch(e){}
-  $("nm").textContent=staff.name;$("role").textContent=staff.name.split(" ")[0]+" · "+roleText();drawHome();view("v-home")}
+  $("nm").textContent=nm(staff);$("role").textContent=nm(staff).split(" ")[0]+" · "+roleText();drawHome();view("v-home")}
 function toLogin(msg){sess=null;staff=null;view("v-login");var e=$("err");e.textContent=msg||"";e.hidden=!msg;$("go").disabled=false}
 async function afterAuth(){
   staff=await loadStaff();
@@ -167,8 +173,8 @@ function roleName(p){return p.role==="lead"?"руководитель":"сотр
 function drawAdmin(){
   $("thd").innerHTML="<tr><th>Человек · роль</th>"+PERMS.map(function(q){return"<th>"+q[1]+"</th>"}).join("")+"</tr>";
   $("tbd").innerHTML=people.map(function(p,i){var k=p.email.toLowerCase();
-    return"<tr><td>"+esc(p.name)+" · "+roleName(p)+"</td>"+PERMS.map(function(q,j){var v=matrix[k]&&matrix[k][q[0]];
-      return'<td><button class="sq" data-i="'+i+'" data-j="'+j+'" aria-pressed="'+(v?"true":"false")+'" aria-label="'+q[1]+": "+(v?"забрать":"дать")+" доступ, "+esc(p.name)+'"'+(tabled?"":" disabled")+'>'+(v?"✓":"")+"</button></td>"}).join("")+"</tr>"}).join("");
+    return"<tr><td>"+esc(nm(p))+" · "+roleName(p)+"</td>"+PERMS.map(function(q,j){var v=matrix[k]&&matrix[k][q[0]];
+      return'<td><button class="sq" data-i="'+i+'" data-j="'+j+'" aria-pressed="'+(v?"true":"false")+'" aria-label="'+q[1]+": "+(v?"забрать":"дать")+" доступ, "+esc(nm(p))+'"'+(tabled?"":" disabled")+'>'+(v?"✓":"")+"</button></td>"}).join("")+"</tr>"}).join("");
   Array.prototype.forEach.call(document.querySelectorAll(".sq"),function(b){b.onclick=function(){toggle(+b.dataset.i,+b.dataset.j)}})}
 function toast(m,u){$("tmsg").textContent=m;$("toast").classList.add("on");$("undo").style.display=u?"":"none";clearTimeout(tm);tm=setTimeout(function(){$("toast").classList.remove("on")},8000)}
 function adminCount(){return people.filter(function(p){return matrix[p.email.toLowerCase()]&&matrix[p.email.toLowerCase()].admin}).length}
