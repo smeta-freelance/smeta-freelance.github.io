@@ -80,7 +80,7 @@ th:first-child,td:first-child{text-align:left}th{background:#FAFBFD;color:var(--
   <p class="legend">Нажатие на квадрат — дать или забрать доступ. Сохраняется сразу, отменить можно в течение 8 секунд. Администраторов не меньше двух. Новых людей пока добавляет Руслан.</p>
   <p class="legend" id="admwarn" hidden></p>
  </section>
- <p class="foot">Версия 24.11.2026 11:04</p>
+ <p class="foot">Версия 24.11.2026 16:51</p>
 </main>
 <div class="toast" id="toast" role="status"><span id="tmsg"></span><button id="undo" type="button">Отменить</button></div>
 <script>
@@ -115,6 +115,16 @@ function peNpw(s){return peLat(s).replace(/[\s–—-]+/g,'').toUpperCase()}
 function peHex(h){var a=new Uint8Array(h.length/2);for(var i=0;i<a.length;i++)a[i]=parseInt(h.substr(i*2,2),16);return a}
 function peB64(s){var b=atob(s),a=new Uint8Array(b.length);for(var i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a}
 async function peSha(s){var d=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(d)).map(function(x){return('0'+x.toString(16)).slice(-2)}).join('')}
+async function peKey(me){
+  try{
+    var r=await api("/rest/v1/pe_keys?select=acc,k,g2n&limit=1");if(!r.ok)return false;
+    var j=await r.json();if(!j||!j.length||!j[0].k||!j[0].acc)return false;var x=j[0];
+    if(localStorage.getItem('pe-hub-acc')!==x.acc||localStorage.getItem('pe-hub-k')!==x.k)clearPe();
+    localStorage.setItem('pe-hub-k',x.k);localStorage.setItem('pe-hub-acc',x.acc);
+    localStorage.setItem('pe-hub-who',me);localStorage.setItem('pe-hub-exp',String(Date.now()+30*864e5));
+    if(x.g2n)localStorage.setItem('pe-hub-g2n','1');
+    return true;
+  }catch(e){return false}}
 async function peSso(me){
   var pw=PEPW,lg=PELG;PEPW=null;PELG="";if(!pw)return false;
   try{
@@ -184,7 +194,7 @@ function openCrm(tab){
   var p=permOfHash(tab);var dd=doors.filter(function(x){return x.url==="#"+tab})[0];if(dd&&!canDoor(dd)){showNoAccess();return}
   var bytes=Uint8Array.from(atob(TPL),function(c){return c.charCodeAt(0)});
   var html=new TextDecoder("utf-8").decode(bytes);
-  var o={me:staff.me,sb:{url:SB,key:KEY},tok:sess.access_token,rt:sess.refresh_token,ver:"24.11.2026 11:04"};
+  var o={me:staff.me,sb:{url:SB,key:KEY},tok:sess.access_token,rt:sess.refresh_token,ver:"24.11.2026 16:51"};
   if(staff.ck)o.ck=staff.ck;
   html=html.replace("<head>","<head><script>window.OTD="+JSON.stringify(o).replace(/</g,"\\u003c")+";window.addEventListener(\"hashchange\",function(){if(!location.hash||location.hash===\"#\")location.reload()});window.addEventListener(\"pageshow\",function(e){if(e.persisted&&!location.hash)location.reload()});<\/script>");
   try{if(location.hash!=="#"+tab)history.pushState(null,"","#"+tab)}catch(e){}
@@ -199,7 +209,7 @@ async function afterAuth(){
   staff=await loadStaff();
   if(!staff){setRt(null);toLogin("Этого адреса нет в списке отдела обучения. Напишите Руслану.");return}
   syncWho(staff.me);checkPe(staff);
-  await peSso(staff.me);
+  if(await peKey(staff.me))PEPW=null;else await peSso(staff.me);
   var nx=(new URLSearchParams(location.search)).get("next");
   if(nx&&/^\/[^\/\\]/.test(nx)){location.replace(nx);return}
   await loadDoors();
