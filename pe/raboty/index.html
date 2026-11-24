@@ -140,7 +140,19 @@ async function livePoll(){if(LBUSY||!ME||(TEST&&!window.__RB_LIVE)||document.hid
     for(var i=0;i<W.length;i++){var x=W[i];window.PE={tok:x.tok||''};var r=await G2L.get(x.deck,'sokw',3000),d=r&&r.data,nv=null;
       if(d&&!d.done&&d.t0&&Date.now()/1000-d.t0<1500)nv={mode:d.mode,t0:d.t0,stopping:(LIVE[x.deck]||{}).stopping};else if(d&&d.done&&d.stopped)nv={stopped:true};
       if(JSON.stringify(nv)!==JSON.stringify(LIVE[x.deck]||null)||(nv&&nv.t0))ch=true;LIVE[x.deck]=nv}
-  }catch(e){}LBUSY=false;if(ch)draw()}
+  }catch(e){}
+  /* 24.11 («Двери 2.0 · Гудвин», п. 11): у работ на этапе записи — этап из задач pe_jobs: записано → проверить текст → монтаж идёт N % → урок готов */
+  try{var G=(ME.decks||[]).filter(function(x){return !isArch(x)&&x.who==='Гудвина · оператора'&&!x.gdone}).slice(0,40);
+    if(G.length){var r2=await fetch(SB.url.replace(/\/$/,'')+'/rest/v1/pe_jobs?select=id,deck,status,payload,eta_min,started_at,created_at&kind=eq.upload&deck=in.('+G.map(function(x){return encodeURIComponent(x.deck)}).join(',')+')&order=id.desc&limit=300',{headers:{apikey:SB.key,Authorization:'Bearer '+SB.key},cache:'no-store'});
+      if(r2.ok){var jr=await r2.json();
+        G.forEach(function(x){var L=null,T=null;jr.forEach(function(j){if(j.deck!==x.deck)return;var a=(j.payload||{}).action;if(!L&&a==='lesson'&&j.status!=='error')L=j;if(!T&&a==='transcribe'&&j.status!=='error')T=j});
+          var base='/pe/'+x.deck,u=L&&(!T||L.id>T.id)?L:T;if(!u)return;var st,btn,hr,dn=false;
+          if(u===L){if(L.status==='done'){st='Урок готов — можно смотреть';btn='Смотреть';hr=base+'/gotovo/';dn=true}
+            else{var s0=Date.parse(L.started_at||L.created_at)||Date.now(),el=Math.max(0,(Date.now()-s0)/60000),eta=+L.eta_min||4,pc=Math.min(96,Math.max(3,Math.round(el/eta*100)));st='Монтаж идёт '+pc+' %';btn='Смотреть ход';hr=base+'/montazh/'}}
+          else{if(T.status==='done'){var du=+(T.payload||{}).dur||0,mm=Math.floor(du/60),ss=Math.round(du%60);st='Записано'+(du?', '+mm+':'+(ss<10?'0':'')+ss:'')+' — проверьте текст';btn='Проверить текст';hr=base+'/tekst/'}
+            else{st='Расшифровываю запись…';btn='Открыть';hr=base+'/tekst/'}}
+          if(x.st!==st||x.btn!==btn||x.href!==hr||!!x.done!==dn){x.st=st;x.btn=btn;x.href=hr;x.done=dn;if(dn)x.gdone=1;ch=true}})}}}catch(e){}
+  LBUSY=false;if(ch){draw();var W2=(ME.decks||[]).filter(function(x){return !isArch(x)}),n2=W2.filter(function(x){return !x.done}).length,bs=document.querySelectorAll('.tabs button');if(bs.length>=3){bs[0].textContent='Все · '+W2.length;bs[1].textContent='В работе · '+n2;bs[2].textContent='Готовые · '+(W2.length-n2)}}}
 async function stopCard(deck){var x=(ME.decks||[]).filter(function(y){return y.deck===deck})[0];if(!x)return;var v=LIVE[deck];if(v)v.stopping=true;draw();
   var API=SB.url.replace(/\/$/,''),h={apikey:SB.key,Authorization:'Bearer '+SB.key,'Content-Type':'application/json',Prefer:'return=minimal'},vt=ls('sf-voter')||'';if(x.tok)h['x-pe-token']=x.tok;
   try{var r=await fetch(API+'/rest/v1/pe_jobs',{method:'POST',headers:h,body:JSON.stringify(x.tok?{deck:deck,kind:'upload',round:1,status:'queued',author:String(ME.io||'эксперт').slice(0,120),payload:{action:'sokrat_stop'}}:{deck:'start',kind:'upload',round:1,status:'queued',author:String(ME.io||'эксперт').slice(0,120),payload:{action:'sokrat_stop',deck:deck,voter:vt}})});
@@ -157,6 +169,7 @@ async function archCard(deck,on){ARCH[deck]={on:on,t:Date.now()};try{ls('pe-rabo
   var h={apikey:SB.key,Authorization:'Bearer '+SB.key,'Content-Type':'application/json',Prefer:'return=minimal'};
   try{var r=await fetch(SB.url.replace(/\/$/,'')+'/rest/v1/pe_jobs',{method:'POST',headers:h,body:JSON.stringify({deck:'start',kind:'upload',round:1,status:'queued',author:String(ME.io||'эксперт').slice(0,120),payload:{action:'raboty_archive',deck:deck,on:on}})});if(!r.ok)throw r.status}
   catch(e){toast('Нет связи — архив сохранён только на этом экране, повторите позже',4000)}}
+if(TEST)window.__RB={me:function(){return ME},poll:livePoll,draw:draw};   /* только на стенде: для автопроверки */
 setInterval(livePoll,6000);setTimeout(livePoll,1200);
 boot();
 })();
