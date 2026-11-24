@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>Проверка браузера · Гудвин</title>
+<style>
+:root{color-scheme:light;--bg:#f6f7fb;--card:#fff;--ink:#1d2433;--mut:#6b7280;--pink:#e5246b;--ok:#15803d;--warn:#b45309;--bad:#b91c1c;--line:#e5e7eb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+.top{height:56px;display:flex;align-items:center;gap:10px;padding:0 20px;background:#fff;border-bottom:1px solid var(--line);font-weight:700}
+.top b{color:var(--pink)}main{max-width:900px;margin:0 auto;padding:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:14px}
+h1{font-size:22px;margin:0 0 6px}p{margin:6px 0;color:var(--mut)}
+.step{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+button{font:inherit;font-weight:700;border:0;border-radius:10px;padding:12px 18px;cursor:pointer;background:var(--pink);color:#fff;min-height:48px}
+button.sec{background:#eef0f6;color:var(--ink)}button:disabled{opacity:.5;cursor:default}
+.st{font-weight:700}.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}
+video{width:100%;max-width:420px;border-radius:10px;background:#000;display:block}
+#done{display:none;text-align:center}#done h1{color:var(--ok);font-size:26px}
+small{color:var(--mut)}
+</style></head><body>
+<div class="top">Академия Сметного Дела · <b>Гудвин</b> · проверка браузера</div>
+<main>
+<div class="card"><h1>Проверка займёт 2 минуты</h1>
+<p>Страница проверяет, будет ли в этом браузере работать запись и монтаж урока. Ничего не сохраняется, кроме технического результата проверки.</p>
+<p id="brw"></p></div>
+
+<div class="card"><div class="step"><div style="flex:1"><div class="st">1. Автопроверка</div><p id="s1">Идёт…</p></div></div></div>
+
+<div class="card"><div class="step"><div style="flex:1"><div class="st">2. Видео играет?</div><p>Должна идти цветная заставка со звуком.</p></div>
+<video id="v" src="sample.mp4" controls playsinline preload="auto"></video></div>
+<div class="step" style="margin-top:10px"><button id="vy">Да, видео идёт</button><button class="sec" id="vn">Нет</button><span id="s2"></span></div></div>
+
+<div class="card"><div class="step"><div style="flex:1"><div class="st">3. Камера и микрофон</div>
+<p>Браузер спросит разрешение — нажмите «Разрешить». Запишется 3 секунды, запись никуда не отправляется.</p></div>
+<button id="cam">Проверить камеру и микрофон</button></div><p id="s3"></p><video id="pv" muted playsinline style="display:none;margin-top:8px"></video></div>
+
+<div class="card"><div class="step"><div style="flex:1"><div class="st">4. Показ экрана</div>
+<p>Браузер предложит выбрать экран или окно — выберите любое. Запишется 3 секунды, никуда не отправляется.</p></div>
+<button id="scr">Проверить показ экрана</button></div><p id="s4"></p></div>
+
+<div class="card"><div class="step"><div style="flex:1"><div class="st">5. Отправить результат</div><p>Результат уйдёт Академии. Можно отправить, даже если что-то не получилось.</p></div>
+<button id="send">Отправить результат</button></div><p id="s5"></p></div>
+
+<div class="card" id="done"><h1>✓ Готово, спасибо!</h1><p>Результат получен. Теперь откройте эту же ссылку в другом браузере из списка в сообщении.</p></div>
+</main>
+<script>
+(function(){
+var SB='https://lqfqhgvmavbkxxtvvmyi.supabase.co',KEY='sb_publishable_Nk96TgvBPj8gLiXJE1n6Tg_SpqTU7Uj';
+var R={v:1,t:new Date().toISOString(),ua:navigator.userAgent,plat:(navigator.userAgentData&&navigator.userAgentData.platform)||navigator.platform,
+  scr:screen.width+'x'+screen.height,dpr:window.devicePixelRatio,lang:navigator.language,api:{},rec:{},net:{},play:null,cam:null,screen:null};
+function $(i){return document.getElementById(i)}
+function nm(){var u=navigator.userAgent;return /Edg\//.test(u)?'Edge':/YaBrowser/.test(u)?'Яндекс Браузер':/OPR\//.test(u)?'Opera':/Firefox\//.test(u)?'Firefox':/Chrome\//.test(u)?'Chrome':/Safari\//.test(u)?'Safari':'другой'}
+R.name=nm();$('brw').textContent='Ваш браузер: '+R.name+' · '+(/Windows/.test(navigator.userAgent)?'Windows':/Mac/.test(navigator.userAgent)?'Mac':R.plat);
+function has(f){try{return !!f()}catch(e){return false}}
+var A=R.api;
+A.getUserMedia=has(function(){return navigator.mediaDevices.getUserMedia});
+A.getDisplayMedia=has(function(){return navigator.mediaDevices.getDisplayMedia});
+A.MediaRecorder=has(function(){return window.MediaRecorder});
+A.SpeechRecognition=has(function(){return window.SpeechRecognition||window.webkitSpeechRecognition});
+A.cryptoSubtle=has(function(){return crypto.subtle.decrypt});
+A.indexedDB=has(function(){return indexedDB});
+A.localStorage=has(function(){localStorage.setItem('_w','1');return localStorage.getItem('_w')==='1'});
+A.AudioContext=has(function(){return window.AudioContext||window.webkitAudioContext});
+A.cssHas=has(function(){return CSS.supports('selector(:has(a))')});A.dvh=has(function(){return CSS.supports('height','100dvh')});
+['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm','video/mp4;codecs=avc1,mp4a','video/mp4','audio/webm;codecs=opus','audio/mp4'].forEach(function(m){R.rec[m]=has(function(){return MediaRecorder.isTypeSupported(m)})});
+var vv=document.createElement('video');R.canPlay={mp4:vv.canPlayType('video/mp4; codecs="avc1.4D401F, mp4a.40.2"'),webm:vv.canPlayType('video/webm')};
+function ping(k,url){var t=performance.now();return fetch(url,{mode:'no-cors',cache:'no-store'}).then(function(){R.net[k]=Math.round(performance.now()-t)},function(){R.net[k]='нет связи'})}
+Promise.all([ping('rec_storage','https://asd-pe-rec.asd-akademiya.workers.dev/'),ping('supabase',SB+'/rest/v1/'),ping('fonts','https://fonts.googleapis.com/css2?family=Onest'),ping('jsdelivr','https://cdn.jsdelivr.net/npm/')]).then(function(){
+  var miss=Object.keys(A).filter(function(k){return !A[k]&&k!=='cssHas'&&k!=='dvh'&&k!=='SpeechRecognition'});
+  var off=Object.keys(R.net).filter(function(k){return R.net[k]==='нет связи'});
+  $('s1').innerHTML=(miss.length?'<span class="bad">Нет: '+miss.join(', ')+'</span>':'<span class="ok">✓ Всё нужное для записи есть</span>')+(off.length?' · <span class="warn">нет связи: '+off.join(', ')+'</span>':' · <span class="ok">связь в порядке</span>')});
+$('vy').onclick=function(){R.play={ok:true,rs:$('v').readyState};$('s2').innerHTML=' <span class="ok">✓ Записал</span>'};
+$('vn').onclick=function(){R.play={ok:false,rs:$('v').readyState,err:$('v').error&&$('v').error.code};$('s2').innerHTML=' <span class="warn">Записал: не играет</span>'};
+function pick(kind){var L=kind==='a'?['audio/webm;codecs=opus','audio/mp4']:['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm','video/mp4'];
+  for(var i=0;i<L.length;i++){try{if(MediaRecorder.isTypeSupported(L[i]))return L[i]}catch(e){}}return ''}
+function rec3(stream,out,cb){var mt=pick('v'),ch=[],mr,t0=Date.now();
+  try{mr=mt?new MediaRecorder(stream,{mimeType:mt}):new MediaRecorder(stream)}catch(e){cb({ok:false,err:'MediaRecorder: '+e.name});return}
+  mr.ondataavailable=function(e){if(e.data&&e.data.size)ch.push(e.data)};
+  mr.onstop=function(){stream.getTracks().forEach(function(t){t.stop()});var b=new Blob(ch,{type:mr.mimeType||mt});
+    cb({ok:b.size>1000,mime:mr.mimeType||mt,bytes:b.size,ms:Date.now()-t0,tracks:{v:stream.getVideoTracks().length,a:stream.getAudioTracks().length}})};
+  mr.start(1000);out.textContent='Записываю 3 секунды…';setTimeout(function(){try{mr.stop()}catch(e){}},3000)}
+$('cam').onclick=function(){var b=this;b.disabled=true;$('s3').textContent='Жду разрешения…';
+  navigator.mediaDevices.getUserMedia({video:true,audio:true}).then(function(s){var p=$('pv');p.srcObject=s;p.style.display='block';p.play().catch(function(){});
+    var tr=s.getVideoTracks()[0],st=tr&&tr.getSettings?tr.getSettings():{};
+    rec3(s,$('s3'),function(r){r.cam=st.width?st.width+'x'+st.height:'';R.cam=r;p.style.display='none';
+      $('s3').innerHTML=r.ok?'<span class="ok">✓ Камера и микрофон работают ('+r.mime.split(';')[0]+', '+Math.round(r.bytes/1024)+' КБ)</span>':'<span class="bad">Не записалось: '+(r.err||'пустая запись')+'</span>';b.disabled=false})},
+  function(e){R.cam={ok:false,err:e.name};$('s3').innerHTML='<span class="bad">Нет доступа: '+e.name+'</span> — проверьте разрешение камеры в настройках браузера';b.disabled=false})};
+$('scr').onclick=function(){var b=this;b.disabled=true;$('s4').textContent='Выберите экран или окно…';
+  if(!A.getDisplayMedia){R.screen={ok:false,err:'нет getDisplayMedia'};$('s4').innerHTML='<span class="bad">Браузер не умеет показывать экран</span>';return}
+  navigator.mediaDevices.getDisplayMedia({video:true,audio:false}).then(function(s){
+    rec3(s,$('s4'),function(r){R.screen=r;$('s4').innerHTML=r.ok?'<span class="ok">✓ Показ экрана работает</span>':'<span class="bad">Не записалось: '+(r.err||'пустая запись')+'</span>';b.disabled=false})},
+  function(e){R.screen={ok:false,err:e.name};$('s4').innerHTML='<span class="warn">Не получилось: '+e.name+'</span>';b.disabled=false})};
+var vid='w'+Math.random().toString(36).slice(2,10);
+$('send').onclick=function(){var b=this;b.disabled=true;$('s5').textContent='Отправляю…';
+  fetch(SB+'/rest/v1/sf_comments',{method:'POST',headers:{apikey:KEY,Authorization:'Bearer '+KEY,'Content-Type':'application/json',Prefer:'return=minimal'},
+    body:JSON.stringify({section:'gudvin_wincheck',voter:vid,author:R.name,body:JSON.stringify(R)})})
+  .then(function(r){if(!r.ok)throw r.status;$('s5').innerHTML='<span class="ok">✓ Отправлено</span>';$('done').style.display='block';$('done').scrollIntoView({behavior:'smooth'})})
+  .catch(function(e){$('s5').innerHTML='<span class="bad">Не отправилось ('+e+'). Сделайте снимок экрана этой страницы и пришлите Руслану.</span>';b.disabled=false})};
+})();
+</script></body></html>
