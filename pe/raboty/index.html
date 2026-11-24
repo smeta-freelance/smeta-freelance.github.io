@@ -106,7 +106,7 @@ function dt(t){if(!t)return '';var d=new Date(t*1000),z=function(n){return (n<10
 /* 19.11 (отзыв тестировщицы: «пустой, но я уже создала презентацию»): список «Моих работ» собирается при выкладке и не знает о работах, созданных после неё —
    добавляем работы, переданные Малевичу в этом браузере (отметка pe-mal-tok-<работа>), а статус берём из базы (livePoll) */
 function addLocal(){var have={};(ME.decks||[]).forEach(function(x){have[x.deck]=1});ME.decks=ME.decks||[];
-  try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf('pe-mal-tok-')===0){var d=k.slice(11);if(!d||have[d])continue;have[d]=1;var mm={};try{mm=JSON.parse(localStorage.getItem('pe-mal-meta-'+d)||'{}')||{}}catch(e){}
+  try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf('pe-mal-tok-')===0){var d=k.slice(11);if(!d||have[d])continue;if(ME.role!=='founder'&&d.indexOf(String(ME.code||'')+'-')!==0)continue;   /* 24.11: чужие ключи в браузере (другой вход на этом компьютере) — не показываем */have[d]=1;var mm={};try{mm=JSON.parse(localStorage.getItem('pe-mal-meta-'+d)||'{}')||{}}catch(e){}
     var dm=/-(\d\d)(\d\d)(\d\d)(?:-|$)/.exec(d),t=mm.c?Math.round(mm.c/1000):(dm?Math.round(Date.parse('20'+dm[1]+'-'+dm[2]+'-'+dm[3]+'T12:00:00')/1000):0);
     ME.decks.push({deck:d,title:(mm.t||'Презентация от '+(dm?dm[3]+'.'+dm[2]+'.20'+dm[1]:d)).slice(0,140),who:'Малевича',st:'Оформление слайдов',btn:'Открыть',href:'/pe/malevich/#'+d,done:false,t:t,expert:mm.e||'',loc:1})}}}catch(e){}
   ME.decks.sort(function(a,b){return (b.t||0)-(a.t||0)})}
