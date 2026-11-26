@@ -89,7 +89,7 @@ main{max-width:none;padding:10px 20px 100px;grid-template-columns:minmax(0,1fr) 
 .mver{font-size:12px;color:#8A909C;white-space:nowrap}.mver b{color:#1745E0}
 @media (max-width:900px){.mh{padding:8px 12px}.mh nav{margin-left:0}}
 </style></head><body><div class="mh" id="mh"><div><div class="who"><span class="mav" aria-hidden="true">М.</span><div>Малевич · дизайнер<small id="mt"></small><button type="button" id="mren" hidden title="Переименовать работу" style="margin-left:8px;border:1px solid #D6DBE6;border-radius:8px;background:#fff;color:#1745E0;font:600 13px system-ui,sans-serif;padding:2px 8px;cursor:pointer">✎ Переименовать</button></div></div>
-<nav aria-label="Шаги урока" class="mnav-off"><a class="ok" id="ms1" tabindex="-1" aria-disabled="true">✓ Тексты от Сократа</a><span class="now" id="ms2">● Слайды</span><span>○ Запись</span><span>○ Монтаж</span></nav><button type="button" id="march" class="march" hidden title="Убрать презентацию в архив">🗄 В архив</button><a class="ok" href="/pe/dveri/" style="margin-left:14px;font-weight:600">⌂ Главная</a><a class="ok" id="mlk" href="/pe/raboty/" style="margin-left:12px;font-weight:600;white-space:nowrap">Мои работы</a><span class="mver" title="Номер версии сервиса">Малевич · версия <b>3.24</b> · 23.11 08:00</span></div></div>
+<nav aria-label="Шаги урока" class="mnav-off"><a class="ok" id="ms1" tabindex="-1" aria-disabled="true">✓ Тексты от Сократа</a><span class="now" id="ms2">● Слайды</span><span>○ Запись</span><span>○ Монтаж</span></nav><button type="button" id="march" class="march" hidden title="Убрать презентацию в архив">🗄 В архив</button><a class="ok" href="/pe/dveri/" style="margin-left:14px;font-weight:600">⌂ Главная</a><a class="ok" id="mlk" href="/pe/raboty/" style="margin-left:12px;font-weight:600;white-space:nowrap">Мои работы</a><span class="mver" title="Номер версии сервиса">Малевич · версия <b>3.25</b> · 26.11 13:37</span></div></div>
 <div class="gl"><div><span class="av" aria-hidden="true">М.</span><div><small>Малевич · дизайнер Академии Сметного Дела</small><ul id="gl"></ul></div></div></div>
 <div class="pgw" id="pgw"><div class="pgt" id="pgt"></div><div class="pgbar" aria-hidden="true"><i id="pgi"></i></div></div>
 <main id="mn"><section class="card stage" aria-live="polite"><div class="hd"><h2 id="ttl"></h2><span id="vt"></span><a class="btn w hb dl1" id="dl1" hidden download>⬇ Скачать слайд</a><button type="button" class="btn p hb" id="hok" hidden></button><button type="button" class="btn w hb" id="sty" hidden>Оформить так же все слайды</button><span class="hn" id="hn"></span></div><div class="big" id="big"></div><div class="vs" id="vs"></div><p class="s" id="mixh" style="max-width:680px;margin:6px auto 0;font-size:15px;color:#555C69">Каждый слайд можно оформить по-своему: у каждого слайда выбирается свой вариант (A, B или C).</p><div id="ed"></div><div class="sml" id="sml" hidden></div></section>
@@ -618,7 +618,14 @@ function go(x){var site=(x&&x.site)||('pe/'+D);window.PE={deck:D,live:D,tok:(x&&
   if(ls('pe-mal-direct-'+D))window.__setDirect();
   var t=(x&&x.title)||'';document.getElementById('mt').textContent=t;
   if(window.G2L&&!t)G2L.get(D,'paket',3000).then(function(r){var d=r&&r.data||{};if(d.title)document.getElementById('mt').textContent=d.title});
-  window.onhashchange=function(){location.reload()};window.__boot25()}
+  window.onhashchange=function(){location.reload()};window.__boot25();
+  /* 26.11 (Руслан: «зависло приложение»): у только что созданной работы ключа в этом браузере ещё нет (отметка «1»), а чтение pe_state с 25.11 — только с ключом:
+     слайды нарисованы, а список пуст. Пока ключа нет — раз в 20 с перечитываем свою же страницу (новая сборка сайта несёт ключ в зашифрованном блоке входа) и,
+     как только ключ появился, запоминаем его и перезагружаемся. До 30 минут. */
+  if(!window.PE.tok&&!M.test&&kb&&ah){var tn=0,tt=setInterval(function(){if(window.PE.tok||++tn>90){clearInterval(tt);return}
+    fetch(location.pathname+'?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(async function(h){var i=h.indexOf('window.MAL={acc:'),j=h.indexOf(',iter:',i);if(i<0||j<0)return;
+      var acc=JSON.parse(h.slice(i+16,j));if(!acc[ah])return;var m2=await dec(b64(kb),acc[ah].data),y=m2&&(m2.decks||[]).filter(function(d){return d.deck===D})[0];
+      if(y&&y.tok){clearInterval(tt);try{localStorage.setItem('pe-mal-tok-'+D,y.tok)}catch(e){}location.reload()}}).catch(function(){})},20000)}}
 if(M.test){go(null);return}
 if(!(kb&&ah&&exp>Date.now())){gate('Войдите в кабинет','Слайды у Малевича открываются после входа в «Мои работы» Академии — тем же логином и паролем.');return}
 (async function(){var me=null;try{if(M.acc[ah])me=await dec(b64(kb),M.acc[ah].data)}catch(e){}window.__me=me;
