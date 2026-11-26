@@ -1,0 +1,169 @@
+/* Шрифт Noto Sans — локально (OFL), редактор работает без интернета */
+@font-face{font-family:'Noto Sans';font-weight:500;font-style:normal;font-display:block;src:url(assets/fonts/noto-sans-cyrillic-500-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Noto Sans';font-weight:500;font-style:normal;font-display:block;src:url(assets/fonts/noto-sans-latin-500-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Noto Sans';font-weight:700;font-style:normal;font-display:block;src:url(assets/fonts/noto-sans-cyrillic-700-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Noto Sans';font-weight:700;font-style:normal;font-display:block;src:url(assets/fonts/noto-sans-latin-700-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Noto Sans';font-weight:800;font-style:normal;font-display:block;src:url(assets/fonts/noto-sans-cyrillic-800-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Noto Sans';font-weight:800;font-style:normal;font-display:block;src:url(assets/fonts/noto-sans-latin-800-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Noto Sans';font-weight:900;font-style:normal;font-display:block;src:url(assets/fonts/noto-sans-cyrillic-900-normal.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Noto Sans';font-weight:900;font-style:normal;font-display:block;src:url(assets/fonts/noto-sans-latin-900-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+:root{--blue:#0231B9;--head:#0038B0;--ink:#000C3F;--mute:#5A6385;--soft:#EFF8FF;--line:#E1E6F0;--bg:#F6F8FC;--yel:#FFE58A;--red:#D92D20;--grn:#0F9147;--sel:#2F6BFF}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:"Noto Sans",system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer}
+.app{height:100vh;display:flex;flex-direction:column;min-width:900px}
+.bar{height:52px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;padding:0 14px;flex:none}
+.bar .t{font-weight:800;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:60px}
+.bar input.t{border:1px solid transparent;border-radius:8px;padding:5px 8px;background:transparent;font:800 15px "Noto Sans";color:var(--ink);flex:1 1 220px;min-width:120px;max-width:340px}
+.btn.sq{width:36px;padding:0;font-size:17px}
+.bar input.t:hover{border-color:var(--line)}.bar input.t:focus{border-color:var(--sel);outline:none;background:#fff}
+.sp{flex:1}
+.btn{height:36px;padding:0 13px;border-radius:10px;border:1px solid #D5DCEA;background:#fff;font-weight:600;font-size:13.5px;display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;flex:none}
+.btn:hover{border-color:#B5C1DA;background:#FAFBFE}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.main{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:800;padding:0 16px}
+.btn.main:hover{background:#0A3CD0}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--mute)}
+.btn.ghost:hover{color:var(--ink);background:#EEF2F9}
+.btn.danger{color:var(--red)}
+.ok{color:var(--grn);font-size:13px;font-weight:700;white-space:nowrap}
+.ok.busy{color:var(--mute)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:12px;font-weight:600;font-size:14px;z-index:99;box-shadow:0 8px 24px #0003}
+
+/* ---------- слайд 1920×1080 ---------- */
+.sw{position:relative;overflow:hidden;flex:none}
+.sx{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0}
+.S{position:absolute;inset:0;width:1920px;height:1080px;background:#0231B9;font-family:"Noto Sans";overflow:hidden}
+.S .card{position:absolute;border-radius:29px;background:#fff}
+.S.poster .card{background:linear-gradient(#1B42BB,#17379D)}
+.S .logo{position:absolute;z-index:5;pointer-events:none}
+.S .lbl{position:absolute;font-weight:800;line-height:1.2;white-space:nowrap}
+.S .tb{position:absolute;line-height:1.22;white-space:pre-wrap;overflow-wrap:break-word}
+.S .tb.r-title{line-height:1.1;letter-spacing:-.005em}
+.S .tb.r-body,.S .tb.r-item,.S .tb.r-q{line-height:1.3}
+.S .tb.plate{background:#EFF8FF;border-radius:24px}
+.S .tb .tag{position:absolute;left:48px;top:36px;font-size:40px;font-weight:800}
+.S .tb .tag.minus{color:#D92D20}.S .tb .tag.plus{color:#0F9147}
+.S mark{background:#FFE58A;color:inherit;padding:0 .1em;border-radius:.1em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.S.poster mark{background:none;color:#FFE58A;padding:0}
+.S.mm{background:#fff}
+.S.cover{background:linear-gradient(135deg,#1F47C4,#142F93)}
+.S.cover mark{background:none;color:#FFE58A;padding:0}
+.S .dec{position:absolute}
+.S .tb.r-key .kv{margin-bottom:22px}
+.S .tb.r-key .kv b{display:block;font-weight:800;line-height:1.15}
+.S .tb.r-key .kv span{display:block;font-size:26px;font-weight:500;color:#3F5F4C;line-height:1.25;margin-top:4px}
+.S.mm mark{background:none;color:#0038B0;font-weight:800;padding:0}
+.S .tb.r-toc{color:#0A1F5C;line-height:1.3}
+.S .tb.r-toc .ti{margin-bottom:40px}
+.S .tb.r-toc .ti i{display:block;font-style:normal;font-size:24px;font-weight:800;color:#0038B0;letter-spacing:.08em;margin-bottom:6px}
+.S .tb.over{outline:4px solid #D92D20;outline-offset:6px}
+.S .tb.keyempty{outline:3px dashed #B9D3C2;outline-offset:-3px}
+.S .ph{color:#A8B3CC;font-weight:500}
+.S .pb{position:absolute;overflow:hidden;background:#EEF3FB}
+.S .pb img{position:absolute;max-width:none;user-select:none;-webkit-user-drag:none}
+.S .pempty{position:absolute;inset:0;display:grid;place-items:center;color:#8B98B8;font-size:44px;font-weight:700;background:repeating-linear-gradient(45deg,#E3ECFA 0 22px,#EEF4FD 22px 44px)}
+.S .selbox{position:absolute;outline:5px solid var(--sel);outline-offset:12px;pointer-events:none;z-index:8}
+.S .selbox .hd{position:absolute;width:26px;height:26px;background:#fff;border:5px solid var(--sel);border-radius:6px;pointer-events:auto}
+.S .hd.nw{left:-25px;top:-25px;cursor:nwse-resize}.S .hd.ne{right:-25px;top:-25px;cursor:nesw-resize}
+.S .hd.sw{left:-25px;bottom:-25px;cursor:nesw-resize}.S .hd.se{right:-25px;bottom:-25px;cursor:nwse-resize}
+.S .tb.editing .tx{visibility:hidden}
+.S textarea.ed{position:absolute;z-index:9;border:0;outline:none;resize:none;background:transparent;padding:0;margin:0;font-family:"Noto Sans";white-space:pre-wrap;overflow:hidden;caret-color:var(--sel)}
+.edit .S .tb,.edit .S .pb{cursor:move}
+.edit .S .tb.editing{cursor:text}
+.edit .S .pb.cropping{cursor:grab;outline:6px dashed #FFB800;outline-offset:-6px}
+
+/* ---------- 1 список ---------- */
+.list{padding:16px;display:flex;flex-direction:column;gap:8px;overflow:auto;flex:1}
+.row{background:#fff;border:1px solid var(--line);border-radius:12px;min-height:72px;display:flex;align-items:center;gap:14px;padding:8px 14px;cursor:pointer}
+.row:hover{border-color:#C9D3E8}
+.row .d{width:86px;font-size:12.5px;color:var(--mute);font-weight:600;line-height:1.3;flex:none}
+.row .n{flex:1;font-weight:700;font-size:15px;min-width:0}
+.row .n small{display:block;font-weight:500;color:var(--mute);font-size:12.5px;margin-top:2px}
+.row .w{font-size:13px;font-weight:600;width:110px;text-align:right;flex:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .sw{border-radius:4px}
+.empty-list{margin:60px auto;text-align:center;color:var(--mute);font-size:15px;line-height:1.6}
+.empty-list b{display:block;color:var(--ink);font-size:20px;margin-bottom:6px}
+
+/* ---------- 2 вопрос-ответ ---------- */
+.qa{display:flex;gap:16px;padding:16px;flex:1;min-height:0}
+.paste{flex:1.05;background:#fff;border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.paste .hd{padding:10px 14px;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.paste .hd label{font-size:12px;color:var(--mute);font-weight:700;display:flex;align-items:center;gap:6px}
+.paste .hd input{height:32px;border:1px solid #D5DCEA;border-radius:8px;padding:0 8px;font:500 13.5px "Noto Sans";color:var(--ink);width:190px}
+.paste .hd input.who{width:120px}
+.paste textarea{flex:1;border:0;outline:none;resize:none;padding:14px 16px;font:400 14px/1.55 "Noto Sans";color:var(--ink)}
+.paste .tip{padding:8px 16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--mute);line-height:1.5}
+.paste .tip b{color:var(--blue)}
+.prev{flex:1;display:flex;flex-direction:column;gap:10px;min-width:0;overflow:auto}
+.prev .hd{font-weight:800;font-size:14.5px;display:flex;align-items:center;gap:8px;position:sticky;top:0;background:var(--bg);padding-bottom:2px;z-index:2}
+.prev .hd .ok{margin-left:auto}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid .it{font-size:12px;color:var(--mute);font-weight:700;display:flex;flex-direction:column;gap:4px}
+.grid .sw{border-radius:5px;box-shadow:0 2px 8px #0A1F5C14}
+
+/* ---------- 3 редактор ---------- */
+.ed{display:flex;flex:1;min-height:0}
+.film{width:124px;background:#fff;border-right:1px solid var(--line);padding:10px 10px 10px 6px;display:flex;flex-direction:column;gap:9px;flex:none;overflow:auto}
+.film .f{display:flex;gap:5px;font-size:11.5px;color:var(--mute);font-weight:700;position:relative;cursor:pointer}
+.film .f .sw{border-radius:3px;box-shadow:0 1px 4px #0A1F5C1A}
+.film .f.cur .sw{outline:3px solid #FFB800;outline-offset:2px}
+.film .f .x{position:absolute;right:-4px;top:-6px;width:22px;height:22px;border-radius:50%;border:1px solid #D5DCEA;background:#fff;font-size:12px;line-height:1;display:none;align-items:center;justify-content:center;color:var(--mute);padding:0}
+.film .f:hover .x{display:flex}
+.add{height:34px;border:1.5px dashed #9FB2DD;border-radius:9px;display:grid;place-items:center;font-weight:700;font-size:13px;color:var(--blue);margin-left:12px;background:#fff;flex:none}
+.add:hover{background:var(--soft)}
+.stage{flex:1;padding:10px 14px;display:flex;flex-direction:column;gap:9px;min-width:0;min-height:0}
+.tool{height:48px;background:#fff;border:1px solid var(--line);border-radius:12px;display:flex;align-items:center;gap:7px;padding:0 8px;flex:none}
+.tool .btn{height:34px;padding:0 10px;font-size:13px}
+.tool .lab{font-size:12px;color:var(--mute);font-weight:700;padding-left:4px}
+.tool .v{width:52px;height:34px;border:1.5px solid var(--blue);border-radius:9px;display:grid;place-items:center;font-weight:800;font-size:16px;color:var(--blue)}
+.tool .v.off{border-color:#D5DCEA;color:#B5C1DA}
+.seg{display:flex;border:1px solid #D5DCEA;border-radius:9px;overflow:hidden;flex:none}
+.seg button{height:32px;padding:0 9px;font-size:13px;font-weight:600;border:0;border-right:1px solid #D5DCEA;background:#fff}
+.seg button:last-child{border:0}.seg button.on{background:var(--soft);color:var(--blue);font-weight:800}
+.seg button:disabled{color:#B5C1DA;cursor:default}
+.tool i.s{width:1px;height:24px;background:var(--line);flex:none}
+.mk{background:var(--yel);padding:1px 5px;border-radius:3px}
+.canvas{flex:1;min-height:0;display:flex;align-items:flex-start;justify-content:center}
+.canvas .sw{border-radius:6px;box-shadow:0 4px 16px #0A1F5C1A}
+.status{height:24px;display:flex;align-items:center;gap:12px;font-size:12.5px;color:var(--mute);flex:none}
+.status button{border:0;background:none;color:var(--blue);font-weight:700;font-size:12.5px;padding:0}
+.photo-tools{position:absolute;z-index:10;display:flex;gap:8px}
+.photo-tools .btn{box-shadow:0 2px 10px #0A1F5C30}
+/* лист шаблонов */
+.dim{position:fixed;inset:52px 0 0 0;background:#0A1F5C59;z-index:20}
+.sheet{position:fixed;left:150px;right:30px;top:72px;max-height:calc(100vh - 100px);overflow:auto;background:#fff;border-radius:16px;box-shadow:0 20px 50px #0A1F5C40;padding:14px 18px 18px;z-index:21}
+.sheet .hd{display:flex;align-items:center;font-weight:800;font-size:16px;margin-bottom:12px}
+.sheet .grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px 16px}
+.sheet .it{color:var(--ink);font-size:13.5px;cursor:pointer;border-radius:8px;padding:4px}
+.sheet .it small{color:var(--mute);font-weight:500;font-size:12px}
+.sheet .it:hover .sw{outline:3px solid var(--sel);outline-offset:3px}
+/* показ */
+.show{position:fixed;inset:0;background:#0B1024;display:grid;place-items:center;z-index:50;cursor:pointer}
+.show .nav{position:absolute;bottom:10px;left:0;right:0;text-align:center;color:#8A9BC8;font-size:13px;pointer-events:none}
+/* PDF */
+#print{display:none}
+@media print{
+  @page{size:1920px 1080px;margin:0}
+  body>*:not(#print){display:none!important}
+  #print{display:block}
+  #print .page{position:relative;width:1920px;height:1080px;break-after:page;overflow:hidden}
+  .S{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+
+/* мастермайнд «10 из 10» */
+.ok.err{color:var(--red)}
+.list .note{font-size:13px;color:var(--mute);padding:2px 4px 6px}
+.row .del{margin-left:14px}
+.found{font-size:13.5px;font-weight:700;color:var(--ink)}
+.warn{background:#FFF7E0;border:1px solid #F3D98A;border-radius:10px;padding:8px 12px;font-size:13px;line-height:1.45;margin-bottom:6px}
+.warn .btn{height:30px;font-size:12.5px;margin-left:6px}
+.tool .hint{font-size:13.5px;font-weight:700;color:var(--blue);padding:0 6px}
+.status .overmsg{color:#fff;background:var(--red);font-weight:700;font-size:14px;padding:3px 12px;border-radius:8px}
+.S textarea.ed.over{outline:4px solid #D92D20;outline-offset:6px}
+.status{height:28px}
+.film{position:relative}
+.film .add{position:sticky;bottom:0;box-shadow:0 -8px 10px #fff}
+.show .nav{font-size:16px;transition:opacity .6s}
+.show .nav.fade{opacity:0}
